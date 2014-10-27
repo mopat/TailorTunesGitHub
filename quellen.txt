@@ -1,5 +1,6 @@
 https://developer.spotify.com/
 http://the.echonest.com/
+http://blog.echonest.com/post/6768920016/new-api-feature-artist-years-active
 http://hammerjs.github.io/getting-started/
 http://jquery.com/
 http://api.jquerymobile.com/
