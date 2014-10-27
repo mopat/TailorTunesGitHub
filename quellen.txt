@@ -1,0 +1,8 @@
+https://developer.spotify.com/
+http://the.echonest.com/
+http://hammerjs.github.io/getting-started/
+http://jquery.com/
+http://api.jquerymobile.com/
+http://stackoverflow.com/questions/9436534/ajax-tutorial-for-post-and-get
+http://stackoverflow.com/questions/2833951/how-to-catch-ajax-query-post-error
+http://stackoverflow.com/questions/3870086/difference-between-ajax-and-get-and-load
