@@ -12,3 +12,6 @@ Responsive Design Tutorial
 https://github.com/scottjehl/iOS-Orientationchange-Fix/blob/master/ios-orientationchange-fix.js
 http://www.webmasterpro.de/coding/article/css-responsive-webdesign-media-queries-fuer-iphone-ipad-und-smartphones.html
 http://wiki.selfhtml.org/wiki/CSS/Media_Queries
+http://blog.kulturbanause.de/2011/04/websites-mit-css3-media-queries-fur-iphone-ipad-android-co-optimieren/
+https://developers.google.com/web/fundamentals/layouts/rwd-fundamentals/set-the-viewport
+http://www.hongkiat.com/blog/responsive-web-nav/
