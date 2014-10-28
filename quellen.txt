@@ -7,3 +7,8 @@ http://api.jquerymobile.com/
 http://stackoverflow.com/questions/9436534/ajax-tutorial-for-post-and-get
 http://stackoverflow.com/questions/2833951/how-to-catch-ajax-query-post-error
 http://stackoverflow.com/questions/3870086/difference-between-ajax-and-get-and-load
+
+Responsive Design Tutorial
+https://github.com/scottjehl/iOS-Orientationchange-Fix/blob/master/ios-orientationchange-fix.js
+http://www.webmasterpro.de/coding/article/css-responsive-webdesign-media-queries-fuer-iphone-ipad-und-smartphones.html
+http://wiki.selfhtml.org/wiki/CSS/Media_Queries

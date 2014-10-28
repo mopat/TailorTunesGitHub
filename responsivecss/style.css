@@ -1,0 +1,19 @@
+body{
+    font-family: 'Open Sans', sans-serif;
+}
+* {
+    margin: 0;
+    padding: 0;
+    color: #ffffff;
+}
+#container{
+    margin: 0 auto;
+    width: 960px;
+    background-color: #1dc116;
+}
+#pull-menu{
+    display: none;
+}
+div.fullWidth {
+    width: 100%;
+}
