@@ -8,11 +8,10 @@ body{
 }
 #container{
     width: 100%;
-    background-color: red;
 }
 #header{
     height: 100%;
-    width: 640px;
+    width: 100%;
     background-color: #1dc116;
 }
 nav{
@@ -34,18 +33,18 @@ nav ul li{
     height: 30px;
     border-bottom: 1px solid black;
     padding-top: 5px;
+    color: #ff951d;
 }
 #nav-list{
     display: none;
     height: 100%;
-    background: #ffaa3e;
-
+    background-color: #ebe6e4;
 }
 #pull{
     background-image: url("https://cdn4.iconfinder.com/data/icons/wirecons-free-vector-icons/32/menu-alt-512.png");
 }
 #pull img{
-    height: 40px;
+    height: 35px;
 }
 #pull-menu{
     width: auto;
@@ -55,11 +54,17 @@ nav ul li{
 #pull img:hover, #pull img:active{
     background-color: #ffb766;
 }
-#content{
-
-    margin-top: 10px;
+#searchfield{
+    text-align: center;
+    padding: 10px;
+    background-color: #0033cc;
 }
 
+#content{
+   background-color: #ebe9db;
+    color: #000000;
+    padding: 5px;
+}
 div.fullWidth {
     width: 100%;
 }

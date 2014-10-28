@@ -4,10 +4,10 @@
 var navList = $("#nav-list");
 $("#pull").on("click", function(){
     if(navList.is(":hidden")){
-        navList.show(500);
+        navList.slideDown(500);
     }
     else if(navList.is(":visible")){
-        navList.hide(500);
+        navList.slideUp(500);
     }
 
 });

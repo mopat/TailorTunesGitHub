@@ -1,0 +1,10 @@
+#search-input{
+    border-radius: 5px;
+    height: 25px;
+}
+#search-button{
+    border-radius: 5px;
+    height: 28px;
+    margin-left: 2px;
+    color: #000000;
+}
