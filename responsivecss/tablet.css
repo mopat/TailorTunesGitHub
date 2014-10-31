@@ -1,15 +1,18 @@
-body{
+body {
     font-family: 'Open Sans', sans-serif;
 }
+
 * {
     margin: 0;
     padding: 0;
     color: #ffffff;
 }
-#container{
+
+#container {
     width: 100%;
     background-color: blue;
 }
-#pull-menu{
+
+#pull-menu {
     display: none;
 }

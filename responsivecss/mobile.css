@@ -1,70 +1,103 @@
-body{
+body {
     font-family: 'Open Sans', sans-serif;
 }
+
 * {
     margin: 0;
     padding: 0;
     color: #ffffff;
 }
-#container{
+
+#container {
     width: 100%;
 }
-#header{
+
+#header {
     height: 100%;
     width: 100%;
     background-color: #1dc116;
 }
-nav{
+
+nav {
     width: 100%;
     min-height: 40px;
-    background: #ffaa3e;
-    font-weight: bold;
+
 }
-nav ul{
+
+nav ul {
     padding: 0;
     margin-bottom: 0 auto;
     width: 100%;
     height: 100%;
-    background: #ffaa3e;
-    list-style: none;
+
     text-align: center;
 }
-nav ul li{
+
+nav ul li {
     height: 30px;
     border-bottom: 1px solid black;
     padding-top: 5px;
-    color: #ff951d;
+
 }
-#nav-list{
+
+#nav-list {
     display: none;
     height: 100%;
     background-color: #ebe6e4;
 }
-#pull{
+
+#pull {
     background-image: url("https://cdn4.iconfinder.com/data/icons/wirecons-free-vector-icons/32/menu-alt-512.png");
 }
-#pull img{
+
+#pull img {
     height: 35px;
 }
-#pull-menu{
+
+#pull-menu {
     width: auto;
     margin: 0 auto;
     text-align: center;
 }
-#pull img:hover, #pull img:active{
-    background-color: #ffb766;
-}
-#searchfield{
-    text-align: center;
-    padding: 10px;
-    background-color: #0033cc;
+
+#pull img:hover, #pull img:active {
+    background-color: #993a98;
 }
 
-#content{
-   background-color: #ebe9db;
-    color: #000000;
-    padding: 5px;
+#searchfield {
+    margin-top: 5px;
+    text-align: center;
+    padding: 10px;
+    background-color: #f6f6f6;
 }
+
+#search-button {
+    width: 6rem;
+}
+
+#search-input {
+    color: #000000;
+}
+
+#sidebar-box ul li {
+    border: 1px solid black;
+    min-height: 3rem;
+    font-size: 1.5rem;
+    padding-top: 12px;
+    padding-left: 3px;
+    background-color: #555555;
+}
+
+#sidebar-box ul {
+}
+
+.arrow-image {
+    max-height: 2.2rem;
+    float: right;
+    padding-right: 20px;
+
+}
+
 div.fullWidth {
     width: 100%;
 }

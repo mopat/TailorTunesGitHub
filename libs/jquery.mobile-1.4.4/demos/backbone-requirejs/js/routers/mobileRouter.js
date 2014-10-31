@@ -3,27 +3,36 @@
 
 // Includes file dependencies
 define([
-	"jquery",
-	"backbone",
-	"../models/CategoryModel",
-	"../collections/CategoriesCollection",
-	"../views/CategoryView"
-], function( $, Backbone, CategoryModel, CategoriesCollection, CategoryView ) {
+    "jquery",
+    "backbone",
+    "../models/CategoryModel",
+    "../collections/CategoriesCollection",
+    "../views/CategoryView"
+], function ($, Backbone, CategoryModel, CategoriesCollection, CategoryView) {
 
     // Extends Backbone.Router
-    var CategoryRouter = Backbone.Router.extend( {
+    var CategoryRouter = Backbone.Router.extend({
 
         // The Router constructor
-        initialize: function() {
+        initialize: function () {
 
             // Instantiates a new Animal Category View
-            this.animalsView = new CategoryView( { el: "#animals", collection: new CategoriesCollection( [] , { type: "animals" } ) } );
+            this.animalsView = new CategoryView({
+                el: "#animals",
+                collection: new CategoriesCollection([], {type: "animals"})
+            });
 
             // Instantiates a new Colors Category View
-            this.colorsView = new CategoryView( { el: "#colors", collection: new CategoriesCollection( [] , { type: "colors" } ) } );
+            this.colorsView = new CategoryView({
+                el: "#colors",
+                collection: new CategoriesCollection([], {type: "colors"})
+            });
 
             // Instantiates a new Vehicles Category View
-            this.vehiclesView = new CategoryView( { el: "#vehicles", collection: new CategoriesCollection( [] , { type: "vehicles" } ) } );
+            this.vehiclesView = new CategoryView({
+                el: "#vehicles",
+                collection: new CategoriesCollection([], {type: "vehicles"})
+            });
 
             // Tells Backbone to start watching for hashchange events
             Backbone.history.start();
@@ -42,32 +51,32 @@ define([
         },
 
         // Home method
-        home: function() {
+        home: function () {
 
             // Programatically changes to the categories page
-            $.mobile.changePage( "#categories" , { reverse: false, changeHash: false } );
+            $.mobile.changePage("#categories", {reverse: false, changeHash: false});
 
         },
 
         // Category method that passes in the type that is appended to the url hash
-        category: function(type) {
+        category: function (type) {
 
             // Stores the current Category View  inside of the currentView variable
-            var currentView = this[ type + "View" ];
+            var currentView = this[type + "View"];
 
             // If there are no collections in the current Category View
-            if(!currentView.collection.length) {
+            if (!currentView.collection.length) {
 
                 // Show's the jQuery Mobile loading icon
-                $.mobile.loading( "show" );
+                $.mobile.loading("show");
 
                 // Fetches the Collection of Category Models for the current Category View
-                currentView.collection.fetch().done( function() {
+                currentView.collection.fetch().done(function () {
 
                     // Programatically changes to the current categories page
-                    $.mobile.changePage( "#" + type, { reverse: false, changeHash: false } );
-    
-                } );
+                    $.mobile.changePage("#" + type, {reverse: false, changeHash: false});
+
+                });
 
             }
 
@@ -75,15 +84,15 @@ define([
             else {
 
                 // Programatically changes to the current categories page
-                $.mobile.changePage( "#" + type, { reverse: false, changeHash: false } );
+                $.mobile.changePage("#" + type, {reverse: false, changeHash: false});
 
             }
 
         }
 
-    } );
+    });
 
     // Returns the Router class
     return CategoryRouter;
 
-} );
+});
