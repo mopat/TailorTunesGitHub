@@ -12,7 +12,21 @@ body {
     width: 100%;
     background-color: blue;
 }
-
+#content{
+ float: left;
+    width: 100%;
+}
 #pull-menu {
     display: none;
+}
+#sidebar-box{
+    float: left;
+    background-color: #555555;
+    width: 200px;
+}
+.arrow-image {
+    max-height: 2.2rem;
+    float: right;
+    padding-right: 20px;
+
 }
