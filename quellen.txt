@@ -16,3 +16,4 @@ http://blog.kulturbanause.de/2011/04/websites-mit-css3-media-queries-fur-iphone-
 https://developers.google.com/web/fundamentals/layouts/rwd-fundamentals/set-the-viewport
 http://www.hongkiat.com/blog/responsive-web-nav/
 http://m.onblog.at/responsive-webdesign-3-bilder-automatisch-skalieren
+http://www.digitalskydesign.com/equal-height-columns-using-only-css/

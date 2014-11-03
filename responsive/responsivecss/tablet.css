@@ -10,20 +10,34 @@ body {
 
 #container {
     width: 100%;
+    height: 100%;
     background-color: blue;
 }
-#content{
- float: left;
-    width: 100%;
+.page-container {
+    display: table;
 }
+
+#content {
+    float: none;
+    max-width: 80%;
+    height: 100%;
+    display: table-cell;
+    vertical-align: top;
+}
+
 #pull-menu {
     display: none;
 }
-#sidebar-box{
-    float: left;
+
+#sidebar {
+    float: none;
+    display: table-cell;
+    vertical-align: top;
     background-color: #555555;
-    width: 200px;
+    max-width: 20%;
+    height: 100%;
 }
+
 .arrow-image {
     max-height: 2.2rem;
     float: right;

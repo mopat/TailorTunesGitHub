@@ -8,10 +8,6 @@ body {
     color: #ffffff;
 }
 
-#container {
-    width: 100%;
-}
-
 #header {
     height: 100%;
     width: 100%;
@@ -79,7 +75,7 @@ nav ul li {
     color: #000000;
 }
 
-#sidebar-box ul li {
+#sidebar ul li {
     border: 1px solid black;
     min-height: 3rem;
     font-size: 1.5rem;
@@ -88,7 +84,8 @@ nav ul li {
     background-color: #555555;
 }
 
-#sidebar-box ul {
+#sidebar h2{
+    color: #000000;
 }
 
 .arrow-image {
