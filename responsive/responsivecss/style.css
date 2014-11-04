@@ -17,6 +17,25 @@ body {
 #pull-menu {
     display: none;
 }
+#sidebar {
+    float: none;
+    display: table-cell;
+    vertical-align: top;
+    background-color: #555555;
+    max-width: 20%;
+    height: 100%;
+}
+
+#content {
+    float: none;
+    max-width: 80%;
+    height: 100%;
+    display: table-cell;
+    vertical-align: top;
+}
+#info-content{
+    display: block;
+}
 
 div.fullWidth {
     width: 100%;

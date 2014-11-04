@@ -1,5 +1,5 @@
 body {
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Open Sans', 'Calibri', sans-serif;
 }
 #container {
     width: 100%;
@@ -21,7 +21,6 @@ body {
     color: #000000;
 }
 
-
 nav {
     background-color: #353535;
     font-weight: bold;
@@ -35,8 +34,10 @@ nav ul {
 nav ul li {
     color: #990099;
 }
-
-#sidebar ul a:link {
+#categories-box ul{
+    list-style: none;
+}
+#categories-box ul a:link {
     text-decoration: none;
 }
 
@@ -45,7 +46,9 @@ nav ul li {
     color: #e1e3e4;
     padding: 5px;
 }
-
+#info-content{
+    display: none;
+}
 img {
     max-width: 100%;
     height: auto;
