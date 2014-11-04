@@ -65,11 +65,13 @@ nav ul li {
 #search-input {
     color: #000000;
 }
+
 #sidebar {
     background-color: #555555;
     max-width: 100%;
     height: 100%;
 }
+
 #categories ul li {
     border: 1px solid black;
     min-height: 3rem;
@@ -79,7 +81,7 @@ nav ul li {
     background-color: #555555;
 }
 
-#categories-box h2{
+#categories-box h2 {
     color: #000000;
 }
 
@@ -90,6 +92,3 @@ nav ul li {
 
 }
 
-div.fullWidth {
-    width: 100%;
-}

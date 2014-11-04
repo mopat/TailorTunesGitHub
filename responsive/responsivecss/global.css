@@ -1,10 +1,12 @@
 body {
     font-family: 'Open Sans', 'Calibri', sans-serif;
 }
+
 #container {
     width: 100%;
     height: 100%;
 }
+
 #search-input {
     border-radius: 5px;
     height: 25px;
@@ -34,9 +36,11 @@ nav ul {
 nav ul li {
     color: #990099;
 }
-#categories-box ul{
+
+#categories-box ul {
     list-style: none;
 }
+
 #categories-box ul a:link {
     text-decoration: none;
 }
@@ -46,9 +50,13 @@ nav ul li {
     color: #e1e3e4;
     padding: 5px;
 }
-#info-content{
+#sidebar{
+    padding: 5px;
+}
+#info-content {
     display: none;
 }
+
 img {
     max-width: 100%;
     height: auto;

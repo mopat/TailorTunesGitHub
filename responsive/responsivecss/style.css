@@ -10,13 +10,14 @@ body {
 
 #container {
     margin: 0 auto;
-    width: 960px;
+    width: 1025px;
     background-color: #1dc116;
 }
 
 #pull-menu {
     display: none;
 }
+
 #sidebar {
     float: none;
     display: table-cell;
@@ -35,8 +36,4 @@ body {
 }
 #info-content{
     display: block;
-}
-
-div.fullWidth {
-    width: 100%;
 }
