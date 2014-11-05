@@ -3,8 +3,6 @@
  */
 var $infoHeader = $("#info-header");
 var $infoContent = $("#info-content");
-var $window = $(window);
-var $windowWidth = $window.innerWidth();
 
 $infoHeader.on("click", function(e){
     e.preventDefault();
@@ -15,8 +13,9 @@ $infoHeader.on("click", function(e){
             $infoContent.hide(100);
         }
 });
-$window.resize(function(){
-    if($windowWidth() > 1024){
+$(window).resize(function(){
+    console.log($(window).width());
+    if($(window).width() > 1024){
         $infoContent.show();
     }
     else{
