@@ -13,18 +13,23 @@ body {
     margin: 0 auto;
     width: 1025px;
 }
+
 .page-container {
     clear: both;
 }
+
 #pull-menu {
     display: none;
 }
+
 #categories-box {
     width: 101%;
 }
-#categories-box h2{
+
+#categories-box h2 {
     color: #000000;
 }
+
 #categories {
     width: 100%;
 }
@@ -39,8 +44,9 @@ body {
     text-align: center;
     background-color: #555555;
 }
+
 #categories ul li.fill-width {
-max-width: 319px;
+    max-width: 319px;
 }
 
 #sidebar {
@@ -50,10 +56,12 @@ max-width: 319px;
     max-width: 200px;
     height: 100%;
 }
+
 #searchfield {
     text-align: center;
     padding: 10px;
 }
+
 #content {
     float: none;
     min-width: 80%;
@@ -62,7 +70,8 @@ max-width: 319px;
     display: table-cell;
     vertical-align: top;
 }
-#info-content{
+
+#info-content {
     display: block;
 
 }
