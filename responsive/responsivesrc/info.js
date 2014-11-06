@@ -1,10 +1,10 @@
 /**
  * Created by Patrick on 04.11.2014.
  */
-var $infoHeader = $("#info-header");
+var $infoIcon = $("#info-icon");
 var $infoContent = $("#info-content");
 
-$infoHeader.on("click", function(e){
+$infoIcon.on("click", function(e){
     e.preventDefault();
         if($infoContent.is(":hidden")){
             $infoContent.show(100);
@@ -14,7 +14,6 @@ $infoHeader.on("click", function(e){
         }
 });
 $(window).resize(function(){
-    console.log($(window).width());
     if($(window).width() > 1024){
         $infoContent.show();
     }

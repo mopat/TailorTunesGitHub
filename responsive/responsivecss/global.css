@@ -50,8 +50,11 @@ nav ul li {
     color: #e1e3e4;
     padding: 5px;
 }
+
 #sidebar{
     padding: 5px;
+    min-width: 33px;
+    background-color: #2e9753;
 }
 #info-content {
     display: none;
@@ -76,4 +79,10 @@ iframe {
 #video-box {
     width: 100%;
     height: auto;
+}
+#info-icon{
+    height: 30px;
+}
+.arrow-image {
+    display: none;
 }
