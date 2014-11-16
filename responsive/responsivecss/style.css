@@ -55,6 +55,7 @@ nav ul li {
     vertical-align: top;
     max-width: 200px;
     height: 100%;
+    border-left: 1px solid black;
 }
 
 #content {
@@ -67,7 +68,10 @@ nav ul li {
     border-right: 1px solid black;
 }
 
+#info-icon {
+    margin-top: 25px;
+}
+
 #info-content {
     display: block;
-
 }
