@@ -1,7 +1,6 @@
 nav {
     width: 100%;
     min-height: 40px;
-
 }
 
 nav ul {
@@ -20,7 +19,7 @@ nav ul li {
 #nav-list {
     display: none;
     height: 100%;
-    background-color: #ebe6e4;
+    background-color: #df151d;
 }
 
 #pull {

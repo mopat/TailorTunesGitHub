@@ -31,7 +31,7 @@ body {
     color: #ae151d;
     float: left;
     padding: 10px;
-    font-size: 2.4rem;
+    font-size: 2.2rem;
 }
 #searchfield {
     text-align: center;
@@ -77,10 +77,6 @@ nav {
 
 nav ul {
     list-style: none;
-}
-
-nav ul li {
-    color: #990099;
 }
 
 #categories-box {
