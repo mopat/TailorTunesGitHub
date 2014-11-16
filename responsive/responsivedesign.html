@@ -14,6 +14,7 @@
     <link rel="stylesheet" media="(orientation: landscape)" href="responsivecss/landscape.css">
 
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Indie+Flower' rel='stylesheet' type='text/css'>
 </head>
 <body>
 <div id="container">
@@ -36,7 +37,7 @@
         <input type="text" id="search-input"><input type="button" id="search-button" value="Search">
     </div>
     <div id="categories-box">
-        <h2>Kategorien</h2>
+
 
         <div id="categories">
             <ul>
@@ -57,40 +58,83 @@
             <a href="#"><img src="responsiveimg/info-icon.gif" id="info-icon"></a>
 
             <div id="info-content">
-                Überall dieselbe alte Leier. Das Layout ist fertig, der Text lässt auf sich warten. Damit das Layout nun
-                nicht nackt im Raume steht und sich klein und leer vorkommt, springe ich ein: der Blindtext. Genau zu
-                diesem Zwecke erschaffen, immer im Schatten meines großen Bruders »Lorem Ipsum«, freue ich mich jedes
-                Mal, wenn Sie ein paar Zeilen lesen. Denn esse est percipi - Sein ist wahrgenommen werden. Und weil Sie
-                nun schon die Güte haben, mich ein paar weitere Sätze lang zu begleiten, möchte ich diese Gelegenheit
-                nutzen, Ihnen nicht nur als Lückenfüller zu dienen, sondern auf etwas hinzuweisen, das es ebenso
-                verdient wahrgenommen zu werden: Webstandards nämlich.
+                Beim Responsive Webdesign (im Deutschen auch responsives Webdesign genannt oder kurz RWD) handelt es
+                sich um ein gestalterisches und technisches Paradigma zur Erstellung von Websites, so dass diese auf
+                Eigenschaften des jeweils benutzten Endgeräts, vor allem Smartphones und Tabletcomputer, reagieren
+                können. Der grafische Aufbau einer „responsiven“ Website erfolgt anhand der Anforderungen des jeweiligen
+                Gerätes, mit dem die Site betrachtet wird. Dies betrifft insbesondere die Anordnung und Darstellung
+                einzelner Elemente, wie Navigationen, Seitenspalten und Texte, aber auch die Nutzung unterschiedlicher
+                Eingabemethoden von Maus (klicken, überfahren) oder Touchscreen (klicken, wischen). Technische Basis
+                hierfür sind die neueren Webstandards HTML5, CSS3 (hier insbesondere die Media Queries) und JavaScript.
             </div>
         </div>
         <div id="content">
-            <h1>Lorem Ipsum Dolor</h1>
+            <h1>Responsive Webdesign</h1>
 
-            Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.
-            <img class="left" src="responsiveimg/htcone.png"> Cum sociis natoque penatibus et magnis dis parturient
-            montes,
-            nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat
-            massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus
-            ut,
-            imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras
-            dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu,
-            consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus.
-            Phasellus
-            viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue.
-            Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum
-            rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus
-            pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero
-            venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed
-            fringilla
-            mauris sit amet nibh. Donec sodales sagittis magna.
+            <h2>Gestaltung</h2>
+
+            <p>Die Größe und Auflösung der Displays auf Laptops, Desktop-PCs, Tablets, Smartphones, E-Book-Readern und
+                Fernsehgeräten können erheblich variieren. Aus diesem Grund sind das Erscheinungsbild und die Bedienung
+                einer Website stark abhängig vom Endgerät. Für Grafiker liegt eine Herausforderung in der
+                konzeptionellen Abgrenzung zu klassischem Printdesign: Wo es einst noch gewohnt und gelernt war, dass
+                das Ausgabemedium eine bestimmte und unveränderbare Größe hatte, muss nun akzeptiert werden, dass starre
+                Gestaltungen für eine Website nicht mehr übertragbar sind. Websites, die mit einem reaktionsfähigen
+                Design ausgestattet sind, berücksichtigen die unterschiedlichen Anforderungen der Endgeräte. Ziel dieser
+                Praxis ist, dass Websites ihre Darstellung so anpassen, dass sie sich jedem Betrachter so übersichtlich
+                und benutzerfreundlich wie möglich präsentieren. Kriterium für das angepasste Erscheinungsbild sind
+                neben der Größe des Anzeigegerätes beispielsweise verfügbare Eingabemethoden (Touchscreen, Maus) oder
+                die Bandbreite der Internetverbindung.</p>
+
+            <img src="responsiveimg/responsive-webdesign.jpg">
+
+            <p> Vor allem Blockelemente müssen unterschiedlich behandelt werden. Nutzt das Gestaltungsraster mehrere
+                Spalten, so können diese variabel an die Breite des jeweiligen Viewports angepasst werden und bei
+                kleinen Auflösungen, wenn eine Darstellung nebeneinander nicht mehr passt, untereinander verschoben oder
+                alternativ positioniert werden. Bilder sollten maximal auf ihr umgebendes Element, aber grundsätzlich
+                nicht über ihre native Größe, skaliert werden. Texturen für Hintergründe können versteckt überfließen.
+                Hintergründe mit Motiv werden bei kleinen Darstellungen auch weggelassen. Logos können wie Bilder
+                verkleinert oder bei großen und detailreichen Grafiken durch ein kleineres Signet ersetzt werden.
+                Vertikale Menüleisten brauchen oft viel Breite und können als Liste umpositioniert, zusätzlich
+                eingeklappt und erst auf Klick oder Scrollposition eingeblendet werden.</p>
+
+            <p> Das Inlineelement "Text" darf nur wenig kleiner skaliert werden um die Lesbarkeit zu erhalten. Da Text
+                aber automatisch umbricht ist eine spezielle Anpassung nicht nötig.</p>
+
+            <h3>Abgrenzung zur mobilen Webseite</h3>
+            Der wesentliche Unterschied zwischen einer mobilen Webseite und einem responsiven Design besteht in der
+            Anzahl der Templates. Aus historischer Sicht bildet die Desktop-Version die normale Ansicht der Website.
+            Dieser wird nach der klassischen Methode ein zusätzliches, unabhängiges Template für mobile Endgeräte
+            hinzugefügt.</p>
+
+            <p> Beim Responsive Webdesign wird nur eine einzige Version der Website erstellt. Diese passt sich
+                selbstständig der verfügbaren Umgebung an. Besonders sichtbar wird dies beim Layout, das sich nach
+                Breite des Browser-Fensters entsprechend verändert.</p>
+
+            <p> Die Entscheidung für ein responsives Webdesign oder nur ein separates mobiles Template hängen vom Sinn
+                und Zweck der Website ab.
+
+            <h3> Abgrenzung zu einer adaptiven Website</h3>
+
+            <p>Auch der grafische Aufbau einer adaptiven Website richtet sich nach dem Viewport des jeweiligen
+                Endgeräts. Dabei beschränkt man sich jedoch auf eine feste Anzahl von Breakpoints zwischen denen das
+                Layout jeweils statisch bleibt. Eine fluide Anpassung an alle Auflösungen wie beim responsive Webdesign
+                findet nicht statt.</p>
+
+            <h3> Abgrenzung zu einer liquiden Website</h3>
+
+            <p> Im Gegensatz zur 'adaptiven Website' wird bei einem liquiden Layout der zur Verfügung stehende Platz
+                immer im gleichen prozentualen Verhältnis genutzt. Verschiebt man beispielsweise bei einer liquiden
+                Website auf einem Desktop-PC die Breite des Browserfensters, so fließen die Inhalte zwar schmaler, da
+                aber ein rein liquides Layout keine Breakpoints besitzt, bleibt die Anordnung der Layoutelemente dabei
+                unverändert.</p>
+
+            <p> Zusammenfassend kann ein Responsive Webdesign deshalb als eine adaptive Reihe verschiedener liquider
+                Layouts charaktisiert werden.
+
             <div id="video-box">
                 <iframe width="850" height="500" src="//www.youtube.com/embed/C8bzZJm_Enw" frameborder="0"
                         allowfullscreen></iframe>
             </div>
-            Sed consequat, leo eget bibendum sodales, augue velit cursus nunc.
         </div>
     </div>
 </div>
