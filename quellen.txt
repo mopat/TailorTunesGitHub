@@ -17,3 +17,4 @@ https://developers.google.com/web/fundamentals/layouts/rwd-fundamentals/set-the-
 http://www.hongkiat.com/blog/responsive-web-nav/
 http://m.onblog.at/responsive-webdesign-3-bilder-automatisch-skalieren
 http://www.digitalskydesign.com/equal-height-columns-using-only-css/
+http://www.heise.de/ix/artikel/Allen-recht-1058764.html
