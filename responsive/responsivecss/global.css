@@ -27,19 +27,47 @@ body {
     color: #000000;
 }
 
+#logo {
+    color: #ae151d;
+    float: left;
+    padding: 10px;
+    font-size: 2.4rem;
+}
 #searchfield {
     text-align: center;
     padding: 10px;
-    background-color: #f6f6f6;
-    border-left: 1px solid black;
-    border-right: 1px solid black;
-    border-style: dotted;
+    height: 100%;
+    float: right;
 }
 
-#searchfield h3 {
+#search-icon {
+    height: 50px;
+    width: auto;
+}
+
+#searchfield:hover {
+    background-color: #fafafa;
+    border-left: 1px solid #ff0000;
+}
+
+#search-input-box {
+    display: none;
+}
+
+#search-button {
+    padding-bottom: 5px;
+    width: 8rem;
+    border: none;
+    background-color: #df151d;
+    color: #f5f5f5;
+    font-size: 1.3rem;
+    font-family: 'Indie Flower', cursiv;
+}
+
+#search-input {
     color: #000000;
+    border: 1px solid #d2151d;
 }
-
 nav {
     background-color: #d2151d;
     font-weight: bold;
@@ -55,6 +83,9 @@ nav ul li {
     color: #990099;
 }
 
+#categories-box {
+    clear: both;
+}
 #categories-box ul {
     list-style: none;
     font-family: 'Poiret One', cursive;
@@ -88,7 +119,6 @@ nav ul li {
 #sidebar {
     padding: 5px;
     min-width: 33px;
-
 }
 
 #info-icon {

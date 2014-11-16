@@ -14,6 +14,7 @@
     <link rel="stylesheet" media="(orientation: landscape)" href="responsivecss/landscape.css">
 
     <link href='http://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Shadows+Into+Light' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Indie+Flower' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css'>
 </head>
@@ -33,9 +34,16 @@
             </div>
         </nav>
     </div>
+    <div id="search-wrapper">
+        <span id="logo">RESPONSIVE WEBDESIGN</span>
     <div id="searchfield">
-        <h3>What are you looking for?</h3>
-        <input type="text" id="search-input"><input type="button" id="search-button" value="Search">
+
+        <a href="#"><img src="responsiveimg/search-icon.png" id="search-icon"></a>
+
+        <div id="search-input-box">
+            <input type="text" id="search-input"><input type="button" id="search-button" value="Search">
+        </div>
+    </div>
     </div>
     <div id="categories-box">
         <div id="categories">
@@ -47,7 +55,7 @@
                     <li>Hot Topics <img class="arrow-image" src="responsiveimg/arrow_png.png"></li>
                 </a>
                 <a href="http://raspbianpi8.no-ip.org/responsivedesign.html">
-                    <li class="fill-width">Nano <img class="arrow-image" src="responsiveimg/arrow_png.png"></li>
+                    <li class="fill-width">Tutorials <img class="arrow-image" src="responsiveimg/arrow_png.png"></li>
                 </a>
             </ul>
         </div>
@@ -131,7 +139,6 @@
                 Layouts charaktisiert werden.
 
             <div id="video-box">
-            <
             <iframe width="854" height="450" src="//www.youtube.com/embed/_PfNBcs2hME" frameborder="0"
                         allowfullscreen></iframe>
             </div>
@@ -141,6 +148,7 @@
 <script src="responsivelibs/jquery-2.1.1.min.js"></script>
 <script src="responsivelibs/ios-orientationchange-fix.js"></script>
 <script src="responsivesrc/navigation.js"></script>
+<script src="responsivesrc/search.js"></script>
 <script src="responsivesrc/info.js"></script>
 
 </body>
