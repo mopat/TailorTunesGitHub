@@ -46,10 +46,11 @@ $.ajax({
     success: function (data) {
         console.log(data);
         var tracks = data.tracks.items;
+        console.log("SPOTIFY-Start");
         for (var i = 0; i < tracks.length; i++) {
             console.log(tracks[i].name);
         }
-
+        console.log("SPOTIFY-End");
     },
     error: function (XMLHttpRequest, textStatus, errorThrown) {
         alert("ERROR " + errorThrown + " at" + XMLHttpRequest);
