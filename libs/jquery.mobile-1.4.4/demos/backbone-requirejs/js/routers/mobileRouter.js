@@ -39,7 +39,7 @@ define([
 
         },
 
-        // Backbone.js Routes
+        // Backbone.foundationJS Routes
         routes: {
 
             // When there is no hash bang on the url, the home method is called

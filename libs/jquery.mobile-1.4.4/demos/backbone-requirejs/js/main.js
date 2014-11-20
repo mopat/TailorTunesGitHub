@@ -1,7 +1,7 @@
 // Sets the require.js configuration for your application.
 require.config({
 
-    baseUrl: "../js",
+    baseUrl: "../foundationJS",
 
     // 3rd party script alias names
     paths: {
@@ -12,7 +12,7 @@ require.config({
         "underscore": "//cdn.jsdelivr.net/lodash/2.4.1/lodash.min",
         "backbone": "//cdn.jsdelivr.net/backbonejs/1.1.2/backbone-min",
 
-        "backbone-requirejs-demos": "../backbone-requirejs/js"
+        "backbone-requirejs-demos": "../backbone-requirejs/foundationJS"
     },
 
     // Sets the configuration for your third party scripts that are not AMD compatible
@@ -49,7 +49,7 @@ require([
 
     require(["jquerymobile"], function () {
 
-        // Instantiates a new Backbone.js Mobile Router
+        // Instantiates a new Backbone.foundationJS Mobile Router
         this.router = new Mobile();
     });
 });

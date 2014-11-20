@@ -1640,7 +1640,7 @@ div.ui-mobile-viewport {
     visibility: hidden;
 }
 
-/* Non-js content hiding */
+/* Non-foundationJS content hiding */
 .ui-nojs {
     position: absolute !important;
     height: 1px;
@@ -3938,7 +3938,7 @@ fieldset.ui-controlgroup {
 
 .ui-popup-open .ui-header-fixed,
 .ui-popup-open .ui-footer-fixed {
-    position: absolute !important; /* See issues #4816, #4844 and #4874 and popup.js */
+    position: absolute !important; /* See issues #4816, #4844 and #4874 and popup.foundationJS */
 }
 
 .ui-popup-screen {

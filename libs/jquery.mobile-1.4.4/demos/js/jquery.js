@@ -438,7 +438,7 @@
             }
         },
 
-        // See test/unit/core.js for details concerning isFunction.
+        // See test/unit/core.foundationJS for details concerning isFunction.
         // Since version 1.3, DOM methods and functions like alert
         // aren't supported. They return false on IE (#2968).
         isFunction: function (obj) {
@@ -560,7 +560,7 @@
 
                 if (data) {
                     // Make sure the incoming data is actual JSON
-                    // Logic borrowed from http://json.org/json2.js
+                    // Logic borrowed from http://json.org/json2.foundationJS
                     if (rvalidchars.test(data.replace(rvalidescape, "@")
                             .replace(rvalidtokens, "]")
                             .replace(rvalidbraces, ""))) {
@@ -3517,7 +3517,7 @@
                 support.boxSizing = div.offsetWidth === 4;
             });
 
-            // Use window.getComputedStyle because jsdom on node.js will break without it.
+            // Use window.getComputedStyle because jsdom on node.foundationJS will break without it.
             if (window.getComputedStyle) {
                 support.pixelPosition = ( window.getComputedStyle(div, null) || {} ).top !== "1%";
                 support.boxSizingReliable = ( window.getComputedStyle(div, null) || {width: "4px"} ).width === "4px";
@@ -7093,7 +7093,7 @@
     });
 
 // NOTE: we've included the "window" in window.getComputedStyle
-// because jsdom on node.js will break without it.
+// because jsdom on node.foundationJS will break without it.
     if (window.getComputedStyle) {
         getStyles = function (elem) {
             return window.getComputedStyle(elem, null);
@@ -7618,7 +7618,7 @@
         _load = jQuery.fn.load,
 
     /* Prefilters
-     * 1) They are useful to introduce custom dataTypes (see ajax/jsonp.js for an example)
+     * 1) They are useful to introduce custom dataTypes (see ajax/jsonp.foundationJS for an example)
      * 2) These are called:
      *    - BEFORE asking for a transport
      *    - AFTER param serialization (s.data is a string if s.processData is true)

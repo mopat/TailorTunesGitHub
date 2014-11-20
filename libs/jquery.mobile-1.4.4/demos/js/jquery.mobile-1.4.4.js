@@ -137,7 +137,7 @@
                     data = element.getAttribute("data-" + $.mobile.ns + key);
                 }
 
-                // Copied from core's src/data.js:dataAttr()
+                // Copied from core's src/data.foundationJS:dataAttr()
                 // Convert from a string to a proper data type
                 try {
                     data = data === "true" ? true :
@@ -723,7 +723,7 @@
                     keepNative = $.mobile.page.prototype.keepNativeSelector(),
                     that = this;
 
-                // Add no js class to elements
+                // Add no foundationJS class to elements
                 if ($.mobile.nojs) {
                     $.mobile.nojs(this);
                 }
@@ -1535,8 +1535,8 @@
 // 
 // Project Home - http://benalman.com/projects/jquery-hashchange-plugin/
 // GitHub       - http://github.com/cowboy/jquery-hashchange/
-// Source       - http://github.com/cowboy/jquery-hashchange/raw/master/jquery.ba-hashchange.js
-// (Minified)   - http://github.com/cowboy/jquery-hashchange/raw/master/jquery.ba-hashchange.min.js (0.8kb gzipped)
+// Source       - http://github.com/cowboy/jquery-hashchange/raw/master/jquery.ba-hashchange.foundationJS
+// (Minified)   - http://github.com/cowboy/jquery-hashchange/raw/master/jquery.ba-hashchange.min.foundationJS (0.8kb gzipped)
 // 
 // About: License
 // 
@@ -7559,7 +7559,7 @@
                             itemIcon = getAttr(item[0], "icon");
                             icon = ( itemIcon === false ) ? false : ( itemIcon || o.icon );
 
-                            // TODO: Remove in 1.5 together with links.js (links.js / .ui-link deprecated in 1.4)
+                            // TODO: Remove in 1.5 together with links.foundationJS (links.foundationJS / .ui-link deprecated in 1.4)
                             a.removeClass("ui-link");
 
                             buttonClass = "ui-btn";
@@ -14411,8 +14411,8 @@
      * http://api.jqueryui.com/tabs/
      *
      * Depends:
-     *	jquery.ui.core.js
-     *	jquery.ui.widget.js
+     *	jquery.ui.core.foundationJS
+     *	jquery.ui.widget.foundationJS
      */
     (function ($, undefined) {
 
@@ -15403,7 +15403,7 @@
                         $window.trigger("hashchange", [true]);
                     } else {
                         // TODO figure out how to simplify this interaction with the initial history entry
-                        // at the bottom js/navigate/navigate.js
+                        // at the bottom foundationJS/navigate/navigate.foundationJS
                         $.mobile.navigate.history.stack = [];
                         $.mobile.navigate($.mobile.path.isPath(location.hash) ? location.hash : location.href);
                     }

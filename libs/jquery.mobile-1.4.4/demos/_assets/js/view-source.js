@@ -153,9 +153,9 @@ $.fn.viewSourceCode = function () {
             sources.push({title: "PHP", theme: "d", brush: "php", data: fixData(data)});
         }
 
-        if (self.is("[data-demo-js]")) {
-            data = getSnippet("script", self.attr("data-demo-js"), snippetSource);
-            sources.push({title: "JS", theme: "e", brush: "js", data: fixData(data)});
+        if (self.is("[data-demo-foundationJS]")) {
+            data = getSnippet("script", self.attr("data-demo-foundationJS"), snippetSource);
+            sources.push({title: "JS", theme: "e", brush: "foundationJS", data: fixData(data)});
         }
 
         if (self.is("[data-demo-css]")) {
@@ -169,7 +169,7 @@ $.fn.viewSourceCode = function () {
 };
 
 $(document).on("pagebeforecreate", "[data-role='page']", function () {
-    $(this).find("[data-demo-html], [data-demo-js], [data-demo-css], [data-demo-php]").viewSourceCode();
+    $(this).find("[data-demo-html], [data-demo-foundationJS], [data-demo-css], [data-demo-php]").viewSourceCode();
     SyntaxHighlighter.defaults['toolbar'] = false;
     SyntaxHighlighter.defaults['auto-links'] = false;
 });
@@ -184,7 +184,7 @@ $(document).on("pagecreate", function (e) {
         }
     });
 
-    // reposition when switching between html / js / css
+    // reposition when switching between html / foundationJS / css
     $(e.target).delegate(".jqm-view-source .ui-collapsible", "expand", function () {
         $(this).parents(":mobile-popup").popup("reposition", {positionTo: "window"});
     });
@@ -334,7 +334,7 @@ eval(function (p, a, c, k, e, d) {
     };
 
     Brush.prototype = new SyntaxHighlighter.Highlighter();
-    Brush.aliases = ['js', 'jscript', 'javascript'];
+    Brush.aliases = ['foundationJS', 'jscript', 'javascript'];
 
     SyntaxHighlighter.brushes.JScript = Brush;
 
