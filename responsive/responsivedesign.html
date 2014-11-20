@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
-<head lang="en">
+<head lang="de">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-    <title></title>
+    <title>Responsive Webdesign</title>
     <link rel="stylesheet" type="text/css" href="responsivecss/global.css" media="screen">
     <link rel="stylesheet" type="text/css" href="responsivecss/style.css" media="screen and (min-width:1025px)">
     <link rel="stylesheet" type="text/css" href="responsivecss/tablet.css"
@@ -13,7 +13,6 @@
 
     <link href='http://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Shadows+Into+Light' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/css?family=Indie+Flower' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css'>
 </head>
 <body>
@@ -21,10 +20,18 @@
     <div id="header">
         <nav>
             <ul id="nav-list">
-                <li>Home</li>
-                <li>Kontakte</li>
-                <li>Impressum</li>
-                <li>Galerie</li>
+                <a href="http://raspbianpi8.no-ip.org/responsive/responsivedesign.html">
+                    <li>Home</li>
+                </a>
+                <a href="http://raspbianpi8.no-ip.org/responsive/responsivedesign.html">
+                    <li>Kontakte</li>
+                </a>
+                <a href="http://raspbianpi8.no-ip.org/responsive/responsivedesign.html">
+                    <li>Impressum</li>
+                </a>
+                <a href="http://raspbianpi8.no-ip.org/responsive/responsivedesign.html">
+                    <li>Galerie</li>
+                </a>
             </ul>
             <div id="pull-menu">
                 <a href="#" id="pull"><img
@@ -34,14 +41,15 @@
     </div>
     <div id="search-wrapper">
         <span id="logo">RESPONSIVE WEBDESIGN</span>
-    <div id="searchfield">
 
-        <a href="#"><img src="responsiveimg/search-icon.png" id="search-icon"></a>
+        <div id="searchfield">
 
-        <div id="search-input-box">
-            <input type="text" id="search-input"><input type="button" id="search-button" value="Search">
+            <a href="#"><img src="responsiveimg/search-icon.png" id="search-icon"></a>
+
+            <div id="search-input-box">
+                <input type="text" id="search-input"><input type="button" id="search-button" value="Suchen">
+            </div>
         </div>
-    </div>
     </div>
     <div id="categories-box">
         <div id="categories">
@@ -143,6 +151,7 @@
         </div>
     </div>
 </div>
+
 <script type="text/javascript" src="responsivelibs/jquery-2.1.1.min.js"></script>
 <script type="text/javascript" src="responsivelibs/ios-orientationchange-fix.js"></script>
 <script type="text/javascript" src="responsivesrc/navigation.js"></script>
