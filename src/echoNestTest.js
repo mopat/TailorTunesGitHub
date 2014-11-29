@@ -26,7 +26,6 @@ $("#button-start-search").on("click", function () {
         cache: false,
         success: function (jsonObject) {
             //console.log(jsonObject);
-            console.log(jsonObject.response.songs[0].title);
             var songs = jsonObject.response.songs;
             for (var i = 0; i < songs.length; i++) {
                 console.log(songs[i].title);
