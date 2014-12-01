@@ -23,3 +23,4 @@ SoundCloud API
 http://www.sitepoint.com/use-jquerys-ajax-function/
 http://stackoverflow.com/questions/16394100/order-by-playbacks-when-fetching-tracks-from-soundcloud
 http://stackoverflow.com/questions/9880442/soundcloud-api-track-query-filtering
+http://stackoverflow.com/questions/24076885/soundcloud-api-how-to-play-private-sound-with-html5-audio-tag
