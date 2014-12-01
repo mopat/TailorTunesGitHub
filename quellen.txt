@@ -18,3 +18,8 @@ http://www.hongkiat.com/blog/responsive-web-nav/
 http://m.onblog.at/responsive-webdesign-3-bilder-automatisch-skalieren
 http://www.digitalskydesign.com/equal-height-columns-using-only-css/
 http://www.heise.de/ix/artikel/Allen-recht-1058764.html
+
+SoundCloud API
+http://www.sitepoint.com/use-jquerys-ajax-function/
+http://stackoverflow.com/questions/16394100/order-by-playbacks-when-fetching-tracks-from-soundcloud
+http://stackoverflow.com/questions/9880442/soundcloud-api-track-query-filtering

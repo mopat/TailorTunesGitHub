@@ -2,9 +2,10 @@
  * Created by Patrick on 27.10.2014.
  */
 var echoNestKey = "N2U2OZ8ZDCXNV9DBG";
+console.log("ECHO-Start");
 $.ajax({
     type: "GET",
-    url: "http://developer.echonest.com/api/v4/playlist/static?api_key=N2U2OZ8ZDCXNV9DBG&format=json&artist=snoop+dogg&artist_start_year_after=1991&artist_start_year_before=2000&sort=song_hotttnesss-desc&results=80",
+    url: "https://developer.echonest.com/api/v4/playlist/static?api_key=N2U2OZ8ZDCXNV9DBG&format=json&artist=snoop+dogg&artist_start_year_after=1991&artist_start_year_before=2000&sort=song_hotttnesss-desc&results=80",
     cache: false,
     success: function (jsonObject) {
         console.log(jsonObject);
@@ -14,6 +15,7 @@ $.ajax({
         alert("ERROR " + errorThrown + " at" + XMLHttpRequest);
     }
 });
+console.log("ECHO-End");
 
 //echonest artist + hotttnes
 $("#button-start-search").on("click", function () {
