@@ -1,10 +1,3 @@
-jQuery.getJSON('https://www.googleapis.com/youtube/v3/videos?id=7lCDEYXw3mM&key=AIzaSyCoJUXxTrH6PJtpKxCIu5D08O7Xani0uwM&part=snippet,statistics', function (data) {
-    console.log(data);
-    for (var i = 0; i < data.data.items.length; i++) {
-        console.log(data.data.items[i].title); // title
-        console.log(data.data.items[i].description); // description
-    }
-});
 // The client ID is obtained from the {{ Google Cloud Console }}
 // at {{ https://cloud.google.com/console }}.
 // If you run this code from a server other than http://localhost,
