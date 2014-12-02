@@ -38,8 +38,9 @@ App.MainModel = (function () {
         },
         searchSoundCloudTracks = function (searchedTrack) {
             console.log(searchedTrack);
-            var searchedTrack = "haftbefehl lass die affen";
-            var searchURL = "https://api.soundcloud.com/tracks?filter=public&streamable=true&q=" + searchedTrack + "&client_id=" + client_id + "&format=json&limit=" + limit;
+            //Optimierung: der track mit den meisten plays oder favorite counts der am besten gleich query
+            var searchedTrack = "robin schulz sun goes down";
+            var searchURL = "https://api.soundcloud.com/tracks?filter=public&streamable=true&q=" + searchedTrack + "&client_id=" + client_id + "&format=json&limit=" + limit + "&duration[from]=250000&duration[to]=800000";
             var bestResult = null;
             var tracks = [];
             $.ajax({
@@ -61,13 +62,18 @@ App.MainModel = (function () {
                     for (var i = 0; i < tracks.length; i++) {
                         if (tracks[i].streamable == true) {
                             console.log(i);
+                            console.log(tracks[i].stream_url);
                             bestResult = tracks[i];
                             break;
                         }
                     }
                     console.log(bestResult.title);
-                    console.log(tracks[i].stream_url);
+
                     $('#player').attr('src', bestResult.stream_url + '?client_id=' + client_id);
+                    var audioPlayer = document.getElementById("player");
+                    audioPlayer.addEventListener("ended", function () {
+                        searchSoundCloudTracks("Hel");
+                    });
                 },
                 type: 'GET'
             });
