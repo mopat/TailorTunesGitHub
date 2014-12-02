@@ -33,14 +33,12 @@ App.MainModel = (function () {
                 }
             });
         },
-        playTracks = function () {
 
-        },
-        searchSoundCloudTracks = function (searchedTrack) {
-            console.log(searchedTrack);
+        searchSoundCloudTracks = function (query) {
+            console.log(query);
             //Optimierung: der track mit den meisten plays oder favorite counts der am besten gleich query
-            var searchedTrack = "robin schulz sun goes down";
-            var searchURL = "https://api.soundcloud.com/tracks?filter=public&streamable=true&q=" + searchedTrack + "&client_id=" + client_id + "&format=json&limit=" + limit + "&duration[from]=250000&duration[to]=800000";
+            var query = "robin schulz sun goes down";
+            var searchURL = "https://api.soundcloud.com/tracks?filter=public&streamable=true&q=" + query + "&client_id=" + client_id + "&format=json&limit=" + limit + "&duration[from]=250000&duration[to]=800000";
             var bestResult = null;
             var tracks = [];
             $.ajax({
@@ -53,12 +51,13 @@ App.MainModel = (function () {
                 },
                 dataType: 'json',
                 success: function (data) {
-
                     tracks = data;
-                    data.sort(function (a, b) {
-                        return b.favoritings_count - a.favoritings_count
-                    })
-                    console.log(tracks);
+                    tracks = deleteNotMatchingResults(tracks, query);
+                    tracks.sort(sortByPlaybackCount);
+                    //console.log(tracks);
+                    //for (var i = 0; i < tracks.length; i++) {
+                    // console.log(tracks[i].playback_count);
+                    //}
                     for (var i = 0; i < tracks.length; i++) {
                         if (tracks[i].streamable == true) {
                             console.log(i);
@@ -77,6 +76,49 @@ App.MainModel = (function () {
                 },
                 type: 'GET'
             });
+        },
+
+        sortByFavoritingsCount = function (a, b) {
+            return b.favoritings_count - a.favoritings_count;
+        },
+
+        sortByPlaybackCount = function (a, b) {
+            return b.playback_count - a.playback_count;
+
+        },
+
+        deleteNotMatchingResults = function (tracks, query) {
+
+            for (var i = 0; i < tracks.length; i++) {
+                var currentTitle = tracks[i].title;
+                currentTitle = normalize(currentTitle);
+                query = normalize(query);
+                //console.log(currentTitle);
+                // console.log(tracks[i].title);
+
+                var index = indexOfBoyerMoore
+                    // the needle
+                (query,
+                    // the haystack
+                    currentTitle
+                );
+                console.log(index);
+                console.log(query + " " + currentTitle);
+                if (currentTitle.toLowerCase().indexOf(query) == -1) {
+                    console.log("delete");
+                    tracks.slice(i, 1);
+                }
+            }
+            console.log(tracks);
+            return tracks;
+        },
+
+        normalize = function (string) {
+            return string.replace("-", " ").replace(/[^\w\s]/gi, ' ').replace(/\s{2,}/g, ' ').toLowerCase().trim();
+        }
+
+    playTrack = function () {
+
         };
 
     that.init = init;
