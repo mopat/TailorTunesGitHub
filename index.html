@@ -38,28 +38,27 @@
     </div>
 </div>
 <div class="row text-center">
-    <div class="large-12 columns">
-        <ul id="advanced-search-box">
-            <li>New Tracks
-                <div class="switch small">
-                    <input id="exampleRadioSwitch1" type="radio" checked name="testGroup">
-                    <label for="exampleRadioSwitch1"></label>
-                </div>
-            </li>
-            <li>New Tracks
-                <div class="switch small">
-                    <input id="exampleRadioSwitch2" type="radio" name="testGroup">
-                    <label for="exampleRadioSwitch2"></label>
-                </div>
-            </li>
-            <li>New Tracks
-                <div class="switch small">
-                    <input id="exampleRadioSwitch3" type="radio" name="testGroup">
-                    <label for="exampleRadioSwitch3"></label>
-                </div>
-            </li>
-        </ul>
-
+    <div class="large-4 medium-4 small-4 columns">
+        Year
+        <div class="range-slider round" data-slider>
+            <span class="range-slider-handle" role="slider" tabindex="0"></span>
+            <span class="range-slider-active-segment"></span>
+            <input type="hidden">
+        </div>
+    </div>
+    <div class="large-4 medium-4 small-4 columns">
+        New Tracks
+        <div class="switch small">
+            <input id="exampleRadioSwitch2" type="radio" name="testGroup">
+            <label for="exampleRadioSwitch2"></label>
+        </div>
+    </div>
+    <div class="large-4 medium-4 small-4 columns">
+        Hottest Tracks
+        <div class="switch small">
+            <input id="exampleRadioSwitch3" type="radio" name="testGroup">
+            <label for="exampleRadioSwitch3"></label>
+        </div>
     </div>
 </div>
 <div class="row">
@@ -85,6 +84,7 @@
 
 <script src="js/vendor/jquery.js"></script>
 <script src="js/foundation.min.js"></script>
+<script src="js/foundation/foundation.slider.js"></script>
 <script src="libs/string_score.js"></script>
 <script src="https://connect.soundcloud.com/sdk.js"></script>
 
