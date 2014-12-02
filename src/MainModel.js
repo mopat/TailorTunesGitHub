@@ -37,7 +37,7 @@ App.MainModel = (function () {
         searchSoundCloudTracks = function (query) {
             console.log(query);
             //Optimierung: der track mit den meisten plays oder favorite counts der am besten gleich query
-            var query = "robin schulz sun goes down";
+            var query = "david guetta dangerous";
             var searchURL = "https://api.soundcloud.com/tracks?filter=public&streamable=true&q=" + query + "&client_id=" + client_id + "&format=json&limit=" + limit + "&duration[from]=250000&duration[to]=800000";
             var bestResult = null;
             var tracks = [];
@@ -51,28 +51,13 @@ App.MainModel = (function () {
                 },
                 dataType: 'json',
                 success: function (data) {
-                    tracks = data;
-                    tracks = deleteNotMatchingResults(tracks, query);
-                    tracks.sort(sortByPlaybackCount);
-                    //console.log(tracks);
-                    //for (var i = 0; i < tracks.length; i++) {
-                    // console.log(tracks[i].playback_count);
-                    //}
-                    for (var i = 0; i < tracks.length; i++) {
-                        if (tracks[i].streamable == true) {
-                            console.log(i);
-                            console.log(tracks[i].stream_url);
-                            bestResult = tracks[i];
-                            break;
-                        }
-                    }
-                    console.log(bestResult.title);
+                    tracks = deleteNotMatchingResults(data, query);
+                    tracks.sort(sortByFavoritingsCount);
 
-                    $('#player').attr('src', bestResult.stream_url + '?client_id=' + client_id);
-                    var audioPlayer = document.getElementById("player");
-                    audioPlayer.addEventListener("ended", function () {
-                        searchSoundCloudTracks("Hel");
-                    });
+                    bestResult = tracks[0];
+                    console.log(bestResult.title);
+                    playTrack(bestResult.stream_url);
+
                 },
                 type: 'GET'
             });
@@ -87,39 +72,72 @@ App.MainModel = (function () {
 
         },
 
-        deleteNotMatchingResults = function (tracks, query) {
+        getBestScoreAndCountTrack = function (tracks) {
+            var bestTrack = null;
+            for (var i = 0; i < tracks.length - 1; i++) {
+                var currentTrack = tracks[i];
+                var nextTrack = tracks[i + 1];
+                if (currentTrack.favoritings_count > nextTrack.favoritings_count) {
+                    bestTrack = currentTrack;
+                }
+                else {
+                    bestTrack = nextTrack;
+                }
+            }
+            console.log(bestTrack.favoritings_count);
+            return bestTrack;
+        },
 
+        deleteNotMatchingResults = function (tracks, query) {
+            var properTracks = [];
             for (var i = 0; i < tracks.length; i++) {
+
                 var currentTitle = tracks[i].title;
                 currentTitle = normalize(currentTitle);
                 query = normalize(query);
                 //console.log(currentTitle);
                 // console.log(tracks[i].title);
 
-                var index = indexOfBoyerMoore
-                    // the needle
-                (query,
-                    // the haystack
-                    currentTitle
-                );
-                console.log(index);
-                console.log(query + " " + currentTitle);
-                if (currentTitle.toLowerCase().indexOf(query) == -1) {
-                    console.log("delete");
-                    tracks.slice(i, 1);
+                var score = currentTitle.score(query);
+                var streamable = tracks[i].streamable;
+                var sharing = tracks[i].sharing;
+                //console.log(score);
+                //console.log(query + " " + currentTitle);
+                if (score > 0.6 && streamable == true && sharing == "public") {
+                    tracks[i].score = score;
+                    properTracks.push(tracks[i]);
                 }
             }
-            console.log(tracks);
-            return tracks;
+            properTracks.sort(sortByScore);
+            iterateArray(properTracks);
+            return properTracks;
+        },
+
+        sortByScore = function (a, b) {
+            return b.score - a.score;
         },
 
         normalize = function (string) {
-            return string.replace("-", " ").replace(/[^\w\s]/gi, ' ').replace(/\s{2,}/g, ' ').toLowerCase().trim();
+            return string.replace("-", " ").replace(/[^\w\s.]/gi, ' ').replace(/\s{2,}/g, ' ').toLowerCase().trim();
+        },
+
+        playTrack = function (streamUrl) {
+            $('#player').attr('src', streamUrl + '?client_id=' + client_id);
+            var audioPlayer = document.getElementById("player");
+            audioPlayer.addEventListener("ended", function () {
+                searchSoundCloudTracks("Hel");
+            });
+        },
+
+        iterateArray = function (array) {
+            for (var i = 0; i < array.length; i++) {
+                console.log(array[i]);
+                console.log(array[i].score);
+                console.log(array[i].favoritings_count);
+                console.log(array[i].permalink_url);
+            }
+
         }
-
-    playTrack = function () {
-
-        };
 
     that.init = init;
 

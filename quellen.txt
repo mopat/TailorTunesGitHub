@@ -27,4 +27,6 @@ http://stackoverflow.com/questions/24076885/soundcloud-api-how-to-play-private-s
 
 Implementierung
 http://www.tillmann-wegst.de/fuzzy/
+http://stackoverflow.com/questions/4374822/javascript-regexp-remove-all-special-characters
 http://stackoverflow.com/questions/3609080/how-to-remove-double-white-space-using-regexp
+https://github.com/joshaven/string_score
