@@ -30,7 +30,8 @@ App.MainModel = (function () {
                     spotifyArtist = normalize(jsonObject.response.songs[0].artist_name);
                     spotifyTitle = normalize(jsonObject.response.songs[0].title);
                     //console.log(jsonObject.response.songs);
-                    searchSoundCloudTracks("rihanna", "the monster");
+                    searchSoundCloudTracks(spotifyArtist, spotifyTitle);
+                    // searchSoundCloudTracks("calvin harris", "blame");
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     alert("ERROR " + errorThrown + " at" + XMLHttpRequest);
@@ -41,7 +42,7 @@ App.MainModel = (function () {
         searchSoundCloudTracks = function (artist, title) {
             var queryOne = artist + " " + title;
             var queryTwo = title + " " + artist;
-            var queryThree = title + " official";
+            var queryThree = title;
             var testString = normalize("Eminem - The Monster Feat. Rihanna (Official Audio)");
             var testScore = testString.score(queryTwo);
             console.log("TESTSCORE " + testScore);

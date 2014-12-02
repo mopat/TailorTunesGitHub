@@ -10,8 +10,78 @@
     <script src="js/vendor/modernizr.js"></script>
 </head>
 <body>
-<audio id="player" src="" controls="controls" autoplay="autoplay">
-</audio>
+<div class="row">
+    <div class="large-6 medium-6 small-6 columns text-center">
+        Hottest Tracks
+    </div>
+    <div class="large-6 medium-6 small-6 columns text-center">
+        New Tracks
+    </div>
+</div>
+<div class="row">
+    <div class="large-10 medium-10 small-8 columns">
+        <input type="text" id="search-field">
+    </div>
+    <div class="large-2 medium-2 small-4 columns">
+        <button id="search-button">Search</button>
+    </div>
+</div>
+<div class="row text-center">
+    <div class="large-4 medium-4 small-4 columns">
+        Genre
+    </div>
+    <div class="large-4 medium-4 small-4 columns">
+        Track
+    </div>
+    <div class="large-4 medium-4 small-4 columns">
+        Artist
+    </div>
+</div>
+<div class="row text-center">
+    <div class="large-12 columns">
+        <ul id="advanced-search-box">
+            <li>New Tracks
+                <div class="switch small">
+                    <input id="exampleRadioSwitch1" type="radio" checked name="testGroup">
+                    <label for="exampleRadioSwitch1"></label>
+                </div>
+            </li>
+            <li>New Tracks
+                <div class="switch small">
+                    <input id="exampleRadioSwitch2" type="radio" name="testGroup">
+                    <label for="exampleRadioSwitch2"></label>
+                </div>
+            </li>
+            <li>New Tracks
+                <div class="switch small">
+                    <input id="exampleRadioSwitch3" type="radio" name="testGroup">
+                    <label for="exampleRadioSwitch3"></label>
+                </div>
+            </li>
+        </ul>
+
+    </div>
+</div>
+<div class="row">
+    <div id="playlist-box">
+        <div class="large-6 medium-6 small-6 columns">
+            Snoop Dogg feat. Pharrel
+        </div>
+        <div class="large-6 medium-6 small-6 columns">
+            Drop it like it's hot
+        </div>
+    </div>
+</div>
+<div class="row text-center">
+    <div class="large-12 medium-12 small-12 columns">
+        <div class="callout panel">
+            <audio id="player" src="" controls="controls" autoplay="autoplay">
+            </audio>
+        </div>
+    </div>
+
+</div>
+
 
 <script src="js/vendor/jquery.js"></script>
 <script src="js/foundation.min.js"></script>

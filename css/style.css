@@ -1,3 +1,9 @@
 #player {
     background-color: #df151d;
 }
+
+#advanced-search-box li {
+    display: block;
+    float: left;
+    width: 33%;
+}
