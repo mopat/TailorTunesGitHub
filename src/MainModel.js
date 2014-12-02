@@ -3,6 +3,7 @@ App.MainModel = (function () {
     var that = {},
         client_id = '23a3031c7cd251c7c217ca127777e48b',
         limit = 200,
+        properTracks = [],
 
         init = function () {
             console.log("MM");
@@ -18,15 +19,17 @@ App.MainModel = (function () {
         },
 
         getSpotifyTracks = function () {
-            var bestSpotifyTrack = null;
+            var spotifyArtist = null;
+            var spotifyTitle = null;
             $.ajax({
                 type: "GET",
                 url: "https://developer.echonest.com/api/v4/playlist/static?api_key=N2U2OZ8ZDCXNV9DBG&format=json&artist=snoop+dogg&artist_start_year_after=1991&artist_start_year_before=2000&sort=song_hotttnesss-desc&results=80",
                 cache: false,
                 success: function (jsonObject) {
-                    bestSpotifyTrack = jsonObject.response.songs[0].artist_name + " " + jsonObject.response.songs[0].title;
+                    spotifyArtist = jsonObject.response.songs[0].artist_name;
+                    spotifyTitle = jsonObject.response.songs[0].title;
                     //console.log(jsonObject.response.songs);
-                    searchSoundCloudTracks(bestSpotifyTrack);
+                    searchSoundCloudTracks("nicky minaj", "anaconda");
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     alert("ERROR " + errorThrown + " at" + XMLHttpRequest);
@@ -34,15 +37,28 @@ App.MainModel = (function () {
             });
         },
 
-        searchSoundCloudTracks = function (query) {
-            console.log(query);
-            //Optimierung: der track mit den meisten plays oder favorite counts der am besten gleich query
-            var query = "david guetta dangerous";
-            var searchURL = "https://api.soundcloud.com/tracks?filter=public&streamable=true&q=" + query + "&client_id=" + client_id + "&format=json&limit=" + limit + "&duration[from]=250000&duration[to]=800000";
+        searchSoundCloudTracks = function (artist, title) {
+            var queryOne = artist + " " + title;
+            var queryTwo = title + " " + artist;
+            var queryThree = title;
+
             var bestResult = null;
             var tracks = [];
             $.ajax({
-                url: searchURL,
+                url: getAjaxUrl(queryOne),
+                data: {
+                    format: 'json'
+                },
+                error: function () {
+                },
+                dataType: 'json',
+                success: function (data) {
+                    deleteNotMatchingResults(data, queryOne);
+                },
+                type: 'GET'
+            });
+            $.ajax({
+                url: getAjaxUrl(queryTwo),
                 data: {
                     format: 'json'
                 },
@@ -51,11 +67,27 @@ App.MainModel = (function () {
                 },
                 dataType: 'json',
                 success: function (data) {
-                    tracks = deleteNotMatchingResults(data, query);
-                    tracks.sort(sortByFavoritingsCount);
+                    deleteNotMatchingResults(data, queryTwo);
+                },
+                type: 'GET'
+            });
+            $.ajax({
+                url: getAjaxUrl(queryThree),
+                data: {
+                    format: 'json'
+                },
+                error: function () {
 
-                    bestResult = tracks[0];
+                },
+                dataType: 'json',
+                success: function (data) {
+                    deleteNotMatchingResults(data, queryThree);
+                    properTracks.sort(sortByPlaybackCount);
+
+                    bestResult = properTracks[0];
                     console.log(bestResult.title);
+                    console.log(bestResult.playback_count);
+                    iterateArray(properTracks);
                     playTrack(bestResult.stream_url);
 
                 },
@@ -69,7 +101,6 @@ App.MainModel = (function () {
 
         sortByPlaybackCount = function (a, b) {
             return b.playback_count - a.playback_count;
-
         },
 
         getBestScoreAndCountTrack = function (tracks) {
@@ -89,7 +120,6 @@ App.MainModel = (function () {
         },
 
         deleteNotMatchingResults = function (tracks, query) {
-            var properTracks = [];
             for (var i = 0; i < tracks.length; i++) {
 
                 var currentTitle = tracks[i].title;
@@ -103,14 +133,15 @@ App.MainModel = (function () {
                 var sharing = tracks[i].sharing;
                 //console.log(score);
                 //console.log(query + " " + currentTitle);
-                if (score > 0.6 && streamable == true && sharing == "public") {
+                if (score > 0.3 && streamable == true && sharing == "public") {
                     tracks[i].score = score;
                     properTracks.push(tracks[i]);
                 }
             }
+            console.log(properTracks.length);
             properTracks.sort(sortByScore);
-            iterateArray(properTracks);
-            return properTracks;
+
+
         },
 
         sortByScore = function (a, b) {
@@ -135,9 +166,14 @@ App.MainModel = (function () {
                 console.log(array[i].score);
                 console.log(array[i].favoritings_count);
                 console.log(array[i].permalink_url);
-            }
 
-        }
+            }
+            console.log(array.length);
+        },
+
+        getAjaxUrl = function (query) {
+            return "https://api.soundcloud.com/tracks?filter=public&streamable=true&q=" + query + "&client_id=" + client_id + "&format=json&limit=" + limit + "&duration[from]=250000&duration[to]=800000";
+        };
 
     that.init = init;
 
