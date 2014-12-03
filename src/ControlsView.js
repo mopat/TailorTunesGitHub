@@ -8,6 +8,7 @@ App.ControlsView = (function () {
         $pauseButton = null,
         $nextButton = null,
         $previousButton = null,
+        $elapsedTime = null,
 
 
         init = function () {
@@ -19,6 +20,7 @@ App.ControlsView = (function () {
             $pauseButton = $("#pause-button");
             $nextButton = $("#next-button");
             $previousButton = $("#previous-button");
+            $elapsedTime = $("#elapsed-time");
 
             initSlider();
             initPlayerControls();
@@ -30,23 +32,33 @@ App.ControlsView = (function () {
             $timeSlider.slider({step: 0.3});
 
             $player.on('timeupdate', function () {
-                $timeSlider.slider({value: (this.currentTime / this.duration) * 100});
+                handleTimeSliderUpdate();
             });
 
             $timeSlider.on("slide", function (event, ui) {
                 $player.off();
                 var val = $timeSlider.slider("value");
                 player.currentTime = val * player.duration / 100;
-
             });
 
             $timeSlider.on("slidestop", function (event, ui) {
                 $player.on('timeupdate', function () {
-                    $timeSlider.slider({value: (this.currentTime / this.duration) * 100});
+                    handleTimeSliderUpdate();
                 });
                 var val = $timeSlider.slider("value");
                 player.currentTime = val * player.duration / 100;
             });
+        },
+
+        handleTimeSliderUpdate = function () {
+            $timeSlider.slider({value: (player.currentTime / player.duration) * 100});
+            var minutes = Math.floor(player.currentTime / 60);
+            var seconds = Math.floor(player.currentTime % 60);
+            if (seconds < 10)
+                seconds = "0" + seconds;
+            var minutesAndSeconds = minutes + ":" + seconds;
+            $elapsedTime.html(minutesAndSeconds);
+            console.log(minutesAndSeconds);
         },
 
         initPlayerControls = function () {
@@ -61,8 +73,7 @@ App.ControlsView = (function () {
 
         handleTrackPicked = function (src) {
             $player.attr('src', src);
-            var audioPlayer = document.getElementById("player");
-            audioPlayer.addEventListener("ended", function () {
+            player.addEventListener("ended", function () {
 
             });
         };
