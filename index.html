@@ -72,13 +72,17 @@
     </div>
 </div>
 <div class="row text-center">
-    <div class="large-12 medium-12 small-12 columns">
-        <div class="callout panel">
+    <div id="audio-player-box">
+        <div class="large-10 medium-10 small-10 columns">
+            <button id="play-button" class="controls">Play</button>
+            <button id="pause-button" class="controls">Pause</button>
+            <button id="next-button" class="controls">Next</button>
+            <button id="previous-button" class="controls">Previous</button>
             <audio id="player" src="" controls="controls" autoplay="autoplay">
             </audio>
+            <progress id="seekbar" value="0" max="1" style="width:400px;"></progress>
         </div>
     </div>
-
 </div>
 
 

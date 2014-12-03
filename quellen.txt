@@ -30,3 +30,4 @@ http://www.tillmann-wegst.de/fuzzy/
 http://stackoverflow.com/questions/4374822/javascript-regexp-remove-all-special-characters
 http://stackoverflow.com/questions/3609080/how-to-remove-double-white-space-using-regexp
 https://github.com/joshaven/string_score
+http://stackoverflow.com/questions/12314345/custom-progress-bar-for-audio-and-progress-html5-elements

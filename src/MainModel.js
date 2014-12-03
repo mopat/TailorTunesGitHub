@@ -10,12 +10,30 @@ App.MainModel = (function () {
             console.log("MM");
             initSoundCloud();
             getSpotifyTracks();
+            initPlayer();
         },
 
         initSoundCloud = function () {
             // initialize client with app credentials
             SC.initialize({
                 client_id: client_id
+            });
+        },
+
+        initPlayer = function () {
+            $('#play-button').on('click', function () {
+                document.getElementById('player').play();
+            });
+
+            $('#pause-button').on('click', function () {
+                document.getElementById('player').pause();
+            });
+
+            $('#player').on('timeupdate', function () {
+                $('#seekbar').attr("value", this.currentTime / this.duration);
+            });
+            $('#seekbar').on("click", function () {
+                $('#player').currentTime = 0;
             });
         },
 

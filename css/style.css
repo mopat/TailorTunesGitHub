@@ -1,9 +1,17 @@
 #player {
     background-color: #df151d;
+    width: 100%;
 }
 
+audio {
+    color: #ffffff;
+}
 #advanced-search-box li {
     display: block;
     float: left;
     width: 33%;
+}
+
+#audio-player-box {
+    background-color: #df151d;
 }
