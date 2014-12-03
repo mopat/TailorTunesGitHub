@@ -3,8 +3,8 @@
     width: 100%;
 }
 
-audio {
-    color: #ffffff;
+#player {
+    display: none;
 }
 #advanced-search-box li {
     display: block;
