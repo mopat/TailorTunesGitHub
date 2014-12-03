@@ -14,17 +14,6 @@ App.MainController = (function () {
             playlistView.init();
             controlsView.init();
             console.log("MC");
-
-            $(mainModel).on("timesliderupdate", handleTimeSliderUpdate);
-            $(controlsView).on("timesliderslide", handleTimeSliderSlide);
-        },
-
-        handleTimeSliderUpdate = function (event, currentTime, duration) {
-            controlsView.handleTimeSliderUpdate(currentTime, duration);
-        },
-
-        handleTimeSliderSlide = function (event, sliderVal) {
-            mainModel.handleTimeSliderSlide(sliderVal);
         };
 
 

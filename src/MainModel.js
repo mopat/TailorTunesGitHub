@@ -5,30 +5,14 @@ App.MainModel = (function () {
         limit = 200,
         properTracks = [],
         stringScoreTolerance = 0.5,
-        player = null,
-        $player = null,
 
         init = function () {
             console.log("MM");
-            player = document.getElementById("player");
-            $player = $("#player");
             initSoundCloud();
-            setPlayerListener();
             getSpotifyTracks();
+            initPlayer();
 
 
-
-        },
-
-        setPlayerListener = function () {
-            $player.on('timeupdate', function (event) {
-                $(that).trigger("timesliderupdate", [player.currentTime, player.duration]);
-            });
-        },
-
-        handleTimeSliderSlide = function (sliderVal) {
-            $player.off();
-            player.currentTime = sliderVal * player.duration / 100;
         },
 
         initSoundCloud = function () {
@@ -38,6 +22,48 @@ App.MainModel = (function () {
             });
         },
 
+        initPlayer = function () {
+            $('#play-button').on('click', function () {
+                document.getElementById('player').play();
+            });
+
+            $('#pause-button').on('click', function () {
+                document.getElementById('player').pause();
+            });
+
+
+            $(function () {
+                $("#slider").slider();
+                $("#slider").slider("option", "max", 100);
+                $("#slider").slider({step: 0.3});
+            });
+            $('.ui-slider-handle').draggable();
+
+            $('#player').on('timeupdate', function () {
+                $("#slider").slider({value: (this.currentTime / this.duration) * 100});
+                // console.log(this.currentTime   / this.duration);
+            });
+
+            $("#slider").on("slide", function (event, ui) {
+                $('#player').off();
+                var val = $("#slider").slider("value");
+                //console.log(val);
+                var player = document.getElementById('player');
+                player.currentTime = val * player.duration / 100;
+
+            });
+            $("#slider").on("slidestop", function (event, ui) {
+                $('#player').on('timeupdate', function () {
+                    $("#slider").slider({value: (this.currentTime / this.duration) * 100});
+                    // console.log(this.currentTime   / this.duration);
+                });
+                var val = $("#slider").slider("value");
+                //console.log(val);
+                var player = document.getElementById('player');
+                player.currentTime = val * player.duration / 100;
+
+            });
+        },
 
         getSpotifyTracks = function () {
             var spotifyArtist = null;
@@ -199,7 +225,7 @@ App.MainModel = (function () {
         getAjaxUrl = function (query) {
             return "https://api.soundcloud.com/tracks?filter=public&streamable=true&q=" + query + "&client_id=" + client_id + "&format=json&limit=" + limit + "&duration[from]=250000&duration[to]=800000";
         };
-    that.handleTimeSliderSlide = handleTimeSliderSlide;
+
     that.init = init;
 
     return that;
