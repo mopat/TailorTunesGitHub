@@ -16,10 +16,42 @@
     background-color: #df151d;
 }
 
+#controls-box input {
+    border: none;
+}
+
+#play-button {
+    background-image: url("../ui-images/button-play.png");
+}
+
+#pause-button {
+    background-image: url("../ui-images/button-pause.png");
+}
+
+#next-button {
+    background-image: url("../ui-images/button-next.png");
+}
+
+#previous-button {
+    background-image: url("../ui-images/button-previous.png");
+}
+
+.controls {
+    width: 50px;
+    height: 50px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    float: left;
+    display: inline;
+}
 #audio-progress {
 
 }
 
+#music-button-box {
+    width: 100%;
+    text-align: center;
+}
 #slider {
     background-color: #df151d;
 }

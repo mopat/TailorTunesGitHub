@@ -58,7 +58,6 @@ App.ControlsView = (function () {
                 seconds = "0" + seconds;
             var minutesAndSeconds = minutes + ":" + seconds;
             $elapsedTime.html(minutesAndSeconds);
-            console.log(minutesAndSeconds);
         },
 
         initPlayerControls = function () {

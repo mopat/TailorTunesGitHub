@@ -72,13 +72,31 @@
         </div>
     </div>
 </div>
-<div class="row text-center">
-    <div id="audio-player-box">
-        <div class="large-10 medium-10 small-10 columns">
-            <button id="play-button" class="controls">Play</button>
-            <button id="pause-button" class="controls">Pause</button>
-            <button id="next-button" class="controls">Next</button>
-            <button id="previous-button" class="controls">Previous</button>
+<div id="controls-box">
+    <div class="row text-center">
+        <div class="large-12 medium-12 small-12 columns">
+            <div id="music-button-box">
+                <div class="large-3 medium-3 small-3 columns large-centered medium-centered small-centered">
+                    <a href="#">
+                        <img id="pause-button" class="controls"/>
+                    </a></div>
+                <div class="large-3 medium-3 small-3 columns large-centered medium-centered small-centered">
+                    <a href="#">
+                        <img id="play-button" class="controls"/>
+                    </a></div>
+                <div class="large-3 medium-3 small-3 columns large-centered medium-centered small-centered">
+                    <a href="#">
+                        <img id="next-button" class="controls"/>
+                    </a></div>
+                <div class="large-3 medium-3 small-3 columns large-centered medium-centered small-centered">
+                    <a href="#">
+                        <img id="previous-button" class="controls"/>
+                    </a></div>
+            </div>
+        </div>
+    </div>
+    <div class="row text-center">
+        <div class="large-12 medium-12 small-12 columns text-center">
             <audio id="player" src="" controls="controls" autoplay="autoplay">
             </audio>
             <div id="time-slider"></div>
@@ -88,7 +106,6 @@
         </div>
     </div>
 </div>
-
 
 <script src="js/vendor/jquery.js"></script>
 <script src="libs/jquery-ui.min.js"></script>
