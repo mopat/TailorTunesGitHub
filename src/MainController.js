@@ -13,7 +13,13 @@ App.MainController = (function () {
             mainModel.init();
             playlistView.init();
             controlsView.init();
+
+            $(mainModel).on("trackPicked", handleTrackPicked);
             console.log("MC");
+        },
+
+        handleTrackPicked = function (event, src) {
+            controlsView.handleTrackPicked(src);
         };
 
 

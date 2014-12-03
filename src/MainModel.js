@@ -10,60 +10,14 @@ App.MainModel = (function () {
             console.log("MM");
             initSoundCloud();
             getSpotifyTracks();
-            initPlayer();
-
-
         },
 
         initSoundCloud = function () {
-            // initialize client with app credentials
             SC.initialize({
                 client_id: client_id
             });
         },
 
-        initPlayer = function () {
-            $('#play-button').on('click', function () {
-                document.getElementById('player').play();
-            });
-
-            $('#pause-button').on('click', function () {
-                document.getElementById('player').pause();
-            });
-
-
-            $(function () {
-                $("#slider").slider();
-                $("#slider").slider("option", "max", 100);
-                $("#slider").slider({step: 0.3});
-            });
-            $('.ui-slider-handle').draggable();
-
-            $('#player').on('timeupdate', function () {
-                $("#slider").slider({value: (this.currentTime / this.duration) * 100});
-                // console.log(this.currentTime   / this.duration);
-            });
-
-            $("#slider").on("slide", function (event, ui) {
-                $('#player').off();
-                var val = $("#slider").slider("value");
-                //console.log(val);
-                var player = document.getElementById('player');
-                player.currentTime = val * player.duration / 100;
-
-            });
-            $("#slider").on("slidestop", function (event, ui) {
-                $('#player').on('timeupdate', function () {
-                    $("#slider").slider({value: (this.currentTime / this.duration) * 100});
-                    // console.log(this.currentTime   / this.duration);
-                });
-                var val = $("#slider").slider("value");
-                //console.log(val);
-                var player = document.getElementById('player');
-                player.currentTime = val * player.duration / 100;
-
-            });
-        },
 
         getSpotifyTracks = function () {
             var spotifyArtist = null;
@@ -191,8 +145,6 @@ App.MainModel = (function () {
             console.log("count");
             console.log(count);
             console.log(properTracks.length);
-
-
         },
 
         sortByScore = function (a, b) {
@@ -204,11 +156,10 @@ App.MainModel = (function () {
         },
 
         playTrack = function (streamUrl) {
-            $('#player').attr('src', streamUrl + '?client_id=' + client_id);
-            var audioPlayer = document.getElementById("player");
-            audioPlayer.addEventListener("ended", function () {
-                searchSoundCloudTracks("Hel");
-            });
+
+            var src = streamUrl + '?client_id=' + client_id;
+            $(that).trigger("trackPicked", [src]);
+
         },
 
         iterateArray = function (array) {
