@@ -7,6 +7,7 @@
 
     <link rel="stylesheet" href="css/foundation.css"/>
     <link rel="stylesheet" href="css/style.css"/>
+    <link rel="stylesheet" href="css/jquery-ui.css">
     <script src="js/vendor/modernizr.js"></script>
 </head>
 <body>
@@ -80,16 +81,19 @@
             <button id="previous-button" class="controls">Previous</button>
             <audio id="player" src="" controls="controls" autoplay="autoplay">
             </audio>
-            <progress id="seekbar" value="0" max="1" style="width:400px;"></progress>
+            <div id="slider"></div>
         </div>
     </div>
 </div>
 
 
 <script src="js/vendor/jquery.js"></script>
+<script src="libs/jquery-ui.min.js"></script>
+<script src="libs/jquery.ui.touch-punch.min.js"></script>
 <script src="js/foundation.min.js"></script>
 <script src="js/foundation/foundation.slider.js"></script>
 <script src="libs/string_score.js"></script>
+
 <script src="https://connect.soundcloud.com/sdk.js"></script>
 
 <script type="text/javascript" src="src/App.js"></script>

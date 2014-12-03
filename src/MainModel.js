@@ -11,6 +11,8 @@ App.MainModel = (function () {
             initSoundCloud();
             getSpotifyTracks();
             initPlayer();
+
+
         },
 
         initSoundCloud = function () {
@@ -29,11 +31,37 @@ App.MainModel = (function () {
                 document.getElementById('player').pause();
             });
 
-            $('#player').on('timeupdate', function () {
-                $('#seekbar').attr("value", this.currentTime / this.duration);
+
+            $(function () {
+                $("#slider").slider();
+                $("#slider").slider("option", "max", 100);
+                $("#slider").slider({step: 0.3});
             });
-            $('#seekbar').on("click", function () {
-                $('#player').currentTime = 0;
+            $('.ui-slider-handle').draggable();
+
+            $('#player').on('timeupdate', function () {
+                $("#slider").slider({value: (this.currentTime / this.duration) * 100});
+                // console.log(this.currentTime   / this.duration);
+            });
+
+            $("#slider").on("slide", function (event, ui) {
+                $('#player').off();
+                var val = $("#slider").slider("value");
+                //console.log(val);
+                var player = document.getElementById('player');
+                player.currentTime = val * player.duration / 100;
+
+            });
+            $("#slider").on("slidestop", function (event, ui) {
+                $('#player').on('timeupdate', function () {
+                    $("#slider").slider({value: (this.currentTime / this.duration) * 100});
+                    // console.log(this.currentTime   / this.duration);
+                });
+                var val = $("#slider").slider("value");
+                //console.log(val);
+                var player = document.getElementById('player');
+                player.currentTime = val * player.duration / 100;
+
             });
         },
 
