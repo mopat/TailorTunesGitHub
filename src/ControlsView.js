@@ -2,6 +2,7 @@
 App.ControlsView = (function () {
     var that = {},
         $timeSlider = null,
+        $volumeSlider = null,
         $player = null,
         player = null,
         $playButton = null,
@@ -14,6 +15,7 @@ App.ControlsView = (function () {
         init = function () {
             console.log("CV");
             $timeSlider = $("#time-slider");
+            $volumeSlider = $("#volume-slider");
             $player = $('#player');
             player = document.getElementById("player");
             $playButton = $("#play-button");
@@ -22,22 +24,10 @@ App.ControlsView = (function () {
             $previousButton = $("#previous-button");
             $elapsedTime = $("#elapsed-time");
 
-            initSlider();
+            initTimeSlider();
             initPlayerControls();
             initStickyFooter();
-            $("#year-slider").noUiSlider({
-                start: [1950, 2015],
-                connect: true,
-                range: {
-                    'min': 1950,
-                    'max': 2015
-                },
-                format: wNumb({
-                    decimals: 0
-                })
-            });
-            $("#year-slider").Link('lower').to($('#year-slider-value-lower'));
-            $("#year-slider").Link('upper').to($('#year-slider-value-upper'));
+            initVolumeSlider();
         },
 
         initStickyFooter = function () {
@@ -55,11 +45,10 @@ App.ControlsView = (function () {
                     $footer.removeClass('fixed-footer');
                 }
             }
-
             $(window).ready(h).resize(h).scroll(h);
         },
 
-        initSlider = function () {
+        initTimeSlider = function () {
             $timeSlider.slider();
             $timeSlider.slider("option", "max", 100);
             $timeSlider.slider({step: 0.3});
@@ -81,6 +70,19 @@ App.ControlsView = (function () {
                 var val = $timeSlider.slider("value");
                 player.currentTime = val * player.duration / 100;
             });
+        },
+
+        initVolumeSlider = function () {
+            $volumeSlider.slider();
+            $volumeSlider.slider("option", "max", 100);
+            $volumeSlider.slider("value", 100);
+            $volumeSlider.slider({step: 1});
+
+            $volumeSlider.on("slidechange", function (event, ui) {
+                var val = $volumeSlider.slider("value");
+                player.volume = val / 100;
+            });
+            $(".ui-slider-handle").width(12);
         },
 
         handleTimeSliderUpdate = function () {

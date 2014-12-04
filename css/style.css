@@ -4,10 +4,9 @@
     display: none;
 }
 
-#advanced-search-box li {
-    display: block;
-    float: left;
-    width: 33%;
+#advanced-search-box {
+    background-color: #1dc116;
+    height: 150px;
 }
 
 #playlist-box {
@@ -68,6 +67,14 @@
     background-color: #df151d;
     margin-top: 10px;
     width: 100%;
+    margin-left: 20px;
+}
+
+#volume-slider {
+    background-color: #bebdbf;
+    margin-top: 10px;
+    margin-right: 10px;
+    width: 90%;
 }
 
 #elapsed-time {

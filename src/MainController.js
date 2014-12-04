@@ -4,15 +4,18 @@ App.MainController = (function () {
         mainModel = null,
         playlistView = null,
         controlsView = null,
+        advancedSearchView = null,
 
         init = function () {
             mainModel = App.MainModel;
             playlistView = App.PlaylistView;
             controlsView = App.ControlsView;
+            advancedSearchView = App.AdvancedSearchView;
 
             mainModel.init();
             playlistView.init();
             controlsView.init();
+            advancedSearchView.init();
 
             $(mainModel).on("trackPicked", handleTrackPicked);
             console.log("MC");
