@@ -1,26 +1,41 @@
 #player {
     background-color: #df151d;
     width: 100%;
-}
-
-#player {
     display: none;
 }
+
 #advanced-search-box li {
     display: block;
     float: left;
     width: 33%;
 }
 
-#audio-player-box {
-    background-color: #df151d;
+#playlist-box {
+    height: 1000px;
 }
 
+/*Controls-Box: Slider and Buttons*/
 #controls-box {
     background-color: #000000;
+    height: auto;
 }
+
 #controls-box input {
     border: none;
+}
+
+#music-button-box {
+    width: 290px;
+    height: auto;
+    text-align: center;
+    margin: 0 auto;
+    padding-top: 10px;
+}
+
+.fixed-footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
 }
 
 #play-button {
@@ -47,14 +62,6 @@
     float: left;
     border: none;
     margin-right: 5px;
-}
-
-#music-button-box {
-    width: 290px;
-    height: auto;
-    text-align: center;
-    margin: 0 auto;
-    padding-top: 10px;
 }
 
 #time-slider {

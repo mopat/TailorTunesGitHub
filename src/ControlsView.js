@@ -24,6 +24,26 @@ App.ControlsView = (function () {
 
             initSlider();
             initPlayerControls();
+            initStickyFooter();
+        },
+
+        initStickyFooter = function () {
+            $footer = $('#sticky-footer');
+            $win = $(window);
+            var ipos = $footer.offset().top;
+            var wpos, space;
+
+            function h(e) {
+                wpos = $win.scrollTop();
+                space = $win.height() - $footer.height() * 2;
+                if (wpos + space < ipos) {
+                    $footer.addClass('fixed-footer');
+                } else {
+                    $footer.removeClass('fixed-footer');
+                }
+            }
+
+            $(window).ready(h).resize(h).scroll(h);
         },
 
         initSlider = function () {
