@@ -77,6 +77,10 @@
     width: 90%;
 }
 
+#volume-box {
+    color: #ffffff;
+}
+
 #elapsed-time {
     color: #ffffff;
 }

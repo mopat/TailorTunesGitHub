@@ -3,6 +3,7 @@ App.ControlsView = (function () {
     var that = {},
         $timeSlider = null,
         $volumeSlider = null,
+        $volumeIcon = null,
         $player = null,
         player = null,
         $playButton = null,
@@ -10,12 +11,14 @@ App.ControlsView = (function () {
         $nextButton = null,
         $previousButton = null,
         $elapsedTime = null,
+        $volume = null,
 
 
         init = function () {
             console.log("CV");
             $timeSlider = $("#time-slider");
             $volumeSlider = $("#volume-slider");
+            $volumeIcon = $("#volume-icon");
             $player = $('#player');
             player = document.getElementById("player");
             $playButton = $("#play-button");
@@ -23,6 +26,7 @@ App.ControlsView = (function () {
             $nextButton = $("#next-button");
             $previousButton = $("#previous-button");
             $elapsedTime = $("#elapsed-time");
+            $volume = $("#volume-value");
 
             initTimeSlider();
             initPlayerControls();
@@ -45,6 +49,7 @@ App.ControlsView = (function () {
                     $footer.removeClass('fixed-footer');
                 }
             }
+
             $(window).ready(h).resize(h).scroll(h);
         },
 
@@ -78,11 +83,22 @@ App.ControlsView = (function () {
             $volumeSlider.slider("value", 100);
             $volumeSlider.slider({step: 1});
 
+            $volumeSlider.on("slide", function (event, ui) {
+                setVolumeValue();
+            });
             $volumeSlider.on("slidechange", function (event, ui) {
-                var val = $volumeSlider.slider("value");
-                player.volume = val / 100;
+                setVolumeValue();
             });
             $(".ui-slider-handle").width(12);
+            function setVolumeValue() {
+                var val = $volumeSlider.slider("value");
+                player.volume = val / 100;
+                $volume.html(val + "%");
+                if (val == 0)
+                    $volumeIcon.switchClass("fi-volume", "fi-volume-strike");
+                else if ($volumeIcon.hasClass("fi-volume-strike"))
+                    $volumeIcon.switchClass("fi-volume-strike", "fi-volume");
+            }
         },
 
         handleTimeSliderUpdate = function () {
