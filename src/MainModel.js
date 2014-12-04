@@ -1,7 +1,8 @@
 /*** Created by Patrick on 19.11.2014.*/
 App.MainModel = (function () {
     var that = {},
-        client_id = '23a3031c7cd251c7c217ca127777e48b',
+        sc_client_id = '23a3031c7cd251c7c217ca127777e48b',
+        echoNestAPIKey = "N2U2OZ8ZDCXNV9DBG",
         limit = 200,
         properTracks = [],
         stringScoreTolerance = 0.5,
@@ -9,22 +10,22 @@ App.MainModel = (function () {
         init = function () {
             console.log("MM");
             initSoundCloud();
-            getSpotifyTracks();
+            getEchoNestTracks();
         },
 
         initSoundCloud = function () {
             SC.initialize({
-                client_id: client_id
+                client_id: sc_client_id
             });
         },
 
 
-        getSpotifyTracks = function () {
+        getEchoNestTracks = function () {
             var spotifyArtist = null;
             var spotifyTitle = null;
             $.ajax({
                 type: "GET",
-                url: "https://developer.echonest.com/api/v4/playlist/static?api_key=N2U2OZ8ZDCXNV9DBG&format=json&artist=snoop+dogg&artist_start_year_after=1991&artist_start_year_before=2000&sort=song_hotttnesss-desc&results=80",
+                url: "https://developer.echonest.com/api/v4/playlist/static?api_key=" + echoNestAPIKey + "&format=json&artist=snoop+dogg&artist_start_year_after=1991&artist_start_year_before=2000&sort=song_hotttnesss-desc&results=80",
                 cache: false,
                 success: function (jsonObject) {
                     spotifyArtist = normalize(jsonObject.response.songs[0].artist_name);
@@ -157,7 +158,7 @@ App.MainModel = (function () {
 
         playTrack = function (streamUrl) {
 
-            var src = streamUrl + '?client_id=' + client_id;
+            var src = streamUrl + '?client_id=' + sc_client_id;
             $(that).trigger("trackPicked", [src]);
 
         },
@@ -174,7 +175,7 @@ App.MainModel = (function () {
         },
 
         getAjaxUrl = function (query) {
-            return "https://api.soundcloud.com/tracks?filter=public&streamable=true&q=" + query + "&client_id=" + client_id + "&format=json&limit=" + limit + "&duration[from]=250000&duration[to]=800000";
+            return "https://api.soundcloud.com/tracks?filter=public&streamable=true&q=" + query + "&client_id=" + sc_client_id + "&format=json&limit=" + limit + "&duration[from]=250000&duration[to]=800000";
         };
 
     that.init = init;

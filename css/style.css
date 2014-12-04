@@ -11,6 +11,8 @@
 
 #playlist-box {
     height: 1000px;
+    width: 100%;
+    background-color: #1c94c4;
 }
 
 /*Controls-Box: Slider and Buttons*/
@@ -66,8 +68,8 @@
 #time-slider {
     background-color: #df151d;
     margin-top: 10px;
-    width: 100%;
     margin-left: 20px;
+    width: 100%;
 }
 
 #volume-slider {
