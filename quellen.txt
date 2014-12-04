@@ -34,3 +34,4 @@ http://stackoverflow.com/questions/12314345/custom-progress-bar-for-audio-and-pr
 http://stackoverflow.com/questions/6360249/jquery-ui-sliders-on-touch-devices
 https://github.com/furf/jquery-ui-touch-punch#readme
 http://api.jqueryui.com/slider/#event-start
+http://stackoverflow.com/questions/2182716/how-can-we-specify-src-attribute-of-img-tag-in-css

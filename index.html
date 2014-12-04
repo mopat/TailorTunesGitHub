@@ -65,52 +65,43 @@
 <div class="row">
     <div id="playlist-box">
         <div class="large-6 medium-6 small-6 columns">
-            Snoop Dogg feat. Pharrel
+            Snoop Dogg feat. Pharrell
         </div>
         <div class="large-6 medium-6 small-6 columns">
             Drop it like it's hot
         </div>
     </div>
 </div>
-<div id="controls-box">
-    <div class="row text-center">
-        <div class="large-12 medium-12 small-12 columns">
-            <div id="music-button-box">
-                <div class="large-3 medium-3 small-3 columns large-centered medium-centered small-centered">
-                    <a href="#">
-                        <img id="pause-button" class="controls"/>
-                    </a>
-                </div>
-                <div class="large-3 medium-3 small-3 columns large-centered medium-centered small-centered">
-                    <a href="#">
-                        <img id="play-button" class="controls"/>
-                    </a>
-                </div>
-                <div class="large-3 medium-3 small-3 columns large-centered medium-centered small-centered">
-                    <a href="#">
-                        <img id="next-button" class="controls"/>
-                    </a>
-                </div>
-                <div class="large-3 medium-3 small-3 columns large-centered medium-centered small-centered">
-                    <a href="#">
-                        <img id="previous-button" class="controls"/>
-                    </a>
-                </div>
+<div class="row">
+    <div id="controls-box">
+        <div id="music-button-box">
+            <div class="large-12 columns">
+                <a href="#">
+                    <img id="pause-button" class="controls"/>
+                </a>
+                <a href="#">
+                    <img id="play-button" class="controls"/>
+                </a>
+                <a href="#">
+                    <img id="next-button" class="controls"/>
+                </a>
+                <a href="#">
+                    <img id="previous-button" class="controls"/>
+                </a>
             </div>
         </div>
-    </div>
-    <div class="row text-center">
-        <div class="large-12 medium-12 small-12 columns text-center">
-            <audio id="player" src="" controls="controls" autoplay="autoplay">
-            </audio>
-            <div id="time-slider"></div>
-            <div id="time-box">
-                <span id="elapsed-time"></span>
+        <div class="row">
+            <div class="large-12 medium-12 small-12 columns text-center">
+                <audio id="player" src="" controls="controls" autoplay="autoplay">
+                </audio>
+                <div id="time-slider"></div>
+                <div id="time-box">
+                    <span id="elapsed-time">0:00</span>
+                </div>
             </div>
         </div>
     </div>
 </div>
-
 <script src="js/vendor/jquery.js"></script>
 <script src="libs/jquery-ui.min.js"></script>
 <script src="libs/jquery.ui.touch-punch.min.js"></script>
