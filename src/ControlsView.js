@@ -25,6 +25,19 @@ App.ControlsView = (function () {
             initSlider();
             initPlayerControls();
             initStickyFooter();
+            $("#year-slider").noUiSlider({
+                start: [1950, 2015],
+                connect: true,
+                range: {
+                    'min': 1950,
+                    'max': 2015
+                },
+                format: wNumb({
+                    decimals: 0
+                })
+            });
+            $("#year-slider").Link('lower').to($('#year-slider-value-lower'));
+            $("#year-slider").Link('upper').to($('#year-slider-value-upper'));
         },
 
         initStickyFooter = function () {

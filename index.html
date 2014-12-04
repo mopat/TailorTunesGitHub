@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="css/foundation.css"/>
     <link rel="stylesheet" href="css/style.css"/>
     <link rel="stylesheet" href="css/jquery-ui.css">
+    <link rel="stylesheet" href="css/jquery.nouislider.min.css">
     <script src="js/vendor/modernizr.js"></script>
 </head>
 <body>
@@ -41,11 +42,9 @@
 <div class="row text-center">
     <div class="large-4 medium-4 small-4 columns">
         Year
-        <div class="range-slider round" data-slider>
-            <span class="range-slider-handle" role="slider" tabindex="0"></span>
-            <span class="range-slider-active-segment"></span>
-            <input type="hidden">
-        </div>
+        <div id="year-slider"></div>
+        <span id="year-slider-value-lower"></span>
+        <span id="year-slider-value-upper"></span>
     </div>
     <div class="large-4 medium-4 small-4 columns">
         New Tracks
@@ -107,11 +106,11 @@
 <script src="js/vendor/jquery.js"></script>
 <script src="libs/jquery-ui.min.js"></script>
 <script src="libs/jquery.ui.touch-punch.min.js"></script>
+<script src="libs/jquery.nouislider.all.min.js"></script>
 <script src="js/foundation.min.js"></script>
 <script src="js/foundation/foundation.slider.js"></script>
 <script src="libs/string_score.js"></script>
-
-<script src="https://connect.soundcloud.com/sdk.js"></script>
+<script src="libs/soundcloud_sdk.js"></script>
 
 <script type="text/javascript" src="src/App.js"></script>
 <script type="text/javascript" src="src/MainController.js"></script>
