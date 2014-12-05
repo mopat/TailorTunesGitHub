@@ -60,6 +60,7 @@ App.MainModel = (function () {
                     properTracks = [];
                     deleteNotMatchingResults(data, queryOne);
                     addToPlayList();
+                    playPlaylist();
                     console.log(currentIndex, index)
                     if (currentIndex == index)playPlaylist();
                 },
