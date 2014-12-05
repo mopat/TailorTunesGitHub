@@ -20,7 +20,6 @@ App.MainModel = (function () {
         },
 
         searchEchoNestTracks = function (searchVal, lowerVal, upperVal) {
-            console.log(lowerVal);
             var artist = searchVal;
             $.ajax({
                 type: "GET",
@@ -29,6 +28,7 @@ App.MainModel = (function () {
                 success: function (jsonObject) {
                     var tracks = jsonObject.response.songs;
                     playlist = [];
+                    $("#playlist-box").css("background-color", "red");
                     searchSoundCloudTracks(tracks);
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -39,13 +39,13 @@ App.MainModel = (function () {
 
         searchSoundCloudTracks = function (echoNestData) {
             var ajaxCalls = [];
-            for (var i = 0; i < echoNestData.length; i++) {
+            for (var i in echoNestData) {
                 var artist = normalize(echoNestData[i].artist_name);
                 var title = normalize(echoNestData[i].title);
                 var queryOne = artist + " " + title;
                 var queryTwo = title + " " + artist;
                 var queryThree = title;
-
+                console.log("query ", queryOne);
                 var ajaxCaller = function ajaxQuery(query) {
                     return $.ajax({
                         url: getScUrl(query),
@@ -68,7 +68,7 @@ App.MainModel = (function () {
                 ajaxCalls.push(ajaxCaller(queryOne));
             }
             $.when.apply($, ajaxCalls).done(function () {
-                console.log("DONE")
+                $("#playlist-box").css("background-color", "green");
                 playPlaylist();
             })
             /***
@@ -125,7 +125,8 @@ App.MainModel = (function () {
         getMatchingResults = function (tracks, query) {
             var count = 0;
             var matchingTracks = [];
-            for (var i = 0; i < tracks.length; i++) {
+
+            for (var i in tracks) {
                 var currentTitle = tracks[i].title;
                 currentTitle = normalize(currentTitle);
 
@@ -160,24 +161,24 @@ App.MainModel = (function () {
 
 
         playPlaylist = function () {
-            var src = playlist[currentPlaylistItem].stream_url + '?client_id=' + sc_client_id;
-            $(that).trigger("trackPicked", [src]);
-            console.log(playlist);
+            $(that).trigger("trackPicked", [getSrcUrl()]);
+            console.log("playlist ", playlist);
+            for (var i = 0; i < playlist.length; i++) {
+                console.log("title ", playlist[i].title)
+            }
         },
 
         playNextTrack = function () {
             if (currentPlaylistItem < playlist.length - 1) {
                 currentPlaylistItem++;
-                var src = playlist[currentPlaylistItem].stream_url + '?client_id=' + sc_client_id;
-                $(that).trigger("trackPicked", [src]);
+                $(that).trigger("trackPicked", [getSrcUrl()]);
             }
         },
 
         playPreviousTrack = function () {
             if (currentPlaylistItem > 0) {
                 currentPlaylistItem--;
-                var src = playlist[currentPlaylistItem].stream_url + '?client_id=' + sc_client_id;
-                $(that).trigger("trackPicked", [src]);
+                $(that).trigger("trackPicked", [getSrcUrl()]);
             }
         },
 
@@ -187,13 +188,17 @@ App.MainModel = (function () {
                 console.log(array[i].score);
                 console.log(array[i].playback_count);
                 console.log(array[i].permalink_url);
-
             }
             console.log(array.length);
         },
 
         getScUrl = function (query) {
             return "https://api.soundcloud.com/tracks?filter=public&streamable=true&q=" + query + "&client_id=" + sc_client_id + "&format=json&limit=" + scLimit + "&duration[from]=250000&duration[to]=800000";
+        },
+
+        getSrcUrl = function () {
+            var src = playlist[currentPlaylistItem].stream_url + '?client_id=' + sc_client_id;
+            return src;
         };
 
     that.searchEchoNestTracks = searchEchoNestTracks;

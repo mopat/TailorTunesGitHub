@@ -116,11 +116,13 @@ App.ControlsView = (function () {
         },
 
         initPlayerControls = function () {
-            $playButton.on('click', function () {
+            $playButton.on('click', function (e) {
+                e.preventDefault();
                 player.play();
             });
 
-            $pauseButton.on('click', function () {
+            $pauseButton.on('click', function (e) {
+                e.preventDefault();
                 player.pause();
             });
         },
@@ -129,18 +131,21 @@ App.ControlsView = (function () {
             $player.attr('src', src);
         },
 
-        handleNextButtonClick = function () {
+        handleNextButtonClick = function (e) {
+            e.preventDefault();
             $(that).trigger("nextButtonClick");
-            resetTimeSliderVal();
+            resetTimer();
         },
 
-        handlePreviousButtonClick = function () {
+        handlePreviousButtonClick = function (e) {
+            e.preventDefault();
             $(that).trigger("previousButtonClick");
-            resetTimeSliderVal();
+            resetTimer();
         },
 
-        resetTimeSliderVal = function () {
+        resetTimer = function () {
             $timeSlider.slider({value: 0});
+            $elapsedTime.html("0:00");
         };
 
     that.handleTrackPicked = handleTrackPicked;

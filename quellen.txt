@@ -36,3 +36,6 @@ https://github.com/furf/jquery-ui-touch-punch#readme
 http://api.jqueryui.com/slider/#event-start
 http://stackoverflow.com/questions/2182716/how-can-we-specify-src-attribute-of-img-tag-in-css
 http://refreshless.com/nouislider/
+http://lostechies.com/joshuaflanagan/2011/10/20/coordinating-multiple-ajax-requests-with-jquery-when/
+http://api.jquery.com/jQuery.when/
+http://stackoverflow.com/questions/5627284/pass-in-an-array-of-deferreds-to-when
