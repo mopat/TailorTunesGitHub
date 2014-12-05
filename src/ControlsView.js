@@ -85,7 +85,7 @@ App.ControlsView = (function () {
             $volumeSlider.slider();
             $volumeSlider.slider("option", "max", 100);
             $volumeSlider.slider("value", 100);
-            $volumeSlider.slider({step: 1});
+            $volumeSlider.slider({step: 10});
 
             $volumeSlider.on("slide", function (event, ui) {
                 setVolumeValue();
