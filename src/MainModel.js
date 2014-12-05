@@ -3,7 +3,8 @@ App.MainModel = (function () {
     var that = {},
         sc_client_id = '23a3031c7cd251c7c217ca127777e48b',
         echoNestAPIKey = "N2U2OZ8ZDCXNV9DBG",
-        limit = 90,
+        scLimit = 90,
+        echoNestLimit = 20,
         playlist = [],
         stringScoreTolerance = 0.5,
         currentPlaylistItem = 0,
@@ -23,18 +24,12 @@ App.MainModel = (function () {
             var artist = searchVal;
             $.ajax({
                 type: "GET",
-                url: "https://developer.echonest.com/api/v4/playlist/static?api_key=" + echoNestAPIKey + "&format=json&artist=" + artist + "&artist_start_year_after=" + lowerVal + "&artist_start_year_before=" + upperVal + "&sort=song_hotttnesss-desc&results=20",
+                url: "https://developer.echonest.com/api/v4/playlist/static?api_key=" + echoNestAPIKey + "&format=json&artist=" + artist + "&artist_start_year_after=" + lowerVal + "&artist_start_year_before=" + upperVal + "&sort=song_hotttnesss-desc&results=" + echoNestLimit,
                 cache: false,
                 success: function (jsonObject) {
-                    // console.log(artist + " " + title);
                     var tracks = jsonObject.response.songs;
-
-
+                    playlist = [];
                     searchSoundCloudTracks(tracks);
-
-                    // playPlaylist();
-                    //searchSoundCloudTracks(spotifyArtist, spotifyTitle);
-                    // searchSoundCloudTracks("calvin harris", "blame");
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     alert("ERROR " + errorThrown + " at" + XMLHttpRequest);
@@ -43,7 +38,6 @@ App.MainModel = (function () {
         },
 
         searchSoundCloudTracks = function (echoNestData) {
-
             var ajaxCalls = [];
             for (var i = 0; i < echoNestData.length; i++) {
                 var artist = normalize(echoNestData[i].artist_name);
@@ -52,11 +46,7 @@ App.MainModel = (function () {
                 var queryTwo = title + " " + artist;
                 var queryThree = title;
 
-                console.log(ajaxCalls);
-
                 var ajaxCaller = function ajaxQuery(query) {
-
-                    console.log(queryOne);
                     return $.ajax({
                         url: getAjaxUrl(query),
                         data: {
@@ -66,15 +56,15 @@ App.MainModel = (function () {
                         },
                         dataType: 'json',
                         success: function (data) {
-                            console.log("datalength", data.length);
-                            if (data.length != 0)
-                                deleteNotMatchingResults(data, query);
+                            if (data.length != 0) {
+                                var matchingTracks = getMatchingResults(data, query);
+                                addToPlayList(matchingTracks);
+                            }
                         },
                         type: 'GET'
                     });
                 }
                 ajaxCalls.push(ajaxCaller(queryOne));
-
             }
             $.when.apply($, ajaxCalls).done(function () {
                 console.log("DONE")
@@ -113,55 +103,42 @@ App.MainModel = (function () {
             });
              ***/
         },
-        addToPlayList = function (properTracks) {
+
+        addToPlayList = function (matchingTracks) {
             var tracks = [];
 
             //sort tracks by score
-            properTracks.sort(sortByScore);
+            matchingTracks.sort(sortByScore);
             //take tracks with best match
             for (var i = 0; i < 20; i++) {
-                tracks[i] = properTracks[i];
-                //iterateArray(tracks[i]);
+                tracks[i] = matchingTracks[i];
             }
-
             //sort tracks by playback_count
-            properTracks.sort(sortByFavoritingsCount);
-
+            matchingTracks.sort(sortByFavoritingsCount);
             // console.log(tracks[0].title);
             //take the first element
             if (tracks[0] != undefined)
-            playlist.push(tracks[0]);
-
-
+                playlist.push(tracks[0]);
         },
 
-        deleteNotMatchingResults = function (tracks, query) {
-
-            //   console.log(query);
+        getMatchingResults = function (tracks, query) {
             var count = 0;
-            var properTracks = [];
+            var matchingTracks = [];
             for (var i = 0; i < tracks.length; i++) {
                 var currentTitle = tracks[i].title;
                 currentTitle = normalize(currentTitle);
-                // console.log(currentTitle);
-                // console.log(tracks[i].title);
 
                 var score = currentTitle.score(query);
                 var streamable = tracks[i].streamable;
                 var sharing = tracks[i].sharing;
-                // console.log(score, streamable, sharing);
-                //console.log(score);
-                //console.log(query + " " + currentTitle);
+
                 if (score > stringScoreTolerance && streamable == true && sharing == "public" && tracks[i] != "undefined") {
                     count++;
                     tracks[i].score = score;
-                    properTracks.push(tracks[i]);
+                    matchingTracks.push(tracks[i]);
                 }
             }
-            addToPlayList(properTracks);
-            //  console.log("count");
-            //console.log(count);
-            //   console.log(properTracks.length);
+            return matchingTracks;
         },
 
         sortByScore = function (a, b) {
@@ -182,7 +159,6 @@ App.MainModel = (function () {
 
 
         playPlaylist = function () {
-            console.log("playplaylist")
             var src = playlist[currentPlaylistItem].stream_url + '?client_id=' + sc_client_id;
             $(that).trigger("trackPicked", [src]);
             console.log(playlist);
@@ -207,7 +183,7 @@ App.MainModel = (function () {
         },
 
         getAjaxUrl = function (query) {
-            return "https://api.soundcloud.com/tracks?filter=public&streamable=true&q=" + query + "&client_id=" + sc_client_id + "&format=json&limit=" + limit + "&duration[from]=250000&duration[to]=800000";
+            return "https://api.soundcloud.com/tracks?filter=public&streamable=true&q=" + query + "&client_id=" + sc_client_id + "&format=json&limit=" + scLimit + "&duration[from]=250000&duration[to]=800000";
         };
 
     that.searchEchoNestTracks = searchEchoNestTracks;

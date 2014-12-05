@@ -32,6 +32,10 @@ App.ControlsView = (function () {
             initPlayerControls();
             initStickyFooter();
             initVolumeSlider();
+
+            player.addEventListener("ended", function () {
+                $(that).trigger("trackEnded");
+            });
         },
 
         initStickyFooter = function () {
@@ -56,7 +60,7 @@ App.ControlsView = (function () {
         initTimeSlider = function () {
             $timeSlider.slider();
             $timeSlider.slider("option", "max", 100);
-            $timeSlider.slider({step: 0.3});
+            $timeSlider.slider({step: 0.25});
 
             $player.on('timeupdate', function () {
                 handleTimeSliderUpdate();
@@ -123,11 +127,6 @@ App.ControlsView = (function () {
 
         handleTrackPicked = function (src) {
             $player.attr('src', src);
-
-            player.addEventListener("ended", function () {
-                $(that).trigger("trackEnded");
-            });
-            console.log($._data($player, "events"));
         };
 
     that.handleTrackPicked = handleTrackPicked;

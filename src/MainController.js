@@ -29,7 +29,6 @@ App.MainController = (function () {
 
         handleTrackEnded = function () {
             mainModel.playNextTrack();
-
         },
 
         handleSearchButtonClicked = function (event, searchVal, lowerVal, upperVal) {
