@@ -28,6 +28,7 @@ App.MainController = (function () {
         },
 
         handleTrackEnded = function () {
+
             mainModel.getNextTrack();
         },
 

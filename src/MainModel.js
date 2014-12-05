@@ -3,8 +3,7 @@ App.MainModel = (function () {
     var that = {},
         sc_client_id = '23a3031c7cd251c7c217ca127777e48b',
         echoNestAPIKey = "N2U2OZ8ZDCXNV9DBG",
-        limit = 200,
-        properTracks = [],
+        limit = 90,
         playlist = [],
         stringScoreTolerance = 0.5,
         currentPlaylistItem = 0,
@@ -24,13 +23,14 @@ App.MainModel = (function () {
             var artist = searchVal;
             $.ajax({
                 type: "GET",
-                url: "https://developer.echonest.com/api/v4/playlist/static?api_key=" + echoNestAPIKey + "&format=json&artist=" + artist + "&artist_start_year_after=" + lowerVal + "&artist_start_year_before=" + upperVal + "&sort=song_hotttnesss-desc&results=80",
+                url: "https://developer.echonest.com/api/v4/playlist/static?api_key=" + echoNestAPIKey + "&format=json&artist=" + artist + "&artist_start_year_after=" + lowerVal + "&artist_start_year_before=" + upperVal + "&sort=song_hotttnesss-desc&results=20",
                 cache: false,
                 success: function (jsonObject) {
-
-
                     // console.log(artist + " " + title);
-                    searchSoundCloudTracks(jsonObject.response.songs);
+                    var tracks = jsonObject.response.songs;
+
+
+                    searchSoundCloudTracks(tracks);
 
                     // playPlaylist();
                     //searchSoundCloudTracks(spotifyArtist, spotifyTitle);
@@ -43,21 +43,20 @@ App.MainModel = (function () {
         },
 
         searchSoundCloudTracks = function (echoNestData) {
-
-
-            var i = 0;
-            var length = echoNestData.length - 10;
-            ajaxProcess(i);
-
-            function ajaxProcess(i) {
+            var ajaxCalls = [];
+            for (var i = 0; i < echoNestData.length; i++) {
                 var artist = normalize(echoNestData[i].artist_name);
                 var title = normalize(echoNestData[i].title);
                 var queryOne = artist + " " + title;
                 var queryTwo = title + " " + artist;
                 var queryThree = title;
-                if (i < length)
-                    $.ajax({
-                        url: getAjaxUrl(queryOne),
+                ajaxQuery(queryOne);
+
+                function ajaxQuery(query) {
+
+                    console.log(queryOne);
+                    return $.ajax({
+                        url: getAjaxUrl(query),
                         data: {
                             format: 'json'
                         },
@@ -65,15 +64,14 @@ App.MainModel = (function () {
                         },
                         dataType: 'json',
                         success: function (data) {
-                            i++;
-                            deleteNotMatchingResults(data, queryOne);
-                            ajaxProcess(i);
-                            console.log(i);
+                            console.log("datalength", data.length);
+                            if (data.length != 0)
+                                deleteNotMatchingResults(data, query);
                         },
                         type: 'GET'
                     });
+                }
             }
-
 
             /***
              $.ajax({
@@ -108,50 +106,52 @@ App.MainModel = (function () {
             });
              ***/
         },
-        addToPlayList = function () {
+        addToPlayList = function (properTracks) {
             var tracks = [];
+
             //sort tracks by score
-            tracks.sort(sortByScore);
+            properTracks.sort(sortByScore);
             //take tracks with best match
             for (var i = 0; i < 20; i++) {
                 tracks[i] = properTracks[i];
-                // iterateArray(tracks);
+                //iterateArray(tracks[i]);
             }
 
             //sort tracks by playback_count
-            tracks.sort(sortByFavoritingsCount);
+            properTracks.sort(sortByFavoritingsCount);
 
             // console.log(tracks[0].title);
-            console.log("playbackcount " + tracks[0].playback_count);
-            console.log(tracks[0].score);
             //take the first element
+            if (tracks[0] != undefined)
             playlist.push(tracks[0]);
-            console.log(playlist);
+
+
         },
 
         deleteNotMatchingResults = function (tracks, query) {
 
+            //   console.log(query);
             var count = 0;
+            var properTracks = [];
             for (var i = 0; i < tracks.length; i++) {
-                console.log("DELETE")
                 var currentTitle = tracks[i].title;
                 currentTitle = normalize(currentTitle);
-                //console.log(currentTitle);
+                // console.log(currentTitle);
                 // console.log(tracks[i].title);
 
                 var score = currentTitle.score(query);
                 var streamable = tracks[i].streamable;
                 var sharing = tracks[i].sharing;
+                // console.log(score, streamable, sharing);
                 //console.log(score);
                 //console.log(query + " " + currentTitle);
-                if (score > stringScoreTolerance && streamable == true && sharing == "public") {
+                if (score > stringScoreTolerance && streamable == true && sharing == "public" && tracks[i] != "undefined") {
                     count++;
                     tracks[i].score = score;
-                    //console.log(score);
-
                     properTracks.push(tracks[i]);
                 }
             }
+            addToPlayList(properTracks);
             //  console.log("count");
             //console.log(count);
             //   console.log(properTracks.length);
@@ -179,14 +179,16 @@ App.MainModel = (function () {
         },
 
         playPlaylist = function () {
+            console.log("playplaylist")
             var src = playlist[currentPlaylistItem].stream_url + '?client_id=' + sc_client_id;
             $(that).trigger("trackPicked", [src])
+            console.log(playlist);
         },
 
         getNextTrack = function () {
             currentPlaylistItem++;
             var src = playlist[currentPlaylistItem].stream_url + '?client_id=' + sc_client_id;
-            $(that).trigger("trackPicked", [src])
+            console.log(currentPlaylistItem);
         },
 
         iterateArray = function (array) {
