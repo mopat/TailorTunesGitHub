@@ -13,9 +13,7 @@ App.ControlsView = (function () {
         $elapsedTime = null,
         $volume = null,
 
-
         init = function () {
-            console.log("CV");
             $timeSlider = $("#time-slider");
             $volumeSlider = $("#volume-slider");
             $volumeIcon = $("#volume-icon");
@@ -36,6 +34,8 @@ App.ControlsView = (function () {
             player.addEventListener("ended", function () {
                 $(that).trigger("trackEnded");
             });
+            $nextButton.on("click", handleNextButtonClick);
+            $previousButton.on("click", handlePreviousButtonClick);
         },
 
         initStickyFooter = function () {
@@ -127,6 +127,20 @@ App.ControlsView = (function () {
 
         handleTrackPicked = function (src) {
             $player.attr('src', src);
+        },
+
+        handleNextButtonClick = function () {
+            $(that).trigger("nextButtonClick");
+            resetTimeSliderVal();
+        },
+
+        handlePreviousButtonClick = function () {
+            $(that).trigger("previousButtonClick");
+            resetTimeSliderVal();
+        },
+
+        resetTimeSliderVal = function () {
+            $timeSlider.slider({value: 0});
         };
 
     that.handleTrackPicked = handleTrackPicked;

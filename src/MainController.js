@@ -19,6 +19,8 @@ App.MainController = (function () {
 
             $(mainModel).on("trackPicked", handleTrackPicked);
             $(controlsView).on("trackEnded", handleTrackEnded);
+            $(controlsView).on("nextButtonClick", handleNextButtonClick);
+            $(controlsView).on("previousButtonClick", handlePreviousButtonClick);
 
             $(searchView).on("searchButtonClicked", handleSearchButtonClicked);
         },
@@ -33,6 +35,14 @@ App.MainController = (function () {
 
         handleSearchButtonClicked = function (event, searchVal, lowerVal, upperVal) {
             mainModel.searchEchoNestTracks(searchVal, lowerVal, upperVal);
+        },
+
+        handleNextButtonClick = function () {
+            mainModel.playNextTrack();
+        },
+
+        handlePreviousButtonClick = function () {
+            mainModel.playPreviousTrack();
         };
 
 

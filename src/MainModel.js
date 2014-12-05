@@ -48,11 +48,12 @@ App.MainModel = (function () {
 
                 var ajaxCaller = function ajaxQuery(query) {
                     return $.ajax({
-                        url: getAjaxUrl(query),
+                        url: getScUrl(query),
                         data: {
                             format: 'json'
                         },
-                        error: function () {
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            alert("ERROR " + errorThrown + " at" + XMLHttpRequest);
                         },
                         dataType: 'json',
                         success: function (data) {
@@ -72,7 +73,7 @@ App.MainModel = (function () {
             })
             /***
              $.ajax({
-                url: getAjaxUrl(queryTwo),
+                url: getScUrl(queryTwo),
                 data: {
                     format: 'json'
                 },
@@ -86,7 +87,7 @@ App.MainModel = (function () {
                 type: 'GET'
             });
              $.ajax({
-                url: getAjaxUrl(queryThree),
+                url: getScUrl(queryThree),
                 data: {
                     format: 'json'
                 },
@@ -165,10 +166,19 @@ App.MainModel = (function () {
         },
 
         playNextTrack = function () {
-            currentPlaylistItem++;
-            console.log(currentPlaylistItem);
-            var src = playlist[currentPlaylistItem].stream_url + '?client_id=' + sc_client_id;
-            $(that).trigger("trackPicked", [src]);
+            if (currentPlaylistItem < playlist.length - 1) {
+                currentPlaylistItem++;
+                var src = playlist[currentPlaylistItem].stream_url + '?client_id=' + sc_client_id;
+                $(that).trigger("trackPicked", [src]);
+            }
+        },
+
+        playPreviousTrack = function () {
+            if (currentPlaylistItem > 0) {
+                currentPlaylistItem--;
+                var src = playlist[currentPlaylistItem].stream_url + '?client_id=' + sc_client_id;
+                $(that).trigger("trackPicked", [src]);
+            }
         },
 
         iterateArray = function (array) {
@@ -182,12 +192,13 @@ App.MainModel = (function () {
             console.log(array.length);
         },
 
-        getAjaxUrl = function (query) {
+        getScUrl = function (query) {
             return "https://api.soundcloud.com/tracks?filter=public&streamable=true&q=" + query + "&client_id=" + sc_client_id + "&format=json&limit=" + scLimit + "&duration[from]=250000&duration[to]=800000";
         };
 
     that.searchEchoNestTracks = searchEchoNestTracks;
     that.playNextTrack = playNextTrack;
+    that.playPreviousTrack = playPreviousTrack;
     that.init = init;
 
     return that;
