@@ -5,12 +5,12 @@ App.MainModel = (function () {
         echoNestAPIKey = "N2U2OZ8ZDCXNV9DBG",
         limit = 200,
         properTracks = [],
+        playlist = [],
         stringScoreTolerance = 0.5,
+        currentPlaylistItem = 0,
 
         init = function () {
-            console.log("MM");
             initSoundCloud();
-            getEchoNestTracks();
         },
 
         initSoundCloud = function () {
@@ -19,19 +19,22 @@ App.MainModel = (function () {
             });
         },
 
-
-        getEchoNestTracks = function () {
-            var spotifyArtist = null;
-            var spotifyTitle = null;
+        searchEchoNestTracks = function (searchVal, lowerVal, upperVal) {
+            console.log(lowerVal);
+            var artist = searchVal;
             $.ajax({
                 type: "GET",
-                url: "https://developer.echonest.com/api/v4/playlist/static?api_key=" + echoNestAPIKey + "&format=json&artist=snoop+dogg&artist_start_year_after=1991&artist_start_year_before=2000&sort=song_hotttnesss-desc&results=80",
+                url: "https://developer.echonest.com/api/v4/playlist/static?api_key=" + echoNestAPIKey + "&format=json&artist=" + artist + "&artist_start_year_after=" + lowerVal + "&artist_start_year_before=" + upperVal + "&sort=song_hotttnesss-desc&results=80",
                 cache: false,
                 success: function (jsonObject) {
-                    spotifyArtist = normalize(jsonObject.response.songs[0].artist_name);
-                    spotifyTitle = normalize(jsonObject.response.songs[0].title);
-                    //console.log(jsonObject.response.songs);
-                    searchSoundCloudTracks(spotifyArtist, spotifyTitle);
+                    for (var i = 0; i < jsonObject.response.songs.length; i++) {
+                        var artist = normalize(jsonObject.response.songs[i].artist_name);
+                        var title = normalize(jsonObject.response.songs[i].title);
+                        // console.log(artist + title);
+                        searchSoundCloudTracks(artist, title, jsonObject.response.songs.length - 1, i);
+                    }
+                    playPlaylist();
+                    //searchSoundCloudTracks(spotifyArtist, spotifyTitle);
                     // searchSoundCloudTracks("calvin harris", "blame");
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -40,13 +43,10 @@ App.MainModel = (function () {
             });
         },
 
-        searchSoundCloudTracks = function (artist, title) {
+        searchSoundCloudTracks = function (artist, title, index, currentIndex) {
             var queryOne = artist + " " + title;
             var queryTwo = title + " " + artist;
             var queryThree = title;
-            var testString = normalize("Eminem - The Monster Feat. Rihanna (Official Audio)");
-            var testScore = testString.score(queryTwo);
-            console.log("TESTSCORE " + testScore);
 
             $.ajax({
                 url: getAjaxUrl(queryOne),
@@ -57,11 +57,16 @@ App.MainModel = (function () {
                 },
                 dataType: 'json',
                 success: function (data) {
+                    properTracks = [];
                     deleteNotMatchingResults(data, queryOne);
+                    addToPlayList();
+                    console.log(currentIndex, index)
+                    if (currentIndex == index)playPlaylist();
                 },
                 type: 'GET'
             });
-            $.ajax({
+            /***
+             $.ajax({
                 url: getAjaxUrl(queryTwo),
                 data: {
                     format: 'json'
@@ -71,11 +76,11 @@ App.MainModel = (function () {
                 },
                 dataType: 'json',
                 success: function (data) {
-                    deleteNotMatchingResults(data, queryTwo);
+                  //  deleteNotMatchingResults(data, queryTwo);
                 },
                 type: 'GET'
             });
-            $.ajax({
+             $.ajax({
                 url: getAjaxUrl(queryThree),
                 data: {
                     format: 'json'
@@ -85,40 +90,33 @@ App.MainModel = (function () {
                 },
                 dataType: 'json',
                 success: function (data) {
-                    deleteNotMatchingResults(data, queryOne);
-                    playTrack(getBestTrack().stream_url);
+                    //deleteNotMatchingResults(data, queryOne);
+                    //createPlaylist();
+                    //playTrack(getBestTrack().stream_url);
                 },
                 type: 'GET'
             });
+             ***/
         },
-
-        getBestTrack = function () {
+        addToPlayList = function () {
             var tracks = [];
             //sort tracks by score
             tracks.sort(sortByScore);
             //take tracks with best match
             for (var i = 0; i < 20; i++) {
                 tracks[i] = properTracks[i];
-                iterateArray(tracks);
+                // iterateArray(tracks);
             }
 
             //sort tracks by playback_count
             tracks.sort(sortByFavoritingsCount);
 
-            console.log(tracks[0].title);
+            // console.log(tracks[0].title);
             console.log("playbackcount " + tracks[0].playback_count);
             console.log(tracks[0].score);
             //take the first element
-            return tracks[0];
-
-        },
-
-        sortByFavoritingsCount = function (a, b) {
-            return b.favoritings_count - a.favoritings_count;
-        },
-
-        sortByPlaybackCount = function (a, b) {
-            return b.playback_count - a.playback_count;
+            playlist.push(tracks[0]);
+            console.log(playlist);
         },
 
         deleteNotMatchingResults = function (tracks, query) {
@@ -143,24 +141,41 @@ App.MainModel = (function () {
                     properTracks.push(tracks[i]);
                 }
             }
-            console.log("count");
-            console.log(count);
-            console.log(properTracks.length);
+            //  console.log("count");
+            //console.log(count);
+            //   console.log(properTracks.length);
         },
 
         sortByScore = function (a, b) {
             return b.score - a.score;
         },
 
+        sortByFavoritingsCount = function (a, b) {
+            return b.favoritings_count - a.favoritings_count;
+        },
+
+        sortByPlaybackCount = function (a, b) {
+            return b.playback_count - a.playback_count;
+        },
+
         normalize = function (string) {
             return string.replace("-", " ").replace(/[^\w\s.]/gi, ' ').replace(/\s{2,}/g, ' ').toLowerCase().trim();
         },
 
-        playTrack = function (streamUrl) {
-
+        playTrack = function () {
             var src = streamUrl + '?client_id=' + sc_client_id;
             $(that).trigger("trackPicked", [src]);
+        },
 
+        playPlaylist = function () {
+            var src = playlist[currentPlaylistItem].stream_url + '?client_id=' + sc_client_id;
+            $(that).trigger("trackPicked", [src])
+        },
+
+        getNextTrack = function () {
+            currentPlaylistItem++;
+            var src = playlist[currentPlaylistItem].stream_url + '?client_id=' + sc_client_id;
+            $(that).trigger("trackPicked", [src])
         },
 
         iterateArray = function (array) {
@@ -178,6 +193,8 @@ App.MainModel = (function () {
             return "https://api.soundcloud.com/tracks?filter=public&streamable=true&q=" + query + "&client_id=" + sc_client_id + "&format=json&limit=" + limit + "&duration[from]=250000&duration[to]=800000";
         };
 
+    that.searchEchoNestTracks = searchEchoNestTracks;
+    that.getNextTrack = getNextTrack;
     that.init = init;
 
     return that;

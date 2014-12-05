@@ -4,25 +4,35 @@ App.MainController = (function () {
         mainModel = null,
         playlistView = null,
         controlsView = null,
-        advancedSearchView = null,
+        searchView = null,
 
         init = function () {
             mainModel = App.MainModel;
             playlistView = App.PlaylistView;
             controlsView = App.ControlsView;
-            advancedSearchView = App.AdvancedSearchView;
+            searchView = App.SearchView;
 
             mainModel.init();
             playlistView.init();
             controlsView.init();
-            advancedSearchView.init();
+            searchView.init();
 
             $(mainModel).on("trackPicked", handleTrackPicked);
-            console.log("MC");
+            $(controlsView).on("trackEnded", handleTrackEnded);
+
+            $(searchView).on("searchButtonClicked", handleSearchButtonClicked);
         },
 
         handleTrackPicked = function (event, src) {
             controlsView.handleTrackPicked(src);
+        },
+
+        handleTrackEnded = function () {
+            mainModel.getNextTrack();
+        },
+
+        handleSearchButtonClicked = function (event, searchVal, lowerVal, upperVal) {
+            mainModel.searchEchoNestTracks(searchVal, lowerVal, upperVal);
         };
 
 
