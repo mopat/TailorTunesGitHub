@@ -43,6 +43,7 @@ App.MainModel = (function () {
         },
 
         searchSoundCloudTracks = function (echoNestData) {
+
             var ajaxCalls = [];
             for (var i = 0; i < echoNestData.length; i++) {
                 var artist = normalize(echoNestData[i].artist_name);
@@ -50,9 +51,10 @@ App.MainModel = (function () {
                 var queryOne = artist + " " + title;
                 var queryTwo = title + " " + artist;
                 var queryThree = title;
-                ajaxQuery(queryOne);
 
-                function ajaxQuery(query) {
+                console.log(ajaxCalls);
+
+                var ajaxCaller = function ajaxQuery(query) {
 
                     console.log(queryOne);
                     return $.ajax({
@@ -71,8 +73,13 @@ App.MainModel = (function () {
                         type: 'GET'
                     });
                 }
-            }
+                ajaxCalls.push(ajaxCaller(queryOne));
 
+            }
+            $.when.apply($, ajaxCalls).done(function () {
+                console.log("DONE")
+                playPlaylist();
+            })
             /***
              $.ajax({
                 url: getAjaxUrl(queryTwo),
@@ -173,22 +180,19 @@ App.MainModel = (function () {
             return string.replace("-", " ").replace(/[^\w\s.]/gi, ' ').replace(/\s{2,}/g, ' ').toLowerCase().trim();
         },
 
-        playTrack = function () {
-            var src = streamUrl + '?client_id=' + sc_client_id;
-            $(that).trigger("trackPicked", [src]);
-        },
 
         playPlaylist = function () {
             console.log("playplaylist")
             var src = playlist[currentPlaylistItem].stream_url + '?client_id=' + sc_client_id;
-            $(that).trigger("trackPicked", [src])
+            $(that).trigger("trackPicked", [src]);
             console.log(playlist);
         },
 
-        getNextTrack = function () {
+        playNextTrack = function () {
             currentPlaylistItem++;
-            var src = playlist[currentPlaylistItem].stream_url + '?client_id=' + sc_client_id;
             console.log(currentPlaylistItem);
+            var src = playlist[currentPlaylistItem].stream_url + '?client_id=' + sc_client_id;
+            $(that).trigger("trackPicked", [src]);
         },
 
         iterateArray = function (array) {
@@ -207,7 +211,7 @@ App.MainModel = (function () {
         };
 
     that.searchEchoNestTracks = searchEchoNestTracks;
-    that.getNextTrack = getNextTrack;
+    that.playNextTrack = playNextTrack;
     that.init = init;
 
     return that;

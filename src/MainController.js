@@ -28,8 +28,8 @@ App.MainController = (function () {
         },
 
         handleTrackEnded = function () {
+            mainModel.playNextTrack();
 
-            mainModel.getNextTrack();
         },
 
         handleSearchButtonClicked = function (event, searchVal, lowerVal, upperVal) {

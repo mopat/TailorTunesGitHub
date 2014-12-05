@@ -123,9 +123,11 @@ App.ControlsView = (function () {
 
         handleTrackPicked = function (src) {
             $player.attr('src', src);
+
             player.addEventListener("ended", function () {
                 $(that).trigger("trackEnded");
             });
+            console.log($._data($player, "events"));
         };
 
     that.handleTrackPicked = handleTrackPicked;
