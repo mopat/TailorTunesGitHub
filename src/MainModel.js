@@ -27,13 +27,12 @@ App.MainModel = (function () {
                 url: "https://developer.echonest.com/api/v4/playlist/static?api_key=" + echoNestAPIKey + "&format=json&artist=" + artist + "&artist_start_year_after=" + lowerVal + "&artist_start_year_before=" + upperVal + "&sort=song_hotttnesss-desc&results=80",
                 cache: false,
                 success: function (jsonObject) {
-                    for (var i = 0; i < jsonObject.response.songs.length; i++) {
-                        var artist = normalize(jsonObject.response.songs[i].artist_name);
-                        var title = normalize(jsonObject.response.songs[i].title);
-                        // console.log(artist + title);
-                        searchSoundCloudTracks(artist, title, jsonObject.response.songs.length - 1, i);
-                    }
-                    playPlaylist();
+
+
+                    // console.log(artist + " " + title);
+                    searchSoundCloudTracks(jsonObject.response.songs);
+
+                    // playPlaylist();
                     //searchSoundCloudTracks(spotifyArtist, spotifyTitle);
                     // searchSoundCloudTracks("calvin harris", "blame");
                 },
@@ -43,29 +42,39 @@ App.MainModel = (function () {
             });
         },
 
-        searchSoundCloudTracks = function (artist, title, index, currentIndex) {
-            var queryOne = artist + " " + title;
-            var queryTwo = title + " " + artist;
-            var queryThree = title;
+        searchSoundCloudTracks = function (echoNestData) {
 
-            $.ajax({
-                url: getAjaxUrl(queryOne),
-                data: {
-                    format: 'json'
-                },
-                error: function () {
-                },
-                dataType: 'json',
-                success: function (data) {
-                    properTracks = [];
-                    deleteNotMatchingResults(data, queryOne);
-                    addToPlayList();
-                    playPlaylist();
-                    console.log(currentIndex, index)
-                    if (currentIndex == index)playPlaylist();
-                },
-                type: 'GET'
-            });
+
+            var i = 0;
+            var length = echoNestData.length - 10;
+            ajaxProcess(i);
+
+            function ajaxProcess(i) {
+                var artist = normalize(echoNestData[i].artist_name);
+                var title = normalize(echoNestData[i].title);
+                var queryOne = artist + " " + title;
+                var queryTwo = title + " " + artist;
+                var queryThree = title;
+                if (i < length)
+                    $.ajax({
+                        url: getAjaxUrl(queryOne),
+                        data: {
+                            format: 'json'
+                        },
+                        error: function () {
+                        },
+                        dataType: 'json',
+                        success: function (data) {
+                            i++;
+                            deleteNotMatchingResults(data, queryOne);
+                            ajaxProcess(i);
+                            console.log(i);
+                        },
+                        type: 'GET'
+                    });
+            }
+
+
             /***
              $.ajax({
                 url: getAjaxUrl(queryTwo),
@@ -121,16 +130,16 @@ App.MainModel = (function () {
         },
 
         deleteNotMatchingResults = function (tracks, query) {
+
             var count = 0;
             for (var i = 0; i < tracks.length; i++) {
-
+                console.log("DELETE")
                 var currentTitle = tracks[i].title;
                 currentTitle = normalize(currentTitle);
                 //console.log(currentTitle);
                 // console.log(tracks[i].title);
 
                 var score = currentTitle.score(query);
-
                 var streamable = tracks[i].streamable;
                 var sharing = tracks[i].sharing;
                 //console.log(score);
@@ -139,6 +148,7 @@ App.MainModel = (function () {
                     count++;
                     tracks[i].score = score;
                     //console.log(score);
+
                     properTracks.push(tracks[i]);
                 }
             }
