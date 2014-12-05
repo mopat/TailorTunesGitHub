@@ -3,10 +3,10 @@ App.MainModel = (function () {
     var that = {},
         sc_client_id = '23a3031c7cd251c7c217ca127777e48b',
         echoNestAPIKey = "N2U2OZ8ZDCXNV9DBG",
-        scLimit = 90,
-        echoNestLimit = 20,
+        scLimit = 100,
+        echoNestLimit = 10,
         playlist = [],
-        stringScoreTolerance = 0.5,
+        stringScoreTolerance = 0.4,
         currentPlaylistItem = 0,
 
         init = function () {
@@ -59,6 +59,8 @@ App.MainModel = (function () {
                         success: function (data) {
                             if (data.length != 0) {
                                 var matchingTracks = getMatchingResults(data, query);
+                                console.log("QUERY ", query);
+                                iterateArray(data);
                                 addToPlayList(matchingTracks);
                             }
                         },
@@ -70,6 +72,7 @@ App.MainModel = (function () {
             $.when.apply($, ajaxCalls).done(function () {
                 $("#playlist-box").css("background-color", "green");
                 playPlaylist();
+
             })
             /***
              $.ajax({
@@ -109,13 +112,13 @@ App.MainModel = (function () {
             var tracks = [];
 
             //sort tracks by score
-            matchingTracks.sort(sortByScore);
+            matchingTracks.sort(sortByFavoritingsCount);
             //take tracks with best match
             for (var i = 0; i < 20; i++) {
                 tracks[i] = matchingTracks[i];
             }
             //sort tracks by playback_count
-            matchingTracks.sort(sortByFavoritingsCount);
+            tracks.sort(sortByFavoritingsCount);
             // console.log(tracks[0].title);
             //take the first element
             if (tracks[0] != undefined)
@@ -129,12 +132,13 @@ App.MainModel = (function () {
             for (var i in tracks) {
                 var currentTitle = tracks[i].title;
                 currentTitle = normalize(currentTitle);
+                // console.log(currentTitle);
 
                 var score = currentTitle.score(query);
                 var streamable = tracks[i].streamable;
                 var sharing = tracks[i].sharing;
 
-                if (score > stringScoreTolerance && streamable == true && sharing == "public" && tracks[i] != "undefined") {
+                if (score > stringScoreTolerance && streamable == true && sharing == "public") {
                     count++;
                     tracks[i].score = score;
                     matchingTracks.push(tracks[i]);
@@ -186,14 +190,14 @@ App.MainModel = (function () {
             for (var i = 0; i < array.length; i++) {
                 //console.log(array[i]);
                 console.log(array[i].score);
-                console.log(array[i].playback_count);
+                console.log(array[i].favoritings_count);
                 console.log(array[i].permalink_url);
             }
             console.log(array.length);
         },
 
         getScUrl = function (query) {
-            return "https://api.soundcloud.com/tracks?filter=public&streamable=true&q=" + query + "&client_id=" + sc_client_id + "&format=json&limit=" + scLimit + "&duration[from]=250000&duration[to]=800000";
+            return "https://api.soundcloud.com/tracks?&q=" + query + "&client_id=" + sc_client_id + "&limit=" + scLimit;
         },
 
         getSrcUrl = function () {
