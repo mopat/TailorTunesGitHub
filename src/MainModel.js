@@ -3,10 +3,10 @@ App.MainModel = (function () {
     var that = {},
         sc_client_id = '23a3031c7cd251c7c217ca127777e48b',
         echoNestAPIKey = "N2U2OZ8ZDCXNV9DBG",
-        scLimit = 100,
+        scLimit = 200,
         echoNestLimit = 10,
         playlist = [],
-        stringScoreTolerance = 0.4,
+        stringScoreTolerance = 0.5,
         currentPlaylistItem = 0,
 
         init = function () {
@@ -60,7 +60,7 @@ App.MainModel = (function () {
                             if (data.length != 0) {
                                 var matchingTracks = getMatchingResults(data, query);
                                 console.log("QUERY ", query);
-                                iterateArray(data);
+                                // iterateArray(data);
                                 addToPlayList(matchingTracks);
                             }
                         },
@@ -137,8 +137,9 @@ App.MainModel = (function () {
                 var score = currentTitle.score(query);
                 var streamable = tracks[i].streamable;
                 var sharing = tracks[i].sharing;
+                var duration = tracks[i].duration;
 
-                if (score > stringScoreTolerance && streamable == true && sharing == "public") {
+                if (score > stringScoreTolerance && streamable == true && sharing == "public" && duration > 90000) {
                     count++;
                     tracks[i].score = score;
                     matchingTracks.push(tracks[i]);
