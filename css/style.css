@@ -15,6 +15,14 @@
     background-color: #1c94c4;
 }
 
+.playlist-item-container {
+    clear: both;
+}
+
+.playlist-item-image {
+    float: left;
+}
+
 /*Controls-Box: Slider and Buttons*/
 #controls-box {
     background-color: #000000;

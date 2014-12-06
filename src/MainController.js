@@ -22,6 +22,8 @@ App.MainController = (function () {
             $(controlsView).on("nextButtonClick", handleNextButtonClick);
             $(controlsView).on("previousButtonClick", handlePreviousButtonClick);
 
+            $(mainModel).on("playlistCreated", handlePlaylistCreated);
+
             $(searchView).on("searchButtonClicked", handleSearchButtonClicked);
         },
 
@@ -43,6 +45,10 @@ App.MainController = (function () {
 
         handlePreviousButtonClick = function () {
             mainModel.playPreviousTrack();
+        },
+
+        handlePlaylistCreated = function (event, playlist) {
+            playlistView.addPlaylistItem(playlist);
         };
 
 

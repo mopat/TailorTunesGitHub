@@ -62,6 +62,7 @@ App.MainModel = (function () {
                                 console.log("QUERY ", query);
                                 // iterateArray(data);
                                 addToPlayList(matchingTracks);
+
                             }
                         },
                         type: 'GET'
@@ -72,6 +73,7 @@ App.MainModel = (function () {
             $.when.apply($, ajaxCalls).done(function () {
                 $("#playlist-box").css("background-color", "green");
                 playPlaylist();
+                setPlaylistView();
 
             })
             /***
@@ -169,8 +171,12 @@ App.MainModel = (function () {
             $(that).trigger("trackPicked", [getSrcUrl()]);
             console.log("playlist ", playlist);
             for (var i = 0; i < playlist.length; i++) {
-                console.log("title ", playlist[i].title)
+                console.log("title ", playlist[i].title, " ", playlist[i].favoritings_count)
             }
+        },
+
+        setPlaylistView = function () {
+            $(that).trigger("playlistCreated", [playlist]);
         },
 
         playNextTrack = function () {
