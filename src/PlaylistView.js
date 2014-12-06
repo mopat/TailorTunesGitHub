@@ -12,12 +12,6 @@ App.PlaylistView = (function () {
             listItemColors = ["#006AAA", "#117AB9"];
 
             $playlist.on("click", handleListItemClick);
-            $playlist.sortable({
-                scroll: true,
-                delay: 600,
-                scrollSpeed: 40
-            });
-            $playlist.disableSelection();
         },
 
         addPlaylistItem = function (playlist) {
@@ -63,6 +57,12 @@ App.PlaylistView = (function () {
                 $playlist.append(centerContainer);
                 $playlistBox.append($playlist);
             }
+            $playlist.sortable({
+                scroll: true,
+                delay: 600,
+                scrollSpeed: 40
+            });
+            $playlist.disableSelection();
         },
 
         handleListItemClick = function (event) {

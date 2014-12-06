@@ -34,6 +34,7 @@ body {
 #playlist {
     list-style-type: none;
     margin-left: 0;
+    overflow: auto;
 }
 
 .playlist-item {
