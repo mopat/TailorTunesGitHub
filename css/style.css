@@ -15,12 +15,38 @@
     background-color: #1c94c4;
 }
 
-.playlist-item-container {
+#playlist {
+
+}
+
+#playlist {
+    list-style-type: none;
+}
+
+#playlist li a:hover, a:active, a:default {
+
+}
+
+.playlist-item {
     clear: both;
+    color: white;
+    min-height: 50px;
+    font-size: 1rem;
+    border-bottom: solid;
+    border-width: 1px;
+    overflow: hidden;
+}
+
+.playlist-title {
+    float: left;
+    position: relative;
+    margin-left: 60px;
 }
 
 .playlist-item-image {
     float: left;
+    height: 45px;
+    position: absolute;
 }
 
 /*Controls-Box: Slider and Buttons*/

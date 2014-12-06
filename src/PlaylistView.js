@@ -13,24 +13,24 @@ App.PlaylistView = (function () {
 
             for (var i = 0; i < playlist.length; i++) {
                 var artworkUrl = playlist[i].artwork_url;
+                if (artworkUrl == null)
+                    artworkUrl = playlist[i].user.avatar_url;
                 var title = playlist[i].title;
                 var permalinkUrl = playlist[i].permalink_url;
-                var itemContainer = $('<div class="playlist-item-container">');
                 var anchor = $('<a>');
                 //anchor.attr("href", permalinkUrl);
                 anchor.attr("href", "#");
                 //   anchor.attr("target", "_blank");
                 var listItem = $("<li class='playlist-item'>");
-                $(listItem).html(title);
+                // $(listItem).html("<span class='playlist-title>" + title + "</span>");
+
                 var listImg = $("<img class='playlist-item-image'>");
                 listImg.attr("src", artworkUrl);
-
+                listItem.append(listImg);
+                listItem.append($("<span class='playlist-title'>").html(title));
 
                 anchor.append(listItem);
-                listItem.append(listImg);
-                itemContainer.append(anchor);
-
-                $playlist.append(itemContainer);
+                $playlist.append(anchor);
                 $playlistBox.append($playlist);
             }
 
