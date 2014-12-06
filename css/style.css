@@ -1,3 +1,6 @@
+body {
+    background-color: #009AF7;
+}
 #player {
     background-color: #df151d;
     width: 100%;
@@ -9,22 +12,24 @@
     height: 150px;
 }
 
+/*Playlist CSS*/
+#playlist-container {
+    background-color: #4AB6F7;
+}
 #playlist-box {
-    height: 1000px;
+    min-height: 500px;
     width: 100%;
-    background-color: #1c94c4;
+    padding: 0;
 }
 
-#playlist {
-
+.columns {
+    padding: 0;
 }
+
 
 #playlist {
     list-style-type: none;
-}
-
-#playlist li a:hover, a:active, a:default {
-
+    margin-left: 0;
 }
 
 .playlist-item {
@@ -40,18 +45,27 @@
 .playlist-title {
     float: left;
     position: relative;
-    margin-left: 60px;
+    margin-left: 10px;
+    width: 70%;
 }
 
 .playlist-item-image {
     float: left;
-    height: 45px;
+    width: 50px;
     position: absolute;
+    margin-left: 3px;
 }
+
+.playlist-track-duration {
+    float: left;
+    width: 10px position : absolute;
+    margin-left: 55px;
+}
+
 
 /*Controls-Box: Slider and Buttons*/
 #controls-box {
-    background-color: #000000;
+    background-color: #009AF7;
     height: auto;
 }
 

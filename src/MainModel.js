@@ -28,7 +28,7 @@ App.MainModel = (function () {
                 success: function (jsonObject) {
                     var tracks = jsonObject.response.songs;
                     playlist = [];
-                    $("#playlist-box").css("background-color", "red");
+                    //$("#playlist-box").css("background-color", "red");
                     searchSoundCloudTracks(tracks);
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -71,7 +71,7 @@ App.MainModel = (function () {
                 ajaxCalls.push(ajaxCaller(queryOne));
             }
             $.when.apply($, ajaxCalls).done(function () {
-                $("#playlist-box").css("background-color", "green");
+                // $("#playlist-box").css("background-color", "green");
                 playPlaylist();
                 setPlaylistView();
 
