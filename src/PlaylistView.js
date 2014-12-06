@@ -14,7 +14,7 @@ App.PlaylistView = (function () {
             $playlist.on("click", handleListItemClick);
             $playlist.sortable({
                 scroll: true,
-                delay: 500,
+                delay: 600,
                 scrollSpeed: 40
             });
             $playlist.disableSelection();
