@@ -1,6 +1,7 @@
 /*** Created by Patrick on 19.11.2014.*/
 App.ControlsView = (function () {
     var that = {},
+        sc_client_id = '23a3031c7cd251c7c217ca127777e48b',
         $timeSlider = null,
         $volumeSlider = null,
         $volumeIcon = null,
@@ -12,6 +13,7 @@ App.ControlsView = (function () {
         $previousButton = null,
         $elapsedTime = null,
         $volume = null,
+        $titleInfo = null,
 
         init = function () {
             $timeSlider = $("#time-slider");
@@ -25,6 +27,7 @@ App.ControlsView = (function () {
             $previousButton = $("#previous-button");
             $elapsedTime = $("#elapsed-time");
             $volume = $("#volume-value");
+            $titleInfo = $("#title-info");
 
             initTimeSlider();
             initPlayerControls();
@@ -127,8 +130,10 @@ App.ControlsView = (function () {
             });
         },
 
-        handleTrackPicked = function (src) {
-            $player.attr('src', src);
+        handleTrackPicked = function (streamUrl, title) {
+            streamUrl += '?client_id=' + sc_client_id;
+            $player.attr('src', streamUrl);
+            $titleInfo.html(title);
         },
 
         handleNextButtonClick = function (e) {

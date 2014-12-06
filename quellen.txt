@@ -39,3 +39,4 @@ http://refreshless.com/nouislider/
 http://lostechies.com/joshuaflanagan/2011/10/20/coordinating-multiple-ajax-requests-with-jquery-when/
 http://api.jquery.com/jQuery.when/
 http://stackoverflow.com/questions/5627284/pass-in-an-array-of-deferreds-to-when
+http://api.jquery.com/closest/

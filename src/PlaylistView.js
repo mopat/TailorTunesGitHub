@@ -10,10 +10,11 @@ App.PlaylistView = (function () {
             $playlist = $("#playlist");
 
             listItemColors = ["#006AAA", "#117AB9"];
+
+            $playlist.on("click", handleListItemClick);
         },
 
         addPlaylistItem = function (playlist) {
-
             for (var i = 0; i < playlist.length; i++) {
 
                 var artworkUrl = playlist[i].artwork_url;
@@ -22,13 +23,16 @@ App.PlaylistView = (function () {
                 var title = playlist[i].title;
                 var duration = playlist[i].duration;
                 //var permalinkUrl = playlist[i].permalink_url;
+                var streamUrl = playlist[i].stream_url;
+
                 var anchor = $('<a>');
+
                 //anchor.attr("href", permalinkUrl);
                 anchor.attr("href", "#");
                 //   anchor.attr("target", "_blank");
 
                 var listItem = $("<li class='playlist-item'>");
-
+                listItem.attr("data-stream-url", streamUrl);
                 // $(listItem).html("<span class='playlist-title>" + title + "</span>");
 
                 var listImg = $("<img class='playlist-item-image'>");
@@ -36,6 +40,7 @@ App.PlaylistView = (function () {
                 listItem.append(listImg);
                 listItem.append($("<span class='playlist-track-duration'>").html(getMinutesAndSeconds(duration)));
                 listItem.append($("<span class='playlist-title'>").html(title));
+
 
                 if (i % 2 == 0) {
                     listItem.css("background-color", listItemColors[0]);
@@ -52,6 +57,13 @@ App.PlaylistView = (function () {
                 $playlist.append(centerContainer);
                 $playlistBox.append($playlist);
             }
+        },
+
+        handleListItemClick = function (event) {
+            event.preventDefault();
+            var streamUrl = $(event.target).closest(".playlist-item").attr("data-stream-url");
+            var title = $(event.target).closest(".playlist-title").html();
+            $(that).trigger("playlistItemClicked", [streamUrl, title]);
         },
 
         getMinutesAndSeconds = function (duration) {

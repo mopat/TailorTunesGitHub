@@ -168,7 +168,7 @@ App.MainModel = (function () {
 
 
         playPlaylist = function () {
-            $(that).trigger("trackPicked", [getSrcUrl()]);
+            $(that).trigger("trackPicked", [playlist[currentPlaylistItem].stream_url, playlist[currentPlaylistItem].title]);
             console.log("playlist ", playlist);
             for (var i = 0; i < playlist.length; i++) {
                 console.log("title ", playlist[i].title, " ", playlist[i].favoritings_count)
@@ -182,14 +182,14 @@ App.MainModel = (function () {
         playNextTrack = function () {
             if (currentPlaylistItem < playlist.length - 1) {
                 currentPlaylistItem++;
-                $(that).trigger("trackPicked", [getSrcUrl()]);
+                $(that).trigger("trackPicked", [playlist[currentPlaylistItem].stream_url, playlist[currentPlaylistItem].title]);
             }
         },
 
         playPreviousTrack = function () {
             if (currentPlaylistItem > 0) {
                 currentPlaylistItem--;
-                $(that).trigger("trackPicked", [getSrcUrl()]);
+                $(that).trigger("trackPicked", [playlist[currentPlaylistItem].stream_url, playlist[currentPlaylistItem].title]);
             }
         },
 
@@ -205,11 +205,6 @@ App.MainModel = (function () {
 
         getScUrl = function (query) {
             return "https://api.soundcloud.com/tracks?&q=" + query + "&client_id=" + sc_client_id + "&limit=" + scLimit;
-        },
-
-        getSrcUrl = function () {
-            var src = playlist[currentPlaylistItem].stream_url + '?client_id=' + sc_client_id;
-            return src;
         };
 
     that.searchEchoNestTracks = searchEchoNestTracks;
