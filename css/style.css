@@ -58,7 +58,8 @@ body {
 
 .playlist-track-duration {
     float: left;
-    width: 10px position : absolute;
+    width: auto;
+
     margin-left: 55px;
 }
 
