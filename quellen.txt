@@ -43,3 +43,4 @@ http://api.jquery.com/closest/
 http://stackoverflow.com/questions/15044340/jquery-set-checkbox-checked
 http://stackoverflow.com/questions/3739419/jquery-sortable-and-automatic-scrolling
 https://github.com/morr/jquery.appear
+http://stackoverflow.com/questions/1394020/jquery-each-backwards

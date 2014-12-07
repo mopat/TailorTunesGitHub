@@ -5,6 +5,8 @@ App.PlaylistView = (function () {
         $playlist = null,
         listItemColors = [],
         $sortModeSwitch = null,
+        firstAppearedElementOnScreen = null,
+        lastAppearedElementOnScreen = null,
 
         init = function () {
             $playlistBox = $("#playlist-box");
@@ -16,7 +18,8 @@ App.PlaylistView = (function () {
             $playlist.on("click", handleListItemClick);
             $sortModeSwitch.on("click", handleSortSwitchClick);
             $(window).on("scroll", function () {
-                getFirstAppearedElementOnScreen();
+                setFirstAppearedElementOnScreen();
+                setLastAppearedElementOnScreen()
             });
             setPlaylistIds();
         },
@@ -92,18 +95,16 @@ App.PlaylistView = (function () {
                 delay: 600,
                 tolerance: "pointer",
                 revert: true,
-                change: function (event, ui) {
+                sort: function (event, ui) {
 
                     var currentScrollTop = $('html, body').scrollTop(),
                         topHelper = ui.offset.top,
                         delta = topHelper - currentScrollTop;
-
-
-                    var firstElementInListOffset = $("#playlist li").first().offset().top;
-                    var lastElementInListOffset = $("#playlist li").last().offset().top;
-
-                    if (topHelper >= 300)
-                        $('html, body').animate({scrollTop: currentScrollTop + delta}, 500);
+                    console.log("first", firstAppearedElementOnScreen)
+                    console.log("last", lastAppearedElementOnScreen)
+                    console.log("topHelper", topHelper)
+                    if (topHelper <= lastAppearedElementOnScreen || topHelper >= firstAppearedElementOnScreen)
+                        $('html, body').animate({scrollTop: currentScrollTop + delta}, 5);
 
                     setPlaylistIds();
                 },
@@ -114,11 +115,21 @@ App.PlaylistView = (function () {
             });
         },
 
-        getFirstAppearedElementOnScreen = function () {
-            $("#playlist .playlist-item").each(function (index) {
-                if ($("#playlist li").is(":appeared")) {
-                    console.log($("#playlist li").offset().top);
-                    return $(this);
+        setFirstAppearedElementOnScreen = function () {
+            $("#playlist .playlist-item").each(function () {
+                if ($(this).is(":appeared")) {
+                    console.log("first", $(this).offset().top);
+                    firstAppearedElementOnScreen = $(this).offset().top;
+                }
+            });
+        },
+
+        setLastAppearedElementOnScreen = function () {
+            jQuery.fn.reverse = [].reverse;
+            $("#playlist .playlist-item").reverse().each(function () {
+                if ($(this).is(":appeared")) {
+                    // console.log("last" , $(this).offset().top);
+                    lastAppearedElementOnScreen = $(this).offset().top;
                 }
             });
         },
