@@ -4,14 +4,17 @@ App.PlaylistView = (function () {
         $playlistBox = null,
         $playlist = null,
         listItemColors = [],
+        $sortModeSwitch = null,
 
         init = function () {
             $playlistBox = $("#playlist-box");
             $playlist = $("#playlist");
+            $sortModeSwitch = $("#sort-mode-switch");
 
             listItemColors = ["#006AAA", "#117AB9"];
 
             $playlist.on("click", handleListItemClick);
+            $sortModeSwitch.on("click", handleSortSwitchClick);
         },
 
         addPlaylistItem = function (playlist) {
@@ -57,13 +60,43 @@ App.PlaylistView = (function () {
                 $playlist.append(centerContainer);
                 $playlistBox.append($playlist);
             }
-            $playlist.sortable({
-                scroll: true,
-                delay: 600,
-                scrollSpeed: 40
-            });
-            $playlist.disableSelection();
+
+            if ($sortModeSwitch.attr("checked", true)) {
+                $sortModeSwitch.click();
+            }
         },
+
+        handleSortSwitchClick = function(){
+            if($sortModeSwitch.attr("checked")){
+                $sortModeSwitch.removeAttr("checked");
+                removeSortable();
+            }
+            else{
+                $sortModeSwitch.attr("checked", true);
+                addSortable();
+            }
+
+        },
+
+        addSortable = function(){
+            $playlist.sortable({
+                scroll: true, scrollSensitivity: 10, scrollSpeed: 10,
+                delay: 600,
+                sort: function(event, ui) {
+                    var currentScrollTop = $(window).scrollTop(),
+                        topHelper = ui.position.top,
+                        delta = topHelper - currentScrollTop;
+                    setTimeout(function() {
+                        $(window).scrollTop(currentScrollTop + delta);
+                    }, 50);
+                }
+
+            });
+        },
+
+        removeSortable = function(){
+            $playlist.sortable("destroy");
+        };
 
         handleListItemClick = function (event) {
             event.preventDefault();

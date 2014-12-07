@@ -40,3 +40,5 @@ http://lostechies.com/joshuaflanagan/2011/10/20/coordinating-multiple-ajax-reque
 http://api.jquery.com/jQuery.when/
 http://stackoverflow.com/questions/5627284/pass-in-an-array-of-deferreds-to-when
 http://api.jquery.com/closest/
+http://stackoverflow.com/questions/15044340/jquery-set-checkbox-checked
+http://stackoverflow.com/questions/3739419/jquery-sortable-and-automatic-scrolling
