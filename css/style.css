@@ -21,7 +21,7 @@ body {
     background-color: #4AB6F7;
 }
 #playlist-box {
-    height: 800px;
+    height: 100%;
     width: 100%;
     padding: 0;
 }

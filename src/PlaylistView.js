@@ -15,6 +15,10 @@ App.PlaylistView = (function () {
 
             $playlist.on("click", handleListItemClick);
             $sortModeSwitch.on("click", handleSortSwitchClick);
+            $(window).on("scroll", function () {
+                getFirstAppearedElementOnScreen();
+            });
+            setPlaylistIds();
         },
 
         addPlaylistItem = function (playlist) {
@@ -74,7 +78,7 @@ App.PlaylistView = (function () {
             else{
                 $sortModeSwitch.attr("checked", true);
                 addSortable();
-                $playlist.disabeSelection();
+                $playlist.disableSelection();
                 $("#sticky-footer").fadeOut(500);
             }
         },
@@ -93,18 +97,35 @@ App.PlaylistView = (function () {
                     var currentScrollTop = $('html, body').scrollTop(),
                         topHelper = ui.offset.top,
                         delta = topHelper - currentScrollTop;
+
+
                     var firstElementInListOffset = $("#playlist li").first().offset().top;
                     var lastElementInListOffset = $("#playlist li").last().offset().top;
-                    console.log("first", firstElementInListOffset);
-                    console.log("last", lastElementInListOffset);
-                    console.log("Helper", topHelper);
-                    if (topHelper >= lastElementInListOffset)
+
+                    if (topHelper >= 300)
                         $('html, body').animate({scrollTop: currentScrollTop + delta}, 500);
+
+                    setPlaylistIds();
                 },
                 stop: function (event, ui) {
                     $('html, body').stop();
                     $('html, body').clearQueue();
                 }
+            });
+        },
+
+        getFirstAppearedElementOnScreen = function () {
+            $("#playlist .playlist-item").each(function (index) {
+                if ($("#playlist li").is(":appeared")) {
+                    console.log($("#playlist li").offset().top);
+                    return $(this);
+                }
+            });
+        },
+
+        setPlaylistIds = function () {
+            $("#playlist .playlist-item").each(function (index) {
+                $(this).attr("data-id", "list-id-" + index);
             });
         },
 
