@@ -21,6 +21,7 @@ App.PlaylistView = (function () {
                 setFirstAppearedElementOnScreen();
                 setLastAppearedElementOnScreen()
             });
+            $sortModeSwitch.click();
             setPlaylistIds();
         },
 
@@ -72,13 +73,13 @@ App.PlaylistView = (function () {
             }
         },
 
-        handleSortSwitchClick = function(){
-            if($sortModeSwitch.attr("checked")){
+        handleSortSwitchClick = function () {
+            if ($sortModeSwitch.attr("checked")) {
                 $sortModeSwitch.removeAttr("checked");
                 removeSortable();
                 $("#sticky-footer").fadeIn(500);
             }
-            else{
+            else {
                 $sortModeSwitch.attr("checked", true);
                 addSortable();
                 $playlist.disableSelection();
@@ -86,11 +87,11 @@ App.PlaylistView = (function () {
             }
         },
 
-        addSortable = function(){
+        addSortable = function () {
             var autoScroll;
             $playlist.sortable({
                 scroll: true,
-                scrollSensitivity: 10,
+                scrollSensitivity: 80,
                 scrollSpeed: 10,
                 delay: 600,
                 tolerance: "pointer",
@@ -100,11 +101,21 @@ App.PlaylistView = (function () {
                     var currentScrollTop = $('html, body').scrollTop(),
                         topHelper = ui.offset.top,
                         delta = topHelper - currentScrollTop;
-                    console.log("first", firstAppearedElementOnScreen)
-                    console.log("last", lastAppearedElementOnScreen)
+                    //console.log("first", firstAppearedElementOnScreen)
+                    // console.log("last", lastAppearedElementOnScreen)
                     console.log("topHelper", topHelper)
-                    if (topHelper <= lastAppearedElementOnScreen || topHelper >= firstAppearedElementOnScreen)
-                        $('html, body').animate({scrollTop: currentScrollTop + delta}, 5);
+                    setFirstAppearedElementOnScreen();
+                    setLastAppearedElementOnScreen();
+                    //runter
+                    if ((topHelper >= lastAppearedElementOnScreen)) {
+                        $('html, body').animate({scrollTop: lastAppearedElementOnScreen + 10}, 200);
+                        console.log("LASTTRUE")
+                    }
+                    //hoch
+                    if (topHelper <= firstAppearedElementOnScreen + 50) {
+                        $('html, body').animate({scrollTop: firstAppearedElementOnScreen + 50}, 100);
+                        console.log("FIRTSTTRUE")
+                    }
 
                     setPlaylistIds();
                 },
@@ -116,17 +127,17 @@ App.PlaylistView = (function () {
         },
 
         setFirstAppearedElementOnScreen = function () {
-            $("#playlist .playlist-item").each(function () {
+            jQuery.fn.reverse = [].reverse;
+            $("#playlist .playlist-item").reverse().each(function () {
                 if ($(this).is(":appeared")) {
-                    console.log("first", $(this).offset().top);
+                    //  console.log("first", $(this).offset().top);
                     firstAppearedElementOnScreen = $(this).offset().top;
                 }
             });
         },
 
         setLastAppearedElementOnScreen = function () {
-            jQuery.fn.reverse = [].reverse;
-            $("#playlist .playlist-item").reverse().each(function () {
+            $("#playlist .playlist-item").each(function () {
                 if ($(this).is(":appeared")) {
                     // console.log("last" , $(this).offset().top);
                     lastAppearedElementOnScreen = $(this).offset().top;
@@ -140,16 +151,16 @@ App.PlaylistView = (function () {
             });
         },
 
-        removeSortable = function(){
+        removeSortable = function () {
             $playlist.sortable("destroy");
         };
 
-        handleListItemClick = function (event) {
-            event.preventDefault();
-            var streamUrl = $(event.target).closest(".playlist-item").attr("data-stream-url");
-            var title = $(event.target).closest(".playlist-title").html();
-            $(that).trigger("playlistItemClicked", [streamUrl, title]);
-        },
+    handleListItemClick = function (event) {
+        event.preventDefault();
+        var streamUrl = $(event.target).closest(".playlist-item").attr("data-stream-url");
+        var title = $(event.target).closest(".playlist-title").html();
+        $(that).trigger("playlistItemClicked", [streamUrl, title]);
+    },
 
         getMinutesAndSeconds = function (duration) {
             var minutes = Math.floor((duration / 1000) / 60);
