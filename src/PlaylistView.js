@@ -56,7 +56,6 @@ App.PlaylistView = (function () {
 
                 anchor.append(listItem);
                 centerContainer.append(anchor);
-
                 $playlist.append(centerContainer);
                 $playlistBox.append($playlist);
             }
@@ -70,27 +69,42 @@ App.PlaylistView = (function () {
             if($sortModeSwitch.attr("checked")){
                 $sortModeSwitch.removeAttr("checked");
                 removeSortable();
+                $("#sticky-footer").fadeIn(500);
             }
             else{
                 $sortModeSwitch.attr("checked", true);
                 addSortable();
+                $playlist.disabeSelection();
+                $("#sticky-footer").fadeOut(500);
             }
-
         },
 
         addSortable = function(){
+            var autoScroll;
             $playlist.sortable({
-                scroll: true, scrollSensitivity: 10, scrollSpeed: 10,
+                scroll: true,
+                scrollSensitivity: 10,
+                scrollSpeed: 10,
                 delay: 600,
-                sort: function(event, ui) {
-                    var currentScrollTop = $(window).scrollTop(),
-                        topHelper = ui.position.top,
-                        delta = topHelper - currentScrollTop;
-                    setTimeout(function() {
-                        $(window).scrollTop(currentScrollTop + delta);
-                    }, 50);
-                }
+                tolerance: "pointer",
+                revert: true,
+                change: function (event, ui) {
 
+                    var currentScrollTop = $('html, body').scrollTop(),
+                        topHelper = ui.offset.top,
+                        delta = topHelper - currentScrollTop;
+                    var firstElementInListOffset = $("#playlist li").first().offset().top;
+                    var lastElementInListOffset = $("#playlist li").last().offset().top;
+                    console.log("first", firstElementInListOffset);
+                    console.log("last", lastElementInListOffset);
+                    console.log("Helper", topHelper);
+                    if (topHelper >= lastElementInListOffset)
+                        $('html, body').animate({scrollTop: currentScrollTop + delta}, 500);
+                },
+                stop: function (event, ui) {
+                    $('html, body').stop();
+                    $('html, body').clearQueue();
+                }
             });
         },
 
