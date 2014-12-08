@@ -1,5 +1,5 @@
 body {
-    background-color: #009AF7;
+    background-color: #282828;
 }
 #player {
     background-color: #df151d;
@@ -81,7 +81,7 @@ body {
 
 /*Controls-Box: Slider and Buttons*/
 #controls-box {
-    background-color: #009AF7;
+    background-color: #aaa59d;
     height: auto;
 }
 

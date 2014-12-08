@@ -15,7 +15,7 @@ App.PlaylistView = (function () {
             $playlist = $("#playlist");
             $sortModeSwitch = $("#sort-mode-switch");
 
-            listItemColors = ["#006AAA", "#117AB9"];
+            listItemColors = ["#555555", "#4B4B47"];
 
             $playlist.on("click", handleListItemClick);
             $sortModeSwitch.on("click", handleSortSwitchClick);
