@@ -28,7 +28,7 @@ App.PlaylistView = (function () {
             });
             //$sortModeSwitch.click();
             setPlaylistIds();
-            setPlaylistHeight(false);
+            setPlaylistMarginBottomControlsBoxHeight();
         },
 
         addPlaylistItem = function (playlist) {
@@ -84,14 +84,14 @@ App.PlaylistView = (function () {
                 $sortModeSwitch.removeAttr("checked");
                 removeSortable();
                 $("#sticky-footer").fadeIn(0);
-                setPlaylistHeight(false);
+                setPlaylistMarginBottomControlsBoxHeight();
             }
             else {
                 $sortModeSwitch.attr("checked", true);
                 addSortable();
                 $playlist.disableSelection();
                 $("#sticky-footer").fadeOut(500);
-                setPlaylistHeight(true);
+                setPlaylistMarginBottomZero();
             }
         },
 
@@ -102,7 +102,7 @@ App.PlaylistView = (function () {
                 scrollSensitivity: 80,
                 scrollSpeed: 50,
                 helper: "original",
-                delay: 600,
+                delay: 300,
                 tolerance: "pointer",
                 revert: true,
                 sort: function (event, ui) {
@@ -198,17 +198,15 @@ App.PlaylistView = (function () {
             }
         },
 
-        setPlaylistHeight = function (isFullHeight) {
-            if (isFullHeight) {
-                $playlist.height("100%");
-            }
-            else {
-                var controlsBoxHeight = $("#controls-box").height() + 100;
-                var newPlaylistHeight = $playlist.height() - controlsBoxHeight;
-                $playlist.height(newPlaylistHeight);
-                console.log(newPlaylistHeight)
-            }
+        setPlaylistMarginBottomControlsBoxHeight = function () {
+            var controlsBoxHeight = $("#controls-box").height();
+            $playlist.css("margin-bottom", controlsBoxHeight)
+        },
+
+        setPlaylistMarginBottomZero = function () {
+            $playlist.css("margin-bottom", 0)
         };
+
 
     that.addPlaylistItem = addPlaylistItem;
     that.init = init;
