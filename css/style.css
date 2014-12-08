@@ -67,6 +67,18 @@ body {
     margin-left: 55px;
 }
 
+#sticky {
+    background-color: #333;
+    width: 100%;
+    color: #fff;
+}
+
+#sticky.stick {
+    position: fixed;
+    top: 0;
+    z-index: 10000;
+    max-width: 1000px;
+}
 
 /*Controls-Box: Slider and Buttons*/
 #controls-box {

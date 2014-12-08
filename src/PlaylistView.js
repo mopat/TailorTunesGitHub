@@ -19,7 +19,9 @@ App.PlaylistView = (function () {
             $sortModeSwitch.on("click", handleSortSwitchClick);
             $(window).on("scroll", function () {
                 setFirstAppearedElementOnScreen();
-                setLastAppearedElementOnScreen()
+                setLastAppearedElementOnScreen();
+                setBeforeLastAppearedElementOnScreen();
+                stickyRelocate();
             });
             $sortModeSwitch.click();
             setPlaylistIds();
@@ -92,10 +94,10 @@ App.PlaylistView = (function () {
             $playlist.sortable({
                 scroll: true,
                 scrollSensitivity: 80,
-                scrollSpeed: 10,
+                scrollSpeed: 50,
+                helper: "original",
                 delay: 600,
                 tolerance: "pointer",
-                revert: true,
                 sort: function (event, ui) {
 
                     var currentScrollTop = $('html, body').scrollTop(),
@@ -106,14 +108,14 @@ App.PlaylistView = (function () {
                     console.log("topHelper", topHelper)
                     setFirstAppearedElementOnScreen();
                     setLastAppearedElementOnScreen();
-                    //runter
+                    setBeforeLastAppearedElementOnScreen();
                     if ((topHelper >= lastAppearedElementOnScreen)) {
-                        $('html, body').animate({scrollTop: lastAppearedElementOnScreen + 10}, 200);
+                        $('html, body').animate({scrollTop: lastAppearedElementOnScreen + 10}, 100);
                         console.log("LASTTRUE")
                     }
-                    //hoch
-                    if (topHelper <= firstAppearedElementOnScreen + 50) {
-                        $('html, body').animate({scrollTop: firstAppearedElementOnScreen + 50}, 100);
+
+                    if (topHelper <= firstAppearedElementOnScreen) {
+                        $('html, body').animate({scrollTop: beforeLastAppearedOnscreen - 100}, 300);
                         console.log("FIRTSTTRUE")
                     }
 
@@ -131,7 +133,7 @@ App.PlaylistView = (function () {
             $("#playlist .playlist-item").reverse().each(function () {
                 if ($(this).is(":appeared")) {
                     //  console.log("first", $(this).offset().top);
-                    firstAppearedElementOnScreen = $(this).offset().top;
+                    firstAppearedElementOnScreen = $(this).offset().top + $(this).height();
                 }
             });
         },
@@ -141,6 +143,14 @@ App.PlaylistView = (function () {
                 if ($(this).is(":appeared")) {
                     // console.log("last" , $(this).offset().top);
                     lastAppearedElementOnScreen = $(this).offset().top;
+                }
+            });
+        },
+        setBeforeLastAppearedElementOnScreen = function () {
+            $("#playlist .playlist-item").each(function (index) {
+                if ($(this).is(":appeared") && index == 1) {
+                    // console.log("last" , $(this).offset().top);
+                    beforeLastAppearedOnscreen = $(this).offset().top;
                 }
             });
         },
@@ -169,6 +179,16 @@ App.PlaylistView = (function () {
                 seconds = "0" + seconds;
             var minutesAndSeconds = minutes + ":" + seconds;
             return minutesAndSeconds;
+        },
+        stickyRelocate = function () {
+            var window_top = $(window).scrollTop();
+            var div_top = $('#sticky-anchor').offset().top;
+            if (window_top > div_top) {
+                console.log("stickkkyyy")
+                $('#sticky').addClass('stick');
+            } else {
+                $('#sticky').removeClass('stick');
+            }
         };
 
     that.addPlaylistItem = addPlaylistItem;
