@@ -23,7 +23,7 @@ App.PlaylistView = (function () {
                 setBeforeLastAppearedElementOnScreen();
                 stickyRelocate();
             });
-            $sortModeSwitch.click();
+            //$sortModeSwitch.click();
             setPlaylistIds();
         },
 
@@ -98,6 +98,7 @@ App.PlaylistView = (function () {
                 helper: "original",
                 delay: 600,
                 tolerance: "pointer",
+                revert: true,
                 sort: function (event, ui) {
 
                     var currentScrollTop = $('html, body').scrollTop(),
@@ -109,12 +110,12 @@ App.PlaylistView = (function () {
                     setFirstAppearedElementOnScreen();
                     setLastAppearedElementOnScreen();
                     setBeforeLastAppearedElementOnScreen();
-                    if ((topHelper >= lastAppearedElementOnScreen)) {
+                    if ((topHelper > lastAppearedElementOnScreen - 20)) {
                         $('html, body').animate({scrollTop: lastAppearedElementOnScreen + 10}, 100);
                         console.log("LASTTRUE")
                     }
 
-                    if (topHelper <= firstAppearedElementOnScreen) {
+                    if (topHelper < firstAppearedElementOnScreen) {
                         $('html, body').animate({scrollTop: beforeLastAppearedOnscreen - 100}, 300);
                         console.log("FIRTSTTRUE")
                     }
@@ -180,6 +181,7 @@ App.PlaylistView = (function () {
             var minutesAndSeconds = minutes + ":" + seconds;
             return minutesAndSeconds;
         },
+
         stickyRelocate = function () {
             var window_top = $(window).scrollTop();
             var div_top = $('#sticky-anchor').offset().top;

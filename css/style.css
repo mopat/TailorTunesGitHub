@@ -40,8 +40,8 @@ body {
 .playlist-item {
     clear: both;
     color: white;
-    min-height: 30px;
-    font-size: 1rem;
+    min-height: 20px;
+    font-size: 0.8rem;
     border-bottom: solid;
     border-width: 1px;
     overflow: hidden;
@@ -56,7 +56,7 @@ body {
 
 .playlist-item-image {
     float: left;
-    width: 30px;
+    width: 20px;
     position: absolute;
     margin-left: 3px;
 }
@@ -91,7 +91,7 @@ body {
 }
 
 #music-button-box {
-    width: 290px;
+    width: 150px;
     height: auto;
     text-align: center;
     margin: 0 auto;
@@ -104,6 +104,15 @@ body {
     width: 100%;
 }
 
+#controls-box .ui-slider {
+    height: 0.2em !important;
+}
+
+#controls-box .ui-slider .ui-slider-handle {
+    height: 0.65em !important;
+    width: 0.65em !important;
+    border-radius: 25px !important;
+}
 #play-button {
 
 }
@@ -121,8 +130,8 @@ body {
 }
 
 .controls {
-    width: 60px;
-    height: 60px;
+    width: 30px;
+    height: 30px;
     background-repeat: no-repeat;
     background-size: cover;
     float: left;
@@ -147,6 +156,7 @@ body {
 
 #volume-box {
     color: #ffffff;
+    font-size: 0.6rem;
 }
 
 #elapsed-time {
