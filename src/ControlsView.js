@@ -56,9 +56,9 @@ App.ControlsView = (function () {
                     $footer.removeClass('fixed-footer');
                 }
             }
-
             $(window).ready(h).resize(h).scroll(h);
         },
+
 
         initTimeSlider = function () {
             $timeSlider.slider();

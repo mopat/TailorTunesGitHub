@@ -7,6 +7,8 @@ App.PlaylistView = (function () {
         $sortModeSwitch = null,
         firstAppearedElementOnScreen = null,
         lastAppearedElementOnScreen = null,
+        beforeLastAppearedOnscreen = null,
+        controlsBoxHeight = null,
 
         init = function () {
             $playlistBox = $("#playlist-box");
@@ -22,9 +24,11 @@ App.PlaylistView = (function () {
                 setLastAppearedElementOnScreen();
                 setBeforeLastAppearedElementOnScreen();
                 stickyRelocate();
+
             });
             //$sortModeSwitch.click();
             setPlaylistIds();
+            setPlaylistHeight(false);
         },
 
         addPlaylistItem = function (playlist) {
@@ -79,13 +83,15 @@ App.PlaylistView = (function () {
             if ($sortModeSwitch.attr("checked")) {
                 $sortModeSwitch.removeAttr("checked");
                 removeSortable();
-                $("#sticky-footer").fadeIn(500);
+                $("#sticky-footer").fadeIn(0);
+                setPlaylistHeight(false);
             }
             else {
                 $sortModeSwitch.attr("checked", true);
                 addSortable();
                 $playlist.disableSelection();
                 $("#sticky-footer").fadeOut(500);
+                setPlaylistHeight(true);
             }
         },
 
@@ -183,13 +189,24 @@ App.PlaylistView = (function () {
         },
 
         stickyRelocate = function () {
-            var window_top = $(window).scrollTop();
-            var div_top = $('#sticky-anchor').offset().top;
-            if (window_top > div_top) {
-                console.log("stickkkyyy")
+            var windowTop = $(window).scrollTop();
+            var divTop = $('#sticky-anchor').offset().top;
+            if (windowTop > divTop) {
                 $('#sticky').addClass('stick');
             } else {
                 $('#sticky').removeClass('stick');
+            }
+        },
+
+        setPlaylistHeight = function (isFullHeight) {
+            if (isFullHeight) {
+                $playlist.height("100%");
+            }
+            else {
+                var controlsBoxHeight = $("#controls-box").height() + 100;
+                var newPlaylistHeight = $playlist.height() - controlsBoxHeight;
+                $playlist.height(newPlaylistHeight);
+                console.log(newPlaylistHeight)
             }
         };
 

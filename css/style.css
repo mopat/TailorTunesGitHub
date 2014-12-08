@@ -56,15 +56,14 @@ body {
 
 .playlist-item-image {
     float: left;
-    width: 20px;
-    position: absolute;
+    width: 3%;
     margin-left: 3px;
 }
 
 .playlist-track-duration {
     float: left;
     width: auto;
-    margin-left: 55px;
+    margin-left: 15px;
 }
 
 #sticky {
