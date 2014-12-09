@@ -14,6 +14,10 @@ body {
     box-sizing: border-box;
 }
 
+.columns {
+    padding: 0;
+}
+
 #player {
     background-color: #df151d;
     width: 100%;
@@ -39,11 +43,6 @@ body {
     width: 100%;
     padding: 0;
 }
-
-.columns {
-    padding: 0;
-}
-
 
 #playlist {
     list-style-type: none;
@@ -90,7 +89,7 @@ body {
     position: fixed;
     top: 0;
     z-index: 10000;
-    max-width: 1000px;
+    max-width: 62.5rem;
 }
 
 /*Controls-Box: Slider and Buttons*/
@@ -108,9 +107,7 @@ body {
     height: auto;
     text-align: center;
     margin: 0 auto;
-    padding-top: 10px;
 }
-
 
 #controls-box .ui-slider {
     height: 0.2em !important;
@@ -150,16 +147,15 @@ body {
 #time-slider {
     background-color: #df151d;
     margin-top: 10px;
-    margin-left: 20px;
-    width: 95%;
+    margin-left: 30px;
+    width: 90%;
 }
 
 #volume-slider {
     background-color: #bebdbf;
     margin-top: 10px;
-    margin-right: 10px;
     margin-left: 13px;
-    width: 90%;
+    width: 80%;
 }
 
 #volume-box {
@@ -171,9 +167,14 @@ body {
     color: #ffffff;
 }
 
+#title-info-box {
+    height: 1.3rem;
+    margin-bottom: 15px;
+}
 #title-info {
     color: white;
     font-weight: bold;
+    font-size: 0.8rem;
 }
 
 footer {

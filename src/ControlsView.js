@@ -31,7 +31,6 @@ App.ControlsView = (function () {
 
             initTimeSlider();
             initPlayerControls();
-            initStickyFooter();
             initVolumeSlider();
 
             player.addEventListener("ended", function () {
@@ -39,10 +38,6 @@ App.ControlsView = (function () {
             });
             $nextButton.on("click", handleNextButtonClick);
             $previousButton.on("click", handlePreviousButtonClick);
-        },
-
-        initStickyFooter = function () {
-
         },
 
 
