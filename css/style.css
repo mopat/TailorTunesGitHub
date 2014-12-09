@@ -1,6 +1,19 @@
+html {
+    height: 100%;
+}
 body {
     background-color: #282828;
+    position: relative;
 }
+
+*,
+*:before,
+*:after {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
 #player {
     background-color: #df151d;
     width: 100%;
@@ -34,7 +47,7 @@ body {
 #playlist {
     list-style-type: none;
     margin-left: 0;
-    overflow: auto;
+    overflow-y: scroll;
 }
 
 .playlist-item {
@@ -97,11 +110,6 @@ body {
     padding-top: 10px;
 }
 
-.fixed-footer {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-}
 
 #controls-box .ui-slider {
     height: 0.2em !important;
@@ -165,4 +173,11 @@ body {
 #title-info {
     color: white;
     font-weight: bold;
+}
+
+footer {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
 }
