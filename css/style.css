@@ -32,6 +32,7 @@ body {
 /*Playlist CSS*/
 #playlist-container {
     background-color: #4AB6F7;
+    border: 1px solid gray;
 }
 #playlist-box {
     height: 100%;
@@ -46,8 +47,8 @@ body {
 
 #playlist {
     list-style-type: none;
-    margin-left: 0;
-    overflow-y: scroll;
+    padding: 0;
+    margin: 0;
 }
 
 .playlist-item {

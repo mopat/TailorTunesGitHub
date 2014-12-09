@@ -26,8 +26,8 @@ App.PlaylistView = (function () {
                 stickyRelocate();
 
             });
-            //$sortModeSwitch.click();
             setPlaylistIds();
+            setPlaylistMarginBottomZero();
             setPlaylistMarginBottomControlsBoxHeight();
         },
 
@@ -200,11 +200,11 @@ App.PlaylistView = (function () {
 
         setPlaylistMarginBottomControlsBoxHeight = function () {
             var controlsBoxHeight = $("#controls-box").height();
-            $playlist.css("margin-bottom", controlsBoxHeight)
+            $playlistBox.css("margin-bottom", controlsBoxHeight)
         },
 
         setPlaylistMarginBottomZero = function () {
-            $playlist.css("margin-bottom", 0)
+            $playlistBox.css("margin-bottom", 0)
         };
 
 
