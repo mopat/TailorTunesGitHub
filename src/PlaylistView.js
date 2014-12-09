@@ -138,7 +138,7 @@ App.PlaylistView = (function () {
         setFirstAppearedElementOnScreen = function () {
             jQuery.fn.reverse = [].reverse;
             $("#playlist .playlist-item").reverse().each(function () {
-                if ($(this).is(":appeared")) {
+                if ($(this).visible()) {
                     //  console.log("first", $(this).offset().top);
                     firstAppearedElementOnScreen = $(this).offset().top + $(this).height();
                 }
@@ -147,7 +147,7 @@ App.PlaylistView = (function () {
 
         setLastAppearedElementOnScreen = function () {
             $("#playlist .playlist-item").each(function () {
-                if ($(this).is(":appeared")) {
+                if ($(this).visible()) {
                     // console.log("last" , $(this).offset().top);
                     lastAppearedElementOnScreen = $(this).offset().top;
                 }
@@ -155,7 +155,7 @@ App.PlaylistView = (function () {
         },
         setBeforeLastAppearedElementOnScreen = function () {
             $("#playlist .playlist-item").each(function (index) {
-                if ($(this).is(":appeared") && index == 1) {
+                if ($(this).visible() && index == 1) {
                     // console.log("last" , $(this).offset().top);
                     beforeLastAppearedOnscreen = $(this).offset().top;
                 }
