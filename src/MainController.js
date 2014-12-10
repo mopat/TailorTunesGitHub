@@ -27,6 +27,7 @@ App.MainController = (function () {
             $(playlistView).on("playlistItemClicked", handlePlaylistItemClick);
 
             $(searchView).on("searchButtonClicked", handleSearchButtonClick);
+            ;
         },
 
         handleTrackPick = function (event, src, title) {

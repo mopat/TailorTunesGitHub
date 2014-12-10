@@ -42,7 +42,6 @@ body {
 }
 /*Playlist CSS*/
 #playlist-container {
-    background-color: #4AB6F7;
     border: 1px solid gray;
 }
 #playlist-box {
@@ -180,13 +179,23 @@ body {
 #title-info-box {
     height: 1.3rem;
     margin-bottom: 15px;
+    width: 100%;
+    border: 1px solid #ccc;
+    background: #ccc;
 }
-#title-info {
+
+.title-info {
     color: white;
     font-weight: bold;
     font-size: 0.8rem;
 }
 
+.marquee {
+    margin: 0 auto;
+    max-width: 1000px;
+    overflow: hidden;
+    height: 1.5rem;
+}
 footer {
     position: fixed;
     right: 0;

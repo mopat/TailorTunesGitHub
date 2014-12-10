@@ -46,3 +46,4 @@ https://github.com/morr/jquery.appear
 http://stackoverflow.com/questions/1394020/jquery-each-backwards
 http://cbracco.me/css-sticky-footer-effect/
 https://github.com/aamirafridi/jQuery.Marquee
+http://aamirafridi.com/jquery/jquery-marquee-plugin#examples
