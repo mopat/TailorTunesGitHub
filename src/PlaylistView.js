@@ -28,6 +28,20 @@ App.PlaylistView = (function () {
             setPlaylistIds();
             setPlaylistMarginBottomZero();
             setPlaylistMarginBottomControlsBoxHeight();
+            // resizePlaylistBox();
+        },
+
+        resizePlaylistBox = function () {
+            $(function () {
+
+                var $header = $('#header');
+                console.log($header.height());
+                var $footer = $('#sticky-footer');
+                var $window = $(window).on('resize', function () {
+                    var height = $(this).height() - $header.height() + $footer.height();
+                    $playlistBox.height(height);
+                }).trigger('resize'); //on page load
+            });
         },
 
         addPlaylistItem = function (playlist) {
@@ -115,7 +129,6 @@ App.PlaylistView = (function () {
                 stop: function (event, ui) {
                     $('html, body').stop();
                     $('html, body').clearQueue();
-
                     setPlaylistIds();
                 }
             });
