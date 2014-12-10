@@ -8,7 +8,6 @@ App.PlaylistView = (function () {
         firstAppearedElementOnScreen = null,
         lastAppearedElementOnScreen = null,
         beforeLastAppearedOnscreen = null,
-        controlsBoxHeight = null,
 
         init = function () {
             $playlistBox = $("#playlist-box");
@@ -58,14 +57,6 @@ App.PlaylistView = (function () {
                 listItem.append($("<span class='playlist-track-duration'>").html(getMinutesAndSeconds(duration)));
                 listItem.append($("<span class='playlist-title'>").html(title));
 
-
-                if (i % 2 == 0) {
-                    listItem.css("background-color", listItemColors[0]);
-                }
-                else {
-                    listItem.css("background-color", listItemColors[1]);
-                }
-
                 var centerContainer = $("<div class='center-container'>");
 
                 anchor.append(listItem);
@@ -73,6 +64,7 @@ App.PlaylistView = (function () {
                 $playlist.append(centerContainer);
                 $playlistBox.append($playlist);
             }
+            setPlaylistIds();
 
             if ($sortModeSwitch.attr("checked", true)) {
                 $sortModeSwitch.click();
@@ -119,12 +111,12 @@ App.PlaylistView = (function () {
                         $('html, body').animate({scrollTop: beforeLastAppearedOnscreen - 100}, 300);
                         console.log("FIRTSTTRUE")
                     }
-
-                    setPlaylistIds();
                 },
                 stop: function (event, ui) {
                     $('html, body').stop();
                     $('html, body').clearQueue();
+
+                    setPlaylistIds();
                 }
             });
         },
@@ -158,6 +150,12 @@ App.PlaylistView = (function () {
 
         setPlaylistIds = function () {
             $("#playlist .playlist-item").each(function (index) {
+                if (index % 2 == 0) {
+                    $(this).css("background-color", listItemColors[0]);
+                }
+                else {
+                    $(this).css("background-color", listItemColors[1]);
+                }
                 $(this).attr("data-id", "list-id-" + index);
             });
         },
