@@ -14,6 +14,7 @@ App.ControlsView = (function () {
         $elapsedTime = null,
         $volume = null,
         $titleInfo = null,
+        $marquee = null,
 
         init = function () {
             $timeSlider = $("#time-slider");
@@ -27,7 +28,8 @@ App.ControlsView = (function () {
             $previousButton = $("#previous-button");
             $elapsedTime = $("#elapsed-time");
             $volume = $("#volume-value");
-            $titleInfo = $("#title-info");
+            $titleInfo = $(".title-info");
+            $marquee = $(".marquee");
 
             initTimeSlider();
             initPlayerControls();
@@ -115,6 +117,17 @@ App.ControlsView = (function () {
             streamUrl += '?client_id=' + sc_client_id;
             $player.attr('src', streamUrl);
             $titleInfo.html(title);
+            $marquee.marquee({
+                //speed in milliseconds of the marquee
+                duration: 5000,
+                //gap in pixels between the tickers
+                gap: 250,
+                //time in milliseconds before the marquee will start animating
+                delayBeforeStart: 0,
+                //'left' or 'right'
+                direction: 'left',
+                duplicated: true
+            });
         },
 
         handleNextButtonClick = function (e) {
