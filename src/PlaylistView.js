@@ -67,6 +67,7 @@ App.PlaylistView = (function () {
 
                 var listImg = $("<img class='playlist-item-image'>");
                 listImg.attr("src", artworkUrl);
+                listItem.append($("<span class='playlist-number'>").html(i + 1 + "."));
                 listItem.append(listImg);
                 listItem.append($("<span class='playlist-track-duration'>").html(getMinutesAndSeconds(duration)));
                 listItem.append($("<span class='playlist-title'>").html(title));
@@ -75,6 +76,7 @@ App.PlaylistView = (function () {
 
                 anchor.append(listItem);
                 centerContainer.append(anchor);
+                $playlist.append(centerContainer);
                 $playlist.append(centerContainer);
                 $playlistBox.append($playlist);
             }
@@ -170,11 +172,13 @@ App.PlaylistView = (function () {
                     $(this).css("background-color", listItemColors[1]);
                 }
                 $(this).attr("data-id", "list-id-" + index);
+                $(this).find(".playlist-number").html(index + 1 + ".");
             });
         },
 
         removeSortable = function () {
             $playlist.sortable("destroy");
+            console.log("REMOVE")
         };
 
     handleListItemClick = function (event) {

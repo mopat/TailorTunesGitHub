@@ -66,6 +66,9 @@ body {
     overflow: hidden;
 }
 
+.playlist-number {
+    float: left;
+}
 .playlist-title {
     float: left;
     position: relative;
@@ -106,6 +109,7 @@ body {
 #controls-box {
     background-color: #aaa59d;
     height: auto;
+    border-radius: 5px;
 }
 
 #controls-box input {
