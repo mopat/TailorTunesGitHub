@@ -27,7 +27,6 @@ App.MainController = (function () {
             $(playlistView).on("playlistItemClicked", handlePlaylistItemClick);
 
             $(searchView).on("searchButtonClicked", handleSearchButtonClick);
-            ;
         },
 
         handleTrackPick = function (event, src, title) {
@@ -39,7 +38,7 @@ App.MainController = (function () {
         },
 
         handleSearchButtonClick = function (event, searchVal, lowerVal, upperVal) {
-            mainModel.searchEchoNestTracks(searchVal, lowerVal, upperVal);
+            mainModel.searchSpotifyTracksByYear(searchVal, lowerVal, upperVal);
         },
 
         handleNextButtonClick = function () {

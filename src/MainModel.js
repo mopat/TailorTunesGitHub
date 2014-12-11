@@ -4,7 +4,7 @@ App.MainModel = (function () {
         sc_client_id = '23a3031c7cd251c7c217ca127777e48b',
         echoNestAPIKey = "N2U2OZ8ZDCXNV9DBG",
         scLimit = 200,
-        echoNestLimit = 10,
+        searchLimit = 20,
         playlist = [],
         stringScoreTolerance = 0.5,
         currentPlaylistItem = 0,
@@ -23,13 +23,12 @@ App.MainModel = (function () {
             var artist = searchVal;
             $.ajax({
                 type: "GET",
-                url: "https://developer.echonest.com/api/v4/playlist/static?api_key=" + echoNestAPIKey + "&format=json&artist=" + artist + "&artist_start_year_after=" + lowerVal + "&artist_start_year_before=" + upperVal + "&sort=song_hotttnesss-desc&results=" + echoNestLimit,
+                url: "https://developer.echonest.com/api/v4/playlist/static?api_key=" + echoNestAPIKey + "&format=json&artist=" + artist + "&artist_start_year_after=" + lowerVal + "&artist_end_year_after=" + upperVal + "&sort=song_hotttnesss-desc&results=" + searchLimit,
                 cache: false,
                 success: function (jsonObject) {
                     var tracks = jsonObject.response.songs;
                     playlist = [];
-                    //$("#playlist-box").css("background-color", "red");
-                    searchSoundCloudTracks(tracks);
+                    searchSoundCloudTracks(tracks, "soundcloud");
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     alert("ERROR " + errorThrown + " at" + XMLHttpRequest);
@@ -37,15 +36,40 @@ App.MainModel = (function () {
             });
         },
 
-        searchSoundCloudTracks = function (echoNestData) {
+        searchSpotifyTracksByYear = function (searchVal, lowerVal, upperVal) {
+            var artist = searchVal;
+            $.ajax({
+                type: "GET",
+                url: "https://api.spotify.com/v1/search?q=" + artist + "+year:" + lowerVal.toString() + "-" + upperVal.toString() + "&type=track&limit=" + searchLimit,
+                cache: false,
+                success: function (data) {
+                    var tracks = data.tracks.items;
+                    playlist = [];
+                    searchSoundCloudTracks(tracks, "spotify", artist);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert("ERROR " + errorThrown + " at" + XMLHttpRequest);
+                }
+            });
+        },
+
+        searchSoundCloudTracks = function (tracks, usedAPI, artistQuery) {
             var ajaxCalls = [];
-            for (var i in echoNestData) {
-                var artist = normalize(echoNestData[i].artist_name);
-                var title = normalize(echoNestData[i].title);
-                var queryOne = artist + " " + title;
+            var artist = null;
+            var title = null;
+            var queryOne = null;
+            for (var i in tracks) {
+                if (usedAPI == "spotify") {
+                    queryOne = artistQuery + " " + normalize(tracks[i].name);
+
+                }
+                else {
+                    artist = normalize(tracks[i].artist_name);
+                    title = normalize(tracks[i].title);
+                    queryOne = artist + " " + title;
+                }
                 var queryTwo = title + " " + artist;
                 var queryThree = title;
-                console.log("query ", queryOne);
                 var ajaxCaller = function ajaxQuery(query) {
                     return $.ajax({
                         url: getScUrl(query),
@@ -60,9 +84,7 @@ App.MainModel = (function () {
                             if (data.length != 0) {
                                 var matchingTracks = getMatchingResults(data, query);
                                 console.log("QUERY ", query);
-                                // iterateArray(data);
                                 addToPlayList(matchingTracks);
-
                             }
                         },
                         type: 'GET'
@@ -208,6 +230,7 @@ App.MainModel = (function () {
         };
 
     that.searchEchoNestTracks = searchEchoNestTracks;
+    that.searchSpotifyTracksByYear = searchSpotifyTracksByYear;
     that.playNextTrack = playNextTrack;
     that.playPreviousTrack = playPreviousTrack;
     that.init = init;

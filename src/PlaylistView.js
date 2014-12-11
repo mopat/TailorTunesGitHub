@@ -103,39 +103,6 @@ App.PlaylistView = (function () {
             }
         },
 
-        addSortable = function () {
-            var autoScroll;
-            $playlist.sortable({
-                scroll: true,
-                sort: function (event, ui) {
-
-                    var currentScrollTop = $('html, body').scrollTop(),
-                        topHelper = ui.offset.top,
-                        delta = topHelper - currentScrollTop;
-                    //console.log("first", firstAppearedElementOnScreen)
-                    // console.log("last", lastAppearedElementOnScreen)
-                    console.log("topHelper", topHelper)
-                    setFirstAppearedElementOnScreen();
-                    setLastAppearedElementOnScreen();
-                    setBeforeLastAppearedElementOnScreen();
-                    if ((topHelper > lastAppearedElementOnScreen - 20)) {
-                        $('html, body').animate({scrollTop: lastAppearedElementOnScreen + 10}, 100);
-                        console.log("LASTTRUE")
-                    }
-
-                    if (topHelper < firstAppearedElementOnScreen) {
-                        $('html, body').animate({scrollTop: beforeLastAppearedOnscreen - 100}, 300);
-                        console.log("FIRTSTTRUE")
-                    }
-                },
-                stop: function (event, ui) {
-                    $('html, body').stop();
-                    $('html, body').clearQueue();
-                    setPlaylistIds();
-                }
-            });
-        },
-
         setFirstAppearedElementOnScreen = function () {
             jQuery.fn.reverse = [].reverse;
             $("#playlist .playlist-item").reverse().each(function () {
@@ -176,17 +143,47 @@ App.PlaylistView = (function () {
             });
         },
 
+        addSortable = function () {
+            var autoScroll;
+            $playlist.sortable({
+                scroll: true,
+                sort: function (event, ui) {
+
+                    var currentScrollTop = $('html, body').scrollTop(),
+                        topHelper = ui.offset.top,
+                        delta = topHelper - currentScrollTop;
+                    //console.log("first", firstAppearedElementOnScreen)
+                    // console.log("last", lastAppearedElementOnScreen)
+                    console.log("topHelper", topHelper)
+                    setFirstAppearedElementOnScreen();
+                    setLastAppearedElementOnScreen();
+                    setBeforeLastAppearedElementOnScreen();
+                    if ((topHelper > lastAppearedElementOnScreen - 20)) {
+                        $('html, body').animate({scrollTop: lastAppearedElementOnScreen + 10}, 100);
+                        console.log("LASTTRUE")
+                    }
+
+                    if (topHelper < firstAppearedElementOnScreen) {
+                        $('html, body').animate({scrollTop: beforeLastAppearedOnscreen - 100}, 300);
+                        console.log("FIRTSTTRUE")
+                    }
+                },
+                stop: function (event, ui) {
+                    setPlaylistIds();
+                }
+            });
+        },
+
         removeSortable = function () {
             $playlist.sortable("destroy");
-            console.log("REMOVE")
-        };
+        },
 
-    handleListItemClick = function (event) {
-        event.preventDefault();
-        var streamUrl = $(event.target).closest(".playlist-item").attr("data-stream-url");
-        var title = $(event.target).closest(".playlist-title").html();
-        $(that).trigger("playlistItemClicked", [streamUrl, title]);
-    },
+        handleListItemClick = function (event) {
+            event.preventDefault();
+            var streamUrl = $(event.target).closest(".playlist-item").attr("data-stream-url");
+            var title = $(event.target).closest(".playlist-title").html();
+            $(that).trigger("playlistItemClicked", [streamUrl, title]);
+        },
 
         getMinutesAndSeconds = function (duration) {
             var minutes = Math.floor((duration / 1000) / 60);

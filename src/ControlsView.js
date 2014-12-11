@@ -114,8 +114,10 @@ App.ControlsView = (function () {
         },
 
         handleTrackPicked = function (streamUrl, title) {
+            resetTimer();
             streamUrl += '?client_id=' + sc_client_id;
             $player.attr('src', streamUrl);
+            player.play();
             $titleInfo.html(title);
             $marquee.marquee({
                 //speed in milliseconds of the marquee
