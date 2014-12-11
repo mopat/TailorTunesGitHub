@@ -28,7 +28,7 @@ App.MainModel = (function () {
                 success: function (jsonObject) {
                     var tracks = jsonObject.response.songs;
                     playlist = [];
-                    searchSoundCloudTracks(tracks, "soundcloud");
+                    searchSoundCloudTracks(tracks, "soundcloud", artist);
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     alert("ERROR " + errorThrown + " at" + XMLHttpRequest);
