@@ -49,3 +49,4 @@ https://github.com/aamirafridi/jQuery.Marquee
 http://aamirafridi.com/jquery/jquery-marquee-plugin#examples
 http://stackoverflow.com/questions/5541115/set-div-height-using-jquery-stretch-div-height
 http://stackoverflow.com/questions/1374126/how-to-extend-an-existing-javascript-array-with-another-array
+http://stackoverflow.com/questions/12086453/wrap-anchor-tag-around-li-element
