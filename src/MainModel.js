@@ -6,6 +6,7 @@ App.MainModel = (function () {
         scLimit = 200,
         searchLimit = 20,
         playlist = [],
+        completePlaylist = [],
         stringScoreTolerance = 0.5,
         currentPlaylistItem = 0,
 

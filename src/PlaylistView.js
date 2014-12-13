@@ -8,6 +8,7 @@ App.PlaylistView = (function () {
         firstAppearedElementOnScreen = null,
         lastAppearedElementOnScreen = null,
         beforeLastAppearedOnscreen = null,
+        completePlaylist = [],
 
         init = function () {
             $playlistBox = $("#playlist-box");
@@ -45,6 +46,7 @@ App.PlaylistView = (function () {
         },
 
         addPlaylistItem = function (playlist) {
+            completePlaylist.push.apply(completePlaylist, playlist);
             for (var i = 0; i < playlist.length; i++) {
 
                 var artworkUrl = playlist[i].artwork_url;
@@ -67,17 +69,15 @@ App.PlaylistView = (function () {
 
                 var listImg = $("<img class='playlist-item-image'>");
                 listImg.attr("src", artworkUrl);
-                listItem.append($("<span class='playlist-number'>").html(i + 1 + "."));
-                listItem.append(listImg);
-                listItem.append($("<span class='playlist-track-duration'>").html(getMinutesAndSeconds(duration)));
-                listItem.append($("<span class='playlist-title'>").html(title));
 
+                anchor.append($("<span class='playlist-number'>").html(i + 1 + "."));
+                anchor.append(listImg);
+                anchor.append($("<span class='playlist-track-duration'>").html(getMinutesAndSeconds(duration)));
+                anchor.append($("<span class='playlist-title'>").html(title));
+                listItem.append(anchor);
                 var centerContainer = $("<div class='center-container'>");
 
-                anchor.append(listItem);
-                centerContainer.append(anchor);
-                $playlist.append(centerContainer);
-                $playlist.append(centerContainer);
+                $playlist.append(listItem);
                 $playlistBox.append($playlist);
             }
             setPlaylistIds();
@@ -138,7 +138,7 @@ App.PlaylistView = (function () {
                 else {
                     $(this).css("background-color", listItemColors[1]);
                 }
-                $(this).attr("data-id", "list-id-" + index);
+                $(this).attr("id", index);
                 $(this).find(".playlist-number").html(index + 1 + ".");
             });
         },

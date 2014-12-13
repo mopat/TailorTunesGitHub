@@ -56,6 +56,13 @@ body {
     margin: 0;
 }
 
+#playlist a {
+    text-decoration: none;
+    display: block;
+    width: 100%;
+    min-height: 20px;
+    color: white;
+}
 .playlist-item {
     clear: both;
     color: white;
