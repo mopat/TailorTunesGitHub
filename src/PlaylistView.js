@@ -9,6 +9,7 @@ App.PlaylistView = (function () {
         lastAppearedElementOnScreen = null,
         beforeLastAppearedOnscreen = null,
         completePlaylist = [],
+        addedPlaylists = 0,
 
         init = function () {
             $playlistBox = $("#playlist-box");
@@ -29,23 +30,11 @@ App.PlaylistView = (function () {
             setPlaylistIds();
             setPlaylistMarginBottomZero();
             setPlaylistMarginBottomControlsBoxHeight();
-            // resizePlaylistBox();
         },
 
-        resizePlaylistBox = function () {
-            $(function () {
-
-                var $header = $('#header');
-                console.log($header.height());
-                var $footer = $('#sticky-footer');
-                var $window = $(window).on('resize', function () {
-                    var height = $(this).height() - $header.height() + $footer.height();
-                    $playlistBox.height(height);
-                }).trigger('resize'); //on page load
-            });
-        },
 
         addPlaylistItem = function (playlist) {
+            addedPlaylists++;
             completePlaylist.push.apply(completePlaylist, playlist);
             for (var i = 0; i < playlist.length; i++) {
 
@@ -81,9 +70,53 @@ App.PlaylistView = (function () {
                 $playlistBox.append($playlist);
             }
             setPlaylistIds();
+            if (addedPlaylists == 1)
+                playFirstTrack();
 
             if ($sortModeSwitch.attr("checked", true)) {
                 $sortModeSwitch.click();
+            }
+        },
+
+        playFirstTrack = function () {
+            var firstTrack = $("#playlist .playlist-item").first();
+            firstTrack.addClass("now-playing");
+            var streamUrl = firstTrack.attr("data-stream-url");
+            var title = firstTrack.find(".playlist-title").html();
+            $(that).trigger("trackPicked", [streamUrl, title]);
+        },
+
+        playNextTrack = function () {
+            var nowPlayingId = $(".now-playing").attr("id");
+            if(nowPlayingId < $("#playlist .playlist-item").size()-1){
+            var nextTrack = $("#playlist .now-playing").next();
+            $("#playlist .playlist-item").removeClass("now-playing");
+            nextTrack.addClass("now-playing");
+            var streamUrl = nextTrack.attr("data-stream-url");
+            var title = nextTrack.find(".playlist-title").html();
+            $(that).trigger("trackPicked", [streamUrl, title]);
+            }
+            else{
+                var streamUrl = $(".now-playing").attr("data-stream-url");
+                var title = $(".now-playing").find(".playlist-title").html();
+                $(that).trigger("trackPicked", [streamUrl, title]);
+            }
+        },
+
+        playPreviousTrack = function () {
+            var nowPlayingId = $(".now-playing").attr("id");
+            if(nowPlayingId > 0){
+                var previousTrack = $("#playlist .now-playing").prev();
+                $("#playlist .playlist-item").removeClass("now-playing");
+                previousTrack.addClass("now-playing");
+                var streamUrl = previousTrack.attr("data-stream-url");
+                var title = previousTrack.find(".playlist-title").html();
+                $(that).trigger("trackPicked", [streamUrl, title]);
+            }
+            else{
+                var streamUrl = $(".now-playing").attr("data-stream-url");
+                var title = $(".now-playing").find(".playlist-title").html();
+                $(that).trigger("trackPicked", [streamUrl, title]);
             }
         },
 
@@ -215,6 +248,8 @@ App.PlaylistView = (function () {
 
 
     that.addPlaylistItem = addPlaylistItem;
+    that.playNextTrack = playNextTrack;
+    that.playPreviousTrack = playPreviousTrack;
     that.init = init;
 
     return that;

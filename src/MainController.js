@@ -17,7 +17,8 @@ App.MainController = (function () {
             controlsView.init();
             searchView.init();
 
-            $(mainModel).on("trackPicked", handleTrackPick);
+            //$(mainModel).on("trackPicked", handleTrackPick);
+            $(playlistView).on("trackPicked", handleTrackPick);
             $(controlsView).on("trackEnded", handleTrackEnd);
             $(controlsView).on("nextButtonClick", handleNextButtonClick);
             $(controlsView).on("previousButtonClick", handlePreviousButtonClick);
@@ -34,19 +35,19 @@ App.MainController = (function () {
         },
 
         handleTrackEnd = function () {
-            mainModel.playNextTrack();
+            playlistView.playNextTrack();
         },
 
         handleSearchButtonClick = function (event, searchVal, lowerVal, upperVal) {
-            mainModel.searchEchoNestTracks(searchVal, lowerVal, upperVal);
+            mainModel.searchSpotifyTracksByYear(searchVal, lowerVal, upperVal);
         },
 
         handleNextButtonClick = function () {
-            mainModel.playNextTrack();
+            playlistView.playNextTrack();
         },
 
         handlePreviousButtonClick = function () {
-            mainModel.playPreviousTrack();
+            playlistView.playPreviousTrack();
         },
 
         handlePlaylistCreated = function (event, playlist) {

@@ -95,7 +95,7 @@ App.MainModel = (function () {
             }
             $.when.apply($, ajaxCalls).done(function () {
                 // $("#playlist-box").css("background-color", "green");
-                playPlaylist();
+                //playPlaylist();
                 setPlaylistView();
 
             })
