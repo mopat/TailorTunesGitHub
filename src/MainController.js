@@ -17,7 +17,6 @@ App.MainController = (function () {
             controlsView.init();
             searchView.init();
 
-            //$(mainModel).on("trackPicked", handleTrackPick);
             $(playlistView).on("trackPicked", handleTrackPick);
             $(controlsView).on("trackEnded", handleTrackEnd);
             $(controlsView).on("nextButtonClick", handleNextButtonClick);

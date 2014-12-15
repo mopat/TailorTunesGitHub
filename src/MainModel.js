@@ -62,7 +62,6 @@ App.MainModel = (function () {
             for (var i in tracks) {
                 if (usedAPI == "spotify") {
                     queryOne = artistQuery + " " + normalize(tracks[i].name);
-
                 }
                 else {
                     artist = normalize(tracks[i].artist_name);
@@ -94,8 +93,6 @@ App.MainModel = (function () {
                 ajaxCalls.push(ajaxCaller(queryOne));
             }
             $.when.apply($, ajaxCalls).done(function () {
-                // $("#playlist-box").css("background-color", "green");
-                //playPlaylist();
                 setPlaylistView();
 
             })
@@ -189,32 +186,10 @@ App.MainModel = (function () {
             return string.replace("-", " ").replace(/[^\w\s.]/gi, ' ').replace(/\s{2,}/g, ' ').toLowerCase().trim();
         },
 
-
-        playPlaylist = function () {
-            $(that).trigger("trackPicked", [playlist[currentPlaylistItem].stream_url, playlist[currentPlaylistItem].title]);
-            console.log("playlist ", playlist);
-            for (var i = 0; i < playlist.length; i++) {
-                console.log("title ", playlist[i].title, " ", playlist[i].favoritings_count)
-            }
-        },
-
         setPlaylistView = function () {
             $(that).trigger("playlistCreated", [playlist]);
         },
 
-        playNextTrack = function () {
-            if (currentPlaylistItem < playlist.length - 1) {
-                currentPlaylistItem++;
-                $(that).trigger("trackPicked", [playlist[currentPlaylistItem].stream_url, playlist[currentPlaylistItem].title]);
-            }
-        },
-
-        playPreviousTrack = function () {
-            if (currentPlaylistItem > 0) {
-                currentPlaylistItem--;
-                $(that).trigger("trackPicked", [playlist[currentPlaylistItem].stream_url, playlist[currentPlaylistItem].title]);
-            }
-        },
 
         iterateArray = function (array) {
             for (var i = 0; i < array.length; i++) {
@@ -232,8 +207,6 @@ App.MainModel = (function () {
 
     that.searchEchoNestTracks = searchEchoNestTracks;
     that.searchSpotifyTracksByYear = searchSpotifyTracksByYear;
-    that.playNextTrack = playNextTrack;
-    that.playPreviousTrack = playPreviousTrack;
     that.init = init;
 
     return that;

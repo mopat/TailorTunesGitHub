@@ -71,14 +71,14 @@ App.PlaylistView = (function () {
             }
             setPlaylistIds();
             if (addedPlaylists == 1)
-                playFirstTrack();
+                startPlaylist();
 
             if ($sortModeSwitch.attr("checked", true)) {
                 $sortModeSwitch.click();
             }
         },
 
-        playFirstTrack = function () {
+        startPlaylist = function () {
             var firstTrack = $("#playlist .playlist-item").first();
             firstTrack.addClass("now-playing");
             var streamUrl = firstTrack.attr("data-stream-url");
@@ -87,37 +87,42 @@ App.PlaylistView = (function () {
         },
 
         playNextTrack = function () {
-            var nowPlayingId = $(".now-playing").attr("id");
-            if(nowPlayingId < $("#playlist .playlist-item").size()-1){
-            var nextTrack = $("#playlist .now-playing").next();
-            $("#playlist .playlist-item").removeClass("now-playing");
-            nextTrack.addClass("now-playing");
-            var streamUrl = nextTrack.attr("data-stream-url");
-            var title = nextTrack.find(".playlist-title").html();
-            $(that).trigger("trackPicked", [streamUrl, title]);
+            var $nowPlaying = $("#playlist .now-playing");
+            var $nowPlayingId = $nowPlaying.attr("id");
+            var $nextTrack = $nowPlaying.next();
+            if($nowPlayingId < $("#playlist .playlist-item").size()-1){
+                $("#playlist .now-playing").removeClass("now-playing");
+                handlePlayTrack($nextTrack);
             }
             else{
-                var streamUrl = $(".now-playing").attr("data-stream-url");
-                var title = $(".now-playing").find(".playlist-title").html();
-                $(that).trigger("trackPicked", [streamUrl, title]);
+                handleResetTrack($nowPlaying);
             }
         },
 
         playPreviousTrack = function () {
-            var nowPlayingId = $(".now-playing").attr("id");
-            if(nowPlayingId > 0){
-                var previousTrack = $("#playlist .now-playing").prev();
-                $("#playlist .playlist-item").removeClass("now-playing");
-                previousTrack.addClass("now-playing");
-                var streamUrl = previousTrack.attr("data-stream-url");
-                var title = previousTrack.find(".playlist-title").html();
-                $(that).trigger("trackPicked", [streamUrl, title]);
+            var $nowPlaying = $("#playlist .now-playing");
+            var $nowPlayingId = $nowPlaying.attr("id");
+            var $previousTrack = $nowPlaying.prev();
+            if($nowPlayingId > 0){
+                $nowPlaying.removeClass("now-playing");
+                handlePlayTrack($previousTrack);
             }
             else{
-                var streamUrl = $(".now-playing").attr("data-stream-url");
-                var title = $(".now-playing").find(".playlist-title").html();
-                $(that).trigger("trackPicked", [streamUrl, title]);
+                handleResetTrack($nowPlaying);
             }
+        },
+
+        handlePlayTrack = function(current){
+            current.addClass("now-playing");
+            var streamUrl = current.attr("data-stream-url");
+            var title = current.find(".playlist-title").html();
+            $(that).trigger("trackPicked", [streamUrl, title]);
+        },
+
+        handleResetTrack = function(nowPlaying){
+            var streamUrl = nowPlaying.attr("data-stream-url");
+            var title = nowPlaying.find(".playlist-title").html();
+            $(that).trigger("trackPicked", [streamUrl, title]);
         },
 
         handleSortSwitchClick = function () {
@@ -213,8 +218,11 @@ App.PlaylistView = (function () {
 
         handleListItemClick = function (event) {
             event.preventDefault();
-            var streamUrl = $(event.target).closest(".playlist-item").attr("data-stream-url");
-            var title = $(event.target).closest(".playlist-title").html();
+            $("#playlist .now-playing").removeClass("now-playing");
+            var $clickedItem = $(event.target).closest(".playlist-item");
+            $clickedItem.addClass("now-playing");
+            var streamUrl = $clickedItem.attr("data-stream-url");
+            var title = $clickedItem.find(".playlist-title").html();
             $(that).trigger("playlistItemClicked", [streamUrl, title]);
         },
 
