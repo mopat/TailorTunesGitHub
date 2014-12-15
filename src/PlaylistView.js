@@ -80,26 +80,24 @@ App.PlaylistView = (function () {
 
         startPlaylist = function () {
             var firstTrack = $("#playlist .playlist-item").first();
-            firstTrack.addClass("now-playing");
-            var streamUrl = firstTrack.attr("data-stream-url");
-            var title = firstTrack.find(".playlist-title").html();
-            $(that).trigger("trackPicked", [streamUrl, title]);
+            handlePlayTrack(firstTrack)
         },
 
 
         handlePlayOrNextClicked = function (indicator) {
             var $nowPlaying = $("#playlist .now-playing");
+            $nowPlaying.find(".playlist-title").css("color", "white");
             var $nowPlayingId = $nowPlaying.attr("id");
             var playlistSize = $("#playlist .playlist-item").size();
 
             if ($nowPlayingId < playlistSize - 1 && indicator == "next") {
-                $nowPlaying.removeClass("now-playing");
                 var $nextTrack = $nowPlaying.next();
+                $nowPlaying.removeClass("now-playing");
                 handlePlayTrack($nextTrack);
             }
-            if ($nowPlayingId > 0 && indicator == "previous") {
-                $nowPlaying.removeClass("now-playing");
+            else if ($nowPlayingId > 0 && indicator == "previous") {
                 var $previousTrack = $nowPlaying.prev();
+                $nowPlaying.removeClass("now-playing");
                 handlePlayTrack($previousTrack);
             }
             else {
@@ -111,10 +109,12 @@ App.PlaylistView = (function () {
             current.addClass("now-playing");
             var streamUrl = current.attr("data-stream-url");
             var title = current.find(".playlist-title").html();
+            current.find(".playlist-title").css("color", "lightblue")
             $(that).trigger("trackPicked", [streamUrl, title]);
         },
 
         handleResetTrack = function (nowPlaying) {
+            nowPlaying.find(".playlist-title").css("color", "lightblue")
             var streamUrl = nowPlaying.attr("data-stream-url");
             var title = nowPlaying.find(".playlist-title").html();
             $(that).trigger("trackPicked", [streamUrl, title]);

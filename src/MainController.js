@@ -34,14 +34,15 @@ App.MainController = (function () {
         },
 
         handleTrackEnd = function () {
-            playlistView.playNextTrack();
+            playlistView.handlePlayOrNextClicked("next");
         },
 
         handleSearchButtonClick = function (event, searchVal, lowerVal, upperVal) {
-            mainModel.searchSpotifyTracksByYear(searchVal, lowerVal, upperVal);
+            mainModel.searchEchoNestTracks(searchVal, lowerVal, upperVal);
         },
 
         handleNextButtonClick = function () {
+
             playlistView.handlePlayOrNextClicked("next");
         },
 
