@@ -105,6 +105,15 @@ App.PlaylistView = (function () {
             }
         },
 
+        handleListItemClick = function (event) {
+            event.preventDefault();
+            var $nowPlaying = $("#playlist .now-playing");
+            $nowPlaying.find(".playlist-title").css("color", "white");
+            $nowPlaying.removeClass("now-playing");
+            var $clickedItem = $(event.target).closest(".playlist-item");
+            handlePlayTrack($clickedItem);
+        },
+
         handlePlayTrack = function (current) {
             current.addClass("now-playing");
             var streamUrl = current.attr("data-stream-url");
@@ -209,16 +218,6 @@ App.PlaylistView = (function () {
 
         removeSortable = function () {
             $playlist.sortable("destroy");
-        },
-
-        handleListItemClick = function (event) {
-            event.preventDefault();
-            $("#playlist .now-playing").removeClass("now-playing");
-            var $clickedItem = $(event.target).closest(".playlist-item");
-            $clickedItem.addClass("now-playing");
-            var streamUrl = $clickedItem.attr("data-stream-url");
-            var title = $clickedItem.find(".playlist-title").html();
-            $(that).trigger("playlistItemClicked", [streamUrl, title]);
         },
 
         getMinutesAndSeconds = function (duration) {
