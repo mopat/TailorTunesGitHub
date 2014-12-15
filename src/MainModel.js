@@ -59,6 +59,7 @@ App.MainModel = (function () {
             var artist = null;
             var title = null;
             var queryOne = null;
+            tracks = removeDuplicates(tracks);
             for (var i in tracks) {
                 if (usedAPI == "spotify") {
                     queryOne = artistQuery + " " + normalize(tracks[i].name);
@@ -84,7 +85,7 @@ App.MainModel = (function () {
                             if (data.length != 0) {
                                 var matchingTracks = getMatchingResults(data, query);
                                 console.log("QUERY ", query);
-                                addToPlayList(matchingTracks);
+                                addToPlayList(removeDuplicates(matchingTracks));
                             }
                         },
                         type: 'GET'
@@ -130,6 +131,14 @@ App.MainModel = (function () {
              ***/
         },
 
+        removeDuplicates = function (tracks) {
+            var uniqueObjects = [];
+            $.each(tracks, function(i, el){
+                if($.inArray(el, uniqueObjects) === -1) uniqueObjects.push(el);
+            });
+            return uniqueObjects;
+        },
+
         addToPlayList = function (matchingTracks) {
             var tracks = [];
 
@@ -167,6 +176,7 @@ App.MainModel = (function () {
                     matchingTracks.push(tracks[i]);
                 }
             }
+            matchingTracks = removeDuplicates(matchingTracks);
             return matchingTracks;
         },
 
