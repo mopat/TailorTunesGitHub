@@ -21,6 +21,7 @@ App.PlaylistView = (function () {
             $playlist.on("click", handleListItemClick);
             $playlist.on("swipeleft", swipeleftHandler);
             $sortModeSwitch.on("click", handleSortSwitchClick);
+
             $(window).on("scroll", function () {
                 setFirstAppearedElementOnScreen();
                 setLastAppearedElementOnScreen();

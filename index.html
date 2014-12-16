@@ -72,6 +72,7 @@
             <div id="sticky-sort-switch-box">
                 <div id="sticky-anchor"></div>
                 <div id="sticky">
+
                     <div class="switch">
                         Sort Playlist
                         <input id="sort-mode-switch" type="checkbox">
@@ -131,7 +132,7 @@
     </div>
 </footer>
 <script src="js/vendor/jquery.js"></script>
-<script src="libs/jquery.mobile-1.4.4/jquery.mobile-1.4.4.min.js"></script>
+<script src="libs/jquery.mobile.touchEvents.min.js"></script>
 <script src="js/foundation.min.js"></script>
 <script src="libs/jquery-ui.min.js"></script>
 <script src="libs/jquery.ui.touch-punch.min.js"></script>
@@ -151,7 +152,7 @@
     $(document).foundation();
     $(function () {
         App.init();
-        $.mobile.loading( 'show', { theme: "b", text: "", textonly: false});
+        //$.mobile.loading( 'show', { theme: "b", text: "", textonly: false});
     });
 </script>
 </body>

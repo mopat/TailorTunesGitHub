@@ -53,3 +53,4 @@ http://stackoverflow.com/questions/12086453/wrap-anchor-tag-around-li-element
 http://stackoverflow.com/questions/9229645/remove-duplicates-from-javascript-array
 https://github.com/mattbryson/TouchSwipe-Jquery-Plugin
 http://api.jquerymobile.com/swipeleft/
+http://stackoverflow.com/questions/10397940/jquery-mobile-loading-message
