@@ -51,3 +51,5 @@ http://stackoverflow.com/questions/5541115/set-div-height-using-jquery-stretch-d
 http://stackoverflow.com/questions/1374126/how-to-extend-an-existing-javascript-array-with-another-array
 http://stackoverflow.com/questions/12086453/wrap-anchor-tag-around-li-element
 http://stackoverflow.com/questions/9229645/remove-duplicates-from-javascript-array
+https://github.com/mattbryson/TouchSwipe-Jquery-Plugin
+http://api.jquerymobile.com/swipeleft/

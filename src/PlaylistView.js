@@ -19,6 +19,7 @@ App.PlaylistView = (function () {
             listItemColors = ["#464646", "#292929"];
 
             $playlist.on("click", handleListItemClick);
+            $playlist.on("swipeleft", swipeleftHandler);
             $sortModeSwitch.on("click", handleSortSwitchClick);
             $(window).on("scroll", function () {
                 setFirstAppearedElementOnScreen();
@@ -30,6 +31,15 @@ App.PlaylistView = (function () {
             setPlaylistIds();
             setPlaylistMarginBottomZero();
             setPlaylistMarginBottomControlsBoxHeight();
+        },
+
+        swipeleftHandler = function (event) {
+            var $swipedItem = $(event.target).closest(".playlist-item");
+            $swipedItem.fadeOut(500, fadeOutComplete);
+
+            function fadeOutComplete(){
+                $swipedItem.remove();
+            };
         },
 
 
