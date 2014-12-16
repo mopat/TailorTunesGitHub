@@ -44,8 +44,7 @@ App.PlaylistView = (function () {
                     $(that).trigger("resetPlayer");
                else if($swipedItem.attr("id") == $nowPlaying.attr("id"))
                     handlePrevOrNextClicked("next");
-
-
+                
                 $swipedItem.remove();
                 setPlaylistIds();
             };
@@ -121,7 +120,6 @@ App.PlaylistView = (function () {
             else if ($nowPlayingId == playlistSize - 1 && indicator == "next") {
                 $nowPlaying.removeClass("now-playing");
                 startPlaylist();
-                console.log("START")
             }
             else {
                 handleResetTrack($nowPlaying);
