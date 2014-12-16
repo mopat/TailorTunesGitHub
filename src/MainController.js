@@ -18,6 +18,7 @@ App.MainController = (function () {
             searchView.init();
 
             $(playlistView).on("trackPicked", handleTrackPick);
+            $(playlistView).on("resetPlayer", handleResetPlayer);
             $(controlsView).on("trackEnded", handleTrackEnd);
             $(controlsView).on("nextButtonClick", handleNextButtonClick);
             $(controlsView).on("previousButtonClick", handlePreviousButtonClick);
@@ -33,8 +34,12 @@ App.MainController = (function () {
             controlsView.handleTrackPicked(src, title);
         },
 
+        handleResetPlayer = function(){
+            controlsView.resetPlayer();
+        },
+
         handleTrackEnd = function () {
-            playlistView.handlePlayOrNextClicked("next");
+            playlistView.handlePrevOrNextClicked("next");
         },
 
         handleSearchButtonClick = function (event, searchVal, lowerVal, upperVal) {

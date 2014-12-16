@@ -37,12 +37,15 @@ App.PlaylistView = (function () {
         swipeleftHandler = function (event) {
             var $swipedItem = $(event.target).closest(".playlist-item");
             var $nowPlaying = $("#playlist .now-playing");
-
-            if($swipedItem.attr("id") == $nowPlaying.attr("id"))
-                handlePrevOrNextClicked("next");
-
+            var playlistSize = $("#playlist .playlist-item").size();
             $swipedItem.fadeOut(500, fadeOutComplete);
             function fadeOutComplete(){
+                if(playlistSize-1 == 0)
+                    $(that).trigger("resetPlayer");
+               else if($swipedItem.attr("id") == $nowPlaying.attr("id"))
+                    handlePrevOrNextClicked("next");
+
+
                 $swipedItem.remove();
                 setPlaylistIds();
             };
@@ -118,6 +121,7 @@ App.PlaylistView = (function () {
             else if ($nowPlayingId == playlistSize - 1 && indicator == "next") {
                 $nowPlaying.removeClass("now-playing");
                 startPlaylist();
+                console.log("START")
             }
             else {
                 handleResetTrack($nowPlaying);

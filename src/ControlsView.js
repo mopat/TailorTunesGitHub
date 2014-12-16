@@ -132,6 +132,13 @@ App.ControlsView = (function () {
             });
         },
 
+        resetPlayer = function(){
+            player.pause();
+            player.currentTime = 0;
+            resetTimer();
+            resetTitleInfo();
+        },
+
         handleNextButtonClick = function (e) {
             e.preventDefault();
             $(that).trigger("nextButtonClick");
@@ -147,9 +154,14 @@ App.ControlsView = (function () {
         resetTimer = function () {
             $timeSlider.slider({value: 0});
             $elapsedTime.html("0:00");
+        },
+
+        resetTitleInfo = function(){
+          $titleInfo.html("");
         };
 
     that.handleTrackPicked = handleTrackPicked;
+    that.resetPlayer = resetPlayer;
     that.init = init;
 
     return that;
