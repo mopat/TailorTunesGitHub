@@ -43,7 +43,7 @@ App.MainController = (function () {
 
         handleNextButtonClick = function () {
 
-            playlistView.handlePlayOrNextClicked("next");
+            playlistView.handlePrevOrNextClicked("next");
         },
 
         handlePreviousButtonClick = function () {

@@ -35,10 +35,15 @@ App.PlaylistView = (function () {
 
         swipeleftHandler = function (event) {
             var $swipedItem = $(event.target).closest(".playlist-item");
-            $swipedItem.fadeOut(500, fadeOutComplete);
+            var $nowPlaying = $("#playlist .now-playing");
 
+            if($swipedItem.attr("id") == $nowPlaying.attr("id"))
+                handlePrevOrNextClicked("next");
+
+            $swipedItem.fadeOut(500, fadeOutComplete);
             function fadeOutComplete(){
                 $swipedItem.remove();
+                setPlaylistIds();
             };
         },
 
@@ -90,14 +95,13 @@ App.PlaylistView = (function () {
 
         startPlaylist = function () {
             var firstTrack = $("#playlist .playlist-item").first();
-            handlePlayTrack(firstTrack)
+            handlePlayTrack(firstTrack);
         },
 
-
-        handlePlayOrNextClicked = function (indicator) {
+        handlePrevOrNextClicked = function (indicator) {
             var $nowPlaying = $("#playlist .now-playing");
             $nowPlaying.find(".playlist-title").css("color", "white");
-            var $nowPlayingId = $nowPlaying.attr("id");
+            var $nowPlayingId = parseInt($nowPlaying.attr("id"));
             var playlistSize = $("#playlist .playlist-item").size();
 
             if ($nowPlayingId < playlistSize - 1 && indicator == "next") {
@@ -109,6 +113,10 @@ App.PlaylistView = (function () {
                 var $previousTrack = $nowPlaying.prev();
                 $nowPlaying.removeClass("now-playing");
                 handlePlayTrack($previousTrack);
+            }
+            else if ($nowPlayingId == playlistSize - 1 && indicator == "next") {
+                $nowPlaying.removeClass("now-playing");
+                startPlaylist();
             }
             else {
                 handleResetTrack($nowPlaying);
@@ -260,7 +268,7 @@ App.PlaylistView = (function () {
 
 
     that.addPlaylistItem = addPlaylistItem;
-    that.handlePlayOrNextClicked = handlePlayOrNextClicked;
+    that.handlePrevOrNextClicked = handlePrevOrNextClicked;
     that.init = init;
 
     return that;
