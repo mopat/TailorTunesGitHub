@@ -35,6 +35,7 @@ App.PlaylistView = (function () {
         },
 
         swipeleftHandler = function (event) {
+            $.event.special.swipe.horizontalDistanceThreshold = 50;
             var $swipedItem = $(event.target).closest(".playlist-item");
             var $nowPlaying = $("#playlist .now-playing");
             var playlistSize = $("#playlist .playlist-item").size();
@@ -44,7 +45,7 @@ App.PlaylistView = (function () {
                     $(that).trigger("resetPlayer");
                else if($swipedItem.attr("id") == $nowPlaying.attr("id"))
                     handlePrevOrNextClicked("next");
-                
+
                 $swipedItem.remove();
                 setPlaylistIds();
             };
