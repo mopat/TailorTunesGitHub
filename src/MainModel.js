@@ -20,18 +20,15 @@ App.MainModel = (function () {
             });
         },
 
-        searchEchoNestTracks = function (query, type, lowerVal, upperVal) {
-            var url = buildEchoNestUrl(query, type);
-            var url = "http://developer.echonest.com/api/v4/playlist/static?api_key=N2U2OZ8ZDCXNV9DBG&genre=dance+pop&format=json&results=20&type=genre-radio&song_selection=song_hotttnesss-top"
-            var artist = query;
+        searchEchoNestTracks = function (query, lowerVal, upperVal, pickedTab) {
             $.ajax({
                 type: "GET",
-                url: buildEchoNestUrl(query, "genre"),
+                url: buildEchoNestUrl(query, pickedTab),
                 cache: false,
                 success: function (jsonObject) {
                     var tracks = jsonObject.response.songs;
                     playlist = [];
-                    searchSoundCloudTracks(tracks, "soundcloud", artist);
+                    searchSoundCloudTracks(tracks, "soundcloud", query);
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     alert("ERROR " + errorThrown + " at" + XMLHttpRequest);
@@ -40,10 +37,11 @@ App.MainModel = (function () {
         },
 
         buildEchoNestUrl = function(query, type){
+            console.log(type)
             switch(type){
-                case "artist":
+                case "artist-tab":
                     return "https://developer.echonest.com/api/v4/playlist/static?api_key=" + echoNestAPIKey + "&format=json&artist=" + query + "&sort=song_hotttnesss-desc&results=" + searchLimit;
-                case "genre":
+                case "genre-tab":
                     return "http://developer.echonest.com/api/v4/playlist/static?api_key=" + echoNestAPIKey + "&genre="+ query + "&format=json&results=" + searchLimit + "&type=genre-radio&song_selection=song_hotttnesss-top";
             }
         },

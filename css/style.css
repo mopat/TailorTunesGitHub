@@ -36,6 +36,14 @@ body {
     height: 150px;
 }
 
+.picked {
+    background-color: #1dc116;
+}
+
+.unpicked {
+    background-color: #990099;
+}
+
 #year-slider {
     margin-left: 30px;
     margin-right: 30px;

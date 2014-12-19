@@ -6,15 +6,18 @@ App.SearchView = (function () {
         $searchField = null,
         $yearSlider = null,
         $searchButton = null,
+        $picker = null,
 
         init = function () {
             $searchField = $("#search-field");
             $searchButton = $("#search-button");
             $yearSlider = $("#year-slider");
+            $picker = $(".picker");
 
             initYearSlider();
 
             $searchButton.on("click", handleSearchClick);
+            $picker.on("click", handleTabClicked);
         },
 
         initYearSlider = function () {
@@ -34,7 +37,12 @@ App.SearchView = (function () {
         },
 
         handleSearchClick = function () {
-            $(that).trigger("searchButtonClicked", [$searchField.val(), $('#year-slider-value-lower').html(), $('#year-slider-value-upper').html()]);
+            $(that).trigger("searchButtonClicked", [$searchField.val(), $('#year-slider-value-lower').html(), $('#year-slider-value-upper').html(), $(".picked").attr("id")]);
+        },
+
+        handleTabClicked = function(e){
+            $(".picked").switchClass("picked", "unpicked", 0);
+            $(e.target).closest(".picker").switchClass("unpicked", "picked", 0);
         };
 
 
