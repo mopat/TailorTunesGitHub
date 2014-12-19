@@ -4,7 +4,7 @@ App.MainModel = (function () {
         sc_client_id = '23a3031c7cd251c7c217ca127777e48b',
         echoNestAPIKey = "N2U2OZ8ZDCXNV9DBG",
         scLimit = 200,
-        searchLimit = 5,
+        searchLimit = 20,
         playlist = [],
         completePlaylist = [],
         stringScoreTolerance = 0.5,
@@ -20,11 +20,13 @@ App.MainModel = (function () {
             });
         },
 
-        searchEchoNestTracks = function (searchVal, lowerVal, upperVal) {
-            var artist = searchVal;
+        searchEchoNestTracks = function (query, type, lowerVal, upperVal) {
+            var url = buildEchoNestUrl(query, type);
+            var url = "http://developer.echonest.com/api/v4/playlist/static?api_key=N2U2OZ8ZDCXNV9DBG&genre=dance+pop&format=json&results=20&type=genre-radio&song_selection=song_hotttnesss-top"
+            var artist = query;
             $.ajax({
                 type: "GET",
-                url: "https://developer.echonest.com/api/v4/playlist/static?api_key=" + echoNestAPIKey + "&format=json&artist=" + artist + "&artist_start_year_after=" + lowerVal + "&artist_end_year_after=" + upperVal + "&sort=song_hotttnesss-desc&results=" + searchLimit,
+                url: buildEchoNestUrl(query, "genre"),
                 cache: false,
                 success: function (jsonObject) {
                     var tracks = jsonObject.response.songs;
@@ -35,6 +37,15 @@ App.MainModel = (function () {
                     alert("ERROR " + errorThrown + " at" + XMLHttpRequest);
                 }
             });
+        },
+
+        buildEchoNestUrl = function(query, type){
+            switch(type){
+                case "artist":
+                    return "https://developer.echonest.com/api/v4/playlist/static?api_key=" + echoNestAPIKey + "&format=json&artist=" + query + "&sort=song_hotttnesss-desc&results=" + searchLimit;
+                case "genre":
+                    return "http://developer.echonest.com/api/v4/playlist/static?api_key=" + echoNestAPIKey + "&genre="+ query + "&format=json&results=" + searchLimit + "&type=genre-radio&song_selection=song_hotttnesss-top";
+            }
         },
 
         searchSpotifyTracksByYear = function (searchVal, lowerVal, upperVal) {
