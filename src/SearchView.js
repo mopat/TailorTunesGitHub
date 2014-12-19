@@ -7,6 +7,7 @@ App.SearchView = (function () {
         $yearSlider = null,
         $searchButton = null,
         $picker = null,
+        $advancedSearchBox = null,
 
         init = function () {
             $searchField = $("#search-field");
@@ -18,6 +19,8 @@ App.SearchView = (function () {
 
             $searchButton.on("click", handleSearchClick);
             $picker.on("click", handleTabClicked);
+
+            $("#advanced-search-box .switch").on("click", handleSwitchClicked);
         },
 
         initYearSlider = function () {
@@ -42,7 +45,12 @@ App.SearchView = (function () {
 
         handleTabClicked = function(e){
             $(".picked").switchClass("picked", "unpicked", 0);
-            $(e.target).closest(".picker").switchClass("unpicked", "picked", 0);
+            $(e.target).closest(".picker").switchClass("unpicked", "picked");
+        },
+
+        handleSwitchClicked = function(e){
+            $(".checked").removeAttr("checked").removeClass("checked");
+            $(e.target).closest("input").attr("checked", true).addClass("checked");
         };
 
 
