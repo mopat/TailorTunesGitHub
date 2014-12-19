@@ -49,6 +49,7 @@ App.SearchView = (function () {
         },
 
         handleSwitchClicked = function(e){
+            e.preventDefault();
             $(".checked").removeAttr("checked").removeClass("checked");
             $(e.target).closest("input").attr("checked", true).addClass("checked");
         };
