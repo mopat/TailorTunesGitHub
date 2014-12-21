@@ -23,14 +23,6 @@ App.SearchView = (function () {
             $yearSliderBox = $("#year-slider-box");
             $yearSlider = $("#year-slider");
             $picker = $(".picker");
-            $hottestSwitchBox = $("#hottest-switch-box");
-            $similarSwitchBox = $("#similar-switch-box");
-            $yearSwitchBox = $("#year-switch-box");
-            $newSwitchBox = $("#new-tracks-switch-box");
-            $hottestSwitch = $("#hottest-switch");
-            $similarSwitch = $("#similar-switch");
-            $yearSwitch = $("#year-switch");
-            $newSwitch = $("#new-tracks-switch");
 
             initYearSlider();
 
@@ -88,27 +80,15 @@ App.SearchView = (function () {
         },
 
         artistMode = function () {
-            $hottestSwitchBox.show();
-            $yearSliderBox.show();
-            $similarSwitchBox.show();
-            $newSwitchBox.show();
-            $yearSwitchBox.show();
+
         },
 
         trackMode = function () {
-            $hottestSwitchBox.hide();
-            $yearSliderBox.hide();
-            $newSwitchBox.hide();
-            $yearSwitchBox.hide();
-            $similarSwitchBox.show();
+
         },
 
         genreMode = function () {
-            $hottestSwitchBox.show();
-            $yearSliderBox.show();
-            $newSwitchBox.show();
-            $yearSwitchBox.show();
-            $similarSwitchBox.hide();
+
         };
 
 
