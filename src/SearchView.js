@@ -62,7 +62,7 @@ App.SearchView = (function () {
 
         handleTabClicked = function (e) {
             $(".picked").switchClass("picked", "unpicked", 0);
-            $(e.target).closest(".picker").switchClass("unpicked", "picked");
+            $(e.target).closest(".picker").switchClass("unpicked", "picked", 0);
             var tabId = $(this).attr("id");
             setMode(tabId);
         },
