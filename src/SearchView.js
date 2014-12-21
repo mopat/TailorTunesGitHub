@@ -13,6 +13,7 @@ App.SearchView = (function () {
         $artistDropdownBox = null,
         $trackDropwdownBox = null,
         $genreDropwdownBox = null,
+        selectedDropdownValue = null,
 
         init = function () {
             $searchField = $("#search-field");
@@ -22,6 +23,8 @@ App.SearchView = (function () {
             $yearSliderValueLower = $('#year-slider-value-lower')
             $yearSliderValueUpper = $('#year-slider-value-upper')
             $picker = $(".picker");
+
+
 
             $artistDropdownBox = $("#artist-dropdown-box");
             $trackDropwdownBox = $("#track-dropdown-box");
@@ -51,7 +54,8 @@ App.SearchView = (function () {
         },
 
         handleSearchClick = function () {
-            $(that).trigger("searchButtonClicked", [$searchField.val(), $yearSliderValueLower.html(), $yearSliderValueUpper.html(), $(".picked").attr("id")]);
+           var visibleDropdownValue = getVisibleDropdownValue();
+            $(that).trigger("searchButtonClicked", [$searchField.val(), $yearSliderValueLower.html(), $yearSliderValueUpper.html(), $(".picked").attr("id"), visibleDropdownValue]);
         },
 
         handleTabClicked = function (e) {
@@ -103,8 +107,17 @@ App.SearchView = (function () {
 
             $trackDropwdownBox.hide();
             $artistDropdownBox.hide();
-        };
+        },
 
+        getVisibleDropdownValue = function(){
+            var visibleDropdownValue = "";
+            $( ".search-dropdown" ).each(function( index ) {
+                if($(this).is(":visible")){
+                    visibleDropdownValue = $(this).val();
+                }
+            });
+            return visibleDropdownValue;
+        };
 
     that.init = init;
 

@@ -42,9 +42,8 @@ App.MainController = (function () {
             playlistView.handlePrevOrNextClicked("next");
         },
 
-        handleSearchButtonClick = function (event, searchVal, lowerVal, upperVal, pickedTab) {
-            mainModel.searchEchoNestTracks(searchVal, lowerVal, upperVal, pickedTab);
-            console.log(pickedTab)
+        handleSearchButtonClick = function (event, searchVal, lowerVal, upperVal, pickedTab, visibleDropdownValue) {
+            mainModel.searchEchoNestTracks(searchVal, lowerVal, upperVal, pickedTab, visibleDropdownValue);
         },
 
         handleNextButtonClick = function () {

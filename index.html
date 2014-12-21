@@ -29,20 +29,20 @@
                     <input type="text" placeholder="Value" id="search-field" value="snoop dogg">
                 </div>
                 <div class="large-3 columns" id="artist-dropdown-box">
-                        <select id="artist-dropdown">
+                        <select id="artist-dropdown" class="search-dropdown">
                             <option value="hottest">Hottest</option>
-                            <option value="newes">Newest</option>
+                            <option value="newest">Newest</option>
                             <option value="year">Year</option>
                             <option value="similar">Similar</option>
                         </select>
                 </div>
-                <div class="large-3 columns" id="track-dropdown-box">
+                <div class="large-3 columns" id="track-dropdown-box" class="search-dropdown">
                     <select id="track-dropdown">
                         <option value="exact">Exact</option>
                         <option value="similar">Similar</option>
                     </select>
                 </div>
-                <div class="large-3 columns" id="genre-dropdown-box">
+                <div class="large-3 columns" id="genre-dropdown-box" class="search-dropdown">
                     <select id="genre-dropdown">
                         <option value="hottest">Hottest</option>
                         <option value="newes">Newest</option>
@@ -167,6 +167,7 @@
 <script type="text/javascript" src="src/PlaylistView.js"></script>
 <script type="text/javascript" src="src/ControlsView.js"></script>
 <script type="text/javascript" src="src/SearchView.js"></script>
+
 <script>
     $(document).foundation();
     $(function () {

@@ -20,10 +20,10 @@ App.MainModel = (function () {
             });
         },
 
-        searchEchoNestTracks = function (query, lowerVal, upperVal, pickedTab) {
+        searchEchoNestTracks = function (query, lowerVal, upperVal, pickedTab, visibleDropdownValue) {
             $.ajax({
                 type: "GET",
-                url: buildEchoNestUrl(query, pickedTab),
+                url: buildEchoNestUrl(query, pickedTab, visibleDropdownValue),
                 cache: false,
                 success: function (jsonObject) {
                     var tracks = jsonObject.response.songs;
@@ -36,13 +36,24 @@ App.MainModel = (function () {
             });
         },
 
-        buildEchoNestUrl = function(query, type){
-            console.log(type)
+        buildEchoNestUrl = function(query, type, dropdownValue){
             switch(type){
                 case "artist-tab":
-                    return "https://developer.echonest.com/api/v4/playlist/static?api_key=" + echoNestAPIKey + "&format=json&artist=" + query + "&sort=song_hotttnesss-desc&results=" + searchLimit;
+                        return echoNestArtistQueryBuilder(query, dropdownValue)
                 case "genre-tab":
                     return "http://developer.echonest.com/api/v4/playlist/static?api_key=" + echoNestAPIKey + "&genre="+ query + "&format=json&results=" + searchLimit + "&type=genre-radio&song_selection=song_hotttnesss-top";
+            }
+        },
+
+        echoNestArtistQueryBuilder = function(query, visibleDropdownValue){
+            switch(visibleDropdownValue){
+                case "hottest":
+                    return "https://developer.echonest.com/api/v4/playlist/static?api_key=" + echoNestAPIKey + "&format=json&artist=" + query + "&sort=song_hotttnesss-desc&results=" + searchLimit;
+                break;
+                case "similar":
+                    return "https://developer.echonest.com/api/v4/playlist/static?api_key=" + echoNestAPIKey + "&format=json&artist=" + query + "&type=artist-radio&song_selection=song_hotttnesss-top&results=" + searchLimit;
+                break;
+
             }
         },
 
