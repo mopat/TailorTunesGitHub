@@ -8,14 +8,9 @@ App.SearchView = (function () {
         $yearSlider = null,
         $searchButton = null,
         $picker = null,
-        $hottestSwitchBox = null,
-        $similarSwitchBox = null,
-        $yearSwitchBox = null,
-        $newSwitchBox = null,
-        $hottestSwitch = null,
-        $similarSwitch = null,
-        $yearSwitch = null,
-        $newSwitch = null,
+        $artistDropdownBox = null,
+        $trackDropwdownBox = null,
+        $genreDropwdownBox = null,
 
         init = function () {
             $searchField = $("#search-field");
@@ -24,6 +19,9 @@ App.SearchView = (function () {
             $yearSlider = $("#year-slider");
             $picker = $(".picker");
 
+            $artistDropdownBox = $("#artist-dropdown-box");
+            $trackDropwdownBox = $("#track-dropdown-box");
+            $genreDropwdownBox = $("#genre-dropdown-box");
             initYearSlider();
 
             $searchButton.on("click", handleSearchClick);
@@ -80,15 +78,27 @@ App.SearchView = (function () {
         },
 
         artistMode = function () {
+            $artistDropdownBox.show();
+            $yearSlider.show();
 
+            $trackDropwdownBox.hide();
+            $genreDropwdownBox.hide();
         },
 
         trackMode = function () {
+            $trackDropwdownBox.show();
 
+            $artistDropdownBox.hide();
+            $genreDropwdownBox.hide();
+            $yearSlider.hide();
         },
 
         genreMode = function () {
+            $genreDropwdownBox.show();
+            $yearSlider.show();
 
+            $trackDropwdownBox.hide();
+            $artistDropdownBox.hide();
         };
 
 
