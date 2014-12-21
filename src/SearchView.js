@@ -6,6 +6,8 @@ App.SearchView = (function () {
         $searchField = null,
         $yearSliderBox = null,
         $yearSlider = null,
+        $yearSliderValueLower = null,
+        $yearSliderValueUpper = null,
         $searchButton = null,
         $picker = null,
         $artistDropdownBox = null,
@@ -17,6 +19,8 @@ App.SearchView = (function () {
             $searchButton = $("#search-button");
             $yearSliderBox = $("#year-slider-box");
             $yearSlider = $("#year-slider");
+            $yearSliderValueLower = $('#year-slider-value-lower')
+            $yearSliderValueUpper = $('#year-slider-value-upper')
             $picker = $(".picker");
 
             $artistDropdownBox = $("#artist-dropdown-box");
@@ -42,12 +46,12 @@ App.SearchView = (function () {
                     decimals: 0
                 })
             });
-            $yearSlider.Link('lower').to($('#year-slider-value-lower'));
-            $yearSlider.Link('upper').to($('#year-slider-value-upper'));
+            $yearSlider.Link('lower').to($yearSliderValueLower);
+            $yearSlider.Link('upper').to($yearSliderValueUpper);
         },
 
         handleSearchClick = function () {
-            $(that).trigger("searchButtonClicked", [$searchField.val(), $('#year-slider-value-lower').html(), $('#year-slider-value-upper').html(), $(".picked").attr("id")]);
+            $(that).trigger("searchButtonClicked", [$searchField.val(), $yearSliderValueLower.html(), $yearSliderValueUpper.html(), $(".picked").attr("id")]);
         },
 
         handleTabClicked = function (e) {
@@ -79,7 +83,7 @@ App.SearchView = (function () {
 
         artistMode = function () {
             $artistDropdownBox.show();
-            $yearSlider.show();
+            $yearSliderBox.show();
 
             $trackDropwdownBox.hide();
             $genreDropwdownBox.hide();
@@ -90,12 +94,12 @@ App.SearchView = (function () {
 
             $artistDropdownBox.hide();
             $genreDropwdownBox.hide();
-            $yearSlider.hide();
+            $yearSliderBox.hide();
         },
 
         genreMode = function () {
             $genreDropwdownBox.show();
-            $yearSlider.show();
+            $yearSliderBox.show();
 
             $trackDropwdownBox.hide();
             $artistDropdownBox.hide();
