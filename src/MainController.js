@@ -27,7 +27,9 @@ App.MainController = (function () {
 
             $(playlistView).on("playlistItemClicked", handlePlaylistItemClick);
 
-            $(searchView).on("searchButtonClicked", handleSearchButtonClick);
+            $(searchView).on("searchButtonClickedSpotify", handleSearchButtonClickedSpotify);
+
+            $(searchView).on("searchButtonClickedEchoNest", handleSearchButtonClickedEchoNest);
         },
 
         handleTrackPick = function (event, src, title) {
@@ -42,8 +44,12 @@ App.MainController = (function () {
             playlistView.handlePrevOrNextClicked("next");
         },
 
-        handleSearchButtonClick = function (event, searchVal, lowerVal, upperVal, pickedTab, visibleDropdownValue) {
-            mainModel.searchEchoNestTracks(searchVal, lowerVal, upperVal, pickedTab, visibleDropdownValue);
+        handleSearchButtonClickedSpotify = function (event, searchVal, lowerVal, upperVal, pickedTab, visibleDropdownValue) {
+            mainModel.searchSpotifyTracks(searchVal, lowerVal, upperVal, pickedTab, visibleDropdownValue);
+        },
+
+        handleSearchButtonClickedEchoNest = function (event, searchVal, pickedTab, visibleDropdownValue) {
+            mainModel.searchEchoNestTracks(searchVal, pickedTab, visibleDropdownValue);
         },
 
         handleNextButtonClick = function () {

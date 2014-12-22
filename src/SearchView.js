@@ -55,7 +55,14 @@ App.SearchView = (function () {
 
         handleSearchClick = function () {
            var visibleDropdownValue = getVisibleDropdownValue();
-            $(that).trigger("searchButtonClicked", [$searchField.val(), $yearSliderValueLower.html(), $yearSliderValueUpper.html(), $(".picked").attr("id"), visibleDropdownValue]);
+            if(visibleDropdownValue == "newest" || visibleDropdownValue == "year"){
+                //search Spotify
+                $(that).trigger("searchButtonClickedSpotify", [$searchField.val(), $yearSliderValueLower.html(), $yearSliderValueUpper.html(), $(".picked").attr("id"), visibleDropdownValue]);
+            }
+            else{
+                //search Echonest
+                $(that).trigger("searchButtonClickedEchoNest", [$searchField.val(), $(".picked").attr("id"), visibleDropdownValue]);
+            }
         },
 
         handleTabClicked = function (e) {

@@ -20,7 +20,7 @@ App.MainModel = (function () {
             });
         },
 
-        searchEchoNestTracks = function (query, lowerVal, upperVal, pickedTab, visibleDropdownValue) {
+        searchEchoNestTracks = function (query, pickedTab, visibleDropdownValue) {
             $.ajax({
                 type: "GET",
                 url: buildEchoNestUrl(query, pickedTab, visibleDropdownValue),
@@ -36,28 +36,64 @@ App.MainModel = (function () {
             });
         },
 
-        buildEchoNestUrl = function(query, type, dropdownValue){
-            switch(type){
+        buildEchoNestUrl = function (query, type, visibleDropdownValue) {
+
+            switch (type) {
                 case "artist-tab":
-                        return echoNestArtistQueryBuilder(query, dropdownValue)
+                    return echoNestArtistQueryBuilder(query, visibleDropdownValue);
+                    break;
                 case "genre-tab":
-                    return "http://developer.echonest.com/api/v4/playlist/static?api_key=" + echoNestAPIKey + "&genre="+ query + "&format=json&results=" + searchLimit + "&type=genre-radio&song_selection=song_hotttnesss-top";
+                    return echoNestGenreQueryBuilder(query, visibleDropdownValue);
+                    break;
+                case "track-tab":
+                    return echoNestTrackQueryBuilder(query, visibleDropdownValue);
             }
         },
 
-        echoNestArtistQueryBuilder = function(query, visibleDropdownValue){
-            switch(visibleDropdownValue){
+        echoNestArtistQueryBuilder = function (query, visibleDropdownValue) {
+            switch (visibleDropdownValue) {
                 case "hottest":
                     return "https://developer.echonest.com/api/v4/playlist/static?api_key=" + echoNestAPIKey + "&format=json&artist=" + query + "&sort=song_hotttnesss-desc&results=" + searchLimit;
-                break;
+                    break;
                 case "similar":
                     return "https://developer.echonest.com/api/v4/playlist/static?api_key=" + echoNestAPIKey + "&format=json&artist=" + query + "&type=artist-radio&song_selection=song_hotttnesss-top&results=" + searchLimit;
-                break;
-
+                    break;
             }
         },
 
-        searchSpotifyTracksByYear = function (searchVal, lowerVal, upperVal) {
+        echoNestGenreQueryBuilder = function (query, visibleDropdownValue) {
+            switch (visibleDropdownValue) {
+                case "hottest":
+                    return "https://developer.echonest.com/api/v4/playlist/static?api_key=" + echoNestAPIKey + "&format=json&genre=" + query + "&type=genre-radio&song_selection=song_hotttnesss-top&results=" + searchLimit;
+                    break;
+            }
+        },
+
+        echoNestTrackQueryBuilder = function (query, visibleDropdownValue) {
+            var getIdQuery =  "https://developer.echonest.com/api/v4/playlist/static?api_key=" + echoNestAPIKey + "&format=json&title=" + query + "$bucket=tracks&results=5";
+            //erst suchergebnisse zu track , dann nutzer auswählen lassen, dann id holen, dann playlis suchen
+
+            $.ajax({
+                type: "GET",
+                url: getIdQuery,
+                cache: false,
+                success: function (jsonObject) {
+                    var tracks = jsonObject.response.songs;
+                    playlist = [];
+                    searchSoundCloudTracks(tracks, "soundcloud", query);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert("ERROR " + errorThrown + " at" + XMLHttpRequest);
+                }
+            });
+            switch (visibleDropdownValue) {
+                case "similar":
+                    return "https://developer.echonest.com/api/v4/playlist/static?api_key=" + echoNestAPIKey + "&format=json&artist=" + query + "&type=artist-radio&song_selection=song_hotttnesss-top&results=" + searchLimit;
+                    break;
+            }
+        },
+
+        searchSpotifyTracks = function (searchVal, lowerVal, upperVal) {
             var artist = searchVal;
             $.ajax({
                 type: "GET",
@@ -153,8 +189,8 @@ App.MainModel = (function () {
 
         removeDuplicates = function (tracks) {
             var uniqueObjects = [];
-            $.each(tracks, function(i, el){
-                if($.inArray(el, uniqueObjects) === -1) uniqueObjects.push(el);
+            $.each(tracks, function (i, el) {
+                if ($.inArray(el, uniqueObjects) === -1) uniqueObjects.push(el);
             });
             return uniqueObjects;
         },
@@ -236,7 +272,7 @@ App.MainModel = (function () {
         };
 
     that.searchEchoNestTracks = searchEchoNestTracks;
-    that.searchSpotifyTracksByYear = searchSpotifyTracksByYear;
+    that.searchSpotifyTracks = searchSpotifyTracks;
     that.init = init;
 
     return that;
