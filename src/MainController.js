@@ -44,12 +44,12 @@ App.MainController = (function () {
             playlistView.handlePrevOrNextClicked("next");
         },
 
-        handleSearchButtonClickedSpotify = function (event, searchVal, lowerVal, upperVal, pickedTab, visibleDropdownValue) {
-            mainModel.searchSpotifyTracks(searchVal, lowerVal, upperVal, pickedTab, visibleDropdownValue);
+        handleSearchButtonClickedSpotify = function (event, searchVal, pickedTab, lowerVal, upperVal, visibleDropdownValue) {
+            mainModel.searchSpotifyTracks(searchVal, pickedTab, lowerVal, upperVal, visibleDropdownValue);
         },
 
-        handleSearchButtonClickedEchoNest = function (event, searchVal, pickedTab, visibleDropdownValue) {
-            mainModel.searchEchoNestTracks(searchVal, pickedTab, visibleDropdownValue);
+        handleSearchButtonClickedEchoNest = function (event, searchVal, pickedTab, lowerVal, upperVal, visibleDropdownValue) {
+            mainModel.searchEchoNestTracks(searchVal, pickedTab, lowerVal, upperVal, visibleDropdownValue);
         },
 
         handleNextButtonClick = function () {

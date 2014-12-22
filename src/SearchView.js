@@ -57,11 +57,11 @@ App.SearchView = (function () {
            var visibleDropdownValue = getVisibleDropdownValue();
             if(visibleDropdownValue == "newest" || visibleDropdownValue == "year"){
                 //search Spotify
-                $(that).trigger("searchButtonClickedSpotify", [$searchField.val(), $yearSliderValueLower.html(), $yearSliderValueUpper.html(), $(".picked").attr("id"), visibleDropdownValue]);
+                $(that).trigger("searchButtonClickedSpotify", [$searchField.val(), $(".picked").attr("id"), $yearSliderValueLower.html(), $yearSliderValueUpper.html(), visibleDropdownValue]);
             }
             else{
                 //search Echonest
-                $(that).trigger("searchButtonClickedEchoNest", [$searchField.val(), $(".picked").attr("id"), visibleDropdownValue]);
+                $(that).trigger("searchButtonClickedEchoNest", [$searchField.val(), $(".picked").attr("id"), $yearSliderValueLower.html(), $yearSliderValueUpper.html(), visibleDropdownValue]);
             }
         },
 

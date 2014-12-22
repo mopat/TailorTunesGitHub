@@ -55,3 +55,4 @@ https://github.com/mattbryson/TouchSwipe-Jquery-Plugin
 http://api.jquerymobile.com/swipeleft/
 http://stackoverflow.com/questions/10397940/jquery-mobile-loading-message
 http://stackoverflow.com/questions/16578936/changing-swipe-sensitivity-with-jquery-mobile
+http://developer.echonest.com/forums/thread/472
