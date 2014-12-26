@@ -42,7 +42,9 @@ body {
 #header a{
     color: #f5f5f5;
 }
-
+.picker{
+    height: 40px;
+}
 .picked {
     background-color: #1dc116;
 }

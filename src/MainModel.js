@@ -91,7 +91,7 @@ App.MainModel = (function () {
             });
             switch (visibleDropdownValue) {
                 case "similar":
-                    return "https://developer.echonest.com/api/v4/playlist/static?api_key=" + echoNestAPIKey + "&format=json&artist=" + query + "&type=artist-radio&song_selection=song_hotttnesss-top&results=" + searchLimit;
+                    return "https://developer.echonest.com/api/v4/playlist/static?api_key=" + echoNestAPIKey + "&format=json&title=" + query + "&type=song-radio&song_selection=song_hotttnesss-top&results=" + searchLimit;
                     break;
             }
         },

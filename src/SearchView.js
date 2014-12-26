@@ -25,8 +25,6 @@ App.SearchView = (function () {
             $picker = $(".picker");
             $searchDropdown =   $( ".search-dropdown" );
 
-
-
             $artistDropdownBox = $("#artist-dropdown-box");
             $trackDropwdownBox = $("#track-dropdown-box");
             $genreDropwdownBox = $("#genre-dropdown-box");
@@ -68,6 +66,7 @@ App.SearchView = (function () {
         },
 
         handleTabClicked = function (e) {
+            resetDropdowns();
             $(".picked").switchClass("picked", "unpicked", 0);
             $(e.target).closest(".picker").switchClass("unpicked", "picked", 0);
             var tabId = $(this).attr("id");
@@ -96,7 +95,6 @@ App.SearchView = (function () {
 
         artistMode = function () {
             $artistDropdownBox.show();
-            $yearSliderBox.show();
 
             $trackDropwdownBox.hide();
             $genreDropwdownBox.hide();
@@ -107,12 +105,10 @@ App.SearchView = (function () {
 
             $artistDropdownBox.hide();
             $genreDropwdownBox.hide();
-            $yearSliderBox.hide();
         },
 
         genreMode = function () {
             $genreDropwdownBox.show();
-            $yearSliderBox.show();
 
             $trackDropwdownBox.hide();
             $artistDropdownBox.hide();
@@ -132,6 +128,13 @@ App.SearchView = (function () {
             if($(this).val() == "year" || $(this).val() == "year-echo")
                 $yearSliderBox.show();
             else $yearSliderBox.hide();
+        },
+
+        resetDropdowns = function(){
+            $yearSliderBox.hide();
+            $searchDropdown.each(function() {
+                $(this).find('option:first').prop('selected', 'selected');
+            });
         };
 
     that.init = init;
