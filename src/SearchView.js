@@ -13,7 +13,7 @@ App.SearchView = (function () {
         $artistDropdownBox = null,
         $trackDropwdownBox = null,
         $genreDropwdownBox = null,
-        selectedDropdownValue = null,
+        $searchDropdown = null,
 
         init = function () {
             $searchField = $("#search-field");
@@ -23,6 +23,7 @@ App.SearchView = (function () {
             $yearSliderValueLower = $('#year-slider-value-lower')
             $yearSliderValueUpper = $('#year-slider-value-upper')
             $picker = $(".picker");
+          $searchDropdown =   $( ".search-dropdown" );
 
 
 
@@ -35,6 +36,7 @@ App.SearchView = (function () {
             $picker.on("click", handleTabClicked);
 
             $("#advanced-search-box .switch").on("click", handleSwitchClicked);
+            $searchDropdown.on("change", handleDropdownChange);
         },
 
         initYearSlider = function () {
@@ -118,12 +120,18 @@ App.SearchView = (function () {
 
         getVisibleDropdownValue = function(){
             var visibleDropdownValue = "";
-            $( ".search-dropdown" ).each(function( index ) {
+            $searchDropdown.each(function( index ) {
                 if($(this).is(":visible")){
                     visibleDropdownValue = $(this).val();
                 }
             });
             return visibleDropdownValue;
+        },
+
+        handleDropdownChange = function(){
+            if($(this).val() == "year" || $(this).val() == "year-echo")
+                $yearSliderBox.show();
+            else $yearSliderBox.hide();
         };
 
     that.init = init;
