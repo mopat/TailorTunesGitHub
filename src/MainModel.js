@@ -146,7 +146,32 @@ App.MainModel = (function () {
             }
         },
 
-
+        searchSoundcloudTracksSimple = function(query){
+            playlist = [];
+            ajaxQuery(query);
+            function ajaxQuery(query) {
+                return $.ajax({
+                    url: getScUrl(query),
+                    data: {
+                        format: 'json'
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert("ERROR " + errorThrown + " at" + XMLHttpRequest);
+                    },
+                    dataType: 'json',
+                    success: function (data) {
+                        console.log(data)
+                        if (data.length != 0) {
+                            var matchingTracks = getMatchingResults(data, query);
+                            console.log("QUERY ", query);
+                            playlist = data;
+                        }
+                        setPlaylistView();
+                    },
+                    type: 'GET'
+                });
+            }
+        },
         searchSoundCloudTracks = function (tracks, usedAPI, artistQuery) {
             var ajaxCalls = [];
             var artist = null;
@@ -310,6 +335,7 @@ App.MainModel = (function () {
 
     that.searchEchoNestTracks = searchEchoNestTracks;
     that.searchSpotifyTracks = searchSpotifyTracks;
+    that.searchSoundcloudTracksSimple = searchSoundcloudTracksSimple;
     that.init = init;
 
     return that;

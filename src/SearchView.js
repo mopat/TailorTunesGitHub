@@ -23,7 +23,7 @@ App.SearchView = (function () {
             $yearSliderValueLower = $('#year-slider-value-lower')
             $yearSliderValueUpper = $('#year-slider-value-upper')
             $picker = $(".picker");
-          $searchDropdown =   $( ".search-dropdown" );
+            $searchDropdown =   $( ".search-dropdown" );
 
 
 
@@ -57,14 +57,14 @@ App.SearchView = (function () {
 
         handleSearchClick = function () {
            var visibleDropdownValue = getVisibleDropdownValue();
-            if(visibleDropdownValue == "newest" || visibleDropdownValue == "year"){
+            if(visibleDropdownValue == "newest" || visibleDropdownValue == "year")
                 //search Spotify
                 $(that).trigger("searchButtonClickedSpotify", [$searchField.val(), $(".picked").attr("id"), $yearSliderValueLower.html(), $yearSliderValueUpper.html(), visibleDropdownValue]);
-            }
-            else{
+            else if(visibleDropdownValue == "simple")
+                $(that).trigger("searchButtonClickedSoundcloud", [$searchField.val()]);
+            else
                 //search Echonest
                 $(that).trigger("searchButtonClickedEchoNest", [$searchField.val(), $(".picked").attr("id"), $yearSliderValueLower.html(), $yearSliderValueUpper.html(), visibleDropdownValue]);
-            }
         },
 
         handleTabClicked = function (e) {

@@ -30,6 +30,8 @@ App.MainController = (function () {
             $(searchView).on("searchButtonClickedSpotify", handleSearchButtonClickedSpotify);
 
             $(searchView).on("searchButtonClickedEchoNest", handleSearchButtonClickedEchoNest);
+
+            $(searchView).on("searchButtonClickedSoundcloud", handleSearchButtonClickedSoundcloud);
         },
 
         handleTrackPick = function (event, src, title) {
@@ -52,13 +54,16 @@ App.MainController = (function () {
             mainModel.searchEchoNestTracks(searchVal, pickedTab, lowerVal, upperVal, visibleDropdownValue);
         },
 
-        handleNextButtonClick = function () {
+        handleSearchButtonClickedSoundcloud = function (event, searchVal) {
+            mainModel.searchSoundcloudTracksSimple(searchVal);
+        },
 
+        handleNextButtonClick = function () {
             playlistView.handlePrevOrNextClicked("next");
         },
 
         handlePreviousButtonClick = function () {
-            playlistView.handlePlayOrNextClicked("previous");
+            playlistView.handlePrevOrNextClicked("previous");
         },
 
         handlePlaylistCreated = function (event, playlist) {
