@@ -3,13 +3,16 @@
  */
 App.ModalView = (function () {
     var that = {},
+        $chooseModal = null,
         $chooseModalList = null,
 
         init = function () {
+            $chooseModal = $("#choose-modal");
             $chooseModalList =  $("#choose-modal-ul");
         },
 
         setModalContent = function(tracks){
+            $chooseModalList.empty();
             console.log(tracks)
             for(var i in tracks){
                 var currentArtistName = tracks[i].artist_name;
@@ -24,7 +27,7 @@ App.ModalView = (function () {
 
 
             }
-            $('#choose-modal').foundation('reveal', 'open');
+            $chooseModal.foundation('reveal', 'open');
         };
 
     that.setModalContent = setModalContent;
