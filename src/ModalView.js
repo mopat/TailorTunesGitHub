@@ -21,7 +21,10 @@ App.ModalView = (function () {
                 listItem.attr("data-track-id", currentTrackId);
 
                 $chooseModalList.append(listItem);
+
+
             }
+            $('#choose-modal').foundation('reveal', 'open');
         };
 
     that.setModalContent = setModalContent;

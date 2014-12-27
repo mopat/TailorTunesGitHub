@@ -57,3 +57,5 @@ http://stackoverflow.com/questions/10397940/jquery-mobile-loading-message
 http://stackoverflow.com/questions/16578936/changing-swipe-sensitivity-with-jquery-mobile
 http://developer.echonest.com/forums/thread/472
 http://stackoverflow.com/questions/10508795/set-the-selectedindex-of-a-dropdown-using-jquery
+http://foundation.zurb.com/docs/components/reveal.html
+http://stackoverflow.com/questions/15245966/revealing-a-modal-in-foundation-4
