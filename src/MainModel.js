@@ -98,6 +98,24 @@ App.MainModel = (function () {
             }
         },
 
+        searchSimilarTracksById = function(trackId, query){
+            var searchUrl = "http://developer.echonest.com/api/v4/playlist/static?api_key=" + echoNestAPIKey + "&song_id=" + trackId + "&format=json&results=20&type=song-radio";
+            $.ajax({
+                type: "GET",
+                url: searchUrl,
+                cache: false,
+                success: function (jsonObject) {
+                    var tracks = jsonObject.response.songs;
+                    playlist = [];
+                    console.log("trackii", tracks)
+                    searchSoundCloudTracks(tracks, "soundcloud", query);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert("ERROR " + errorThrown + " at" + XMLHttpRequest);
+                }
+            });
+        },
+
         searchSpotifyTracks = function (query, type, lowerVal, upperVal, visibleDropdownValue) {
             var artist = query;
             $.ajax({
@@ -336,6 +354,7 @@ App.MainModel = (function () {
     that.searchEchoNestTracks = searchEchoNestTracks;
     that.searchSpotifyTracks = searchSpotifyTracks;
     that.searchSoundcloudTracksSimple = searchSoundcloudTracksSimple;
+    that.searchSimilarTracksById = searchSimilarTracksById;
     that.init = init;
 
     return that;

@@ -36,7 +36,9 @@ App.MainController = (function () {
 
             $(searchView).on("searchButtonClickedSoundcloud", handleSearchButtonClickedSoundcloud);
 
-            $(mainModel).on("trackSearchResultsComplete", handleTrackSearchResultsComplete)
+            $(mainModel).on("trackSearchResultsComplete", handleTrackSearchResultsComplete);
+
+            $(modalView).on("trackIdPicked", handleTrackIdPicked);
         },
 
         handleTrackPick = function (event, src, title) {
@@ -81,6 +83,10 @@ App.MainController = (function () {
 
         handleTrackSearchResultsComplete = function(event, tracks){
             modalView.setModalContent(tracks);
+        },
+
+        handleTrackIdPicked = function(event, trackId, query){
+            mainModel.searchSimilarTracksById(trackId, query);
         };
 
 
