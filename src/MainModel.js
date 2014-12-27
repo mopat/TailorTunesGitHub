@@ -21,7 +21,8 @@ App.MainModel = (function () {
         },
 
         searchEchoNestTracks = function (query, type, lowerVal, upperVal, visibleDropdownValue) {
-            $.ajax({
+            buildEchoNestUrl(query, type, lowerVal, upperVal, visibleDropdownValue)
+          /**  $.ajax({
                 type: "GET",
                 url: buildEchoNestUrl(query, type, lowerVal, upperVal, visibleDropdownValue),
                 cache: false,
@@ -34,6 +35,7 @@ App.MainModel = (function () {
                     alert("ERROR " + errorThrown + " at" + XMLHttpRequest);
                 }
             });
+           **/
         },
 
         buildEchoNestUrl = function (query, type, lowerVal, upperVal, visibleDropdownValue) {
@@ -73,7 +75,7 @@ App.MainModel = (function () {
         },
 
         echoNestTrackQueryBuilder = function (query, visibleDropdownValue) {
-            var getIdQuery = "https://developer.echonest.com/api/v4/playlist/static?api_key=" + echoNestAPIKey + "&format=json&title=" + query + "$bucket=tracks&results=5";
+            var getIdQuery = "http://developer.echonest.com/api/v4/song/search?api_key="+ echoNestAPIKey + "&format=json&results=20"  + "&title=" + query + "&sort=song_hotttnesss-desc";
             //erst suchergebnisse zu track , dann nutzer auswählen lassen, dann id holen, dann playlis suchen
 
             $.ajax({
@@ -82,8 +84,8 @@ App.MainModel = (function () {
                 cache: false,
                 success: function (jsonObject) {
                     var tracks = jsonObject.response.songs;
-                    playlist = [];
-                    searchSoundCloudTracks(tracks, "soundcloud", query);
+                    $(that).trigger("trackSearchResultsComplete", [tracks]);
+                    console.log("tracks", tracks)
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     alert("ERROR " + errorThrown + " at" + XMLHttpRequest);
@@ -97,7 +99,6 @@ App.MainModel = (function () {
         },
 
         searchSpotifyTracks = function (query, type, lowerVal, upperVal, visibleDropdownValue) {
-            console.log(type)
             var artist = query;
             $.ajax({
                 type: "GET",
@@ -160,7 +161,6 @@ App.MainModel = (function () {
                     },
                     dataType: 'json',
                     success: function (data) {
-                        console.log(data)
                         if (data.length != 0) {
                             var matchingTracks = getMatchingResults(data, query);
                             console.log("QUERY ", query);

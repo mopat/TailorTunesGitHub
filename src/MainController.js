@@ -5,17 +5,20 @@ App.MainController = (function () {
         playlistView = null,
         controlsView = null,
         searchView = null,
+        modalView = null,
 
         init = function () {
             mainModel = App.MainModel;
             playlistView = App.PlaylistView;
             controlsView = App.ControlsView;
             searchView = App.SearchView;
+            modalView = App.ModalView;
 
             mainModel.init();
             playlistView.init();
             controlsView.init();
             searchView.init();
+            modalView.init();
 
             $(playlistView).on("trackPicked", handleTrackPick);
             $(playlistView).on("resetPlayer", handleResetPlayer);
@@ -32,6 +35,8 @@ App.MainController = (function () {
             $(searchView).on("searchButtonClickedEchoNest", handleSearchButtonClickedEchoNest);
 
             $(searchView).on("searchButtonClickedSoundcloud", handleSearchButtonClickedSoundcloud);
+
+            $(mainModel).on("trackSearchResultsComplete", handleTrackSearchResultsComplete)
         },
 
         handleTrackPick = function (event, src, title) {
@@ -72,6 +77,10 @@ App.MainController = (function () {
 
         handlePlaylistItemClick = function (event, streamUrl, title) {
             controlsView.handleTrackPicked(streamUrl, title);
+        },
+
+        handleTrackSearchResultsComplete = function(event, tracks){
+            modalView.setModalContent(tracks);
         };
 
 
