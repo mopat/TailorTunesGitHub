@@ -53,7 +53,6 @@ App.PlaylistView = (function () {
 
 
         addPlaylistItem = function (playlist) {
-            console.log(playlist)
             addedPlaylists++;
             completePlaylist.push.apply(completePlaylist, playlist);
             for (var i = 0; i < playlist.length; i++) {
@@ -97,6 +96,7 @@ App.PlaylistView = (function () {
                 $sortModeSwitch.click();
             }
         },
+
 
         startPlaylist = function () {
             var firstTrack = $("#playlist .playlist-item").first();

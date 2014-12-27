@@ -36,9 +36,13 @@ App.MainController = (function () {
 
             $(searchView).on("searchButtonClickedSoundcloud", handleSearchButtonClickedSoundcloud);
 
-            $(mainModel).on("trackSearchResultsComplete", handleTrackSearchResultsComplete);
+            $(mainModel).on("echoNestTrackSearchResultsComplete", handleEchoNestTrackSearchResultsComplete);
+
+            $(mainModel).on("soundcloudTrackSearchResultsComplete", handleSoundcloudTrackSearchResultsComplete);
 
             $(modalView).on("trackIdPicked", handleTrackIdPicked);
+
+            $(modalView).on("soundcloudTrackPicked", handleSoundlcoudTrackPicked);
         },
 
         handleTrackPick = function (event, src, title) {
@@ -77,12 +81,20 @@ App.MainController = (function () {
             playlistView.addPlaylistItem(playlist);
         },
 
+        handleSoundlcoudTrackPicked = function (event, track) {
+            playlistView.addPlaylistItem(track);
+        },
+
         handlePlaylistItemClick = function (event, streamUrl, title) {
             controlsView.handleTrackPicked(streamUrl, title);
         },
 
-        handleTrackSearchResultsComplete = function(event, tracks){
-            modalView.setModalContent(tracks);
+        handleEchoNestTrackSearchResultsComplete = function(event, tracks){
+            modalView.setModalEchoNestContent(tracks);
+        },
+
+        handleSoundcloudTrackSearchResultsComplete = function(event, tracks){
+            modalView.setModalSoundcloudContent(tracks);
         },
 
         handleTrackIdPicked = function(event, trackId, query){

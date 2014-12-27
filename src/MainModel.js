@@ -21,8 +21,9 @@ App.MainModel = (function () {
         },
 
         searchEchoNestTracks = function (query, type, lowerVal, upperVal, visibleDropdownValue) {
-            buildEchoNestUrl(query, type, lowerVal, upperVal, visibleDropdownValue)
-          /**  $.ajax({
+            if (type == "track-tab" && visibleDropdownValue == "similar")
+                searchEchoNestSimilarTracks(query);
+            else $.ajax({
                 type: "GET",
                 url: buildEchoNestUrl(query, type, lowerVal, upperVal, visibleDropdownValue),
                 cache: false,
@@ -35,7 +36,6 @@ App.MainModel = (function () {
                     alert("ERROR " + errorThrown + " at" + XMLHttpRequest);
                 }
             });
-           **/
         },
 
         buildEchoNestUrl = function (query, type, lowerVal, upperVal, visibleDropdownValue) {
@@ -69,14 +69,13 @@ App.MainModel = (function () {
                     return "https://developer.echonest.com/api/v4/playlist/static?api_key=" + echoNestAPIKey + "&format=json&genre=" + query + "&type=genre-radio&song_selection=song_hotttnesss-top&results=" + searchLimit;
                     break;
                 case "year-echo":
-                    return "https://developer.echonest.com/api/v4/playlist/static?api_key=" + echoNestAPIKey + "&artist_start_year_after=" + lowerVal.toString() + "artist_end_year_before=" + upperVal.toString()  +"&format=json&style=" + query + "&song_selection=song_hotttnesss-top&results=" + searchLimit;
+                    return "https://developer.echonest.com/api/v4/playlist/static?api_key=" + echoNestAPIKey + "&artist_start_year_after=" + lowerVal.toString() + "artist_end_year_before=" + upperVal.toString() + "&format=json&style=" + query + "&song_selection=song_hotttnesss-top&results=" + searchLimit;
                     break;
             }
         },
 
-        echoNestTrackQueryBuilder = function (query, visibleDropdownValue) {
-            var getIdQuery = "http://developer.echonest.com/api/v4/song/search?api_key="+ echoNestAPIKey + "&format=json&results=20"  + "&title=" + query + "&sort=song_hotttnesss-desc";
-            //erst suchergebnisse zu track , dann nutzer auswählen lassen, dann id holen, dann playlis suchen
+        searchEchoNestSimilarTracks = function (query) {
+            var getIdQuery = "http://developer.echonest.com/api/v4/song/search?api_key=" + echoNestAPIKey + "&format=json&results=20" + "&title=" + query + "&sort=song_hotttnesss-desc";
 
             $.ajax({
                 type: "GET",
@@ -84,21 +83,15 @@ App.MainModel = (function () {
                 cache: false,
                 success: function (jsonObject) {
                     var tracks = jsonObject.response.songs;
-                    $(that).trigger("trackSearchResultsComplete", [tracks]);
-                    console.log("tracks", tracks)
+                    $(that).trigger("echoNestTrackSearchResultsComplete", [tracks]);
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     alert("ERROR " + errorThrown + " at" + XMLHttpRequest);
                 }
             });
-            switch (visibleDropdownValue) {
-                case "similar":
-                    return "https://developer.echonest.com/api/v4/playlist/static?api_key=" + echoNestAPIKey + "&format=json&title=" + query + "&type=song-radio&song_selection=song_hotttnesss-top&results=" + searchLimit;
-                    break;
-            }
         },
 
-        searchSimilarTracksById = function(trackId, query){
+        searchSimilarTracksById = function (trackId, query) {
             var searchUrl = "http://developer.echonest.com/api/v4/playlist/static?api_key=" + echoNestAPIKey + "&song_id=" + trackId + "&format=json&results=20&type=song-radio";
             $.ajax({
                 type: "GET",
@@ -107,7 +100,6 @@ App.MainModel = (function () {
                 success: function (jsonObject) {
                     var tracks = jsonObject.response.songs;
                     playlist = [];
-                    console.log("trackii", tracks)
                     searchSoundCloudTracks(tracks, "soundcloud", query);
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -165,7 +157,7 @@ App.MainModel = (function () {
             }
         },
 
-        searchSoundcloudTracksSimple = function(query){
+        searchSoundcloudTracksSimple = function (query) {
             playlist = [];
             ajaxQuery(query);
             function ajaxQuery(query) {
@@ -181,10 +173,9 @@ App.MainModel = (function () {
                     success: function (data) {
                         if (data.length != 0) {
                             var matchingTracks = getMatchingResults(data, query);
+                            $(that).trigger("soundcloudTrackSearchResultsComplete", [matchingTracks]);
                             console.log("QUERY ", query);
-                            playlist = data;
                         }
-                        setPlaylistView();
                     },
                     type: 'GET'
                 });
