@@ -3,8 +3,8 @@ App.MainModel = (function () {
     var that = {},
         sc_client_id = '23a3031c7cd251c7c217ca127777e48b',
         echoNestAPIKey = "N2U2OZ8ZDCXNV9DBG",
-        scLimit = 200,
-        searchLimit = 20,
+        scLimit = 100,
+        searchLimit = 10,
         playlist = [],
         completePlaylist = [],
         stringScoreTolerance = 0.5,
@@ -39,7 +39,6 @@ App.MainModel = (function () {
         },
 
         buildEchoNestUrl = function (query, type, lowerVal, upperVal, visibleDropdownValue) {
-
             switch (type) {
                 case "artist-tab":
                     return echoNestArtistQueryBuilder(query, visibleDropdownValue);
@@ -47,8 +46,6 @@ App.MainModel = (function () {
                 case "genre-tab":
                     return echoNestGenreQueryBuilder(query, type, lowerVal, upperVal, visibleDropdownValue);
                     break;
-                case "track-tab":
-                    return echoNestTrackQueryBuilder(query, visibleDropdownValue);
             }
         },
 

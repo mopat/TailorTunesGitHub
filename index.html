@@ -26,15 +26,15 @@
         <form>
             <div class="row collapse postfix-round">
                 <div class="large-6 columns">
-                    <input type="text" placeholder="Value" id="search-field" value="snoop dogg">
+                    <input type="text" placeholder="Value" id="search-field" value="warum">
                 </div>
                 <div class="large-3 columns" id="artist-dropdown-box">
-                        <select id="artist-dropdown" class="search-dropdown">
-                            <option value="hottest">Hottest</option>
-                            <option value="newest">Newest</option>
-                            <option value="year">Year</option>
-                            <option value="similar">Similar</option>
-                        </select>
+                    <select id="artist-dropdown" class="search-dropdown">
+                        <option value="hottest">Hottest</option>
+                        <option value="newest">Newest</option>
+                        <option value="year">Year</option>
+                        <option value="similar">Similar</option>
+                    </select>
                 </div>
                 <div class="large-3 columns" id="track-dropdown-box">
                     <select id="track-dropdown" class="search-dropdown">
@@ -87,14 +87,24 @@
 </div>
 <div class="row" id="modal-box">
     <div class="large-12 medium-12 small-12 columns">
-    <a href="#" data-reveal-id="choose-modal" style="background-color: white">Click Me For A Modal</a>
+        <a href="#" data-reveal-id="choose-modal-echonest" style="background-color: white">Click Me For A Modal</a>
 
-    <div id="choose-modal" class="reveal-modal" data-reveal>
-        <ul id="choose-modal-ul">
+        <div id="choose-modal-echonest" class="reveal-modal" data-reveal>
+            <ul id="choose-modal-echonest-ul">
 
-        </ul>
-        <a class="close-reveal-modal">&#215;</a>
+            </ul>
+            <a class="close-reveal-modal">&#215;</a>
+        </div>
     </div>
+    <div class="large-12 medium-12 small-12 columns">
+        <a href="#" data-reveal-id="choose-modal-soundcloud" style="background-color: white">Click Me For A Modal</a>
+
+        <div id="choose-modal-soundcloud" class="reveal-modal" data-reveal>
+            <ul id="choose-modal-soundcloud-ul">
+
+            </ul>
+            <a class="close-reveal-modal">&#215;</a>
+        </div>
     </div>
 </div>
 <div class="row" id="playlist-container">

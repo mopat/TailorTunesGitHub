@@ -4,25 +4,27 @@
 App.ModalView = (function () {
 
     var that = {},
-        $chooseModal = null,
-        $chooseModalList = null,
+        $chooseModalEchoNest = null,
+        $chooseModalListEchoNest = null,
+        $chooseModalSoundcloud = null,
+        $chooseModalListSoundcloud = null,
         foundTracks = [],
 
         init = function () {
-            $chooseModal = $("#choose-modal");
-            $chooseModalList =  $("#choose-modal-ul");
+            $chooseModalEchoNest = $("#choose-modal-echonest");
+            $chooseModalListEchoNest = $("#choose-modal-echonest-ul");
 
-            // bad duplicate
-            $chooseModalList.on("click", handleEchoNestListItemClick);
-            $chooseModalList.on("click", handleSoundcloudListItemClick);
+            $chooseModalSoundcloud = $("#choose-modal-soundcloud");
+            $chooseModalListSoundcloud = $("#choose-modal-soundcloud-ul")
+
+            $chooseModalListEchoNest.on("click", handleEchoNestListItemClick);
+            $chooseModalListSoundcloud.on("click", handleSoundcloudListItemClick);
         },
 
-        setModalEchoNestContent = function(tracks){
-
+        setModalEchoNestContent = function (tracks) {
             foundTracks = tracks;
-            $chooseModalList.empty();
-            console.log(tracks)
-            for(var i in tracks){
+            $chooseModalListEchoNest.empty();
+            for (var i in tracks) {
                 var currentArtistName = tracks[i].artist_name;
                 var currentTitle = tracks[i].title;
                 var currentTrackId = tracks[i].id;
@@ -31,16 +33,15 @@ App.ModalView = (function () {
                 listItem.html(currentArtistName + " - " + currentTitle);
                 listItem.attr("data-track-id", currentTrackId);
 
-                $chooseModalList.append(listItem);
+                $chooseModalListEchoNest.append(listItem);
             }
-            $chooseModal.foundation('reveal', 'open');
+            $chooseModalEchoNest.foundation('reveal', 'open');
         },
 
-        setModalSoundcloudContent = function(tracks){
-            $chooseModalList.empty();
-            $chooseModalList.addClass("echonest-modal");
+        setModalSoundcloudContent = function (tracks) {
+            $chooseModalListSoundcloud.empty();
             foundTracks = tracks;
-            for(var i in foundTracks){
+            for (var i in foundTracks) {
                 var title = foundTracks[i].title;
                 var duration = foundTracks[i].duration;
                 //var permalinkUrl = playlist[i].permalink_url;
@@ -51,26 +52,24 @@ App.ModalView = (function () {
                 listItem.attr("data-stream-url", streamUrl);
                 listItem.attr("list-id", i);
 
-                $chooseModalList.append(listItem);
+                $chooseModalListSoundcloud.append(listItem);
             }
-            $chooseModal.foundation('reveal', 'open');
-            $chooseModalList.removeClass("echonest-modal");
+            $chooseModalSoundcloud.foundation('reveal', 'open');
         },
 
-        handleEchoNestListItemClick = function(event){
-            var dataTrackId = $(event.target).closest(".modal-list-item").attr("data-track-id");
+        handleEchoNestListItemClick = function (event) {
+            var dataTrackId = $(event.target).closest(".modal-echonest-list-item").attr("data-track-id");
             var query = $(event.target).closest(".modal-echonest-list-item").html();
             $(that).trigger("trackIdPicked", [dataTrackId, query]);
-            $chooseModal.foundation('reveal', 'close');
+            $chooseModalEchoNest.foundation('reveal', 'close');
         },
 
-        handleSoundcloudListItemClick = function(event){
+        handleSoundcloudListItemClick = function (event) {
             var listId = $(event.target).closest(".modal-soundcloud-list-item").attr("list-id");
-            var track = foundTracks[listId];
-            console.log(track)
+            var track = [foundTracks[listId]];
 
             $(that).trigger("soundcloudTrackPicked", [track]);
-            $chooseModal.foundation('reveal', 'close');
+            $chooseModalSoundcloud.foundation('reveal', 'close');
         };
 
     that.setModalEchoNestContent = setModalEchoNestContent;

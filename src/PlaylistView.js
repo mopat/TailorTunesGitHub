@@ -53,6 +53,7 @@ App.PlaylistView = (function () {
 
 
         addPlaylistItem = function (playlist) {
+            console.log("playlist", playlist)
             addedPlaylists++;
             completePlaylist.push.apply(completePlaylist, playlist);
             for (var i = 0; i < playlist.length; i++) {

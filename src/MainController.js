@@ -98,6 +98,7 @@ App.MainController = (function () {
         },
 
         handleTrackIdPicked = function(event, trackId, query){
+            console.log(trackId)
             mainModel.searchSimilarTracksById(trackId, query);
         };
 
