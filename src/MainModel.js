@@ -44,7 +44,7 @@ App.MainModel = (function () {
                     return echoNestArtistQueryBuilder(query, visibleDropdownValue);
                     break;
                 case "genre-tab":
-                    return echoNestGenreQueryBuilder(query, type, lowerVal, upperVal, visibleDropdownValue);
+                    return echoNestGenreQueryBuilder(query, visibleDropdownValue);
                     break;
             }
         },
@@ -60,15 +60,8 @@ App.MainModel = (function () {
             }
         },
 
-        echoNestGenreQueryBuilder = function (query, type, lowerVal, upperVal, visibleDropdownValue) {
-            switch (visibleDropdownValue) {
-                case "hottest":
-                    return "https://developer.echonest.com/api/v4/playlist/static?api_key=" + echoNestAPIKey + "&format=json&genre=" + query + "&type=genre-radio&song_selection=song_hotttnesss-top&results=" + searchLimit;
-                    break;
-                case "year-echo":
-                    return "https://developer.echonest.com/api/v4/playlist/static?api_key=" + echoNestAPIKey + "&artist_start_year_after=" + lowerVal.toString() + "artist_end_year_before=" + upperVal.toString() + "&format=json&style=" + query + "&song_selection=song_hotttnesss-top&results=" + searchLimit;
-                    break;
-            }
+        echoNestGenreQueryBuilder = function (query, visibleDropdownValue) {
+            return "https://developer.echonest.com/api/v4/playlist/static?api_key=" + echoNestAPIKey + "&format=json&genre=" + query + "&type=genre-radio&song_selection=" + visibleDropdownValue + "&results=" + searchLimit;
         },
 
         searchEchoNestSimilarTracks = function (query) {
@@ -178,6 +171,7 @@ App.MainModel = (function () {
                 });
             }
         },
+
         searchSoundCloudTracks = function (tracks, usedAPI, artistQuery) {
             var ajaxCalls = [];
             var artist = null;
@@ -206,6 +200,7 @@ App.MainModel = (function () {
                         },
                         dataType: 'json',
                         success: function (data) {
+                            console.log(data)
                             if (data.length != 0) {
                                 var matchingTracks = getMatchingResults(data, query);
                                 console.log("QUERY ", query);
