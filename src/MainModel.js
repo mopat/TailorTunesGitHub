@@ -28,7 +28,8 @@ App.MainModel = (function () {
                 url: buildEchoNestUrl(query, type, lowerVal, upperVal, visibleDropdownValue),
                 cache: false,
                 success: function (jsonObject) {
-                    var tracks = jsonObject.response.songs;
+                    var tracks = removeDuplicates(jsonObject.response.songs);
+                    console.log(tracks)
                     playlist = [];
                     searchSoundCloudTracks(tracks, "soundcloud", query);
                 },
@@ -42,6 +43,9 @@ App.MainModel = (function () {
             switch (type) {
                 case "artist-tab":
                     return echoNestArtistQueryBuilder(query, visibleDropdownValue);
+                    break;
+                case "track-tab":
+                    return echoNestTrackQueryBuilder();
                     break;
                 case "genre-tab":
                     return echoNestGenreQueryBuilder(query, visibleDropdownValue);
@@ -58,6 +62,10 @@ App.MainModel = (function () {
                     return "https://developer.echonest.com/api/v4/playlist/static?api_key=" + echoNestAPIKey + "&format=json&artist=" + query + "&type=artist-radio&song_selection=song_hotttnesss-top&results=" + searchLimit;
                     break;
             }
+        },
+
+        echoNestTrackQueryBuilder = function () {
+            return "http://developer.echonest.com/api/v4/song/search?api_key=" + echoNestAPIKey + "&sort=song_hotttnesss-desc&bucket=song_hotttnesss";
         },
 
         echoNestGenreQueryBuilder = function (query, visibleDropdownValue) {
