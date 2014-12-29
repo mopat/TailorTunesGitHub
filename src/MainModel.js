@@ -80,7 +80,7 @@ App.MainModel = (function () {
                 url: getIdQuery,
                 cache: false,
                 success: function (jsonObject) {
-                    var tracks = jsonObject.response.songs;
+                    var tracks = removeDuplicates(jsonObject.response.songs);
                     $(that).trigger("echoNestTrackSearchResultsComplete", [tracks]);
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -259,11 +259,21 @@ App.MainModel = (function () {
         },
 
         removeDuplicates = function (tracks) {
-            var uniqueObjects = [];
-            $.each(tracks, function (i, el) {
-                if ($.inArray(el, uniqueObjects) === -1) uniqueObjects.push(el);
+            var uniqueTracks = [];
+            var artistAndTitle = [];
+
+            for (var i in tracks){
+                artistAndTitle[i] = tracks[i].artist_name + " - " + tracks[i].title;
+            }
+
+            var result = [];
+            $.each(artistAndTitle, function(i, e) {
+                if ($.inArray(e, result) == -1){
+                    result.push(e);
+                    uniqueTracks.push(tracks[i])
+                }
             });
-            return uniqueObjects;
+            return uniqueTracks;
         },
 
         addToPlayList = function (matchingTracks) {
