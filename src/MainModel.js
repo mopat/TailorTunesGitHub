@@ -3,7 +3,7 @@ App.MainModel = (function () {
     var that = {},
         sc_client_id = '23a3031c7cd251c7c217ca127777e48b',
         echoNestAPIKey = "N2U2OZ8ZDCXNV9DBG",
-        scLimit = 100,
+        scLimit = 50,
         searchLimit = 10,
         playlist = [],
         completePlaylist = [],
@@ -28,13 +28,13 @@ App.MainModel = (function () {
                 url: buildEchoNestUrl(query, type, lowerVal, upperVal, visibleDropdownValue),
                 cache: false,
                 success: function (jsonObject) {
-                    var tracks = removeDuplicates(jsonObject.response.songs);
+                    var tracks = removeEchoNestDuplicates(jsonObject.response.songs);
                     console.log(tracks)
                     playlist = [];
                     searchSoundCloudTracks(tracks, "soundcloud", query);
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
-                    alert("ERROR " + errorThrown + " at" + XMLHttpRequest);
+                    alert("ECHONEST ERROR " + errorThrown + " at" + XMLHttpRequest);
                 }
             });
         },
@@ -80,7 +80,7 @@ App.MainModel = (function () {
                 url: getIdQuery,
                 cache: false,
                 success: function (jsonObject) {
-                    var tracks = removeDuplicates(jsonObject.response.songs);
+                    var tracks = removeEchoNestDuplicates(jsonObject.response.songs);
                     $(that).trigger("echoNestTrackSearchResultsComplete", [tracks]);
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -165,7 +165,7 @@ App.MainModel = (function () {
                         format: 'json'
                     },
                     error: function (XMLHttpRequest, textStatus, errorThrown) {
-                        alert("ERROR " + errorThrown + " at" + XMLHttpRequest);
+                        alert("ECHONEST ERROR " + errorThrown + " at" + XMLHttpRequest);
                     },
                     dataType: 'json',
                     success: function (data) {
@@ -203,7 +203,7 @@ App.MainModel = (function () {
                             format: 'json'
                         },
                         error: function (XMLHttpRequest, textStatus, errorThrown) {
-                            alert("ERROR " + errorThrown + " at" + XMLHttpRequest);
+                            alert("SOUNDCLOUD ERROR " + errorThrown + " at" + XMLHttpRequest);
                         },
                         dataType: 'json',
                         success: function (data) {
@@ -211,7 +211,7 @@ App.MainModel = (function () {
                             if (data.length != 0) {
                                 var matchingTracks = getMatchingResults(data, query);
                                 console.log("QUERY ", query);
-                                addToPlayList(removeDuplicates(matchingTracks));
+                                addToPlayList(matchingTracks);
                             }
                         },
                         type: 'GET'
@@ -220,8 +220,8 @@ App.MainModel = (function () {
                 ajaxCalls.push(ajaxCaller(queryOne));
             }
             $.when.apply($, ajaxCalls).done(function () {
+                playlist = removeSoundCloudDuplicates(playlist);
                 setPlaylistView();
-
             })
             /***
              $.ajax({
@@ -257,7 +257,7 @@ App.MainModel = (function () {
              ***/
         },
 
-        removeDuplicates = function (tracks) {
+        removeEchoNestDuplicates = function (tracks) {
             var uniqueTracks = [];
             var artistAndTitle = [];
             artistAndTitle.length = tracks.length;
@@ -272,6 +272,24 @@ App.MainModel = (function () {
             });
             return uniqueTracks;
         },
+
+        removeSoundCloudDuplicates = function (tracks) {
+            var uniqueTracks = [];
+            var artistAndTitle = [];
+            artistAndTitle.length = tracks.length;
+
+            var result = [];
+            $.each(artistAndTitle, function(i, e) {
+                artistAndTitle[i] = tracks[i].id;
+                if ($.inArray(artistAndTitle[i], result) == -1){
+                    result.push(artistAndTitle[i]);
+                    console.log(artistAndTitle[i])
+                    uniqueTracks.push(tracks[i]);
+                }
+            });
+            return uniqueTracks;
+        },
+
 
         addToPlayList = function (matchingTracks) {
             var tracks = [];
@@ -288,6 +306,7 @@ App.MainModel = (function () {
             //take the first element
             if (tracks[0] != undefined)
                 playlist.push(tracks[0]);
+
         },
 
         getMatchingResults = function (tracks, query) {
