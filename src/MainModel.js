@@ -55,13 +55,13 @@ App.MainModel = (function () {
 
         echoNestArtistQueryBuilder = function (query, visibleDropdownValue) {
             switch (visibleDropdownValue) {
-                case "hottest":
-                    return "https://developer.echonest.com/api/v4/playlist/static?api_key=" + echoNestAPIKey + "&format=json&artist=" + query + "&sort=song_hotttnesss-desc&results=" + searchLimit;
-                    break;
                 case "similar":
                     return "https://developer.echonest.com/api/v4/playlist/static?api_key=" + echoNestAPIKey + "&format=json&artist=" + query + "&type=artist-radio&song_selection=song_hotttnesss-top&results=" + searchLimit;
                     break;
+                default :  return "https://developer.echonest.com/api/v4/playlist/static?api_key=" + echoNestAPIKey + "&format=json&artist=" + query + "&song_selection=" +visibleDropdownValue +  "&results=" + searchLimit;
+                break;
             }
+
         },
 
         echoNestTrackQueryBuilder = function () {
