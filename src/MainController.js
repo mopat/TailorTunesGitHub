@@ -6,6 +6,7 @@ App.MainController = (function () {
         controlsView = null,
         searchView = null,
         modalView = null,
+        playlistManager = null,
 
         init = function () {
             mainModel = App.MainModel;
@@ -13,12 +14,14 @@ App.MainController = (function () {
             controlsView = App.ControlsView;
             searchView = App.SearchView;
             modalView = App.ModalView;
+            playlistManager = App.PlaylistManager;
 
             mainModel.init();
             playlistView.init();
             controlsView.init();
             searchView.init();
             modalView.init();
+            playlistManager.init();
 
             $(playlistView).on("trackPicked", handleTrackPick);
             $(playlistView).on("resetPlayer", handleResetPlayer);
