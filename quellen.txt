@@ -60,3 +60,5 @@ http://stackoverflow.com/questions/10508795/set-the-selectedindex-of-a-dropdown-
 http://foundation.zurb.com/docs/components/reveal.html
 http://stackoverflow.com/questions/15245966/revealing-a-modal-in-foundation-4
 https://www.parse.com/docs/js_guide
+http://stackoverflow.com/questions/11078324/how-to-create-json-object-using-jquery
+http://stackoverflow.com/questions/18910939/how-to-get-json-key-and-value-in-javascript

@@ -40,10 +40,10 @@ App.PlaylistView = (function () {
             var $nowPlaying = $("#playlist .now-playing");
             var playlistSize = $("#playlist .playlist-item").size();
             $swipedItem.fadeOut(500, fadeOutComplete);
-            function fadeOutComplete(){
-                if(playlistSize-1 == 0)
+            function fadeOutComplete() {
+                if (playlistSize - 1 == 0)
                     $(that).trigger("resetPlayer");
-               else if($swipedItem.attr("id") == $nowPlaying.attr("id"))
+                else if ($swipedItem.attr("id") == $nowPlaying.attr("id"))
                     handlePrevOrNextClicked("next");
 
                 $swipedItem.remove();
@@ -270,11 +270,33 @@ App.PlaylistView = (function () {
 
         setPlaylistMarginBottomZero = function () {
             $playlistBox.css("margin-bottom", 0)
-        };
+        },
 
+        getPlaylistAsJSON = function () {
+            var playlistAsJSON = [];
+
+            $("#playlist .playlist-item").each(function () {
+                var playlistNumber = $(this).attr("id");
+                var imageUrl = $(this).find(".playlist-item-image").attr("src");
+                var streamURL = $(this).attr("data-stream-url");
+                var duration = $(this).find(".playlist-track-duration").html();
+                var title = $(this).find(".playlist-title").html();
+
+                var playlistObject = {
+                    number: playlistNumber,
+                    image_url: imageUrl,
+                    stream_url: streamURL,
+                    duration: duration,
+                    title: title
+                };
+                playlistAsJSON.push(playlistObject);
+            });
+            return JSON.parse(JSON.stringify(playlistAsJSON))
+        };
 
     that.addPlaylistItem = addPlaylistItem;
     that.handlePrevOrNextClicked = handlePrevOrNextClicked;
+    that.getPlaylistAsJSON = getPlaylistAsJSON;
     that.init = init;
 
     return that;

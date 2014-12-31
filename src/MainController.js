@@ -46,6 +46,8 @@ App.MainController = (function () {
             $(modalView).on("trackIdPicked", handleTrackIdPicked);
 
             $(modalView).on("soundcloudTrackPicked", handleSoundlcoudTrackPicked);
+
+            $(playlistManager).on("savePlaylistClicked", handleSavePlaylistClicked);
         },
 
         handleTrackPick = function (event, src, title) {
@@ -101,8 +103,12 @@ App.MainController = (function () {
         },
 
         handleTrackIdPicked = function(event, trackId, query){
-            console.log(trackId)
             mainModel.searchSimilarTracksById(trackId, query);
+        },
+
+        handleSavePlaylistClicked = function(){
+            var JSONPlaylist = playlistView.getPlaylistAsJSON();
+playlistManager.postPlaylist(JSONPlaylist);
         };
 
 
