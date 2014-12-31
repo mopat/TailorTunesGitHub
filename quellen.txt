@@ -59,3 +59,4 @@ http://developer.echonest.com/forums/thread/472
 http://stackoverflow.com/questions/10508795/set-the-selectedindex-of-a-dropdown-using-jquery
 http://foundation.zurb.com/docs/components/reveal.html
 http://stackoverflow.com/questions/15245966/revealing-a-modal-in-foundation-4
+https://www.parse.com/docs/js_guide
