@@ -62,3 +62,4 @@ http://stackoverflow.com/questions/15245966/revealing-a-modal-in-foundation-4
 https://www.parse.com/docs/js_guide
 http://stackoverflow.com/questions/11078324/how-to-create-json-object-using-jquery
 http://stackoverflow.com/questions/18910939/how-to-get-json-key-and-value-in-javascript
+http://stackoverflow.com/questions/10211145/getting-current-date-and-time-in-javascript
