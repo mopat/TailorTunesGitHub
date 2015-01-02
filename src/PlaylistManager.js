@@ -41,6 +41,7 @@ App.PlaylistManager = (function () {
                 success: function (user) {
                     currentUser = Parse.User.current();
                     console.log("LOGGEDIN")
+                    loadPlaylists();
                 },
                 error: function (user, error) {
                     // The login failed. Check error to see why.
@@ -49,7 +50,24 @@ App.PlaylistManager = (function () {
         },
 
         loadPlaylists = function () {
-
+            var query = new Parse.Query("Playlists");
+            query.equalTo("user", currentUser);
+            query.find({
+                success: function(usersPosts) {
+                    // userPosts contains all of the posts by the current user.
+                    var userPost = usersPosts[0];
+                    var playlist = userPost._serverData.JSONPlaylist;
+                    for(var i in playlist){
+                        var itemToJSON = JSON.parse((playlist[i]));
+                        var number = itemToJSON.number;
+                        var imageUrl = itemToJSON.image_url;
+                        var duration = itemToJSON.duration;
+                        var title = itemToJSON.title;
+                        var streamUrl = itemToJSON.stream_url;
+                        console.log(number, imageUrl, duration, title, streamUrl);
+                    }
+                }
+            });
         },
 
         savePlaylist = function () {
@@ -57,7 +75,6 @@ App.PlaylistManager = (function () {
         },
 
         postPlaylist = function(JSONPlaylist){
-            // Make a new post
             var Post = Parse.Object.extend("Playlists");
             var post = new Post();
             post.set("title", "playlist namesss");
@@ -65,26 +82,7 @@ App.PlaylistManager = (function () {
             post.set("user", currentUser);
             post.save(null, {
                 success: function (post) {
-                    // Find all posts by the current user
-                    var query = new Parse.Query(Post);
-
-                    query.equalTo("user", currentUser);
-                    query.find({
-                        success: function (usersPosts) {
-                            // userPosts contains all of the posts by the current user.
-                            var userPost = usersPosts[0];
-                            var playlist = userPost._serverData.JSONPlaylist;
-                            for(var i in playlist){
-                                var itemToJSON = JSON.parse((playlist[i]));
-                                var number = itemToJSON.number;
-                                var imageUrl = itemToJSON.image_url;
-                                var duration = itemToJSON.duration;
-                                var title = itemToJSON.title;
-                                var streamUrl = itemToJSON.stream_url;
-                                console.log(number, imageUrl, duration, title, streamUrl);
-                            }
-                        }
-                    });
+                    console.log("PLAYLIST SAVED");
                 }
             });
         };
