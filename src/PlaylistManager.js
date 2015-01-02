@@ -7,6 +7,7 @@ App.PlaylistManager = (function () {
         JAVASCRIPT_KEY = "wyt0MOGfNQxPCEC3fFDkxGmpukQ7ulbOzeMY27Ql",
         savePlaylistButton = null,
         currentUser = null,
+        playlistTitles = [],
 
         init = function () {
             Parse.initialize(APPLICATION_ID, JAVASCRIPT_KEY);
@@ -22,7 +23,7 @@ App.PlaylistManager = (function () {
             user.set("password", "killer");
             user.set("email", "email@example.com");
 
-// other fields can be set just like with Parse.Object
+            // other fields can be set just like with Parse.Object
             //user.set("phone", "415-392-0202");
 
             user.signUp(null, {
@@ -54,7 +55,10 @@ App.PlaylistManager = (function () {
             query.equalTo("user", currentUser);
             query.find({
                 success: function(usersPosts) {
-                    // userPosts contains all of the posts by the current user.
+                    for(var i in usersPosts){
+                         playlistTitles.push(usersPosts[i]._serverData.title)
+                        console.log(usersPosts[i]._serverData.title)
+                    }
                     var userPost = usersPosts[0];
                     var playlist = userPost._serverData.JSONPlaylist;
                     for(var i in playlist){
@@ -70,24 +74,31 @@ App.PlaylistManager = (function () {
             });
         },
 
-        savePlaylist = function () {
-            $(that).trigger("savePlaylistClicked");
-        },
 
         postPlaylist = function(JSONPlaylist){
             var Post = Parse.Object.extend("Playlists");
             var post = new Post();
-            post.set("title", "playlist namesss");
-            post.set("JSONPlaylist", JSONPlaylist);
             post.set("user", currentUser);
-            post.save(null, {
-                success: function (post) {
-                    console.log("PLAYLIST SAVED");
-                }
-            });
+            var playlistTitle = "playlist title";
+            if($.inArray(playlistTitle, playlistTitles) == -1){
+                post.set("title", playlistTitle);
+                post.set("JSONPlaylist", JSONPlaylist);
+                post.save(null, {
+                    success: function (post) {
+                        console.log("PLAYLIST SAVED");
+                    }
+                });
+            }
+            else{
+                console.log("playlist name already exists.")
+            }
+        },
+
+        savePlaylist = function () {
+            $(that).trigger("savePlaylistClicked");
         };
 
-    that.postPlaylist = postPlaylist;
+        that.postPlaylist = postPlaylist;
     that.init = init;
 
     return that;
