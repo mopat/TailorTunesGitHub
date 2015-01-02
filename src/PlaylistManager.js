@@ -58,7 +58,9 @@ App.PlaylistManager = (function () {
                     for(var i in usersPosts){
                          playlistTitles.push(usersPosts[i]._serverData.title)
                         console.log(usersPosts[i]._serverData.title)
+                        $(that).trigger("userPlaylistTitlesLoaded", [usersPosts[i]._serverData.title, usersPosts[i]._serverData.lastUpdate, usersPosts[i]._serverData.length]);
                     }
+
                     var userPost = usersPosts[0];
                     var playlist = userPost._serverData.JSONPlaylist;
                     for(var i in playlist){
@@ -82,10 +84,25 @@ App.PlaylistManager = (function () {
             var playlistTitle = "playlist title";
             if($.inArray(playlistTitle, playlistTitles) == -1){
                 post.set("title", playlistTitle);
+                post.set("lastUpdate", getCurrenTimeAndDate());
+                post.set("length", JSONPlaylist.length);
                 post.set("JSONPlaylist", JSONPlaylist);
                 post.save(null, {
                     success: function (post) {
                         console.log("PLAYLIST SAVED");
+                        // Find all posts by the current user
+                        var query = new Parse.Query(Post);
+
+                        query.equalTo("user", currentUser);
+                        query.find({
+                            success: function (usersPosts) {
+                                // userPosts contains all of the posts by the current user.
+                                for(var i in usersPosts){
+                                    playlistTitles = [];
+                                    playlistTitles.push(usersPosts[i]._serverData.title)
+                                }
+                            }
+                        });
                     }
                 });
             }
@@ -94,11 +111,39 @@ App.PlaylistManager = (function () {
             }
         },
 
+        getCurrenTimeAndDate = function(){
+                var now     = new Date();
+                var year    = now.getFullYear();
+                var month   = now.getMonth()+1;
+                var day     = now.getDate();
+                var hour    = now.getHours();
+                var minute  = now.getMinutes();
+                var second  = now.getSeconds();
+                if(month.toString().length == 1) {
+                    var month = '0'+month;
+                }
+                if(day.toString().length == 1) {
+                    var day = '0'+day;
+                }
+                if(hour.toString().length == 1) {
+                    var hour = '0'+hour;
+                }
+                if(minute.toString().length == 1) {
+                    var minute = '0'+minute;
+                }
+                if(second.toString().length == 1) {
+                    var second = '0'+second;
+                }
+                var dateTime = year+'/'+month+'/'+day+' '+hour+':'+minute+':'+second;
+return dateTime;
+            },
+
+
         savePlaylist = function () {
             $(that).trigger("savePlaylistClicked");
         };
 
-        that.postPlaylist = postPlaylist;
+    that.postPlaylist = postPlaylist;
     that.init = init;
 
     return that;

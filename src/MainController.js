@@ -7,6 +7,7 @@ App.MainController = (function () {
         searchView = null,
         modalView = null,
         playlistManager = null,
+        userPlaylistView = null,
 
         init = function () {
             mainModel = App.MainModel;
@@ -15,6 +16,7 @@ App.MainController = (function () {
             searchView = App.SearchView;
             modalView = App.ModalView;
             playlistManager = App.PlaylistManager;
+            userPlaylistView = App.UserPlaylistView;
 
             mainModel.init();
             playlistView.init();
@@ -22,6 +24,7 @@ App.MainController = (function () {
             searchView.init();
             modalView.init();
             playlistManager.init();
+            userPlaylistView.init();
 
             $(playlistView).on("trackPicked", handleTrackPick);
             $(playlistView).on("resetPlayer", handleResetPlayer);
@@ -48,6 +51,8 @@ App.MainController = (function () {
             $(modalView).on("soundcloudTrackPicked", handleSoundlcoudTrackPicked);
 
             $(playlistManager).on("savePlaylistClicked", handleSavePlaylistClicked);
+
+            $(playlistManager).on("userPlaylistTitlesLoaded", handleUserPlaylistTitlesLoaded);
         },
 
         handleTrackPick = function (event, src, title) {
@@ -108,7 +113,11 @@ App.MainController = (function () {
 
         handleSavePlaylistClicked = function(){
             var JSONPlaylist = playlistView.getPlaylistAsJSON();
-playlistManager.postPlaylist(JSONPlaylist);
+            playlistManager.postPlaylist(JSONPlaylist);
+        };
+
+        handleUserPlaylistTitlesLoaded = function(event, title, date, length){
+            userPlaylistView.setUserPlaylistView(title, date, length);
         };
 
 

@@ -23,6 +23,9 @@
             New Tracks
         </div>
     </div>
+    <div id="user-playlist-box">
+    </div>
+
     <div class="row">
         <form>
             <div class="row collapse postfix-round">
@@ -97,7 +100,7 @@
         </div>
     </div>
 </div>
-<div class="row" id="modal-box">
+<div class="row" id="choose-title-box">
     <div class="large-12 medium-12 small-12 columns">
         <a href="#" data-reveal-id="choose-modal-echonest" style="background-color: white">Click Me For A Modal</a>
 
@@ -193,6 +196,7 @@
 <script src="libs/jquery.nouislider.all.min.js"></script>
 <script src="libs/jquery.visible.min.js"></script>
 <script src="libs/jquery.marquee.min.js"></script>
+<script src="libs/underscore.js"></script>
 <script src="libs/string_score.js"></script>
 <script src="libs/soundcloud_sdk.js"></script>
 
@@ -202,8 +206,25 @@
 <script type="text/javascript" src="src/PlaylistView.js"></script>
 <script type="text/javascript" src="src/ControlsView.js"></script>
 <script type="text/javascript" src="src/SearchView.js"></script>
-<script type="text/javascript" src="src/ModalView.js"></script>
+<script type="text/javascript" src="src/ChooseTitleView.js"></script>
 <script type="text/javascript" src="src/PlaylistManager.js"></script>
+<script type="text/javascript" src="src/UserPlaylistView.js"></script>
+<script type="text/html" id="user-playlist-item-tpl">
+    <div class="row">
+        <div class="large-12 columns text-center">
+            <div class="user-playlist-item">
+                <span class="user-playlist-title"><%= title %></span>
+                <span class="user-playlist-date"><%= date %></span>
+                <span class="user-playlist-length"><%= length %></span>
+                <span class="trash-icon"><i class="fi-trash"></i> </span>
+                <span class="open-icon"><i class="fi- arrow-down"></i> </span>
+                <span class="load-playlist">LOAD</span>
+                <span class="add-playlist">ADD</span>
+                <span class="rename-playlist">RENAME</span>
+            </div>
+        </div>
+    </div>
+</script>
 
 <script>
     $(document).foundation();
