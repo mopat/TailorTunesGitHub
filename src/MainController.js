@@ -114,10 +114,10 @@ App.MainController = (function () {
         handleSavePlaylistClicked = function(){
             var JSONPlaylist = playlistView.getPlaylistAsJSON();
             playlistManager.postPlaylist(JSONPlaylist);
-        };
+        },
 
-        handleUserPlaylistTitlesLoaded = function(event, title, date, length){
-            userPlaylistView.setUserPlaylistView(title, date, length);
+        handleUserPlaylistTitlesLoaded = function (event, title, date, length, playlistId, JSONPlaylist) {
+            userPlaylistView.setUserPlaylistView(title, date, length, playlistId, JSONPlaylist);
         };
 
 

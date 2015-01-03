@@ -4,24 +4,47 @@
 App.UserPlaylistView = (function () {
     var that = {},
         $userPlaylistBox = null,
-        userPlaylistTemplate = null,
+        userPlaylistTpl = null,
+        userPlaylistItemTpl = null,
+
 
         init = function () {
             $userPlaylistBox = $("#user-playlist-box");
-            userPlaylistTemplate = _.template($("#user-playlist-item-tpl").html());
+            userPlaylistTpl = _.template($("#user-playlist-tpl").html());
+
+            userPlaylistItemTpl = _.template($("#user-playlist-item-tpl").html());
         },
 
-        setUserPlaylistView = function(title, date, length){
-            var playlistItem = userPlaylistTemplate({
-                title: title,
+        setUserPlaylistView = function (playlistTitle, date, length, playlistId, JSONPlaylist) {
+            var playlistHeaderItem = userPlaylistTpl({
+                playlist_id: playlistId,
+                title: playlistTitle,
                 date: date,
                 length: length
             });
-            $userPlaylistBox.append(playlistItem);
+            $userPlaylistBox.append(playlistHeaderItem);
+
+            for (var j in JSONPlaylist) {
+                var itemToJSON = JSONPlaylist[j];
+                var number = itemToJSON.number;
+                var imageUrl = itemToJSON.image_url;
+                var duration = itemToJSON.duration;
+                var songTitle = itemToJSON.title;
+                var streamUrl = itemToJSON.stream_url;
+
+                var playlistItem = userPlaylistItemTpl({
+                    stream_url: streamUrl,
+                    artwork_url: imageUrl,
+                    title: songTitle,
+                    duration: duration,
+                    playlist_number: number
+                });
+                $("#" + playlistId).append(playlistItem)
+            }
         };
 
     that.setUserPlaylistView = setUserPlaylistView;
-        that.init = init;
+    that.init = init;
 
     return that;
 

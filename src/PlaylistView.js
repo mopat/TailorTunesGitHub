@@ -172,6 +172,7 @@ App.PlaylistView = (function () {
             if ($sortModeSwitch.attr("checked")) {
                 $sortModeSwitch.removeAttr("checked");
                 removeSortable();
+                console.log("CHECKED")
                 $("#sticky-footer").fadeIn(0);
                 setPlaylistMarginBottomControlsBoxHeight();
             }

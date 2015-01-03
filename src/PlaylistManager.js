@@ -55,22 +55,13 @@ App.PlaylistManager = (function () {
             query.equalTo("user", currentUser);
             query.find({
                 success: function(usersPosts) {
-                    for(var i in usersPosts){
-                         playlistTitles.push(usersPosts[i]._serverData.title)
-                        console.log(usersPosts[i]._serverData.title)
-                        $(that).trigger("userPlaylistTitlesLoaded", [usersPosts[i]._serverData.title, usersPosts[i]._serverData.lastUpdate, usersPosts[i]._serverData.length]);
-                    }
+                    for (var i in usersPosts) {
+                        var userPost = usersPosts[i];
+                        playlistTitles.push(userPost._serverData.title);
 
-                    var userPost = usersPosts[0];
-                    var playlist = userPost._serverData.JSONPlaylist;
-                    for(var i in playlist){
-                        var itemToJSON = JSON.parse((playlist[i]));
-                        var number = itemToJSON.number;
-                        var imageUrl = itemToJSON.image_url;
-                        var duration = itemToJSON.duration;
-                        var title = itemToJSON.title;
-                        var streamUrl = itemToJSON.stream_url;
-                        console.log(number, imageUrl, duration, title, streamUrl);
+                        var JSONPlaylist = userPost._serverData.JSONPlaylist;
+
+                        $(that).trigger("userPlaylistTitlesLoaded", [usersPosts[i]._serverData.title, usersPosts[i]._serverData.lastUpdate, usersPosts[i]._serverData.length, usersPosts[i].id, JSONPlaylist]);
                     }
                 }
             });
@@ -81,7 +72,7 @@ App.PlaylistManager = (function () {
             var Post = Parse.Object.extend("Playlists");
             var post = new Post();
             post.set("user", currentUser);
-            var playlistTitle = "playlist title";
+            var playlistTitle = "playlist title 2";
             if($.inArray(playlistTitle, playlistTitles) == -1){
                 post.set("title", playlistTitle);
                 post.set("lastUpdate", getCurrenTimeAndDate());
@@ -135,7 +126,7 @@ App.PlaylistManager = (function () {
                     var second = '0'+second;
                 }
                 var dateTime = year+'/'+month+'/'+day+' '+hour+':'+minute+':'+second;
-return dateTime;
+            return dateTime;
             },
 
 

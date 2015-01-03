@@ -210,10 +210,10 @@
 <script type="text/javascript" src="src/ChooseTitleView.js"></script>
 <script type="text/javascript" src="src/PlaylistManager.js"></script>
 <script type="text/javascript" src="src/UserPlaylistView.js"></script>
-<script type="text/html" id="user-playlist-item-tpl">
-    <div class="row">
+<script type="text/html" id="user-playlist-tpl">
+    <div class="row" class="user-playlist-container" id="<%= playlist_id %>">
         <div class="large-12 columns text-center">
-            <div class="user-playlist-item">
+            <div class="user-playlist">
                 <span class="user-playlist-title"><%= title %></span>
                 <span class="user-playlist-date"><%= date %></span>
                 <span class="user-playlist-length"><%= length %></span>
@@ -226,8 +226,16 @@
         </div>
     </div>
 </script>
+<script type="text/html" id="user-playlist-item-tpl">
+    <li class="user-playlist-item" data-stream-url="<%= stream_url %>">
+        <a href="#"><span class="user-playlist-number"><%= playlist_number %></span><img
+                class="user-playlist-item-image" src="<%= artwork_url %>"><span
+                class=user-"playlist-track-duration"><%= duration %></span><span
+                class="playlist-title"><%= title %></span></a>
+    </li>
+</script>
 <script type="text/html" id="playlist-item-tpl">
-    <li class="playlist-item" data-stream-url="<%= stream_url %>" id="">
+    <li class="playlist-item" data-stream-url="<%= stream_url %>">
         <a href="#"><span class="playlist-number"><%= playlist_number %></span><img
             class="playlist-item-image" src="<%= artwork_url %>"><span
             class="playlist-track-duration"><%= duration %></span><span class="playlist-title"><%= title %></span></a>
