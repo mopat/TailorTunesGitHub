@@ -3,6 +3,7 @@ App.PlaylistView = (function () {
     var that = {},
         $playlistBox = null,
         $playlist = null,
+        playlistItemTpl = null,
         listItemColors = [],
         $sortModeSwitch = null,
         firstAppearedElementOnScreen = null,
@@ -15,6 +16,8 @@ App.PlaylistView = (function () {
             $playlistBox = $("#playlist-box");
             $playlist = $("#playlist");
             $sortModeSwitch = $("#sort-mode-switch");
+
+            playlistItemTpl = _.template($("#playlist-item-tpl").html());
 
             listItemColors = ["#464646", "#292929"];
 
@@ -66,7 +69,16 @@ App.PlaylistView = (function () {
                 //var permalinkUrl = playlist[i].permalink_url;
                 var streamUrl = playlist[i].stream_url;
 
-                var anchor = $('<a>');
+                var playlistItem = playlistItemTpl({
+                    stream_url: streamUrl,
+                    artwork_url: artworkUrl,
+                    title: title,
+                    duration: getMinutesAndSeconds(duration),
+                    playlist_number: (i + 1 + ".")
+                });
+
+
+               /** var anchor = $('<a>');
 
                 //anchor.attr("href", permalinkUrl);
                 anchor.attr("href", "#");
@@ -88,6 +100,9 @@ App.PlaylistView = (function () {
 
                 $playlist.append(listItem);
                 $playlistBox.append($playlist);
+
+                **/
+                $playlist.append(playlistItem);
             }
             setPlaylistIds();
             if (addedPlaylists == 1)

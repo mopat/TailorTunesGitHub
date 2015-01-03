@@ -125,6 +125,7 @@
 <div class="row" id="playlist-container">
     <div class="large-12 medium-12 small-12 columns">
         <a href="#" id="save-playlist-button">Save Playlist</a>
+
         <div id="playlist-box">
             <div id="sticky-sort-switch-box">
                 <div id="sticky-anchor"></div>
@@ -225,7 +226,13 @@
         </div>
     </div>
 </script>
-
+<script type="text/html" id="playlist-item-tpl">
+    <li class="playlist-item" data-stream-url="<%= stream_url %>" id="">
+        <a href="#"><span class="playlist-number"><%= playlist_number %></span><img
+            class="playlist-item-image" src="<%= artwork_url %>"><span
+            class="playlist-track-duration"><%= duration %></span><span class="playlist-title"><%= title %></span></a>
+    </li>
+</script>
 <script>
     $(document).foundation();
     $(function () {
