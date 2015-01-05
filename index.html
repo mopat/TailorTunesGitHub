@@ -218,24 +218,22 @@
 <script type="text/html" id="user-playlist-tpl">
     <div class="row" class="user-playlist-container">
         <div class="large-12 columns">
-            <div class="user-playlist">
-                <span class="user-playlist-title"><%= title %></span>
+            <div class="user-playlist-header">
+                <span class="user-playlist-name"><%= title %></span>
                 <span class="user-playlist-date"><%= date %></span>
                 <span class="user-playlist-length"><%= length %></span>
                 <span class="trash-icon"><i class="fi-trash"></i> </span>
-                <span class="open-icon"><i class="fi- arrow-down"></i> </span>
+                <span class="open-icon"><i class="fi-arrow-down"></i> </span>
                 <span class="load-playlist">LOAD</span>
                 <span class="add-playlist">ADD</span>
                 <span class="rename-playlist">RENAME</span>
+
+            </div>
+            <div class="large-12 columns">
+                <ul id="<%= playlist_id %>" class="user-playlist"></ul>
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="large-12 columns">
-        </div>
-    </div>
-    <ul id="<%= playlist_id %>" class="user-playlist">
-    </ul>
 </script>
 <script type="text/html" id="user-playlist-item-tpl">
     <li class="user-playlist-item" data-stream-url="<%= stream_url %>">
@@ -248,8 +246,9 @@
 <script type="text/html" id="playlist-item-tpl">
     <li class="playlist-item" data-stream-url="<%= stream_url %>">
         <a href="#"><span class="playlist-number"><%= playlist_number %></span><img
-            class="playlist-item-image" src="<%= artwork_url %>"><span
-            class="playlist-track-duration"><%= duration %></span><span class="playlist-title"><%= title %></span></a>
+                class="playlist-item-image" src="<%= artwork_url %>"><span
+                class="playlist-track-duration"><%= duration %></span><span
+                class="playlist-title"><%= title %></span></a>
     </li>
 </script>
 <script>

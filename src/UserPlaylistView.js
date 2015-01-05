@@ -13,6 +13,8 @@ App.UserPlaylistView = (function () {
             userPlaylistTpl = _.template($("#user-playlist-tpl").html());
 
             userPlaylistItemTpl = _.template($("#user-playlist-item-tpl").html());
+
+
         },
 
         setUserPlaylistView = function (playlistTitle, date, length, playlistId, JSONPlaylist) {
@@ -25,12 +27,12 @@ App.UserPlaylistView = (function () {
             $userPlaylistBox.append(playlistHeaderItem);
 
             for (var j in JSONPlaylist) {
-                var itemToJSON = JSONPlaylist[j];
-                var number = itemToJSON.number;
-                var imageUrl = itemToJSON.image_url;
-                var duration = itemToJSON.duration;
-                var songTitle = itemToJSON.title;
-                var streamUrl = itemToJSON.stream_url;
+                var JSONItem = JSONPlaylist[j];
+                var number = JSONItem.number;
+                var imageUrl = JSONItem.image_url;
+                var duration = JSONItem.duration;
+                var songTitle = JSONItem.title;
+                var streamUrl = JSONItem.stream_url;
 
                 var playlistItem = userPlaylistItemTpl({
                     stream_url: streamUrl,
@@ -43,6 +45,9 @@ App.UserPlaylistView = (function () {
             }
             setPlaylistIds();
             $("#user-playlist-modal").foundation('reveal', 'open');
+            $(".open-icon").on("click", function (event) {
+                $(event.target).parent().parent().parent().find(".user-playlist").slideDown(300)
+            });
         },
 
         setPlaylistIds = function () {
