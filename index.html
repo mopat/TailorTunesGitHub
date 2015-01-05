@@ -223,7 +223,8 @@
                 <span class="user-playlist-date"><%= date %></span>
                 <span class="user-playlist-length"><%= length %></span>
                 <span class="trash-icon"><i class="fi-trash"></i> </span>
-                <span class="open-icon"><i class="fi-arrow-down"></i> </span>
+                <span class="open-icon"><i class="fi-arrow-down"></i></span>
+                <span class="close-icon"><i class="fi-arrow-up"></i></span>
                 <span class="load-playlist">LOAD</span>
                 <span class="add-playlist">ADD</span>
                 <span class="rename-playlist">RENAME</span>
@@ -237,16 +238,16 @@
 </script>
 <script type="text/html" id="user-playlist-item-tpl">
     <li class="user-playlist-item" data-stream-url="<%= stream_url %>">
-        <a href="#"><span class="user-playlist-number"><%= playlist_number %></span><img
-                class="user-playlist-item-image" src="<%= artwork_url %>"><span
+        <a href="#"><span class="user-playlist-number"></span>
+            <img class="user-playlist-item-image" src="<%= artwork_url %>"><span
                 class="user-playlist-track-duration"><%= duration %></span><span
                 class="user-playlist-title"><%= title %></span></a>
     </li>
 </script>
 <script type="text/html" id="playlist-item-tpl">
     <li class="playlist-item" data-stream-url="<%= stream_url %>">
-        <a href="#"><span class="playlist-number"><%= playlist_number %></span><img
-                class="playlist-item-image" src="<%= artwork_url %>"><span
+        <a href="#"><span class="playlist-number"></span>
+            <img class="playlist-item-image" src="<%= artwork_url %>"><span
                 class="playlist-track-duration"><%= duration %></span><span
                 class="playlist-title"><%= title %></span></a>
     </li>

@@ -27,6 +27,30 @@ App.UserPlaylistView = (function () {
             });
             $userPlaylistBox.append(playlistHeaderItem);
 
+            $(".load-playlist").on("click", function (event) {
+                var $userPlaylist = $(event.target).parent().parent().parent().find(".user-playlist");
+                if ($userPlaylist.hasClass("loaded") == false) {
+                    $userPlaylist.addClass("loading");
+                    var loadedPlaylist = [];
+                    $(".loading .user-playlist-item").each(function () {
+                        var streamUrl = $(this).attr("data-stream-url");
+                        var title = $(this).find(".user-playlist-title").html();
+                        var artworkUrl = $(this).find(".user-playlist-item-image").attr("src");
+                        var duration = $(this).find(".user-playlist-track-duration").html();
+                        console.log(title, artworkUrl, duration, streamUrl);
+                        var playlistObject = {
+                            stream_url: streamUrl,
+                            title: title,
+                            artwork_url: artworkUrl,
+                            durationMinsAndSecs: duration
+                        };
+                        loadedPlaylist.push(playlistObject);
+                    });
+                    $userPlaylist.switchClass("loading", "loaded");
+                    $(that).trigger("userPlaylistLoaded", [loadedPlaylist]);
+                }
+            });
+
             for (var j in JSONPlaylist) {
                 var JSONItem = JSONPlaylist[j];
                 var number = JSONItem.number;
@@ -48,6 +72,9 @@ App.UserPlaylistView = (function () {
             $userPlaylistModal.foundation('reveal', 'open');
             $(".open-icon").on("click", function (event) {
                 $(event.target).parent().parent().parent().find(".user-playlist").slideDown(300);
+            });
+            $(".close-icon").on("click", function (event) {
+                $(event.target).parent().parent().parent().find(".user-playlist").slideUp(300);
             })
         },
 

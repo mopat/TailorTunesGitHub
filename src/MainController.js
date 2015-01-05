@@ -53,6 +53,8 @@ App.MainController = (function () {
             $(playlistManager).on("savePlaylistClicked", handleSavePlaylistClicked);
 
             $(playlistManager).on("userPlaylistTitlesLoaded", handleUserPlaylistTitlesLoaded);
+
+            $(userPlaylistView).on("userPlaylistLoaded", handleUserPlaylistLoaded);
         },
 
         handleTrackPick = function (event, src, title) {
@@ -88,11 +90,11 @@ App.MainController = (function () {
         },
 
         handlePlaylistCreated = function (event, playlist) {
-            playlistView.addPlaylistItem(playlist);
+            playlistView.addPlaylist(playlist);
         },
 
         handleSoundlcoudTrackPicked = function (event, track) {
-            playlistView.addPlaylistItem(track);
+            playlistView.addPlaylist(track);
         },
 
         handlePlaylistItemClick = function (event, streamUrl, title) {
@@ -118,6 +120,10 @@ App.MainController = (function () {
 
         handleUserPlaylistTitlesLoaded = function (event, title, date, length, playlistId, JSONPlaylist) {
             userPlaylistView.setUserPlaylistView(title, date, length, playlistId, JSONPlaylist);
+        },
+
+        handleUserPlaylistLoaded = function (event, playlist) {
+            playlistView.addPlaylist(playlist);
         };
 
 

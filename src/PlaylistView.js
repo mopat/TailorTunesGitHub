@@ -9,7 +9,6 @@ App.PlaylistView = (function () {
         firstAppearedElementOnScreen = null,
         lastAppearedElementOnScreen = null,
         beforeLastAppearedOnscreen = null,
-        completePlaylist = [],
         addedPlaylists = 0,
 
         init = function () {
@@ -55,53 +54,28 @@ App.PlaylistView = (function () {
         },
 
 
-        addPlaylistItem = function (playlist) {
+        addPlaylist = function (playlist) {
             console.log("playlist", playlist)
             addedPlaylists++;
-            completePlaylist.push.apply(completePlaylist, playlist);
-            for (var i = 0; i < playlist.length; i++) {
-
+            for (var i in playlist) {
                 var artworkUrl = playlist[i].artwork_url;
                 if (artworkUrl == null)
                     artworkUrl = playlist[i].user.avatar_url;
+
+                var duration = playlist[i].durationMinsAndSecs;
+                if (duration == null)
+                    duration = getMinutesAndSeconds(playlist[i].duration);
+
                 var title = playlist[i].title;
-                var duration = playlist[i].duration;
-                //var permalinkUrl = playlist[i].permalink_url;
+
                 var streamUrl = playlist[i].stream_url;
 
                 var playlistItem = playlistItemTpl({
                     stream_url: streamUrl,
                     artwork_url: artworkUrl,
                     title: title,
-                    duration: getMinutesAndSeconds(duration),
-                    playlist_number: (i + 1 + ".")
+                    duration: duration
                 });
-
-
-               /** var anchor = $('<a>');
-
-                //anchor.attr("href", permalinkUrl);
-                anchor.attr("href", "#");
-                //   anchor.attr("target", "_blank");
-
-                var listItem = $("<li class='playlist-item'>");
-                listItem.attr("data-stream-url", streamUrl);
-                // $(listItem).html("<span class='playlist-title>" + title + "</span>");
-
-                var listImg = $("<img class='playlist-item-image'>");
-                listImg.attr("src", artworkUrl);
-
-                anchor.append($("<span class='playlist-number'>").html(i + 1 + "."));
-                anchor.append(listImg);
-                anchor.append($("<span class='playlist-track-duration'>").html(getMinutesAndSeconds(duration)));
-                anchor.append($("<span class='playlist-title'>").html(title));
-                listItem.append(anchor);
-                var centerContainer = $("<div class='center-container'>");
-
-                $playlist.append(listItem);
-                $playlistBox.append($playlist);
-
-                **/
                 $playlist.append(playlistItem);
             }
             setPlaylistIds();
@@ -112,7 +86,6 @@ App.PlaylistView = (function () {
                 $sortModeSwitch.click();
             }
         },
-
 
         startPlaylist = function () {
             var firstTrack = $("#playlist .playlist-item").first();
@@ -310,7 +283,7 @@ App.PlaylistView = (function () {
             return JSON.parse(JSON.stringify(playlistAsJSON))
         };
 
-    that.addPlaylistItem = addPlaylistItem;
+    that.addPlaylist = addPlaylist;
     that.handlePrevOrNextClicked = handlePrevOrNextClicked;
     that.getPlaylistAsJSON = getPlaylistAsJSON;
     that.init = init;
