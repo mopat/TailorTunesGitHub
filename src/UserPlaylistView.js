@@ -6,6 +6,7 @@ App.UserPlaylistView = (function () {
         $userPlaylistBox = null,
         userPlaylistTpl = null,
         userPlaylistItemTpl = null,
+        $userPlaylistModal = null,
 
 
         init = function () {
@@ -14,7 +15,7 @@ App.UserPlaylistView = (function () {
 
             userPlaylistItemTpl = _.template($("#user-playlist-item-tpl").html());
 
-
+            $userPlaylistModal = $("#user-playlist-modal");
         },
 
         setUserPlaylistView = function (playlistTitle, date, length, playlistId, JSONPlaylist) {
@@ -44,10 +45,10 @@ App.UserPlaylistView = (function () {
                 $("#" + playlistId).append(playlistItem);
             }
             setPlaylistIds();
-            $("#user-playlist-modal").foundation('reveal', 'open');
+            $userPlaylistModal.foundation('reveal', 'open');
             $(".open-icon").on("click", function (event) {
-                $(event.target).parent().parent().parent().find(".user-playlist").slideDown(300)
-            });
+                $(event.target).parent().parent().parent().find(".user-playlist").slideDown(300);
+            })
         },
 
         setPlaylistIds = function () {
