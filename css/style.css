@@ -65,26 +65,28 @@ body {
 #playlist-container {
     border: 1px solid gray;
 }
-#playlist-box {
+
+#playlist-box, #user-playlist-box {
     height: 100%;
     width: 100%;
     padding: 0;
 }
 
-#playlist {
+#playlist, .user-playlist {
     list-style-type: none;
     padding: 0;
     margin: 0;
 }
 
-#playlist a {
+#playlist a, .user-playlist a {
     text-decoration: none;
     display: block;
     width: 100%;
     min-height: 20px;
     color: white;
 }
-.playlist-item {
+
+.playlist-item, .user-playlist-item {
     clear: both;
     color: white;
     min-height: 20px;
@@ -94,23 +96,24 @@ body {
     overflow: hidden;
 }
 
-.playlist-number {
+.playlist-number, .user-playlist-number {
     float: left;
 }
-.playlist-title {
+
+.playlist-title, .user-playlist-title {
     float: left;
     position: relative;
     margin-left: 10px;
     width: 70%;
 }
 
-.playlist-item-image {
+.playlist-item-image, .user-playlist-item-image {
     float: left;
     width: 3%;
     margin-left: 3px;
 }
 
-.playlist-track-duration {
+.playlist-track-duration, .user-playlist-track-duration {
     float: left;
     width: auto;
     margin-left: 15px;

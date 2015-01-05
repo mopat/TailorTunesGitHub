@@ -39,8 +39,24 @@ App.UserPlaylistView = (function () {
                     duration: duration,
                     playlist_number: number
                 });
-                $("#" + playlistId).append(playlistItem)
+                $("#" + playlistId).append(playlistItem);
             }
+            setPlaylistIds();
+            $("#user-playlist-modal").foundation('reveal', 'open');
+        },
+
+        setPlaylistIds = function () {
+            listItemColors = ["#464646", "#292929"];
+            $(".user-playlist-item").each(function (index) {
+                if (index % 2 == 0) {
+                    $(this).css("background-color", listItemColors[0]);
+                }
+                else {
+                    $(this).css("background-color", listItemColors[1]);
+                }
+                $(this).attr("id", index);
+                $(this).find(".playlist-number").html(index + 1 + ".");
+            });
         };
 
     that.setUserPlaylistView = setUserPlaylistView;
