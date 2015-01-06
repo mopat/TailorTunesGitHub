@@ -55,6 +55,8 @@ App.MainController = (function () {
             $(playlistManager).on("userPlaylistTitlesLoaded", handleUserPlaylistTitlesLoaded);
 
             $(userPlaylistView).on("userPlaylistLoaded", handleUserPlaylistLoaded);
+
+            $(userPlaylistView).on("previewPlaying", handlePreviewPlaying);
         },
 
         handleTrackPick = function (event, src, title) {
@@ -124,6 +126,10 @@ App.MainController = (function () {
 
         handleUserPlaylistLoaded = function (event, playlist) {
             playlistView.addPlaylist(playlist);
+        },
+
+        handlePreviewPlaying = function () {
+
         };
 
 

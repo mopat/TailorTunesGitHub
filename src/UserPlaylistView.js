@@ -3,11 +3,13 @@
  */
 App.UserPlaylistView = (function () {
     var that = {},
+        sc_client_id = "23a3031c7cd251c7c217ca127777e48b",
         $userPlaylistBox = null,
         userPlaylistTpl = null,
         userPlaylistItemTpl = null,
         $userPlaylistModal = null,
         listItemColors = null,
+        preview = new Audio(),
 
 
         init = function () {
@@ -53,6 +55,7 @@ App.UserPlaylistView = (function () {
             $(".user-playlist-item").on("swipeleft", swipeleftHandler);
             $(".open-icon").on("click", handleOpenPlaylist);
             $(".close-icon").on("click", handleClosePlaylist);
+            $(".user-playlist-item").on("click", handleListItemClick);
         },
 
         setPlaylistIds = function () {
@@ -91,6 +94,20 @@ App.UserPlaylistView = (function () {
                 $(that).trigger("userPlaylistLoaded", [loadedPlaylist]);
             }
         },
+
+        handleListItemClick = function (event) {
+            event.preventDefault();
+            var $clickedItem = $(event.target).closest(".user-playlist-item");
+            $(".preview-playing").removeClass("preview-playing");
+            $clickedItem.addClass("preview-playing");
+            var streamUrl = $clickedItem.attr("data-stream-url");
+
+            preview.src = streamUrl + "?client_id=" + sc_client_id;
+            preview.play();
+            $clickedItem.addClass("preview-playing");
+            $(that).trigger("previewPlaying");
+        },
+
 
         swipeleftHandler = function (event) {
             $.event.special.swipe.horizontalDistanceThreshold = 50;
