@@ -62,6 +62,7 @@ App.MainController = (function () {
             $(userPlaylistView).on("previewPlaying", handlePreviewPlaying);
 
             $(loginRegisterView).on("loginButtonClick", handleLoginButtonClick);
+            $(loginRegisterView).on("logoutClicked", handleLogoutClick);
             $(loginRegisterView).on("myPlaylistsAnchorClick", handleMyPlaylistsAnchorClick);
             $(playlistManager).on("loginSuccessful", handleLoginSuccessful);
             $(playlistManager).on("loginFailed", handleLoginFailed);
@@ -154,6 +155,10 @@ App.MainController = (function () {
 
         handleMyPlaylistsAnchorClick = function () {
             userPlaylistView.openUserPlaylistModal();
+        },
+
+        handleLogoutClick = function () {
+            userPlaylistView.emptyUserPlaylistModal();
         };
 
 

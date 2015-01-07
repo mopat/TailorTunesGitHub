@@ -14,7 +14,6 @@ App.PlaylistManager = (function () {
             savePlaylistButton = $("#save-playlist-button");
 
             savePlaylistButton.on("click", savePlaylist);
-
         },
 
         signIn = function () {

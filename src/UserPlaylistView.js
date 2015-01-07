@@ -8,6 +8,7 @@ App.UserPlaylistView = (function () {
         userPlaylistTpl = null,
         userPlaylistItemTpl = null,
         $userPlaylistModal = null,
+        $userPlaylisBox = null,
         listItemColors = null,
         preview = new Audio(),
 
@@ -20,6 +21,7 @@ App.UserPlaylistView = (function () {
             userPlaylistItemTpl = _.template($("#user-playlist-item-tpl").html());
 
             $userPlaylistModal = $("#user-playlist-modal");
+            $userPlaylisBox = $("#user-playlist-box").empty();
         },
 
         setUserPlaylistView = function (playlistTitle, date, length, playlistId, JSONPlaylist) {
@@ -73,9 +75,14 @@ App.UserPlaylistView = (function () {
 
         openUserPlaylistModal = function () {
             $userPlaylistModal.foundation('reveal', 'open');
+        },
+
+        emptyUserPlaylistModal = function () {
+            $userPlaylistBox.empty();
         };
 
         handleLoadPlaylist = function (event) {
+            //playlist in playlistview laden
             var $userPlaylist = $(event.target).parent().parent().parent().find(".user-playlist");
             if ($userPlaylist.hasClass("loaded") == false) {
                 $userPlaylist.addClass("loading");
@@ -133,6 +140,7 @@ App.UserPlaylistView = (function () {
 
     that.setUserPlaylistView = setUserPlaylistView;
     that.openUserPlaylistModal = openUserPlaylistModal;
+    that.emptyUserPlaylistModal = emptyUserPlaylistModal;
     that.init = init;
 
     return that;
