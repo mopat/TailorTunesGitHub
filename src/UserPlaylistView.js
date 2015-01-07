@@ -49,7 +49,7 @@ App.UserPlaylistView = (function () {
                 $("#" + playlistId).append(playlistItem);
             }
             setPlaylistIds();
-            $userPlaylistModal.foundation('reveal', 'open');
+            openUserPlaylistModal();
 
             $(".load-playlist").on("click", handleLoadPlaylist);
             $(".user-playlist-item").on("swipeleft", swipeleftHandler);
@@ -70,6 +70,10 @@ App.UserPlaylistView = (function () {
                 $(this).find(".user-playlist-number").html(index + 1 + ".");
             });
         },
+
+        openUserPlaylistModal = function () {
+            $userPlaylistModal.foundation('reveal', 'open');
+        };
 
         handleLoadPlaylist = function (event) {
             var $userPlaylist = $(event.target).parent().parent().parent().find(".user-playlist");
@@ -128,6 +132,7 @@ App.UserPlaylistView = (function () {
 
 
     that.setUserPlaylistView = setUserPlaylistView;
+    that.openUserPlaylistModal = openUserPlaylistModal;
     that.init = init;
 
     return that;

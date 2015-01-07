@@ -62,6 +62,7 @@ App.MainController = (function () {
             $(userPlaylistView).on("previewPlaying", handlePreviewPlaying);
 
             $(loginRegisterView).on("loginButtonClick", handleLoginButtonClick);
+            $(loginRegisterView).on("myPlaylistsAnchorClick", handleMyPlaylistsAnchorClick);
             $(playlistManager).on("loginSuccessful", handleLoginSuccessful);
             $(playlistManager).on("loginFailed", handleLoginFailed);
         },
@@ -149,6 +150,10 @@ App.MainController = (function () {
 
         handleLoginFailed = function (event, errorMessage) {
             loginRegisterView.loginFailed(errorMessage);
+        },
+
+        handleMyPlaylistsAnchorClick = function () {
+            userPlaylistView.openUserPlaylistModal();
         };
 
 

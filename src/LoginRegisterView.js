@@ -10,6 +10,8 @@ App.LoginRegisterView = (function () {
         $loginButton = null,
         $loginForm = null,
         $loginFailed = null,
+        $loggedInUsername = null,
+        $myPlaylistsAnchor = null,
 
         init = function () {
             $loginBox = $("#login-box");
@@ -19,9 +21,12 @@ App.LoginRegisterView = (function () {
             $loginButton = $("#login-button");
             $loginForm = $("#login-form");
             $loginFailed = $("#login-failed");
+            $loggedInUsername = $("#loggedin-username");
+            $myPlaylistsAnchor = $("#my-playlists-anchor");
 
             $loginAnchor.on("click", handleLoginAnchorClick);
             $loginButton.on("click", handleLoginButtonClick)
+            $myPlaylistsAnchor.on("click", hanldeMyPlaylistsAnchorClicked);
         },
 
         handleLoginButtonClick = function () {
@@ -34,6 +39,8 @@ App.LoginRegisterView = (function () {
         loginSuccessful = function () {
             $loginAnchor.undim();
             $loginBox.hide();
+            var username = Parse.User.current().attributes.username;
+            $loggedInUsername.html(username);
         },
 
         loginFailed = function (errorMessage) {
@@ -49,6 +56,10 @@ App.LoginRegisterView = (function () {
                 $loginForm.show();
                 $(this).dimBackground();
             }
+        },
+
+        hanldeMyPlaylistsAnchorClicked = function () {
+            $(that).trigger("myPlaylistsAnchorClick");
         };
 
     that.loginSuccessful = loginSuccessful;
