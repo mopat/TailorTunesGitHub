@@ -125,7 +125,7 @@ App.UserPlaylistView = (function () {
             $clickedItem.addClass("preview-playing");
             $(that).trigger("previewPlayingStart");
             /**$(".preview-playing").on("click", function(){
-                preview.pause();
+                preview.pause()
                 preview.currentTime = 0;
                 $(".preview-playing").removeClass("preview-playing");
                 $(that).trigger("previewPlayingStop");
