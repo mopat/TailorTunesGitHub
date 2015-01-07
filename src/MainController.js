@@ -59,7 +59,8 @@ App.MainController = (function () {
 
             $(userPlaylistView).on("userPlaylistLoaded", handleUserPlaylistLoaded);
 
-            $(userPlaylistView).on("previewPlaying", handlePreviewPlaying);
+            $(userPlaylistView).on("previewPlayingStart", handlePreviewPlayingStart);
+            $(userPlaylistView).on("previewPlayingStop", handlePreviewPlayingStop);
 
             $(loginRegisterView).on("loginButtonClick", handleLoginButtonClick);
             $(loginRegisterView).on("logoutClicked", handleLogoutClick);
@@ -137,8 +138,12 @@ App.MainController = (function () {
             playlistView.addPlaylist(playlist);
         },
 
-        handlePreviewPlaying = function () {
+        handlePreviewPlayingStart = function () {
+            controlsView.pauseTrack();
+        },
 
+        handlePreviewPlayingStop = function () {
+            controlsView.playTrack();
         },
 
         handleLoginButtonClick = function (event, username, password) {

@@ -139,6 +139,14 @@ App.ControlsView = (function () {
             resetTitleInfo();
         },
 
+        pauseTrack = function () {
+            player.pause();
+        },
+
+        playTrack = function () {
+            player.play();
+        },
+
         handleNextButtonClick = function (e) {
             e.preventDefault();
             $(that).trigger("nextButtonClick");
@@ -157,11 +165,13 @@ App.ControlsView = (function () {
         },
 
         resetTitleInfo = function(){
-          $titleInfo.html("");
+            $titleInfo.empty();
         };
 
     that.handleTrackPicked = handleTrackPicked;
     that.resetPlayer = resetPlayer;
+    that.pauseTrack = pauseTrack;
+    that.playTrack = playTrack;
     that.init = init;
 
     return that;

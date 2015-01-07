@@ -22,6 +22,8 @@ App.UserPlaylistView = (function () {
 
             $userPlaylistModal = $("#user-playlist-modal");
             $userPlaylisBox = $("#user-playlist-box");
+
+            $userPlaylistModal.on("close", handleUserPlaylistModalClosed);
         },
 
         setUserPlaylistView = function (playlistTitle, date, length, playlistId, JSONPlaylist) {
@@ -81,6 +83,12 @@ App.UserPlaylistView = (function () {
             $userPlaylistBox.empty();
         },
 
+        handleUserPlaylistModalClosed = function () {
+            preview.pause();
+            preview.currentTime = 0;
+            $(that).trigger("previewPlayingStop");
+        },
+
         handleLoadPlaylist = function (event) {
             //playlist in playlistview laden
             var $userPlaylist = $(event.target).parent().parent().parent().find(".user-playlist");
@@ -92,7 +100,6 @@ App.UserPlaylistView = (function () {
                     var title = $(this).find(".user-playlist-title").html();
                     var artworkUrl = $(this).find(".user-playlist-item-image").attr("src");
                     var duration = $(this).find(".user-playlist-track-duration").html();
-                    console.log(title, artworkUrl, duration, streamUrl);
                     var playlistObject = {
                         stream_url: streamUrl,
                         title: title,
@@ -116,7 +123,14 @@ App.UserPlaylistView = (function () {
             preview.src = streamUrl + "?client_id=" + sc_client_id;
             preview.play();
             $clickedItem.addClass("preview-playing");
-            $(that).trigger("previewPlaying");
+            $(that).trigger("previewPlayingStart");
+            /**$(".preview-playing").on("click", function(){
+                preview.pause();
+                preview.currentTime = 0;
+                $(".preview-playing").removeClass("preview-playing");
+                $(that).trigger("previewPlayingStop");
+            })
+             **/
         },
 
 
