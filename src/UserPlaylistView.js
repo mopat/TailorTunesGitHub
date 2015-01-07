@@ -21,7 +21,7 @@ App.UserPlaylistView = (function () {
             userPlaylistItemTpl = _.template($("#user-playlist-item-tpl").html());
 
             $userPlaylistModal = $("#user-playlist-modal");
-            $userPlaylisBox = $("#user-playlist-box").empty();
+            $userPlaylisBox = $("#user-playlist-box");
         },
 
         setUserPlaylistView = function (playlistTitle, date, length, playlistId, JSONPlaylist) {
@@ -79,7 +79,7 @@ App.UserPlaylistView = (function () {
 
         emptyUserPlaylistModal = function () {
             $userPlaylistBox.empty();
-        };
+        },
 
         handleLoadPlaylist = function (event) {
             //playlist in playlistview laden
