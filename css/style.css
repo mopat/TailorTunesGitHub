@@ -47,6 +47,9 @@ body {
     display: none;
 }
 
+.preview-playing .user-playlist-title {
+    color: lightblue;
+}
 #player {
     background-color: #df151d;
     width: 100%;

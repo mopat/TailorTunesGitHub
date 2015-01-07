@@ -130,12 +130,12 @@ App.PlaylistView = (function () {
             current.addClass("now-playing");
             var streamUrl = current.attr("data-stream-url");
             var title = current.find(".playlist-title").html();
-            current.find(".playlist-title").css("color", "lightblue")
+            current.find(".playlist-title").css("color", "lightblue");
             $(that).trigger("trackPicked", [streamUrl, title]);
         },
 
         handleResetTrack = function (nowPlaying) {
-            nowPlaying.find(".playlist-title").css("color", "lightblue")
+            nowPlaying.find(".playlist-title").css("color", "lightblue");
             var streamUrl = nowPlaying.attr("data-stream-url");
             var title = nowPlaying.find(".playlist-title").html();
             $(that).trigger("trackPicked", [streamUrl, title]);
