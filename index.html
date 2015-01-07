@@ -16,14 +16,20 @@
 <body>
 <div id="header">
     <div class="row">
-        <div class="large-6 medium-6 small-6 columns text-center">
-            Hottest Tracks
-        </div>
-        <div class="large-6 medium-6 small-6 columns text-center">
-            New Tracks
+        <div id="login-box">
+            <div class="large-4 medium-6 small-12 columns right">
+                <a href="#" class="text-right" id="login-anchor"><i class="fi-torso"> Login</i></a>
+
+                <div id="login-form">
+                    <form>
+                        <input type="text" id="login-username" placeholder="Username" value="patrick">
+                        <input type="password" id="login-password" placeholder="Password" value="killer">
+                        <a href="#" class="button postfix" id="login-button">Login</a>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
-
     <div id="user-playlist-modal" class="reveal-modal" data-reveal>
         <div id="user-playlist-box">
 
@@ -39,8 +45,6 @@
                 </div>
                 <div class="large-3 columns" id="artist-dropdown-box">
                     <select id="artist-dropdown" class="search-dropdown">
-                        <!--<option value="newest">Newest</option>-->
-                        <!--<option value="year">Year</option>-->
                         <option value="song_hotttnesss-top">Hottest</option>
                         <option value="similar">Similar</option>
                         <option value="tempo-top">Slow</option>
@@ -205,6 +209,7 @@
 <script src="libs/underscore-min.js"></script>
 <script src="libs/string_score.js"></script>
 <script src="libs/soundcloud_sdk.js"></script>
+<script type="text/javascript" src="libs/jquery.dim-background.min.js"></script>
 
 <script type="text/javascript" src="src/App.js"></script>
 <script type="text/javascript" src="src/MainController.js"></script>
@@ -215,6 +220,7 @@
 <script type="text/javascript" src="src/ChooseTitleView.js"></script>
 <script type="text/javascript" src="src/PlaylistManager.js"></script>
 <script type="text/javascript" src="src/UserPlaylistView.js"></script>
+<script type="text/javascript" src="src/LoginRegisterView.js"></script>
 <script type="text/html" id="user-playlist-tpl">
     <div class="row" class="user-playlist-container">
         <div class="large-12 columns">
@@ -240,16 +246,16 @@
     <li class="user-playlist-item" data-stream-url="<%= stream_url %>">
         <a href="#"><span class="user-playlist-number"></span>
             <img class="user-playlist-item-image" src="<%= artwork_url %>"><span
-                class="user-playlist-track-duration"><%= duration %></span><span
-                class="user-playlist-title"><%= title %></span></a>
+                    class="user-playlist-track-duration"><%= duration %></span><span
+                    class="user-playlist-title"><%= title %></span></a>
     </li>
 </script>
 <script type="text/html" id="playlist-item-tpl">
     <li class="playlist-item" data-stream-url="<%= stream_url %>">
         <a href="#"><span class="playlist-number"></span>
             <img class="playlist-item-image" src="<%= artwork_url %>"><span
-                class="playlist-track-duration"><%= duration %></span><span
-                class="playlist-title"><%= title %></span></a>
+                    class="playlist-track-duration"><%= duration %></span><span
+                    class="playlist-title"><%= title %></span></a>
     </li>
 </script>
 <script>

@@ -14,7 +14,7 @@ App.PlaylistManager = (function () {
             savePlaylistButton = $("#save-playlist-button");
 
             savePlaylistButton.on("click", savePlaylist);
-            logIn();
+
         },
 
         signIn = function () {
@@ -37,8 +37,8 @@ App.PlaylistManager = (function () {
             });
         },
 
-        logIn = function () {
-            Parse.User.logIn("patrick", "killer", {
+        logIn = function (username, password) {
+            Parse.User.logIn(username, password, {
                 success: function (user) {
                     currentUser = Parse.User.current();
                     console.log("LOGGEDIN")
@@ -134,6 +134,7 @@ App.PlaylistManager = (function () {
             $(that).trigger("savePlaylistClicked");
         };
 
+    that.login = logIn;
     that.postPlaylist = postPlaylist;
     that.init = init;
 

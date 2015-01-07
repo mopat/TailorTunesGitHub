@@ -8,6 +8,7 @@ App.MainController = (function () {
         modalView = null,
         playlistManager = null,
         userPlaylistView = null,
+        loginRegisterView = null,
 
         init = function () {
             mainModel = App.MainModel;
@@ -17,6 +18,7 @@ App.MainController = (function () {
             modalView = App.ModalView;
             playlistManager = App.PlaylistManager;
             userPlaylistView = App.UserPlaylistView;
+            loginRegisterView = App.LoginRegisterView;
 
             mainModel.init();
             playlistView.init();
@@ -25,6 +27,7 @@ App.MainController = (function () {
             modalView.init();
             playlistManager.init();
             userPlaylistView.init();
+            loginRegisterView.init();
 
             $(playlistView).on("trackPicked", handleTrackPick);
             $(playlistView).on("resetPlayer", handleResetPlayer);
@@ -57,6 +60,8 @@ App.MainController = (function () {
             $(userPlaylistView).on("userPlaylistLoaded", handleUserPlaylistLoaded);
 
             $(userPlaylistView).on("previewPlaying", handlePreviewPlaying);
+
+            $(loginRegisterView).on("loginButtonClick", handleLoginButtonClick);
         },
 
         handleTrackPick = function (event, src, title) {
@@ -130,6 +135,10 @@ App.MainController = (function () {
 
         handlePreviewPlaying = function () {
 
+        },
+
+        handleLoginButtonClick = function (event, username, password) {
+            playlistManager.login(username, password);
         };
 
 
