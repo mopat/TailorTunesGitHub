@@ -43,6 +43,10 @@ body {
     font-size: 0.9em;
 }
 
+.stop-icon {
+    display: none;
+}
+
 #player {
     background-color: #df151d;
     width: 100%;

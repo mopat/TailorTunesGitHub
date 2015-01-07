@@ -11,6 +11,7 @@ App.UserPlaylistView = (function () {
         $userPlaylisBox = null,
         listItemColors = null,
         preview = new Audio(),
+        $stop = null,
 
 
         init = function () {
@@ -60,6 +61,7 @@ App.UserPlaylistView = (function () {
             $(".open-icon").on("click", handleOpenPlaylist);
             $(".close-icon").on("click", handleClosePlaylist);
             $(".user-playlist-item").on("click", handleListItemClick);
+            $(".stop-icon").on("click", handleStopIconClick);
         },
 
         setPlaylistIds = function () {
@@ -124,13 +126,7 @@ App.UserPlaylistView = (function () {
             preview.play();
             $clickedItem.addClass("preview-playing");
             $(that).trigger("previewPlayingStart");
-            /**$(".preview-playing").on("click", function(){
-                preview.pause()
-                preview.currentTime = 0;
-                $(".preview-playing").removeClass("preview-playing");
-                $(that).trigger("previewPlayingStop");
-            })
-             **/
+            $(".stop-icon").show(0);
         },
 
 
@@ -149,6 +145,13 @@ App.UserPlaylistView = (function () {
 
         handleClosePlaylist = function (event) {
             $(event.target).parent().parent().parent().find(".user-playlist").slideUp(300);
+        },
+
+        handleStopIconClick = function () {
+            preview.pause();
+            preview.currentTime = 0;
+            $(".stop-icon").hide();
+            $(".preview-playing").removeClass("preview-playing");
         };
 
 
