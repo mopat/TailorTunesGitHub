@@ -42,10 +42,13 @@ App.PlaylistManager = (function () {
                 success: function (user) {
                     currentUser = Parse.User.current();
                     console.log("LOGGEDIN")
+                    $(that).trigger("loginSuccessful");
                     loadPlaylists();
                 },
                 error: function (user, error) {
                     // The login failed. Check error to see why.
+                    console.log(error.message, error.code)
+                    $(that).trigger("loginFailed", [error.message]);
                 }
             });
         },

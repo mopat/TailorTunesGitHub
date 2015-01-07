@@ -62,6 +62,8 @@ App.MainController = (function () {
             $(userPlaylistView).on("previewPlaying", handlePreviewPlaying);
 
             $(loginRegisterView).on("loginButtonClick", handleLoginButtonClick);
+            $(playlistManager).on("loginSuccessful", handleLoginSuccessful);
+            $(playlistManager).on("loginFailed", handleLoginFailed);
         },
 
         handleTrackPick = function (event, src, title) {
@@ -139,6 +141,14 @@ App.MainController = (function () {
 
         handleLoginButtonClick = function (event, username, password) {
             playlistManager.login(username, password);
+        },
+
+        handleLoginSuccessful = function () {
+            loginRegisterView.loginSuccessful();
+        },
+
+        handleLoginFailed = function (event, errorMessage) {
+            loginRegisterView.loginFailed(errorMessage);
         };
 
 

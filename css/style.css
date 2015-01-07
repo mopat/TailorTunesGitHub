@@ -34,6 +34,12 @@ body {
     display: none;
 }
 
+#login-failed {
+    color: #df151d;
+    font-weight: bold;
+    font-size: 0.9em;
+}
+
 #player {
     background-color: #df151d;
     width: 100%;

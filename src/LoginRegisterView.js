@@ -3,18 +3,22 @@
  */
 App.LoginRegisterView = (function () {
     var that = {},
+        $loginBox = null,
         $loginAnchor = null,
         $loginUsername = null,
         $loginPassword = null,
         $loginButton = null,
         $loginForm = null,
+        $loginFailed = null,
 
         init = function () {
+            $loginBox = $("#login-box");
             $loginAnchor = $("#login-anchor");
             $loginUsername = $("#login-username");
             $loginPassword = $("#login-password");
             $loginButton = $("#login-button");
             $loginForm = $("#login-form");
+            $loginFailed = $("#login-failed");
 
             $loginAnchor.on("click", handleLoginAnchorClick);
             $loginButton.on("click", handleLoginButtonClick)
@@ -25,6 +29,15 @@ App.LoginRegisterView = (function () {
             var password = $loginPassword.val();
 
             $(that).trigger("loginButtonClick", [username, password]);
+        },
+
+        loginSuccessful = function () {
+            $loginAnchor.undim();
+            $loginBox.hide();
+        },
+
+        loginFailed = function (errorMessage) {
+            $loginFailed.html("Login Failed due to " + errorMessage);
         },
 
         handleLoginAnchorClick = function () {
@@ -38,6 +51,8 @@ App.LoginRegisterView = (function () {
             }
         };
 
+    that.loginSuccessful = loginSuccessful;
+    that.loginFailed = loginFailed;
     that.init = init;
 
     return that;
