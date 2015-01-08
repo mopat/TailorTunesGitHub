@@ -171,6 +171,11 @@ body {
     background-color: #333;
     margin: 0;
     padding: 0;
+    height: 37px;
+}
+
+#save-playlist-button {
+
 }
 #sticky {
     color: #fff;

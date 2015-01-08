@@ -5,15 +5,16 @@ App.PlaylistManager = (function () {
     var that = {},
         APPLICATION_ID = "yOTWw2niwOWRTql2MtewglSVcXYQa36Bld6ztZX3",
         JAVASCRIPT_KEY = "wyt0MOGfNQxPCEC3fFDkxGmpukQ7ulbOzeMY27Ql",
-        savePlaylistButton = null,
+        $savePlaylistButton = null,
+        $playlistNameInput = null,
         currentUser = null,
         playlistTitles = [],
 
         init = function () {
             Parse.initialize(APPLICATION_ID, JAVASCRIPT_KEY);
-            savePlaylistButton = $("#save-playlist-button");
-
-            savePlaylistButton.on("click", savePlaylist);
+            $savePlaylistButton = $("#save-playlist-button");
+            $playlistNameInput = $("#playlist-name-input");
+            $savePlaylistButton.on("click", savePlaylist);
         },
 
         signIn = function (username, password, email) {
@@ -64,15 +65,14 @@ App.PlaylistManager = (function () {
             });
         },
 
-
         postPlaylist = function(JSONPlaylist){
             var Post = Parse.Object.extend("Playlists");
             var post = new Post();
             post.set("user", currentUser);
-            var playlistTitle = "playlist title 8";
+            var playlistName = $playlistNameInput.val();
             $(that).trigger("emptyOldUserPlaylistView");
-            if($.inArray(playlistTitle, playlistTitles) == -1){
-                post.set("title", playlistTitle);
+            if ($.inArray(playlistName, playlistTitles) == -1) {
+                post.set("title", playlistName);
                 post.set("lastUpdate", getCurrenTimeAndDate());
                 post.set("length", JSONPlaylist.length);
                 post.set("JSONPlaylist", JSONPlaylist);
