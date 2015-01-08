@@ -181,11 +181,63 @@ App.MainModel = (function () {
         },
 
         searchSoundCloudTracks = function (tracks, usedAPI, artistQuery) {
+
             var ajaxCalls = [];
             var artist = null;
             var title = null;
             var queryOne = null;
-            for (var i in tracks) {
+
+            interval = setInterval(function () {
+
+
+                artist = normalize(tracks[0].artist_name);
+                title = normalize(tracks[0].title);
+                queryOne = artist + " " + title;
+
+                console.log("QUERY")
+                tracks.splice(0, 1);
+                var ajaxCaller = function ajaxQuery(query) {
+                    return $.ajax({
+                        url: getScUrl(query),
+                        data: {
+                            format: 'json'
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            alert("SOUNDCLOUD ERROR " + errorThrown + " at" + XMLHttpRequest);
+                        },
+                        dataType: 'json',
+                        success: function (data) {
+                            //console.log(data)
+                            if (data.length != 0) {
+                                var matchingTracks = getMatchingResults(data, query);
+                                console.log("QUERY ", query);
+                                addToPlayList(matchingTracks);
+                            }
+                            else {
+                                alert("No Results found.");
+                            }
+
+                            console.log(tracks.length)
+                        },
+                        type: 'GET'
+                    });
+                }
+                ajaxCalls.push(ajaxCaller(queryOne));
+
+
+            }, 50);
+            $.when.apply($, ajaxCalls).done(function () {
+                playlist = removeSoundCloudDuplicates(playlist);
+                setPlaylistView();
+                clearInterval(interval)
+            })
+
+            /** OLD
+             *   var ajaxCalls = [];
+             var artist = null;
+             var title = null;
+             var queryOne = null;
+             for (var i in tracks) {
                 if (usedAPI == "spotify") {
                     queryOne = artistQuery + " " + normalize(tracks[i].name);
                 }
@@ -219,10 +271,12 @@ App.MainModel = (function () {
                 }
                 ajaxCalls.push(ajaxCaller(queryOne));
             }
-            $.when.apply($, ajaxCalls).done(function () {
+             $.when.apply($, ajaxCalls).done(function () {
                 playlist = removeSoundCloudDuplicates(playlist);
                 setPlaylistView();
             })
+             */
+
             /***
              $.ajax({
                 url: getScUrl(queryTwo),
