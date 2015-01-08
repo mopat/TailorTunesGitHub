@@ -69,7 +69,8 @@ App.PlaylistManager = (function () {
             var Post = Parse.Object.extend("Playlists");
             var post = new Post();
             post.set("user", currentUser);
-            var playlistTitle = "playlist title 3";
+            var playlistTitle = "playlist title 8";
+            $(that).trigger("emptyOldUserPlaylistView");
             if($.inArray(playlistTitle, playlistTitles) == -1){
                 post.set("title", playlistTitle);
                 post.set("lastUpdate", getCurrenTimeAndDate());
@@ -89,6 +90,7 @@ App.PlaylistManager = (function () {
                                     playlistTitles = [];
                                     playlistTitles.push(usersPosts[i]._serverData.title)
                                 }
+                                loadPlaylists();
                             }
                         });
                     }

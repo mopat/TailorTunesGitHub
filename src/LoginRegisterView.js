@@ -66,12 +66,12 @@ App.LoginRegisterView = (function () {
         },
 
         loginSuccessful = function () {
-            $loginAnchor.undim();
+            $.undim();
             $loginAnchor.hide();
             $loginForm.hide();
+
             $signInForm.hide();
             $signInAnchor.hide();
-            $signInAnchor.undim();
             $signInFailed.empty();
 
             var username = Parse.User.current().attributes.username;
@@ -98,7 +98,7 @@ App.LoginRegisterView = (function () {
             $loginAnchor.show();
             $signInAnchor.show();
 
-            $(that).trigger("logoutClicked");
+            $(that).trigger("emptyOldUserPlaylistView");
         },
 
         handleLoginAnchorClick = function () {

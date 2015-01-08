@@ -11,7 +11,6 @@ App.UserPlaylistView = (function () {
         $userPlaylisBox = null,
         listItemColors = null,
         preview = new Audio(),
-        $stop = null,
 
 
         init = function () {
