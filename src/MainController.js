@@ -67,6 +67,10 @@ App.MainController = (function () {
             $(loginRegisterView).on("myPlaylistsAnchorClick", handleMyPlaylistsAnchorClick);
             $(playlistManager).on("loginSuccessful", handleLoginSuccessful);
             $(playlistManager).on("loginFailed", handleLoginFailed);
+
+            $(loginRegisterView).on("signInButtonClick", handleSignInButtonClick);
+            $(playlistManager).on("signInSuccessful", handleLoginSuccessful);
+            $(playlistManager).on("signInFailed", handleSignInFailed);
         },
 
         handleTrackPick = function (event, src, title) {
@@ -164,6 +168,14 @@ App.MainController = (function () {
 
         handleLogoutClick = function () {
             userPlaylistView.emptyUserPlaylistModal();
+        },
+
+        handleSignInButtonClick = function (event, username, password, email) {
+            playlistManager.signIn(username, password, email);
+        },
+
+        handleSignInFailed = function (event, errorMessage) {
+            loginRegisterView.signInFailed(errorMessage);
         };
 
 

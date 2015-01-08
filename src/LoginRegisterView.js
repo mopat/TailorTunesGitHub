@@ -3,7 +3,6 @@
  */
 App.LoginRegisterView = (function () {
     var that = {},
-        $loginBox = null,
         $loginAnchor = null,
         $loginUsername = null,
         $loginPassword = null,
@@ -14,24 +13,41 @@ App.LoginRegisterView = (function () {
         $myPlaylistsAnchor = null,
         $logoutAnchor = null,
         $loggedInBox = null,
+        $signInAnchor = null,
+        $signInUsername = null,
+        $signInPassword = null,
+        $signInButton = null,
+        $signInEmail = null,
+        $signInForm = null,
+        $signInFailed = null,
 
         init = function () {
-            $loginBox = $("#login-box");
             $loginAnchor = $("#login-anchor");
             $loginUsername = $("#login-username");
             $loginPassword = $("#login-password");
             $loginButton = $("#login-button");
-            $loginForm = $("#login-form");
+            $loginForm = $("#login-form-box");
             $loginFailed = $("#login-failed");
             $loggedInUsername = $("#loggedin-username");
             $myPlaylistsAnchor = $("#my-playlists-anchor");
             $logoutAnchor = $("#logout-anchor");
             $loggedInBox = $("#loggedin-box");
 
+            $signInAnchor = $("#sign-in-anchor");
+            $signInUsername = $("#sign-in-username");
+            $signInPassword = $("#sign-in-password");
+            $signInEmail = $("#sign-in-email");
+            $signInButton = $("#sign-in-button");
+            $signInForm = $("#sign-in-form-box");
+            $signInFailed = $("#sign-in-failed");
+
             $loginAnchor.on("click", handleLoginAnchorClick);
             $loginButton.on("click", handleLoginButtonClick)
             $myPlaylistsAnchor.on("click", hanldeMyPlaylistsAnchorClick);
             $logoutAnchor.on("click", hanldeLogoutAnchorClick);
+
+            $signInAnchor.on("click", handleSignInAnchorClick);
+            $signInButton.on("click", handleSignInButtonClick);
         },
 
         handleLoginButtonClick = function () {
@@ -41,14 +57,26 @@ App.LoginRegisterView = (function () {
             $(that).trigger("loginButtonClick", [username, password]);
         },
 
+        handleSignInButtonClick = function () {
+            var username = $signInUsername.val();
+            var password = $signInPassword.val();
+            var email = $signInEmail.val();
+
+            $(that).trigger("signInButtonClick", [username, password, email]);
+        },
+
         loginSuccessful = function () {
             $loginAnchor.undim();
             $loginAnchor.hide();
             $loginForm.hide();
+            $signInForm.hide();
+            $signInAnchor.hide();
+            $signInAnchor.undim();
+            $signInFailed.empty();
 
             var username = Parse.User.current().attributes.username;
             $loggedInUsername.html(username);
-            $loginFailed.html("");
+            $loginFailed.empty();
             $loggedInBox.show();
         },
 
@@ -56,15 +84,8 @@ App.LoginRegisterView = (function () {
             $loginFailed.html("Login Failed due to " + errorMessage);
         },
 
-        handleLoginAnchorClick = function () {
-            if ($loginForm.is(":visible")) {
-                $(this).undim();
-                $loginForm.hide();
-            }
-            else {
-                $loginForm.show();
-                $(this).dimBackground();
-            }
+        signInFailed = function (errorMessage) {
+            $signInFailed.html("Sign In Failed: " + errorMessage);
         },
 
         hanldeMyPlaylistsAnchorClick = function () {
@@ -75,12 +96,45 @@ App.LoginRegisterView = (function () {
             Parse.User.logOut();
             $loggedInBox.hide();
             $loginAnchor.show();
+            $signInAnchor.show();
 
             $(that).trigger("logoutClicked");
+        },
+
+        handleLoginAnchorClick = function () {
+            if ($loginForm.is(":visible")) {
+                $(this).undim();
+                $loginForm.hide();
+            }
+            else {
+                $loginForm.show();
+                $(this).dimBackground();
+                addDimBackgroundClickHandler();
+            }
+        },
+
+        handleSignInAnchorClick = function () {
+            if ($signInForm.is(":visible")) {
+                $(this).undim();
+                $signInForm.hide();
+            }
+            else {
+                $signInForm.show();
+                $(this).dimBackground();
+                addDimBackgroundClickHandler();
+            }
+        },
+
+        addDimBackgroundClickHandler = function () {
+            $(".dimbackground-curtain").on("click", function () {
+                $.undim();
+                $(".form-box").hide();
+            });
         };
 
     that.loginSuccessful = loginSuccessful;
     that.loginFailed = loginFailed;
+    that.signInFailed = signInFailed;
     that.init = init;
 
     return that;

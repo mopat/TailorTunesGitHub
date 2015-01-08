@@ -30,7 +30,7 @@ body {
 }
 /*Login CSS*/
 
-#login-form {
+#login-form-box, #sign-in-form-box {
     position: absolute;
     z-index: 1000;
     width: 100%;
@@ -41,7 +41,8 @@ body {
 #loggedin-box {
     display: none;
 }
-#login-failed {
+
+#login-failed, #sign-in-failed {
     color: #df151d;
     font-weight: bold;
     font-size: 0.9em;

@@ -16,22 +16,19 @@ App.PlaylistManager = (function () {
             savePlaylistButton.on("click", savePlaylist);
         },
 
-        signIn = function () {
+        signIn = function (username, password, email) {
             var user = new Parse.User();
-            user.set("username", "patrick");
-            user.set("password", "killer");
-            user.set("email", "email@example.com");
-
-            // other fields can be set just like with Parse.Object
-            //user.set("phone", "415-392-0202");
+            user.set("username", username);
+            user.set("password", password);
+            user.set("email", email);
 
             user.signUp(null, {
                 success: function (user) {
-                    // Hooray! Let them use the app now.
+                    $(that).trigger("signInSuccessful");
+                    console.log("SUCCESSFUL")
                 },
                 error: function (user, error) {
-                    // Show the error message somewhere and let the user try again.
-                    alert("Error: " + error.code + " " + error.message);
+                    $(that).trigger("signInFailed", [error.message]);
                 }
             });
         },
@@ -45,8 +42,6 @@ App.PlaylistManager = (function () {
                     loadPlaylists();
                 },
                 error: function (user, error) {
-                    // The login failed. Check error to see why.
-                    console.log(error.message, error.code)
                     $(that).trigger("loginFailed", [error.message]);
                 }
             });
@@ -137,6 +132,7 @@ App.PlaylistManager = (function () {
         };
 
     that.login = logIn;
+    that.signIn = signIn;
     that.postPlaylist = postPlaylist;
     that.init = init;
 
