@@ -9,6 +9,7 @@ App.MainModel = (function () {
         completePlaylist = [],
         stringScoreTolerance = 0.5,
         currentPlaylistItem = 0,
+        requestInterval = null,
 
         init = function () {
             initSoundCloud();
@@ -58,8 +59,9 @@ App.MainModel = (function () {
                 case "similar":
                     return "https://developer.echonest.com/api/v4/playlist/static?api_key=" + echoNestAPIKey + "&format=json&artist=" + query + "&type=artist-radio&song_selection=song_hotttnesss-top&results=" + searchLimit;
                     break;
-                default :  return "https://developer.echonest.com/api/v4/playlist/static?api_key=" + echoNestAPIKey + "&format=json&artist=" + query + "&song_selection=" +visibleDropdownValue +  "&results=" + searchLimit;
-                break;
+                default :
+                    return "https://developer.echonest.com/api/v4/playlist/static?api_key=" + echoNestAPIKey + "&format=json&artist=" + query + "&song_selection=" + visibleDropdownValue + "&results=" + searchLimit;
+                    break;
             }
 
         },
@@ -186,15 +188,15 @@ App.MainModel = (function () {
             var artist = null;
             var title = null;
             var queryOne = null;
+            var count = tracks.length;
 
-            interval = setInterval(function () {
+            requestInterval = setInterval(function () {
 
 
                 artist = normalize(tracks[0].artist_name);
                 title = normalize(tracks[0].title);
                 queryOne = artist + " " + title;
 
-                console.log("QUERY")
                 tracks.splice(0, 1);
                 var ajaxCaller = function ajaxQuery(query) {
                     return $.ajax({
@@ -207,6 +209,7 @@ App.MainModel = (function () {
                         },
                         dataType: 'json',
                         success: function (data) {
+                            count--;
                             //console.log(data)
                             if (data.length != 0) {
                                 var matchingTracks = getMatchingResults(data, query);
@@ -214,10 +217,15 @@ App.MainModel = (function () {
                                 addToPlayList(matchingTracks);
                             }
                             else {
-                                alert("No Results found.");
+                                //alert("No Results found.");
                             }
-
-                            console.log(tracks.length)
+                            console.log("TRACKSLENGTH", tracks.length)
+                            if (tracks.length == 0 && count == 0) {
+                                playlist = removeSoundCloudDuplicates(playlist);
+                                setPlaylistView();
+                                clearInterval(requestInterval);
+                            }
+                            console.log(tracks.length, count)
                         },
                         type: 'GET'
                     });
@@ -227,9 +235,11 @@ App.MainModel = (function () {
 
             }, 50);
             $.when.apply($, ajaxCalls).done(function () {
-                playlist = removeSoundCloudDuplicates(playlist);
-                setPlaylistView();
-                clearInterval(interval)
+
+                console.log("TRACKSLENGTH", tracks.length)
+
+
+
             })
 
             /** OLD
@@ -317,9 +327,9 @@ App.MainModel = (function () {
             artistAndTitle.length = tracks.length;
 
             var result = [];
-            $.each(artistAndTitle, function(i, e) {
+            $.each(artistAndTitle, function (i, e) {
                 artistAndTitle[i] = tracks[i].artist_name + " - " + tracks[i].title;
-                if ($.inArray(artistAndTitle[i], result) == -1){
+                if ($.inArray(artistAndTitle[i], result) == -1) {
                     result.push(artistAndTitle[i]);
                     uniqueTracks.push(tracks[i])
                 }
@@ -333,11 +343,10 @@ App.MainModel = (function () {
             artistAndTitle.length = tracks.length;
 
             var result = [];
-            $.each(artistAndTitle, function(i, e) {
+            $.each(artistAndTitle, function (i, e) {
                 artistAndTitle[i] = tracks[i].id;
-                if ($.inArray(artistAndTitle[i], result) == -1){
+                if ($.inArray(artistAndTitle[i], result) == -1) {
                     result.push(artistAndTitle[i]);
-                    console.log(artistAndTitle[i])
                     uniqueTracks.push(tracks[i]);
                 }
             });
@@ -403,6 +412,7 @@ App.MainModel = (function () {
         },
 
         setPlaylistView = function () {
+            console.log("CREATED")
             $(that).trigger("playlistCreated", [playlist]);
         },
 
