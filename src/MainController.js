@@ -39,8 +39,6 @@ App.MainController = (function () {
 
             $(playlistView).on("playlistItemClicked", handlePlaylistItemClick);
 
-            $(searchView).on("searchButtonClickedSpotify", handleSearchButtonClickedSpotify);
-
             $(searchView).on("searchButtonClickedEchoNest", handleSearchButtonClickedEchoNest);
 
             $(searchView).on("searchButtonClickedSoundcloud", handleSearchButtonClickedSoundcloud);
@@ -85,10 +83,6 @@ App.MainController = (function () {
 
         handleTrackEnd = function () {
             playlistView.handlePrevOrNextClicked("next");
-        },
-
-        handleSearchButtonClickedSpotify = function (event, searchVal, pickedTab, lowerVal, upperVal, visibleDropdownValue) {
-            mainModel.searchSpotifyTracks(searchVal, pickedTab, lowerVal, upperVal, visibleDropdownValue);
         },
 
         handleSearchButtonClickedEchoNest = function (event, searchVal, pickedTab, lowerVal, upperVal, visibleDropdownValue) {

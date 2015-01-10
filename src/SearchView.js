@@ -56,10 +56,7 @@ App.SearchView = (function () {
 
         handleSearchClick = function () {
            var visibleDropdownValue = getVisibleDropdownValue();
-            if(visibleDropdownValue == "newest" || visibleDropdownValue == "year")
-                //search Spotify
-                $(that).trigger("searchButtonClickedSpotify", [$searchField.val(), $(".picked").attr("id"), $yearSliderValueLower.html(), $yearSliderValueUpper.html(), visibleDropdownValue]);
-            else if(visibleDropdownValue == "simple")
+            if (visibleDropdownValue == "simple")
                 $(that).trigger("searchButtonClickedSoundcloud", [$searchField.val()]);
             else
                 //search Echonest

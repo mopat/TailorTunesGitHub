@@ -59,8 +59,11 @@ App.MainModel = (function () {
                 case "similar":
                     return "https://developer.echonest.com/api/v4/playlist/static?api_key=" + echoNestAPIKey + "&format=json&artist=" + query + "&type=artist-radio&sort=song_hotttnesss-desc&results=" + searchLimit;
                     break;
+                case "song_hotttnesss-desc":
+                    return "https://developer.echonest.com/api/v4/playlist/static?api_key=" + echoNestAPIKey + "&format=json&artist=" + query + "&sort=song_hotttnesss-desc&results=" + searchLimit;
+                    break;
                 default :
-                    return "https://developer.echonest.com/api/v4/playlist/static?api_key=" + echoNestAPIKey + "&format=json&artist=" + query + "&sort=" + visibleDropdownValue + "&results=" + searchLimit;
+                    return "https://developer.echonest.com/api/v4/playlist/static?api_key=" + echoNestAPIKey + "&format=json&artist=" + query + "&song_selection=" + visibleDropdownValue + "&results=" + searchLimit;
                     break;
             }
 
@@ -108,54 +111,6 @@ App.MainModel = (function () {
             });
         },
 
-        searchSpotifyTracks = function (query, type, lowerVal, upperVal, visibleDropdownValue) {
-            var artist = query;
-            $.ajax({
-                type: "GET",
-                url: buildSpotifyUrl(query, type, lowerVal, upperVal, visibleDropdownValue),
-                cache: false,
-                success: function (data) {
-                    var tracks = data.tracks.items;
-                    playlist = [];
-                    searchSoundCloudTracks(tracks, "spotify", artist);
-                },
-                error: function (XMLHttpRequest, textStatus, errorThrown) {
-                    alert("ERROR " + errorThrown + " at" + XMLHttpRequest);
-                }
-            });
-        },
-
-        buildSpotifyUrl = function (query, type, lowerVal, upperVal, visibleDropdownValue) {
-            switch (type) {
-                case "artist-tab":
-                    return spotifyArtistQueryBuilder(query, lowerVal, upperVal, visibleDropdownValue);
-                    break;
-                case "genre-tab":
-                    return spotifyGenreQueryBuilder(query, lowerVal, upperVal, visibleDropdownValue);
-                    break;
-                case "track-tab":
-                    return spotifyTrackQueryBuilder(query, visibleDropdownValue);
-            }
-        },
-
-        spotifyArtistQueryBuilder = function (query, lowerVal, upperVal, visibleDropdownValue) {
-            switch (visibleDropdownValue) {
-                case "year":
-                    return "https://api.spotify.com/v1/search?q=" + query + "+year:" + lowerVal.toString() + "-" + upperVal.toString() + "&type=track&limit=" + searchLimit;
-                    break;
-                case "newest":
-                    return "https://api.spotify.com/v1/search?q=" + query + "&type=track&limit=" + searchLimit;
-                    break;
-            }
-        },
-
-        spotifyGenreQueryBuilder = function (query, lowerVal, upperVal, visibleDropdownValue) {
-            switch (visibleDropdownValue) {
-                case "newest":
-                    return "https://api.spotify.com/v1/search?q=" + query + "&type=track&limit=" + searchLimit;
-                    break;
-            }
-        },
 
         searchSoundcloudTracksSimple = function (query) {
             playlist = [];
@@ -202,6 +157,7 @@ App.MainModel = (function () {
                         },
                         error: function (XMLHttpRequest, textStatus, errorThrown) {
                             alert("SOUNDCLOUD ERROR " + errorThrown + " at" + XMLHttpRequest);
+                            count--;
                         },
                         dataType: 'json',
                         success: function (data) {
@@ -414,7 +370,6 @@ App.MainModel = (function () {
         };
 
     that.searchEchoNestTracks = searchEchoNestTracks;
-    that.searchSpotifyTracks = searchSpotifyTracks;
     that.searchSoundcloudTracksSimple = searchSoundcloudTracksSimple;
     that.searchSimilarTracksById = searchSimilarTracksById;
     that.init = init;
