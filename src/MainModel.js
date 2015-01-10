@@ -67,7 +67,7 @@ App.MainModel = (function () {
         },
 
         echoNestTrackQueryBuilder = function () {
-            return "http://developer.echonest.com/api/v4/song/search?api_key=" + echoNestAPIKey + "&sort=song_hotttnesss-desc&bucket=song_hotttnesss";
+            return "http://developer.echonest.com/api/v4/song/search?api_key=" + echoNestAPIKey + "&sort=song_hotttnesss-desc&bucket=song_hotttnesss&results=40";
         },
 
         echoNestGenreQueryBuilder = function (query, visibleDropdownValue) {

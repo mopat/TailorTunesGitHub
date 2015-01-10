@@ -23,7 +23,7 @@ App.SearchView = (function () {
             $yearSliderValueLower = $('#year-slider-value-lower')
             $yearSliderValueUpper = $('#year-slider-value-upper')
             $picker = $(".picker");
-            $searchDropdown =   $( ".search-dropdown" );
+            $searchDropdown = $(".search-dropdown");
 
             $artistDropdownBox = $("#artist-dropdown-box");
             $trackDropwdownBox = $("#track-dropdown-box");
@@ -35,6 +35,7 @@ App.SearchView = (function () {
 
             $("#advanced-search-box .switch").on("click", handleSwitchClicked);
             $searchDropdown.on("change", handleDropdownChange);
+            $trackDropwdownBox.on("change", handleTrackDropdownChange);
         },
 
         initYearSlider = function () {
@@ -98,6 +99,7 @@ App.SearchView = (function () {
 
             $trackDropwdownBox.hide();
             $genreDropwdownBox.hide();
+            $searchField.removeAttr('disabled');
         },
 
         trackMode = function () {
@@ -105,6 +107,12 @@ App.SearchView = (function () {
 
             $artistDropdownBox.hide();
             $genreDropwdownBox.hide();
+            if (getVisibleDropdownValue() == "hottest") {
+                $searchField.attr('disabled', 'disabled');
+            }
+            else {
+                $searchField.removeAttr('disabled');
+            }
         },
 
         genreMode = function () {
@@ -112,6 +120,7 @@ App.SearchView = (function () {
 
             $trackDropwdownBox.hide();
             $artistDropdownBox.hide();
+            $searchField.removeAttr('disabled');
         },
 
         getVisibleDropdownValue = function(){
@@ -128,6 +137,15 @@ App.SearchView = (function () {
             if($(this).val() == "year" || $(this).val() == "year-echo")
                 $yearSliderBox.show();
             else $yearSliderBox.hide();
+        },
+
+        handleTrackDropdownChange = function () {
+            if ($(this).val() == "hottest") {
+                $searchField.attr('disabled', 'disabled');
+            }
+            else {
+                $searchField.removeAttr('disabled');
+            }
         },
 
         resetDropdowns = function(){
