@@ -57,10 +57,10 @@ App.MainModel = (function () {
         echoNestArtistQueryBuilder = function (query, visibleDropdownValue) {
             switch (visibleDropdownValue) {
                 case "similar":
-                    return "https://developer.echonest.com/api/v4/playlist/static?api_key=" + echoNestAPIKey + "&format=json&artist=" + query + "&type=artist-radio&song_selection=song_hotttnesss-top&results=" + searchLimit;
+                    return "https://developer.echonest.com/api/v4/playlist/static?api_key=" + echoNestAPIKey + "&format=json&artist=" + query + "&type=artist-radio&sort=song_hotttnesss-desc&results=" + searchLimit;
                     break;
                 default :
-                    return "https://developer.echonest.com/api/v4/playlist/static?api_key=" + echoNestAPIKey + "&format=json&artist=" + query + "&song_selection=" + visibleDropdownValue + "&results=" + searchLimit;
+                    return "https://developer.echonest.com/api/v4/playlist/static?api_key=" + echoNestAPIKey + "&format=json&artist=" + query + "&sort=" + visibleDropdownValue + "&results=" + searchLimit;
                     break;
             }
 
@@ -182,23 +182,19 @@ App.MainModel = (function () {
             }
         },
 
-        searchSoundCloudTracks = function (tracks, usedAPI, artistQuery) {
-
-            var ajaxCalls = [];
-            var artist = null;
-            var title = null;
-            var queryOne = null;
+        searchSoundCloudTracks = function (tracks) {
             var count = tracks.length;
 
             requestInterval = setInterval(function () {
-
-
-                artist = normalize(tracks[0].artist_name);
-                title = normalize(tracks[0].title);
-                queryOne = artist + " " + title;
-
+                if (count > 0 && tracks.length > 0) {
+                    var artist = normalize(tracks[0].artist_name);
+                    var title = normalize(tracks[0].title);
+                    var query = artist + " " + title;
+                    ajaxQuery(query)
+                }
                 tracks.splice(0, 1);
-                var ajaxCaller = function ajaxQuery(query) {
+
+                function ajaxQuery(query) {
                     return $.ajax({
                         url: getScUrl(query),
                         data: {
@@ -216,31 +212,17 @@ App.MainModel = (function () {
                                 console.log("QUERY ", query);
                                 addToPlayList(matchingTracks);
                             }
-                            else {
-                                //alert("No Results found.");
-                            }
-                            console.log("TRACKSLENGTH", tracks.length)
-                            if (tracks.length == 0 && count == 0) {
+                            if (count == 0) {
                                 playlist = removeSoundCloudDuplicates(playlist);
                                 setPlaylistView();
                                 clearInterval(requestInterval);
                             }
-                            console.log(tracks.length, count)
                         },
                         type: 'GET'
                     });
                 }
-                ajaxCalls.push(ajaxCaller(queryOne));
+            }, 200);
 
-
-            }, 50);
-            $.when.apply($, ajaxCalls).done(function () {
-
-                console.log("TRACKSLENGTH", tracks.length)
-
-
-
-            })
 
             /** OLD
              *   var ajaxCalls = [];
