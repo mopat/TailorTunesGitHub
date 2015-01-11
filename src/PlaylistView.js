@@ -27,12 +27,13 @@ App.PlaylistView = (function () {
             $playlist.on("swipeleft", swipeleftHandler);
             $sortModeSwitch.on("click", handleSortSwitchClick);
 
-            $(window).on("scroll", function () {
-                stickyRelocate();
-            });
             setPlaylistIds();
             setPlaylistMarginBottomZero();
             setPlaylistMarginBottomControlsBoxHeight();
+
+            $(window).on("scroll", function () {
+                stickyRelocate();
+            });
         },
 
         swipeleftHandler = function (event) {
