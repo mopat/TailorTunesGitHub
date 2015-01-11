@@ -64,3 +64,4 @@ http://stackoverflow.com/questions/11078324/how-to-create-json-object-using-jque
 http://stackoverflow.com/questions/18910939/how-to-get-json-key-and-value-in-javascript
 http://stackoverflow.com/questions/10211145/getting-current-date-and-time-in-javascript
 https://github.com/andywer/jquery-dim-background
+http://stackoverflow.com/questions/18442628/position-fixed-width-100
