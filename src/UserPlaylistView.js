@@ -53,7 +53,7 @@ App.UserPlaylistView = (function () {
                 $("#" + playlistId).append(playlistItem);
             }
             setPlaylistIds();
-            openUserPlaylistModal();
+            //openUserPlaylistModal();
 
             $(".load-playlist").on("click", handleLoadPlaylist);
             $(".user-playlist-item").on("swipeleft", swipeleftHandler);

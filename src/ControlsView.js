@@ -40,6 +40,8 @@ App.ControlsView = (function () {
             });
             $nextButton.on("click", handleNextButtonClick);
             $previousButton.on("click", handlePreviousButtonClick);
+
+            player.volume = 0;
         },
 
 

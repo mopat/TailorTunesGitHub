@@ -267,7 +267,7 @@ App.PlaylistView = (function () {
         savePlaylist = function () {
             var playlistName = $playlistNameInput.val();
             if (!playlistName || getPlaylistAsJSON().length == 0)
-                sweetAlert("Oops...", "Your playlist or your playlist name is empty!", "error");
+                swal("Oops...", "Your playlist or your playlist name is empty!", "error");
             else
                 $(that).trigger("savePlaylistClicked", [getPlaylistAsJSON(), $playlistNameInput.val()]);
         };

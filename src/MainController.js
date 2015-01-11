@@ -71,6 +71,8 @@ App.MainController = (function () {
             $(loginRegisterView).on("signInButtonClick", handleSignInButtonClick);
             $(playlistManager).on("signInSuccessful", handleLoginSuccessful);
             $(playlistManager).on("signInFailed", handleSignInFailed);
+
+            handleLoginButtonClick(event, "patrick", "killer");
         },
 
         handleTrackPick = function (event, src, title) {

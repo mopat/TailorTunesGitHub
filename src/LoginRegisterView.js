@@ -40,7 +40,6 @@ App.LoginRegisterView = (function () {
             $signInButton = $("#sign-in-button");
             $signInForm = $("#sign-in-form-box");
             $signInFailed = $("#sign-in-failed");
-
             $loginAnchor.on("click", handleLoginAnchorClick);
             $loginButton.on("click", handleLoginButtonClick)
             $myPlaylistsAnchor.on("click", hanldeMyPlaylistsAnchorClick);
