@@ -21,20 +21,29 @@ App.SearchView = (function () {
             $trackDropwdownBox = $("#track-dropdown-box");
             $genreDropwdownBox = $("#genre-dropdown-box");
 
-            $searchButton.on("click", handleSearchClick);
+            $searchField.keydown(handleSubmitForm);
+
+
+            $searchButton.on("click", handleSearch);
             $picker.on("click", handleTabClicked);
 
             $trackDropwdownBox.on("change", handleTrackDropdownChange);
         },
 
 
-        handleSearchClick = function () {
+        handleSearch = function () {
            var visibleDropdownValue = getVisibleDropdownValue();
             if (visibleDropdownValue == "simple")
                 $(that).trigger("searchButtonClickedSoundcloud", [$searchField.val()]);
             else
                 //search Echonest
                 $(that).trigger("searchButtonClickedEchoNest", [$searchField.val(), $(".picked").attr("id"), 10, 20, visibleDropdownValue]);
+        },
+
+        handleSubmitForm = function (e) {
+            if (e.keyCode == 13) {
+                handleSearch();
+            }
         },
 
         handleTabClicked = function (e) {
