@@ -180,18 +180,20 @@ App.PlaylistView = (function () {
                         topHelper = ui.offset.top,
                         delta = topHelper - currentScrollTop;
                     $blendUp.on("hover", function () {
-                        scrollUpTimeout = setTimeout(function () {
-                            $('html, body').animate({scrollTop: topHelper - 50}, 300);
-                            console.log("FIRTSTTRUE")
+                        console.log("FIRTSTTRUE")
 
-                        }, 500);
-                        ;
+                        console.log("ENTER!!!!")
+                            $('html, body').animate({scrollTop: topHelper - 50}, 300);
+
                     }).on("mouseleave", "div", function () {
-                        clearTimeout(scrollUpTimeout);
 
                     });
-                    $blendDown.on("mouseenter", function () {
+                    $blendUp.on("hover", function () {
 
+                        $('html, body').animate({scrollTop: topHelper + 50}, 300);
+                        console.log("FIRTSTTRUE")
+
+                    }).on("mouseleave", "div", function () {
                     });
                 },
                 stop: function (event, ui) {
