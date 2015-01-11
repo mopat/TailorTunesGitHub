@@ -9,11 +9,12 @@ App.PlaylistView = (function () {
         addedPlaylists = 0,
         $blendUp = null,
         $blendDown = null,
+        $stickyFooter = null,
 
         init = function () {
             $playlistBox = $("#playlist-box");
             $playlist = $("#playlist");
-            $("")
+            $stickyFooter = $("#sticky-footer");
             $sortModeSwitch = $("#sort-mode-switch");
             $blendUp = $("#blend-up");
             $blendDown = $("#blend-down");
@@ -152,9 +153,9 @@ App.PlaylistView = (function () {
                 $sortModeSwitch.attr("checked", true);
                 addSortable();
                 $playlist.disableSelection();
-                $("#sticky-footer").slideUp(300);
+                $stickyFooter.slideUp(300);
                 setPlaylistMarginBottomZero();
-                if ($("#sticky").hasClass("stick"))
+                if ($stickyFooter.hasClass("stick"))
                     $blendUp.slideDown(500);
                 $blendDown.slideDown(500);
             }
@@ -183,20 +184,10 @@ App.PlaylistView = (function () {
                         topHelper = ui.offset.top,
                         delta = topHelper - currentScrollTop;
                     $blendUp.on("hover", function () {
-                        console.log("FIRTSTTRUE")
-
-                        console.log("ENTER!!!!")
                         $('html, body').animate({scrollTop: topHelper - 50}, 300);
-
-                    }).on("mouseleave", "div", function () {
-
                     });
                     $blendUp.on("hover", function () {
-
                         $('html, body').animate({scrollTop: topHelper + 50}, 300);
-                        console.log("FIRTSTTRUE")
-
-                    }).on("mouseleave", "div", function () {
                     });
                 },
                 stop: function (event, ui) {
