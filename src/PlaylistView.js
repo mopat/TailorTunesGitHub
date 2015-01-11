@@ -9,12 +9,11 @@ App.PlaylistView = (function () {
         addedPlaylists = 0,
         $blendUp = null,
         $blendDown = null,
-        scrollUpInterval = null,
-        scrollDownInterval = null,
 
         init = function () {
             $playlistBox = $("#playlist-box");
             $playlist = $("#playlist");
+            $("")
             $sortModeSwitch = $("#sort-mode-switch");
             $blendUp = $("#blend-up");
             $blendDown = $("#blend-down");
@@ -144,16 +143,20 @@ App.PlaylistView = (function () {
             if ($sortModeSwitch.attr("checked")) {
                 $sortModeSwitch.removeAttr("checked");
                 removeSortable();
-                console.log("CHECKED")
-                $("#sticky-footer").fadeIn(0);
+                $("#sticky-footer").slideDown(300);
                 setPlaylistMarginBottomControlsBoxHeight();
+                $blendUp.slideUp(500);
+                $blendDown.slideUp(500);
             }
             else {
                 $sortModeSwitch.attr("checked", true);
                 addSortable();
                 $playlist.disableSelection();
-                $("#sticky-footer").fadeOut(500);
+                $("#sticky-footer").slideUp(300);
                 setPlaylistMarginBottomZero();
+                if ($("#sticky").hasClass("stick"))
+                    $blendUp.slideDown(500);
+                $blendDown.slideDown(500);
             }
         },
 
@@ -183,7 +186,7 @@ App.PlaylistView = (function () {
                         console.log("FIRTSTTRUE")
 
                         console.log("ENTER!!!!")
-                            $('html, body').animate({scrollTop: topHelper - 50}, 300);
+                        $('html, body').animate({scrollTop: topHelper - 50}, 300);
 
                     }).on("mouseleave", "div", function () {
 
@@ -221,8 +224,12 @@ App.PlaylistView = (function () {
             var divTop = $('#sticky-anchor').offset().top;
             if (windowTop > divTop) {
                 $('#sticky').addClass('stick');
-            } else {
+                if ($sortModeSwitch.attr("checked"))
+                    $blendUp.slideDown(500);
+            }
+            else {
                 $('#sticky').removeClass('stick');
+                $blendUp.slideUp(500);
             }
         },
 

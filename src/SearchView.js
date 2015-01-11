@@ -24,7 +24,6 @@ App.SearchView = (function () {
             $searchButton.on("click", handleSearchClick);
             $picker.on("click", handleTabClicked);
 
-            $searchDropdown.on("change", handleDropdownChange);
             $trackDropwdownBox.on("change", handleTrackDropdownChange);
         },
 
@@ -103,12 +102,6 @@ App.SearchView = (function () {
                 }
             });
             return visibleDropdownValue;
-        },
-
-        handleDropdownChange = function(){
-            if($(this).val() == "year" || $(this).val() == "year-echo")
-                $yearSliderBox.show();
-            else $yearSliderBox.hide();
         },
 
         handleTrackDropdownChange = function () {
