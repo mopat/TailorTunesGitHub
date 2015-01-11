@@ -4,10 +4,6 @@
 App.SearchView = (function () {
     var that = {},
         $searchField = null,
-        $yearSliderBox = null,
-        $yearSlider = null,
-        $yearSliderValueLower = null,
-        $yearSliderValueUpper = null,
         $searchButton = null,
         $picker = null,
         $artistDropdownBox = null,
@@ -18,41 +14,20 @@ App.SearchView = (function () {
         init = function () {
             $searchField = $("#search-field");
             $searchButton = $("#search-button");
-            $yearSliderBox = $("#year-slider-box");
-            $yearSlider = $("#year-slider");
-            $yearSliderValueLower = $('#year-slider-value-lower')
-            $yearSliderValueUpper = $('#year-slider-value-upper')
             $picker = $(".picker");
             $searchDropdown = $(".search-dropdown");
 
             $artistDropdownBox = $("#artist-dropdown-box");
             $trackDropwdownBox = $("#track-dropdown-box");
             $genreDropwdownBox = $("#genre-dropdown-box");
-            initYearSlider();
 
             $searchButton.on("click", handleSearchClick);
             $picker.on("click", handleTabClicked);
 
-            $("#advanced-search-box .switch").on("click", handleSwitchClicked);
             $searchDropdown.on("change", handleDropdownChange);
             $trackDropwdownBox.on("change", handleTrackDropdownChange);
         },
 
-        initYearSlider = function () {
-            $yearSlider.noUiSlider({
-                start: [1950, 2015],
-                connect: true,
-                range: {
-                    'min': 1950,
-                    'max': 2015
-                },
-                format: wNumb({
-                    decimals: 0
-                })
-            });
-            $yearSlider.Link('lower').to($yearSliderValueLower);
-            $yearSlider.Link('upper').to($yearSliderValueUpper);
-        },
 
         handleSearchClick = function () {
            var visibleDropdownValue = getVisibleDropdownValue();
@@ -60,7 +35,7 @@ App.SearchView = (function () {
                 $(that).trigger("searchButtonClickedSoundcloud", [$searchField.val()]);
             else
                 //search Echonest
-                $(that).trigger("searchButtonClickedEchoNest", [$searchField.val(), $(".picked").attr("id"), $yearSliderValueLower.html(), $yearSliderValueUpper.html(), visibleDropdownValue]);
+                $(that).trigger("searchButtonClickedEchoNest", [$searchField.val(), $(".picked").attr("id"), 10, 20, visibleDropdownValue]);
         },
 
         handleTabClicked = function (e) {
@@ -146,7 +121,6 @@ App.SearchView = (function () {
         },
 
         resetDropdowns = function(){
-            $yearSliderBox.hide();
             $searchDropdown.each(function() {
                 $(this).find('option:first').prop('selected', 'selected');
             });

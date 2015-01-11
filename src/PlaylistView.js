@@ -6,15 +6,18 @@ App.PlaylistView = (function () {
         playlistItemTpl = null,
         listItemColors = [],
         $sortModeSwitch = null,
-        firstAppearedElementOnScreen = null,
-        lastAppearedElementOnScreen = null,
-        beforeLastAppearedOnscreen = null,
         addedPlaylists = 0,
+        $blendUp = null,
+        $blendDown = null,
+        scrollUpInterval = null,
+        scrollDownInterval = null,
 
         init = function () {
             $playlistBox = $("#playlist-box");
             $playlist = $("#playlist");
             $sortModeSwitch = $("#sort-mode-switch");
+            $blendUp = $("#blend-up");
+            $blendDown = $("#blend-down");
 
             playlistItemTpl = _.template($("#playlist-item-tpl").html());
 
@@ -25,11 +28,7 @@ App.PlaylistView = (function () {
             $sortModeSwitch.on("click", handleSortSwitchClick);
 
             $(window).on("scroll", function () {
-                setFirstAppearedElementOnScreen();
-                setLastAppearedElementOnScreen();
-                setBeforeLastAppearedElementOnScreen();
                 stickyRelocate();
-
             });
             setPlaylistIds();
             setPlaylistMarginBottomZero();
@@ -158,33 +157,6 @@ App.PlaylistView = (function () {
             }
         },
 
-        setFirstAppearedElementOnScreen = function () {
-            jQuery.fn.reverse = [].reverse;
-            $("#playlist .playlist-item").reverse().each(function () {
-                if ($(this).visible()) {
-                    //  console.log("first", $(this).offset().top);
-                    firstAppearedElementOnScreen = $(this).offset().top + $(this).height();
-                }
-            });
-        },
-
-        setLastAppearedElementOnScreen = function () {
-            $("#playlist .playlist-item").each(function () {
-                if ($(this).visible()) {
-                    // console.log("last" , $(this).offset().top);
-                    lastAppearedElementOnScreen = $(this).offset().top;
-                }
-            });
-        },
-        setBeforeLastAppearedElementOnScreen = function () {
-            $("#playlist .playlist-item").each(function (index) {
-                if ($(this).visible() && index == 1) {
-                    // console.log("last" , $(this).offset().top);
-                    beforeLastAppearedOnscreen = $(this).offset().top;
-                }
-            });
-        },
-
         setPlaylistIds = function () {
             $("#playlist .playlist-item").each(function (index) {
                 if (index % 2 == 0) {
@@ -207,21 +179,20 @@ App.PlaylistView = (function () {
                     var currentScrollTop = $('html, body').scrollTop(),
                         topHelper = ui.offset.top,
                         delta = topHelper - currentScrollTop;
-                    //console.log("first", firstAppearedElementOnScreen)
-                    // console.log("last", lastAppearedElementOnScreen)
-                    console.log("topHelper", topHelper)
-                    setFirstAppearedElementOnScreen();
-                    setLastAppearedElementOnScreen();
-                    setBeforeLastAppearedElementOnScreen();
-                    if ((topHelper > lastAppearedElementOnScreen - 20)) {
-                        $('html, body').animate({scrollTop: lastAppearedElementOnScreen + 10}, 100);
-                        console.log("LASTTRUE")
-                    }
+                    $blendUp.on("hover", function () {
+                        scrollUpTimeout = setTimeout(function () {
+                            $('html, body').animate({scrollTop: topHelper - 50}, 300);
+                            console.log("FIRTSTTRUE")
 
-                    if (topHelper < firstAppearedElementOnScreen) {
-                        $('html, body').animate({scrollTop: beforeLastAppearedOnscreen - 100}, 300);
-                        console.log("FIRTSTTRUE")
-                    }
+                        }, 500);
+                        ;
+                    }).on("mouseleave", "div", function () {
+                        clearTimeout(scrollUpTimeout);
+
+                    });
+                    $blendDown.on("mouseenter", function () {
+
+                    });
                 },
                 stop: function (event, ui) {
                     setPlaylistIds();
@@ -231,6 +202,7 @@ App.PlaylistView = (function () {
 
         removeSortable = function () {
             $playlist.sortable("destroy");
+
         },
 
         getMinutesAndSeconds = function (duration) {

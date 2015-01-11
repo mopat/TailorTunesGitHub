@@ -121,18 +121,6 @@
             </div>
         </form>
     </div>
-    <div class="row text-center">
-        <div id="advanced-search-box">
-            <div class="large-8 medium-8 small-12 columns">
-                <div id="year-slider-box">
-                    Year
-                    <div id="year-slider"></div>
-                    <span id="year-slider-value-lower"></span>
-                    <span id="year-slider-value-upper"></span>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
 <div class="row" id="choose-title-box">
     <div class="large-12 medium-12 small-12 columns">
@@ -175,8 +163,345 @@
                     </div>
                 </form>
             </div>
+            <div id="blend-up" class="blend"></div>
             <ul id="playlist">
+
+                <li class="playlist-item now-playing"
+                    data-stream-url="https://api.soundcloud.com/tracks/165934271/stream" id="0"
+                    style="background-color: rgb(70, 70, 70);">
+                    <a href="#"><span class="playlist-number">1.</span>
+                        <img class="playlist-item-image"
+                             src="https://i1.sndcdn.com/artworks-000089875411-apzswp-large.jpg"><span
+                                class="playlist-track-duration">2:46</span><span class="playlist-title"
+                                                                                 style="color: rgb(173, 216, 230);">Snoop Dogg &amp; Wiz Khalifa - French Inhale (Feat. Mike Posner)</span></a>
+                </li>
+
+                <li class="playlist-item" data-stream-url="https://api.soundcloud.com/tracks/98262242/stream" id="1"
+                    style="background-color: rgb(41, 41, 41);">
+                    <a href="#"><span class="playlist-number">2.</span>
+                        <img class="playlist-item-image"
+                             src="https://i1.sndcdn.com/artworks-000051374993-eptqf4-large.jpg"><span
+                                class="playlist-track-duration">6:46</span><span class="playlist-title">Nate Dogg Feat. Snoop Dogg - Never Leave Me Alone extended by dj well bhz</span></a>
+                </li>
+
+                <li class="playlist-item" data-stream-url="https://api.soundcloud.com/tracks/144283737/stream" id="2"
+                    style="background-color: rgb(70, 70, 70);">
+                    <a href="#"><span class="playlist-number">3.</span>
+                        <img class="playlist-item-image"
+                             src="https://i1.sndcdn.com/artworks-000076321898-0cpyin-large.jpg"><span
+                                class="playlist-track-duration">4:50</span><span class="playlist-title">Snoop Dogg feat. Charlie Wilson - 'Snoop's Upside Ya Head' (Fonkee Monk Edit)</span></a>
+                </li>
+
+                <li class="playlist-item" data-stream-url="https://api.soundcloud.com/tracks/134482705/stream" id="3"
+                    style="background-color: rgb(41, 41, 41);">
+                    <a href="#"><span class="playlist-number">4.</span>
+                        <img class="playlist-item-image"
+                             src="https://i1.sndcdn.com/artworks-000070687830-7llw1j-large.jpg"><span
+                                class="playlist-track-duration">4:27</span><span class="playlist-title">Snoop Dogg - Gangsta Luv Feat. The Dream (Shagabond Remix)</span></a>
+                </li>
+
+                <li class="playlist-item" data-stream-url="https://api.soundcloud.com/tracks/134482705/stream" id="4"
+                    style="background-color: rgb(70, 70, 70);">
+                    <a href="#"><span class="playlist-number">5.</span>
+                        <img class="playlist-item-image"
+                             src="https://i1.sndcdn.com/artworks-000070687830-7llw1j-large.jpg"><span
+                                class="playlist-track-duration">4:27</span><span class="playlist-title">Snoop Dogg - Gangsta Luv Feat. The Dream (Shagabond Remix)</span></a>
+                </li>
+
+                <li class="playlist-item" data-stream-url="https://api.soundcloud.com/tracks/86754758/stream" id="5"
+                    style="background-color: rgb(41, 41, 41);">
+                    <a href="#"><span class="playlist-number">6.</span>
+                        <img class="playlist-item-image"
+                             src="https://i1.sndcdn.com/avatars-000122784661-92ouwg-large.jpg"><span
+                                class="playlist-track-duration">2:05</span><span class="playlist-title">Wiz Khalifa Acapella &amp; Snoop Dogg- That's That Shit (80S_.Remix)</span></a>
+                </li>
+
+                <li class="playlist-item" data-stream-url="https://api.soundcloud.com/tracks/141968965/stream" id="6"
+                    style="background-color: rgb(70, 70, 70);">
+                    <a href="#"><span class="playlist-number">7.</span>
+                        <img class="playlist-item-image"
+                             src="https://i1.sndcdn.com/avatars-000003832120-yzccjj-large.jpg"><span
+                                class="playlist-track-duration">4:36</span><span class="playlist-title">Snoop Dogg - Sixx Minutes (Slow Dive)</span></a>
+                </li>
+
+                <li class="playlist-item" data-stream-url="https://api.soundcloud.com/tracks/106568204/stream" id="7"
+                    style="background-color: rgb(41, 41, 41);">
+                    <a href="#"><span class="playlist-number">8.</span>
+                        <img class="playlist-item-image"
+                             src="https://i1.sndcdn.com/avatars-000051275367-hacx6y-large.jpg"><span
+                                class="playlist-track-duration">3:00</span><span class="playlist-title">Snoop Dogg - Protocol</span></a>
+                </li>
+
+                <li class="playlist-item" data-stream-url="https://api.soundcloud.com/tracks/145428502/stream" id="8"
+                    style="background-color: rgb(70, 70, 70);">
+                    <a href="#"><span class="playlist-number">9.</span>
+                        <img class="playlist-item-image"
+                             src="https://i1.sndcdn.com/artworks-000077047530-fohffe-large.jpg"><span
+                                class="playlist-track-duration">5:21</span><span
+                                class="playlist-title">ZHU - The One.</span></a>
+                </li>
+
+                <li class="playlist-item" data-stream-url="https://api.soundcloud.com/tracks/138712428/stream" id="9"
+                    style="background-color: rgb(41, 41, 41);">
+                    <a href="#"><span class="playlist-number">10.</span>
+                        <img class="playlist-item-image"
+                             src="https://i1.sndcdn.com/artworks-000077047452-kn89b5-large.jpg"><span
+                                class="playlist-track-duration">3:41</span><span
+                                class="playlist-title">ZHU - Faded.</span></a>
+                </li>
+
+                <li class="playlist-item" data-stream-url="https://api.soundcloud.com/tracks/135067414/stream" id="10"
+                    style="background-color: rgb(70, 70, 70);">
+                    <a href="#"><span class="playlist-number">11.</span>
+                        <img class="playlist-item-image"
+                             src="https://i1.sndcdn.com/artworks-000077047440-ljigvg-large.jpg"><span
+                                class="playlist-track-duration">4:37</span><span class="playlist-title">ZHU - Superfriends.</span></a>
+                </li>
+
+                <li class="playlist-item" data-stream-url="https://api.soundcloud.com/tracks/143827337/stream" id="11"
+                    style="background-color: rgb(41, 41, 41);">
+                    <a href="#"><span class="playlist-number">12.</span>
+                        <img class="playlist-item-image"
+                             src="https://i1.sndcdn.com/artworks-000077047576-76l5xs-large.jpg"><span
+                                class="playlist-track-duration">3:03</span><span class="playlist-title">ZHU - Paradise Awaits.</span></a>
+                </li>
+
+                <li class="playlist-item" data-stream-url="https://api.soundcloud.com/tracks/145428506/stream" id="12"
+                    style="background-color: rgb(70, 70, 70);">
+                    <a href="#"><span class="playlist-number">13.</span>
+                        <img class="playlist-item-image"
+                             src="https://i1.sndcdn.com/artworks-000077194293-xchz5m-large.jpg"><span
+                                class="playlist-track-duration">4:33</span><span class="playlist-title">ZHU - Cocaine Model.</span></a>
+                </li>
+
+                <li class="playlist-item" data-stream-url="https://api.soundcloud.com/tracks/145428456/stream" id="13"
+                    style="background-color: rgb(41, 41, 41);">
+                    <a href="#"><span class="playlist-number">14.</span>
+                        <img class="playlist-item-image"
+                             src="https://i1.sndcdn.com/artworks-000077047651-5bqrza-large.jpg"><span
+                                class="playlist-track-duration">4:50</span><span class="playlist-title">ZHU - Stay Closer.</span></a>
+                </li>
+
+                <li class="playlist-item" data-stream-url="https://api.soundcloud.com/tracks/21134861/stream" id="14"
+                    style="background-color: rgb(70, 70, 70);">
+                    <a href="#"><span class="playlist-number">15.</span>
+                        <img class="playlist-item-image"
+                             src="https://i1.sndcdn.com/artworks-000010408365-8pvrfj-large.jpg"><span
+                                class="playlist-track-duration">5:43</span><span class="playlist-title">RUN D.M.C. - King of Rock</span></a>
+                </li>
+
+                <li class="playlist-item" data-stream-url="https://api.soundcloud.com/tracks/39048711/stream" id="15"
+                    style="background-color: rgb(41, 41, 41);">
+                    <a href="#"><span class="playlist-number">16.</span>
+                        <img class="playlist-item-image"
+                             src="https://i1.sndcdn.com/artworks-000019582315-5c95mj-large.jpg"><span
+                                class="playlist-track-duration">4:51</span><span class="playlist-title">Jay-Z - Dirt Off Your Shoulder (The Polish Ambassador Remix)</span></a>
+                </li>
+
+                <li class="playlist-item" data-stream-url="https://api.soundcloud.com/tracks/100079050/stream" id="16"
+                    style="background-color: rgb(70, 70, 70);">
+                    <a href="#"><span class="playlist-number">17.</span>
+                        <img class="playlist-item-image"
+                             src="https://i1.sndcdn.com/avatars-000047872715-7poyzq-large.jpg"><span
+                                class="playlist-track-duration">5:52</span><span class="playlist-title">Mos Def - UMI Says</span></a>
+                </li>
+
+                <li class="playlist-item" data-stream-url="https://api.soundcloud.com/tracks/128486830/stream" id="17"
+                    style="background-color: rgb(41, 41, 41);">
+                    <a href="#"><span class="playlist-number">18.</span>
+                        <img class="playlist-item-image"
+                             src="https://i1.sndcdn.com/avatars-000114564582-n8i5wy-large.jpg"><span
+                                class="playlist-track-duration">4:53</span><span class="playlist-title">Nas - The Message  Original</span></a>
+                </li>
+
+                <li class="playlist-item" data-stream-url="https://api.soundcloud.com/tracks/90892710/stream" id="18"
+                    style="background-color: rgb(70, 70, 70);">
+                    <a href="#"><span class="playlist-number">19.</span>
+                        <img class="playlist-item-image"
+                             src="https://i1.sndcdn.com/artworks-000047283689-x9yso6-large.jpg"><span
+                                class="playlist-track-duration">4:50</span><span class="playlist-title">Common - The Light</span></a>
+                </li>
+
+                <li class="playlist-item" data-stream-url="https://api.soundcloud.com/tracks/27657374/stream" id="19"
+                    style="background-color: rgb(41, 41, 41);">
+                    <a href="#"><span class="playlist-number">20.</span>
+                        <img class="playlist-item-image"
+                             src="https://i1.sndcdn.com/avatars-000011097276-g4namz-large.jpg"><span
+                                class="playlist-track-duration">4:00</span><span class="playlist-title">Masta Ace - Beautiful</span></a>
+                </li>
+
+                <li class="playlist-item" data-stream-url="https://api.soundcloud.com/tracks/94334620/stream" id="20"
+                    style="background-color: rgb(70, 70, 70);">
+                    <a href="#"><span class="playlist-number">21.</span>
+                        <img class="playlist-item-image"
+                             src="https://i1.sndcdn.com/artworks-000049182809-s8ow6u-large.jpg"><span
+                                class="playlist-track-duration">4:16</span><span class="playlist-title">The Fugees - Ready Or Not (Lucas Chambon Remix)</span></a>
+                </li>
+
+                <li class="playlist-item" data-stream-url="https://api.soundcloud.com/tracks/62985222/stream" id="21"
+                    style="background-color: rgb(41, 41, 41);">
+                    <a href="#"><span class="playlist-number">22.</span>
+                        <img class="playlist-item-image"
+                             src="https://i1.sndcdn.com/avatars-000014275602-6gd0qe-large.jpg"><span
+                                class="playlist-track-duration">4:13</span><span class="playlist-title">2Pac - California Love [Original Version]</span></a>
+                </li>
+
+                <li class="playlist-item" data-stream-url="https://api.soundcloud.com/tracks/451046/stream" id="22"
+                    style="background-color: rgb(70, 70, 70);">
+                    <a href="#"><span class="playlist-number">23.</span>
+                        <img class="playlist-item-image"
+                             src="https://a1.sndcdn.com/images/default_avatar_large.png"><span
+                                class="playlist-track-duration">3:16</span><span class="playlist-title">LL Cool J 'Doin It'</span></a>
+                </li>
+
+                <li class="playlist-item" data-stream-url="https://api.soundcloud.com/tracks/34131848/stream" id="23"
+                    style="background-color: rgb(41, 41, 41);">
+                    <a href="#"><span class="playlist-number">24.</span>
+                        <img class="playlist-item-image"
+                             src="https://i1.sndcdn.com/artworks-000017135036-5y9uqf-large.jpg"><span
+                                class="playlist-track-duration">4:03</span><span class="playlist-title">Snoop Dogg &amp; Wiz Khalifa - Talent Show</span></a>
+                </li>
+
+                <li class="playlist-item" data-stream-url="https://api.soundcloud.com/tracks/137125800/stream" id="24"
+                    style="background-color: rgb(70, 70, 70);">
+                    <a href="#"><span class="playlist-number">25.</span>
+                        <img class="playlist-item-image"
+                             src="https://i1.sndcdn.com/artworks-000072128745-zo88eu-large.jpg"><span
+                                class="playlist-track-duration">3:18</span><span class="playlist-title">Thathard - Snoop Dogg feat Daft Punk &amp; Daz - 11 Around The World (That's my work 3) **LP</span></a>
+                </li>
+
+                <li class="playlist-item" data-stream-url="https://api.soundcloud.com/tracks/39991198/stream" id="25"
+                    style="background-color: rgb(41, 41, 41);">
+                    <a href="#"><span class="playlist-number">26.</span>
+                        <img class="playlist-item-image"
+                             src="https://i1.sndcdn.com/avatars-000011942508-w0u17l-large.jpg"><span
+                                class="playlist-track-duration">3:50</span><span class="playlist-title">Snoop Dogg - Round Here</span></a>
+                </li>
+
+                <li class="playlist-item" data-stream-url="https://api.soundcloud.com/tracks/98262242/stream" id="26"
+                    style="background-color: rgb(70, 70, 70);">
+                    <a href="#"><span class="playlist-number">27.</span>
+                        <img class="playlist-item-image"
+                             src="https://i1.sndcdn.com/artworks-000051374993-eptqf4-large.jpg"><span
+                                class="playlist-track-duration">6:46</span><span class="playlist-title">Nate Dogg Feat. Snoop Dogg - Never Leave Me Alone extended by dj well bhz</span></a>
+                </li>
+
+                <li class="playlist-item" data-stream-url="https://api.soundcloud.com/tracks/120998850/stream" id="27"
+                    style="background-color: rgb(41, 41, 41);">
+                    <a href="#"><span class="playlist-number">28.</span>
+                        <img class="playlist-item-image"
+                             src="https://i1.sndcdn.com/artworks-000063234144-7n4ges-large.jpg"><span
+                                class="playlist-track-duration">1:29</span><span class="playlist-title">Snoop Dogg - Serial Killer (Juanito Cover)</span></a>
+                </li>
+
+                <li class="playlist-item" data-stream-url="https://api.soundcloud.com/tracks/126316600/stream" id="28"
+                    style="background-color: rgb(70, 70, 70);">
+                    <a href="#"><span class="playlist-number">29.</span>
+                        <img class="playlist-item-image"
+                             src="https://i1.sndcdn.com/artworks-000066174240-c23z18-large.jpg"><span
+                                class="playlist-track-duration">5:41</span><span class="playlist-title">Ralph Myerz feat Snoop Dogg  - Do the damn thing (Wyro Too Much Acid Remix)</span></a>
+                </li>
+
+                <li class="playlist-item" data-stream-url="https://api.soundcloud.com/tracks/59244879/stream" id="29"
+                    style="background-color: rgb(41, 41, 41);">
+                    <a href="#"><span class="playlist-number">30.</span>
+                        <img class="playlist-item-image"
+                             src="https://i1.sndcdn.com/artworks-000029996800-0i5gdu-large.jpg"><span
+                                class="playlist-track-duration">3:53</span><span class="playlist-title">Dr. Dre, Snoop Dogg - Nuthin' But A G Thang</span></a>
+                </li>
+
+                <li class="playlist-item" data-stream-url="https://api.soundcloud.com/tracks/139590122/stream" id="30"
+                    style="background-color: rgb(70, 70, 70);">
+                    <a href="#"><span class="playlist-number">31.</span>
+                        <img class="playlist-item-image"
+                             src="https://i1.sndcdn.com/artworks-000073743046-ppkcbj-large.jpg"><span
+                                class="playlist-track-duration">3:29</span><span
+                                class="playlist-title">Sia - Chandelier</span></a>
+                </li>
+
+                <li class="playlist-item" data-stream-url="https://api.soundcloud.com/tracks/172052755/stream" id="31"
+                    style="background-color: rgb(41, 41, 41);">
+                    <a href="#"><span class="playlist-number">32.</span>
+                        <img class="playlist-item-image"
+                             src="https://i1.sndcdn.com/artworks-000094064676-n2b23b-large.jpg"><span
+                                class="playlist-track-duration">2:55</span><span class="playlist-title">Meghan Trainor - All About that Bass (MAEJOR REMIX) ft. Justin Bieber</span></a>
+                </li>
+
+                <li class="playlist-item" data-stream-url="https://api.soundcloud.com/tracks/180061191/stream" id="32"
+                    style="background-color: rgb(70, 70, 70);">
+                    <a href="#"><span class="playlist-number">33.</span>
+                        <img class="playlist-item-image"
+                             src="https://i1.sndcdn.com/avatars-000118042320-czeuhn-large.jpg"><span
+                                class="playlist-track-duration">4:03</span><span class="playlist-title">Taylor Swift - Blank Space F4MU5 Cover</span></a>
+                </li>
+
+                <li class="playlist-item" data-stream-url="https://api.soundcloud.com/tracks/126842448/stream" id="33"
+                    style="background-color: rgb(41, 41, 41);">
+                    <a href="#"><span class="playlist-number">34.</span>
+                        <img class="playlist-item-image"
+                             src="https://i1.sndcdn.com/artworks-000066465272-37mn46-large.jpg"><span
+                                class="playlist-track-duration">3:48</span><span class="playlist-title">Hozier - Take Me To Church</span></a>
+                </li>
+
+                <li class="playlist-item" data-stream-url="https://api.soundcloud.com/tracks/171175906/stream" id="34"
+                    style="background-color: rgb(70, 70, 70);">
+                    <a href="#"><span class="playlist-number">35.</span>
+                        <img class="playlist-item-image"
+                             src="https://i1.sndcdn.com/artworks-000093305608-7yrj1l-large.jpg"><span
+                                class="playlist-track-duration">4:51</span><span class="playlist-title">Ed Sheeran - Thinking Out Loud</span></a>
+                </li>
+
+                <li class="playlist-item" data-stream-url="https://api.soundcloud.com/tracks/138712428/stream" id="35"
+                    style="background-color: rgb(41, 41, 41);">
+                    <a href="#"><span class="playlist-number">36.</span>
+                        <img class="playlist-item-image"
+                             src="https://i1.sndcdn.com/artworks-000077047452-kn89b5-large.jpg"><span
+                                class="playlist-track-duration">3:41</span><span
+                                class="playlist-title">ZHU - Faded.</span></a>
+                </li>
+
+                <li class="playlist-item" data-stream-url="https://api.soundcloud.com/tracks/143827337/stream" id="36"
+                    style="background-color: rgb(70, 70, 70);">
+                    <a href="#"><span class="playlist-number">37.</span>
+                        <img class="playlist-item-image"
+                             src="https://i1.sndcdn.com/artworks-000077047576-76l5xs-large.jpg"><span
+                                class="playlist-track-duration">3:03</span><span class="playlist-title">ZHU - Paradise Awaits.</span></a>
+                </li>
+
+                <li class="playlist-item" data-stream-url="https://api.soundcloud.com/tracks/145428502/stream" id="37"
+                    style="background-color: rgb(41, 41, 41);">
+                    <a href="#"><span class="playlist-number">38.</span>
+                        <img class="playlist-item-image"
+                             src="https://i1.sndcdn.com/artworks-000077047530-fohffe-large.jpg"><span
+                                class="playlist-track-duration">5:21</span><span
+                                class="playlist-title">ZHU - The One.</span></a>
+                </li>
+
+                <li class="playlist-item" data-stream-url="https://api.soundcloud.com/tracks/145428506/stream" id="38"
+                    style="background-color: rgb(70, 70, 70);">
+                    <a href="#"><span class="playlist-number">39.</span>
+                        <img class="playlist-item-image"
+                             src="https://i1.sndcdn.com/artworks-000077194293-xchz5m-large.jpg"><span
+                                class="playlist-track-duration">4:33</span><span class="playlist-title">ZHU - Cocaine Model.</span></a>
+                </li>
+
+                <li class="playlist-item" data-stream-url="https://api.soundcloud.com/tracks/135067414/stream" id="39"
+                    style="background-color: rgb(41, 41, 41);">
+                    <a href="#"><span class="playlist-number">40.</span>
+                        <img class="playlist-item-image"
+                             src="https://i1.sndcdn.com/artworks-000077047440-ljigvg-large.jpg"><span
+                                class="playlist-track-duration">4:37</span><span class="playlist-title">ZHU - Superfriends.</span></a>
+                </li>
+
+                <li class="playlist-item" data-stream-url="https://api.soundcloud.com/tracks/145428456/stream" id="40"
+                    style="background-color: rgb(70, 70, 70);">
+                    <a href="#"><span class="playlist-number">41.</span>
+                        <img class="playlist-item-image"
+                             src="https://i1.sndcdn.com/artworks-000077047651-5bqrza-large.jpg"><span
+                                class="playlist-track-duration">4:50</span><span class="playlist-title">ZHU - Stay Closer.</span></a>
+                </li>
             </ul>
+            <div id="blend-down" class="blend"></div>
         </div>
     </div>
 </div>
