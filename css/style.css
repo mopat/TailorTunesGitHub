@@ -164,7 +164,7 @@ body {
     margin: 0;
     height: 35px;
     width: 100%;
-    background-color: white;
+    background-color: #fafafa;
     opacity: 0.9;
     display: none;
     font-size: 0.75rem;
@@ -177,7 +177,6 @@ body {
 
 #blend-up {
     top: 0;
-    border-bottom: 1px solid #3AC4CC;
 }
 
 #blend-down {
