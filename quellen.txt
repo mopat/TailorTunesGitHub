@@ -65,3 +65,6 @@ http://stackoverflow.com/questions/18910939/how-to-get-json-key-and-value-in-jav
 http://stackoverflow.com/questions/10211145/getting-current-date-and-time-in-javascript
 https://github.com/andywer/jquery-dim-background
 http://stackoverflow.com/questions/18442628/position-fixed-width-100
+http://stackoverflow.com/questions/7060750/detect-the-enter-key-in-an-text-input-field
+http://stackoverflow.com/questions/21129955/jquery-pressing-enter-on-form-to-not-refresh-page
+http://tristanedwards.me/sweetalert

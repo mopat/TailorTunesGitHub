@@ -5,16 +5,11 @@ App.PlaylistManager = (function () {
     var that = {},
         APPLICATION_ID = "yOTWw2niwOWRTql2MtewglSVcXYQa36Bld6ztZX3",
         JAVASCRIPT_KEY = "wyt0MOGfNQxPCEC3fFDkxGmpukQ7ulbOzeMY27Ql",
-        $savePlaylistButton = null,
-        $playlistNameInput = null,
         currentUser = null,
         playlistTitles = [],
 
         init = function () {
             Parse.initialize(APPLICATION_ID, JAVASCRIPT_KEY);
-            $savePlaylistButton = $("#save-playlist-button");
-            $playlistNameInput = $("#playlist-name-input");
-            $savePlaylistButton.on("click", savePlaylist);
         },
 
         signIn = function (username, password, email) {
@@ -65,11 +60,10 @@ App.PlaylistManager = (function () {
             });
         },
 
-        postPlaylist = function(JSONPlaylist){
+        postPlaylist = function (JSONPlaylist, playlistName) {
             var Post = Parse.Object.extend("Playlists");
             var post = new Post();
             post.set("user", currentUser);
-            var playlistName = $playlistNameInput.val();
             $(that).trigger("emptyOldUserPlaylistView");
             if ($.inArray(playlistName, playlistTitles) == -1) {
                 post.set("title", playlistName);
@@ -78,7 +72,7 @@ App.PlaylistManager = (function () {
                 post.set("JSONPlaylist", JSONPlaylist);
                 post.save(null, {
                     success: function (post) {
-                        console.log("PLAYLIST SAVED");
+                        sweetAlert("Your playlist was saved! ", null, "success");
                         // Find all posts by the current user
                         var query = new Parse.Query(Post);
 
@@ -97,7 +91,7 @@ App.PlaylistManager = (function () {
                 });
             }
             else{
-                console.log("playlist name already exists.")
+                sweetAlert("Playlist name already exists.", null, "error");
             }
         },
 
@@ -126,11 +120,6 @@ App.PlaylistManager = (function () {
                 }
                 var dateTime = year+'/'+month+'/'+day+' '+hour+':'+minute+':'+second;
             return dateTime;
-            },
-
-
-        savePlaylist = function () {
-            $(that).trigger("savePlaylistClicked");
         };
 
     that.login = logIn;

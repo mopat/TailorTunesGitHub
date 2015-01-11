@@ -106,7 +106,7 @@ App.MainModel = (function () {
                     searchSoundCloudTracks(tracks, "soundcloud", query);
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
-                    alert("ERROR " + errorThrown + " at" + XMLHttpRequest);
+                    sweetAlert("ERROR " + errorThrown + " at" + XMLHttpRequest, "error");
                 }
             });
         },

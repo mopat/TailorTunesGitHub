@@ -10,12 +10,17 @@ App.PlaylistView = (function () {
         $blendUp = null,
         $blendDown = null,
         $stickyFooter = null,
+        $savePlaylistButton = null,
+        $playlistNameInput = null,
+
 
         init = function () {
             $playlistBox = $("#playlist-box");
             $playlist = $("#playlist");
             $stickyFooter = $("#sticky-footer");
             $sortModeSwitch = $("#sort-mode-switch");
+            $savePlaylistButton = $("#save-playlist-button");
+            $playlistNameInput = $("#playlist-name-input");
             $blendUp = $("#blend-up");
             $blendDown = $("#blend-down");
 
@@ -26,6 +31,7 @@ App.PlaylistView = (function () {
             $playlist.on("click", handleListItemClick);
             $playlist.on("swipeleft", swipeleftHandler);
             $sortModeSwitch.on("click", handleSortSwitchClick);
+            $savePlaylistButton.on("click", savePlaylist);
 
             setPlaylistIds();
             setPlaylistMarginBottomZero();
@@ -145,7 +151,7 @@ App.PlaylistView = (function () {
             if ($sortModeSwitch.attr("checked")) {
                 $sortModeSwitch.removeAttr("checked");
                 removeSortable();
-                $("#sticky-footer").slideDown(300);
+                $stickyFooter.slideDown(300);
                 setPlaylistMarginBottomControlsBoxHeight();
                 $blendUp.slideUp(500);
                 $blendDown.slideUp(500);
@@ -253,7 +259,17 @@ App.PlaylistView = (function () {
                 };
                 playlistAsJSON.push(playlistObject);
             });
+            console.log(JSON.parse(JSON.stringify(playlistAsJSON)))
             return JSON.parse(JSON.stringify(playlistAsJSON))
+        },
+
+
+        savePlaylist = function () {
+            var playlistName = $playlistNameInput.val();
+            if (!playlistName || getPlaylistAsJSON().length == 0)
+                sweetAlert("Oops...", "Your playlist or your playlist name is empty!", "error");
+            else
+                $(that).trigger("savePlaylistClicked", [getPlaylistAsJSON(), $playlistNameInput.val()]);
         };
 
     that.addPlaylist = addPlaylist;
