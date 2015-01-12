@@ -93,16 +93,17 @@ App.PlaylistManager = (function () {
                                 query.equalTo("objectId", playlistId);
                                 query.get(playlistId, {
                                     success: function (result) {
-                                        result.set("user", currentUser);
-                                        result.set("title", playlistName);
-                                        result.set("lastUpdate", getCurrenTimeAndDate());
-                                        result.set("length", JSONPlaylist.length);
-                                        result.set("JSONPlaylist", JSONPlaylist);
+
                                         result.save(null, {
-                                            success: function (result) {
+                                            success: function (Result) {
                                                 swal("Your playlist was saved! ", null, "success");
                                                 // Find all posts by the current user
-
+                                                Result.set("user", currentUser);
+                                                Result.set("title", playlistName);
+                                                Result.set("lastUpdate", getCurrenTimeAndDate());
+                                                Result.set("length", JSONPlaylist.length);
+                                                Result.set("JSONPlaylist", JSONPlaylist);
+                                                Result.save();
                                                 query.equalTo("user", currentUser);
                                                 query.find({
                                                     success: function (usersPosts) {
@@ -111,7 +112,7 @@ App.PlaylistManager = (function () {
                                                             playlistTitles = [];
                                                             playlistTitles.push(usersPosts[i]._serverData.title)
                                                         }
-                                                        result.save();
+
                                                         loadPlaylists();
                                                     }
                                                 });
