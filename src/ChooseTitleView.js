@@ -15,7 +15,7 @@ App.ModalView = (function () {
             $chooseModalListEchoNest = $("#choose-modal-echonest-ul");
 
             $chooseModalSoundcloud = $("#choose-modal-soundcloud");
-            $chooseModalListSoundcloud = $("#choose-modal-soundcloud-ul")
+            $chooseModalListSoundcloud = $("#choose-modal-soundcloud-ul");
 
             $chooseModalListEchoNest.on("click", handleEchoNestListItemClick);
             $chooseModalListSoundcloud.on("click", handleSoundcloudListItemClick);

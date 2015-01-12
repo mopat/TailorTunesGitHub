@@ -26,7 +26,13 @@ App.UserPlaylistView = (function () {
 
             $userPlaylistModal.on("close", handleUserPlaylistModalClosed);
 
-            $userPlaylistModal.on("click", ".trash-icon", handleDeletePlaylistClicked);
+            $userPlaylisBox.on("click", ".load-playlist", handleLoadPlaylist);
+            $userPlaylisBox.on("swipeleft", ".user-playlist-item", swipeleftHandler);
+            $userPlaylisBox.on("click", ".open-icon", handleOpenPlaylist);
+            $userPlaylisBox.on("click", ".trash-icon", handleDeletePlaylistClicked);
+            $userPlaylisBox.on("click", ".close-icon", handleClosePlaylist);
+            $userPlaylisBox.on("click", ".user-playlist-item", handleListItemClick);
+            $userPlaylisBox.on("click", ".stop-icon", handleStopIconClick);
         },
 
         setUserPlaylistView = function (playlistTitle, date, length, playlistId, JSONPlaylist) {
@@ -57,13 +63,6 @@ App.UserPlaylistView = (function () {
             }
             setPlaylistIds();
             //openUserPlaylistModal();
-
-            $(".load-playlist").on("click", handleLoadPlaylist);
-            $(".user-playlist-item").on("swipeleft", swipeleftHandler);
-            $(".open-icon").on("click", handleOpenPlaylist);
-            $(".close-icon").on("click", handleClosePlaylist);
-            $(".user-playlist-item").on("click", handleListItemClick);
-            $(".stop-icon").on("click", handleStopIconClick);
         },
 
         setPlaylistIds = function () {

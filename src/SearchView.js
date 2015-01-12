@@ -30,7 +30,6 @@ App.SearchView = (function () {
             $trackDropwdownBox.on("change", handleTrackDropdownChange);
         },
 
-
         handleSearch = function () {
            var visibleDropdownValue = getVisibleDropdownValue();
             if (visibleDropdownValue == "simple")
@@ -52,12 +51,6 @@ App.SearchView = (function () {
             $(e.target).closest(".picker").switchClass("unpicked", "picked", 0);
             var tabId = $(this).attr("id");
             setMode(tabId);
-        },
-
-        handleSwitchClicked = function (e) {
-            e.preventDefault();
-            $(".checked").removeAttr("checked").removeClass("checked");
-            $(e.target).closest("input").attr("checked", true).addClass("checked");
         },
 
         setMode = function (tabId) {
