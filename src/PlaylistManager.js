@@ -67,10 +67,9 @@ App.PlaylistManager = (function () {
 
         startPlaylistPost = function (JSONPlaylist, playlistName) {
             if (currentUser != null) {
-                var post = null;
                 $(that).trigger("emptyOldUserPlaylistView");
                 if ($.inArray(playlistName, playlistTitles) == -1) {
-                    postPlaylist(JSONPlaylist, playlistName, post);
+                    postPlaylist(JSONPlaylist, playlistName);
                 }
                 else {
                     swal({
@@ -88,41 +87,9 @@ App.PlaylistManager = (function () {
                         query.equalTo("title", playlistName);
                         query.find({
                             success: function (playlist) {
-                                var playlistId = playlist.id;
-
-                                query.equalTo("objectId", playlistId);
-                                query.get(playlistId, {
-                                    success: function (result) {
-
-                                        result.save(null, {
-                                            success: function (Result) {
-                                                swal("Your playlist was saved! ", null, "success");
-                                                // Find all posts by the current user
-                                                Result.set("user", currentUser);
-                                                Result.set("title", playlistName);
-                                                Result.set("lastUpdate", getCurrenTimeAndDate());
-                                                Result.set("length", JSONPlaylist.length);
-                                                Result.set("JSONPlaylist", JSONPlaylist);
-                                                Result.save();
-                                                query.equalTo("user", currentUser);
-                                                query.find({
-                                                    success: function (usersPosts) {
-                                                        // userPosts contains all of the posts by the current user.
-                                                        for (var i in usersPosts) {
-                                                            playlistTitles = [];
-                                                            playlistTitles.push(usersPosts[i]._serverData.title)
-                                                        }
-
-                                                        loadPlaylists();
-                                                    }
-                                                });
-                                            }
-                                        });
-
-                                    }
-                                });
-
-
+                                var playlistId = playlist[0].id;
+                                deleteUserPlaylist(playlistId);
+                                postPlaylist(JSONPlaylist, playlistName);
                             }
                         });
                     });
@@ -131,10 +98,10 @@ App.PlaylistManager = (function () {
             else swal("Saving failed!", "You need to login to save playlists.", "error");
         },
 
-        postPlaylist = function (JSONPlaylist, playlistName, post) {
+        postPlaylist = function (JSONPlaylist, playlistName) {
             var Playlists = Parse.Object.extend("Playlists");
             var query = new Parse.Query(Playlists);
-            post = new Playlists();
+            var post = new Playlists();
             post.set("user", currentUser);
             post.set("title", playlistName);
             post.set("lastUpdate", getCurrenTimeAndDate());
@@ -155,6 +122,46 @@ App.PlaylistManager = (function () {
                             }
                             loadPlaylists();
                         }
+                    });
+                }
+            });
+        },
+
+        deleteUserPlaylist = function (playlistId) {
+            retrieveObject(playlistId, deleteObject);
+        },
+
+        retrieveObject = function (playlistId, callback) {
+            var Playlists = Parse.Object.extend("Playlists");
+            var query = new Parse.Query(Playlists);
+            query.get(playlistId, {
+                success: function (playlist) {
+                    if (callback != null || callback != undefined)
+                        callback(playlist);
+                    alert("DELETE")
+                },
+                error: function (object, error) {
+                    // The object was not retrieved successfully.
+                    // error is a Parse.Error with an error code and message.
+                }
+            });
+        },
+
+        deleteObject = function (playlist) {
+            playlist.destroy({
+                success: function (playlist) {
+                    swal({
+                        title: "Playlist deleted",
+                        type: "success",
+                        timer: 500
+                    });
+                    $(that).trigger("userPlaylistDeleteSuccess");
+                },
+                error: function (myObject, error) {
+                    swal({
+                        title: "Could not delete Playlist.",
+                        type: "error",
+                        timer: 500
                     });
                 }
             });
@@ -185,45 +192,6 @@ App.PlaylistManager = (function () {
             }
             var dateTime = year + '/' + month + '/' + day + ' ' + hour + ':' + minute + ':' + second;
             return dateTime;
-        },
-
-        deleteUserPlaylist = function (playlistId) {
-            retrieveObject(playlistId, deleteObject);
-        },
-
-        retrieveObject = function (playlistId, callback) {
-            var Playlists = Parse.Object.extend("Playlists");
-            var query = new Parse.Query(Playlists);
-            query.get(playlistId, {
-                success: function (playlist) {
-                    if (callback != null || callback != undefined)
-                        callback(playlist);
-                },
-                error: function (object, error) {
-                    // The object was not retrieved successfully.
-                    // error is a Parse.Error with an error code and message.
-                }
-            });
-        },
-
-        deleteObject = function (playlist) {
-            playlist.destroy({
-                success: function (playlist) {
-                    swal({
-                        title: "Playlist deleted",
-                        type: "success",
-                        timer: 500
-                    });
-                    $(that).trigger("userPlaylistDeleteSuccess");
-                },
-                error: function (myObject, error) {
-                    swal({
-                        title: "Could not delete Playlist.",
-                        type: "error",
-                        timer: 500
-                    });
-                }
-            });
         };
 
     that.login = logIn;
