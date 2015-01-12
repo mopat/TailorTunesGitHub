@@ -65,37 +65,12 @@ App.PlaylistManager = (function () {
             });
         },
 
-        postPlaylist = function (JSONPlaylist, playlistName) {
-            console.log(currentUser, typeof currentUser)
+        startPlaylistPost = function (JSONPlaylist, playlistName) {
             if (currentUser != null) {
-                var Playlists = Parse.Object.extend("Playlists");
-                var post = new Playlists();
-                post.set("user", currentUser);
+                var post = null;
                 $(that).trigger("emptyOldUserPlaylistView");
                 if ($.inArray(playlistName, playlistTitles) == -1) {
-                    post.set("title", playlistName);
-                    post.set("lastUpdate", getCurrenTimeAndDate());
-                    post.set("length", JSONPlaylist.length);
-                    post.set("JSONPlaylist", JSONPlaylist);
-                    post.save(null, {
-                        success: function (post) {
-                            swal("Your playlist was saved! ", null, "success");
-                            // Find all posts by the current user
-                            var query = new Parse.Query(Playlists);
-
-                            query.equalTo("user", currentUser);
-                            query.find({
-                                success: function (usersPosts) {
-                                    // userPosts contains all of the posts by the current user.
-                                    for (var i in usersPosts) {
-                                        playlistTitles = [];
-                                        playlistTitles.push(usersPosts[i]._serverData.title)
-                                    }
-                                    loadPlaylists();
-                                }
-                            });
-                        }
-                    });
+                    postPlaylist(JSONPlaylist, playlistName, post);
                 }
                 else {
                     swal({
@@ -108,10 +83,80 @@ App.PlaylistManager = (function () {
                         closeOnConfirm: false
                     }, function () {
                         swal("Deleted!", "Your imaginary file has been deleted.", "success");
+                        var Playlists = Parse.Object.extend("Playlists");
+                        var query = new Parse.Query(Playlists);
+                        query.equalTo("title", playlistName);
+                        query.find({
+                            success: function (playlist) {
+                                var playlistId = playlist.id;
+
+                                query.equalTo("objectId", playlistId);
+                                query.get(playlistId, {
+                                    success: function (result) {
+                                        result.set("user", currentUser);
+                                        result.set("title", playlistName);
+                                        result.set("lastUpdate", getCurrenTimeAndDate());
+                                        result.set("length", JSONPlaylist.length);
+                                        result.set("JSONPlaylist", JSONPlaylist);
+                                        result.save(null, {
+                                            success: function (result) {
+                                                swal("Your playlist was saved! ", null, "success");
+                                                // Find all posts by the current user
+
+                                                query.equalTo("user", currentUser);
+                                                query.find({
+                                                    success: function (usersPosts) {
+                                                        // userPosts contains all of the posts by the current user.
+                                                        for (var i in usersPosts) {
+                                                            playlistTitles = [];
+                                                            playlistTitles.push(usersPosts[i]._serverData.title)
+                                                        }
+                                                        result.save();
+                                                        loadPlaylists();
+                                                    }
+                                                });
+                                            }
+                                        });
+
+                                    }
+                                });
+
+
+                            }
+                        });
                     });
                 }
             }
             else swal("Saving failed!", "You need to login to save playlists.", "error");
+        },
+
+        postPlaylist = function (JSONPlaylist, playlistName, post) {
+            var Playlists = Parse.Object.extend("Playlists");
+            var query = new Parse.Query(Playlists);
+            post = new Playlists();
+            post.set("user", currentUser);
+            post.set("title", playlistName);
+            post.set("lastUpdate", getCurrenTimeAndDate());
+            post.set("length", JSONPlaylist.length);
+            post.set("JSONPlaylist", JSONPlaylist);
+            post.save(null, {
+                success: function (post) {
+                    swal("Your playlist was saved! ", null, "success");
+                    // Find all posts by the current user
+
+                    query.equalTo("user", currentUser);
+                    query.find({
+                        success: function (usersPosts) {
+                            // userPosts contains all of the posts by the current user.
+                            for (var i in usersPosts) {
+                                playlistTitles = [];
+                                playlistTitles.push(usersPosts[i]._serverData.title)
+                            }
+                            loadPlaylists();
+                        }
+                    });
+                }
+            });
         },
 
         getCurrenTimeAndDate = function () {
@@ -183,7 +228,7 @@ App.PlaylistManager = (function () {
     that.login = logIn;
     that.signIn = signIn;
     that.logOut = logOut;
-    that.postPlaylist = postPlaylist;
+    that.startPlaylistPost = startPlaylistPost;
     that.deleteUserPlaylist = deleteUserPlaylist;
     that.init = init;
 

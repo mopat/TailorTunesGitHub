@@ -132,7 +132,7 @@ App.MainController = (function () {
         },
 
         handleSavePlaylistClicked = function (event, JSONPlaylist, playlistName) {
-            playlistManager.postPlaylist(JSONPlaylist, playlistName);
+            playlistManager.startPlaylistPost(JSONPlaylist, playlistName);
         },
 
         handleUserPlaylistTitlesLoaded = function (event, title, date, length, playlistId, JSONPlaylist) {
