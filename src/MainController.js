@@ -62,7 +62,8 @@ App.MainController = (function () {
             $(userPlaylistView).on("previewPlayingStart", handlePreviewPlayingStart);
             $(userPlaylistView).on("previewPlayingStop", handlePreviewPlayingStop);
 
-            $(loginRegisterView).on("loginButtonClick", handleLoginButtonClick);
+            $(loginRegisterView).on("loginButtonClicked", handleLoginButtonClick);
+            $(loginRegisterView).on("handleLogoutClicked", handleLogoutClick);
             $(loginRegisterView).on("emptyOldUserPlaylistView", handleEmptyUserPlaylistView);
             $(loginRegisterView).on("myPlaylistsAnchorClick", handleMyPlaylistsAnchorClick);
             $(playlistManager).on("loginSuccessful", handleLoginSuccessful);
@@ -71,6 +72,9 @@ App.MainController = (function () {
             $(loginRegisterView).on("signInButtonClick", handleSignInButtonClick);
             $(playlistManager).on("signInSuccessful", handleLoginSuccessful);
             $(playlistManager).on("signInFailed", handleSignInFailed);
+
+            $(userPlaylistView).on("deleteUserPlaylist", handleDeleteUserPlaylist);
+            $(playlistManager).on("userPlaylistDeleteSuccess", handleDeleteUserPlaylistSuccess);
 
             handleLoginButtonClick(event, "patrick", "killer");
         },
@@ -151,6 +155,10 @@ App.MainController = (function () {
             playlistManager.login(username, password);
         },
 
+        handleLogoutClick = function () {
+            playlistManager.logOut();
+        },
+
         handleLoginSuccessful = function () {
             loginRegisterView.loginSuccessful();
         },
@@ -173,6 +181,14 @@ App.MainController = (function () {
 
         handleSignInFailed = function (event, errorMessage) {
             loginRegisterView.signInFailed(errorMessage);
+        },
+
+        handleDeleteUserPlaylist = function (event, playlistId) {
+            playlistManager.deleteUserPlaylist(playlistId);
+        },
+
+        handleDeleteUserPlaylistSuccess = function () {
+            userPlaylistView.removeUserPlaylist();
         };
 
 

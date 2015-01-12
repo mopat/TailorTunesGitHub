@@ -68,3 +68,5 @@ http://stackoverflow.com/questions/18442628/position-fixed-width-100
 http://stackoverflow.com/questions/7060750/detect-the-enter-key-in-an-text-input-field
 http://stackoverflow.com/questions/21129955/jquery-pressing-enter-on-form-to-not-refresh-page
 http://tristanedwards.me/sweetalert
+http://stackoverflow.com/questions/5333426/how-to-find-a-parent-with-a-known-class-in-jquery
+http://stackoverflow.com/questions/5354641/how-can-i-get-make-javascript-code-execution-to-wait-until-an-ajax-request-with

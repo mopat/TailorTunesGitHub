@@ -11,6 +11,7 @@ App.UserPlaylistView = (function () {
         $userPlaylisBox = null,
         listItemColors = null,
         preview = new Audio(),
+        $playlistContainerToDelete = null,
 
 
         init = function () {
@@ -24,6 +25,8 @@ App.UserPlaylistView = (function () {
             $userPlaylisBox = $("#user-playlist-box");
 
             $userPlaylistModal.on("close", handleUserPlaylistModalClosed);
+
+            $userPlaylistModal.on("click", ".trash-icon", handleDeletePlaylistClicked);
         },
 
         setUserPlaylistView = function (playlistTitle, date, length, playlistId, JSONPlaylist) {
@@ -139,11 +142,11 @@ App.UserPlaylistView = (function () {
         },
 
         handleOpenPlaylist = function (event) {
-            $(event.target).parent().parent().parent().find(".user-playlist").slideDown(300);
+            $(this).parents(".user-playlist-container").find(".user-playlist").slideDown(300);
         },
 
         handleClosePlaylist = function (event) {
-            $(event.target).parent().parent().parent().find(".user-playlist").slideUp(300);
+            $(this).parents(".user-playlist-container").find(".user-playlist").slideUp(300);
         },
 
         handleStopIconClick = function () {
@@ -151,12 +154,33 @@ App.UserPlaylistView = (function () {
             preview.currentTime = 0;
             $(".stop-icon").hide();
             $(".preview-playing").removeClass("preview-playing");
+        },
+
+        handleDeletePlaylistClicked = function () {
+            $playlistContainerToDelete = $(this).parents(".user-playlist-container");
+            var playlistId = $playlistContainerToDelete.find(".user-playlist").attr("id");
+            swal({
+                title: "Are you sure you want to delete this playlist?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes, delete it!",
+                closeOnConfirm: false
+            }, function () {
+                $(that).trigger("deleteUserPlaylist", [playlistId]);
+            });
+        },
+
+        removeUserPlaylist = function () {
+            $playlistContainerToDelete.remove();
+            $playlistContainerToDelete = null;
         };
 
 
     that.setUserPlaylistView = setUserPlaylistView;
     that.openUserPlaylistModal = openUserPlaylistModal;
     that.emptyUserPlaylistModal = emptyUserPlaylistModal;
+    that.removeUserPlaylist = removeUserPlaylist;
     that.init = init;
 
     return that;

@@ -53,7 +53,7 @@ App.LoginRegisterView = (function () {
             var username = $loginUsername.val();
             var password = $loginPassword.val();
 
-            $(that).trigger("loginButtonClick", [username, password]);
+            $(that).trigger("loginButtonClicked", [username, password]);
         },
 
         handleSignInButtonClick = function () {
@@ -92,12 +92,12 @@ App.LoginRegisterView = (function () {
         },
 
         hanldeLogoutAnchorClick = function () {
-            Parse.User.logOut();
             $loggedInBox.hide();
             $loginAnchor.show();
             $signInAnchor.show();
 
             $(that).trigger("emptyOldUserPlaylistView");
+            $(that).trigger("handleLogoutClicked");
         },
 
         handleLoginAnchorClick = function () {

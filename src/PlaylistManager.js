@@ -43,6 +43,11 @@ App.PlaylistManager = (function () {
             });
         },
 
+        logOut = function () {
+            Parse.User.logOut();
+            currentUser = Parse.User.current();
+        },
+
         loadPlaylists = function () {
             var query = new Parse.Query("Playlists");
             query.equalTo("user", currentUser);
@@ -61,6 +66,7 @@ App.PlaylistManager = (function () {
         },
 
         postPlaylist = function (JSONPlaylist, playlistName) {
+            console.log(currentUser, typeof currentUser)
             if (currentUser != null) {
                 var Playlists = Parse.Object.extend("Playlists");
                 var post = new Playlists();
@@ -73,7 +79,7 @@ App.PlaylistManager = (function () {
                     post.set("JSONPlaylist", JSONPlaylist);
                     post.save(null, {
                         success: function (post) {
-                            sweetAlert("Your playlist was saved! ", null, "success");
+                            swal("Your playlist was saved! ", null, "success");
                             // Find all posts by the current user
                             var query = new Parse.Query(Playlists);
 
@@ -133,11 +139,52 @@ App.PlaylistManager = (function () {
             }
             var dateTime = year + '/' + month + '/' + day + ' ' + hour + ':' + minute + ':' + second;
             return dateTime;
+        },
+
+        deleteUserPlaylist = function (playlistId) {
+            retrieveObject(playlistId, deleteObject);
+        },
+
+        retrieveObject = function (playlistId, callback) {
+            var Playlists = Parse.Object.extend("Playlists");
+            var query = new Parse.Query(Playlists);
+            query.get(playlistId, {
+                success: function (playlist) {
+                    if (callback != null || callback != undefined)
+                        callback(playlist);
+                },
+                error: function (object, error) {
+                    // The object was not retrieved successfully.
+                    // error is a Parse.Error with an error code and message.
+                }
+            });
+        },
+
+        deleteObject = function (playlist) {
+            playlist.destroy({
+                success: function (playlist) {
+                    swal({
+                        title: "Playlist deleted",
+                        type: "success",
+                        timer: 500
+                    });
+                    $(that).trigger("userPlaylistDeleteSuccess");
+                },
+                error: function (myObject, error) {
+                    swal({
+                        title: "Could not delete Playlist.",
+                        type: "error",
+                        timer: 500
+                    });
+                }
+            });
         };
 
     that.login = logIn;
     that.signIn = signIn;
+    that.logOut = logOut;
     that.postPlaylist = postPlaylist;
+    that.deleteUserPlaylist = deleteUserPlaylist;
     that.init = init;
 
     return that;
