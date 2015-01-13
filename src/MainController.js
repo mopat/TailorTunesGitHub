@@ -76,6 +76,8 @@ App.MainController = (function () {
             $(userPlaylistView).on("deleteUserPlaylist", handleDeleteUserPlaylist);
             $(playlistManager).on("userPlaylistDeleteSuccess", handleDeleteUserPlaylistSuccess);
 
+            $(playlistView).on("playlistCleared", handlePlaylistCleared);
+
             handleLoginButtonClick(event, "patrick", "killer");
         },
 
@@ -189,6 +191,10 @@ App.MainController = (function () {
 
         handleDeleteUserPlaylistSuccess = function () {
             userPlaylistView.removeUserPlaylist();
+        },
+
+        handlePlaylistCleared = function () {
+            controlsView.resetPlayer();
         };
 
 

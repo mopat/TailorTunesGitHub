@@ -197,6 +197,10 @@ body {
     width: 100%;
 }
 
+#clear-playlist-button {
+    width: 150px;
+}
+
 #sticky {
     color: #fff;
     max-width: 200px;
@@ -273,6 +277,9 @@ body {
     padding-left: 10px;
 }
 
+.volume-controls {
+    padding-left: 5px;
+}
 #elapsed-time {
     color: #ffffff;
 }

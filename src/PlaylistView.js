@@ -12,6 +12,7 @@ App.PlaylistView = (function () {
         $stickyFooter = null,
         $savePlaylistButton = null,
         $playlistNameInput = null,
+        $clearPlaylistButton = null,
 
 
         init = function () {
@@ -23,6 +24,7 @@ App.PlaylistView = (function () {
             $playlistNameInput = $("#playlist-name-input");
             $blendUp = $("#blend-up");
             $blendDown = $("#blend-down");
+            $clearPlaylistButton = $("#clear-playlist-button");
 
             playlistItemTpl = _.template($("#playlist-item-tpl").html());
 
@@ -32,6 +34,7 @@ App.PlaylistView = (function () {
             $playlist.on("swipeleft", swipeleftHandler);
             $sortModeSwitch.on("click", handleSortSwitchClick);
             $savePlaylistButton.on("click", savePlaylist);
+            $clearPlaylistButton.on("click", clearPlaylist);
 
             setPlaylistIds();
             setPlaylistMarginBottomZero();
@@ -269,6 +272,11 @@ App.PlaylistView = (function () {
                 swal("Oops...", "Your playlist or your playlist name is empty!", "error");
             else
                 $(that).trigger("savePlaylistClicked", [getPlaylistAsJSON(), $playlistNameInput.val()]);
+        },
+
+        clearPlaylist = function () {
+            $playlist.empty();
+            $(that).trigger("playlistCleared");
         };
 
     that.addPlaylist = addPlaylist;
