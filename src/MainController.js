@@ -195,6 +195,7 @@ App.MainController = (function () {
 
         handlePlaylistCleared = function () {
             controlsView.resetPlayer();
+            userPlaylistView.removeLoadedStatus();
         };
 
 

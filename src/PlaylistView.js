@@ -39,10 +39,13 @@ App.PlaylistView = (function () {
             setPlaylistIds();
             setPlaylistMarginBottomZero();
             setPlaylistMarginBottomControlsBoxHeight();
+            fillPlaylistHeight();
+            stickyRelocate();
+        },
 
-            $(window).on("scroll", function () {
-                stickyRelocate();
-            });
+        fillPlaylistHeight = function () {
+            var distance = $('#controls-box').offset().top - $('#sticky-sort-switch-box').offset().top;
+            $playlist.css("min-height", (distance - $(".marquee").height()));
         },
 
         swipeleftHandler = function (event) {
@@ -220,17 +223,19 @@ App.PlaylistView = (function () {
         },
 
         stickyRelocate = function () {
-            var windowTop = $(window).scrollTop();
-            var divTop = $('#sticky-anchor').offset().top;
-            if (windowTop > divTop) {
-                $('#sticky').addClass('stick');
-                if ($sortModeSwitch.attr("checked"))
-                    $blendUp.slideDown(500);
-            }
-            else {
-                $('#sticky').removeClass('stick');
-                $blendUp.slideUp(500);
-            }
+            $(window).on("scroll", function () {
+                var windowTop = $(window).scrollTop();
+                var divTop = $('#sticky-anchor').offset().top;
+                if (windowTop > divTop) {
+                    $('#sticky').addClass('stick');
+                    if ($sortModeSwitch.attr("checked"))
+                        $blendUp.slideDown(500);
+                }
+                else {
+                    $('#sticky').removeClass('stick');
+                    $blendUp.slideUp(500);
+                }
+            });
         },
 
         setPlaylistMarginBottomControlsBoxHeight = function () {
@@ -275,6 +280,7 @@ App.PlaylistView = (function () {
         },
 
         clearPlaylist = function () {
+            addedPlaylists = 0;
             $playlist.empty();
             $(that).trigger("playlistCleared");
         };

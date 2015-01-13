@@ -92,9 +92,9 @@ App.UserPlaylistView = (function () {
             $(that).trigger("previewPlayingStop");
         },
 
-        handleLoadPlaylist = function (event) {
+        handleLoadPlaylist = function () {
             //playlist in playlistview laden
-            var $userPlaylist = $(event.target).parent().parent().parent().find(".user-playlist");
+            var $userPlaylist = $(this).parents(".user-playlist-container").find(".user-playlist");
             if ($userPlaylist.hasClass("loaded") == false) {
                 $userPlaylist.addClass("loading");
                 var loadedPlaylist = [];
@@ -175,6 +175,10 @@ App.UserPlaylistView = (function () {
                 $playlistContainerToDelete.remove();
                 $playlistContainerToDelete = null;
             }
+        },
+
+        removeLoadedStatus = function () {
+            $(".loaded").removeClass("loaded");
         };
 
 
@@ -182,6 +186,7 @@ App.UserPlaylistView = (function () {
     that.openUserPlaylistModal = openUserPlaylistModal;
     that.emptyUserPlaylistModal = emptyUserPlaylistModal;
     that.removeUserPlaylist = removeUserPlaylist;
+    that.removeLoadedStatus = removeLoadedStatus;
     that.init = init;
 
     return that;

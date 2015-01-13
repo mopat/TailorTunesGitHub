@@ -70,3 +70,5 @@ http://stackoverflow.com/questions/21129955/jquery-pressing-enter-on-form-to-not
 http://tristanedwards.me/sweetalert
 http://stackoverflow.com/questions/5333426/how-to-find-a-parent-with-a-known-class-in-jquery
 http://stackoverflow.com/questions/5354641/how-can-i-get-make-javascript-code-execution-to-wait-until-an-ajax-request-with
+http://stackoverflow.com/questions/15149573/find-distance-between-two-divs-using-jquery
+http://robertnyman.com/2010/01/11/css-background-transparency-without-affecting-child-elements-through-rgba-and-filters/
