@@ -3,8 +3,10 @@ App.ControlsView = (function () {
     var that = {},
         sc_client_id = '23a3031c7cd251c7c217ca127777e48b',
         $timeSlider = null,
-        $volumeSlider = null,
+        $volumeMinus = null,
+        $volumePlus = null,
         $volumeIcon = null,
+        $volume = null,
         $player = null,
         player = null,
         $playButton = null,
@@ -12,14 +14,15 @@ App.ControlsView = (function () {
         $nextButton = null,
         $previousButton = null,
         $elapsedTime = null,
-        $volume = null,
         $titleInfo = null,
         $marquee = null,
 
         init = function () {
             $timeSlider = $("#time-slider");
-            $volumeSlider = $("#volume-slider");
+            $volumeMinus = $("#volume-minus");
+            $volumePlus = $("#volume-plus");
             $volumeIcon = $("#volume-icon");
+            $volume = $("#volume-value");
             $player = $('#player');
             player = document.getElementById("player");
             $playButton = $("#play-button");
@@ -27,17 +30,17 @@ App.ControlsView = (function () {
             $nextButton = $("#next-button");
             $previousButton = $("#previous-button");
             $elapsedTime = $("#elapsed-time");
-            $volume = $("#volume-value");
             $titleInfo = $(".title-info");
             $marquee = $(".marquee");
 
             initTimeSlider();
             initPlayerControls();
-            initVolumeSlider();
 
             player.addEventListener("ended", function () {
                 $(that).trigger("trackEnded");
             });
+            $volumeMinus.on("click", handleVolumeMinus);
+            $volumePlus.on("click", handleVolumePlus);
             $nextButton.on("click", handleNextButtonClick);
             $previousButton.on("click", handlePreviousButtonClick);
 
@@ -69,28 +72,24 @@ App.ControlsView = (function () {
             });
         },
 
-        initVolumeSlider = function () {
-            $volumeSlider.slider();
-            $volumeSlider.slider("option", "max", 100);
-            $volumeSlider.slider("value", 100);
-            $volumeSlider.slider({step: 10});
+        handleVolumeMinus = function () {
+            player.volume -= 0.1;
+            setVolumeView();
+        },
 
-            $volumeSlider.on("slide", function (event, ui) {
-                setVolumeValue();
-            });
-            $volumeSlider.on("slidechange", function (event, ui) {
-                setVolumeValue();
-            });
-            $(".ui-slider-handle").width(12);
-            function setVolumeValue() {
-                var val = $volumeSlider.slider("value");
-                player.volume = val / 100;
-                $volume.html(val + "%");
-                if (val == 0)
-                    $volumeIcon.switchClass("fi-volume", "fi-volume-strike");
-                else if ($volumeIcon.hasClass("fi-volume-strike"))
-                    $volumeIcon.switchClass("fi-volume-strike", "fi-volume");
-            }
+        handleVolumePlus = function () {
+            player.volume += 0.1;
+            setVolumeView();
+        },
+
+        setVolumeView = function () {
+            var volume = Math.round((player.volume * 100) / 10) * 10;
+
+            $volume.html(volume + "%");
+            if (volume == 0)
+                $volumeIcon.switchClass("fi-volume", "fi-volume-strike");
+            else if ($volumeIcon.hasClass("fi-volume-strike"))
+                $volumeIcon.switchClass("fi-volume-strike", "fi-volume");
         },
 
         handleTimeSliderUpdate = function () {
