@@ -13,6 +13,7 @@ App.PlaylistView = (function () {
         $savePlaylistButton = null,
         $playlistNameInput = null,
         $clearPlaylistButton = null,
+        $playlistSpaceFiller = null,
 
 
         init = function () {
@@ -25,6 +26,7 @@ App.PlaylistView = (function () {
             $blendUp = $("#blend-up");
             $blendDown = $("#blend-down");
             $clearPlaylistButton = $("#clear-playlist-button");
+            $playlistSpaceFiller = $("#playlist-space-filler");
 
             playlistItemTpl = _.template($("#playlist-item-tpl").html());
 
@@ -35,6 +37,7 @@ App.PlaylistView = (function () {
             $sortModeSwitch.on("click", handleSortSwitchClick);
             $savePlaylistButton.on("click", savePlaylist);
             $clearPlaylistButton.on("click", clearPlaylist);
+            $playlistSpaceFiller.on("click", playlistSpaceFillerClick);
 
             setPlaylistIds();
             setPlaylistMarginBottomZero();
@@ -69,6 +72,7 @@ App.PlaylistView = (function () {
             console.log("playlist", playlist)
             addedPlaylists++;
             for (var i in playlist) {
+                $playlistSpaceFiller.hide(0);
                 var artworkUrl = playlist[i].artwork_url;
                 if (artworkUrl == null)
                     artworkUrl = playlist[i].user.avatar_url;
@@ -281,8 +285,14 @@ App.PlaylistView = (function () {
 
         clearPlaylist = function () {
             addedPlaylists = 0;
-            $playlist.empty();
+            $playlist.find("li").remove();
             $(that).trigger("playlistCleared");
+            $playlistSpaceFiller.show();
+        },
+
+        playlistSpaceFillerClick = function (e) {
+            e.preventDefault();
+            $(that).trigger("playlistSpaceFillerClicked");
         };
 
     that.addPlaylist = addPlaylist;

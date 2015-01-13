@@ -97,16 +97,15 @@ body {
     border-right: 1px solid black;
 }
 
-#artist-tab, #track-tab {
-
-}
-
-#year-slider-box {
-    display: none;
+#search-form {
+    background-color: #333333;
 }
 
 /*Playlist CSS*/
-
+#playlist-space-filler {
+    margin: 0 auto;
+    width: 200px;
+}
 #playlist-box, #user-playlist-box {
     height: 100%;
     width: 100%;
@@ -295,6 +294,8 @@ body {
 
 #elapsed-time {
     color: #ffffff;
+    font-size: 0.8rem;
+    padding-top: 8px;
 }
 
 #title-info-box {

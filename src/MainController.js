@@ -77,6 +77,7 @@ App.MainController = (function () {
             $(playlistManager).on("userPlaylistDeleteSuccess", handleDeleteUserPlaylistSuccess);
 
             $(playlistView).on("playlistCleared", handlePlaylistCleared);
+            $(playlistView).on("playlistSpaceFillerClicked", handlePlaylistSpaceFillerClick);
 
             handleLoginButtonClick(event, "patrick", "killer");
         },
@@ -196,6 +197,10 @@ App.MainController = (function () {
         handlePlaylistCleared = function () {
             controlsView.resetPlayer();
             userPlaylistView.removeLoadedStatus();
+        },
+
+        handlePlaylistSpaceFillerClick = function () {
+            searchView.scrollToSearchField();
         };
 
 

@@ -22,7 +22,8 @@ App.SearchView = (function () {
             $genreDropwdownBox = $("#genre-dropdown-box");
 
             $searchField.keydown(handleSubmitForm);
-
+            $searchField.on("click", handleSearchFieldClick);
+            $searchField.select();
 
             $searchButton.on("click", handleSearch);
             $picker.on("click", handleTabClicked);
@@ -51,6 +52,7 @@ App.SearchView = (function () {
             $(e.target).closest(".picker").switchClass("unpicked", "picked", 0);
             var tabId = $(this).attr("id");
             setMode(tabId);
+            $searchField.focus().select();
         },
 
         setMode = function (tabId) {
@@ -119,8 +121,20 @@ App.SearchView = (function () {
             $searchDropdown.each(function() {
                 $(this).find('option:first').prop('selected', 'selected');
             });
+        },
+
+        scrollToSearchField = function () {
+            $('html, body').animate({
+                scrollTop: $searchField.offset().top
+            }, 500);
+            $searchField.focus().select();
+        },
+
+        handleSearchFieldClick = function () {
+            $searchField.select();
         };
 
+    that.scrollToSearchField = scrollToSearchField;
     that.init = init;
 
     return that;
