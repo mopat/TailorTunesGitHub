@@ -197,12 +197,9 @@ body {
     width: 100%;
 }
 
-#save-playlist-button {
-
-}
-
 #sticky {
     color: #fff;
+    max-width: 200px;
     font-size: 0.9rem;
     padding-right: 2px;
     padding-left: 5px;
@@ -220,7 +217,7 @@ body {
 
 /*Controls-Box: Slider and Buttons*/
 #controls-box {
-    background-color: #aaa59d;
+    background-color: #777777;
     height: auto;
 }
 
@@ -229,10 +226,14 @@ body {
 }
 
 #music-button-box {
-    width: 150px;
+    width: 200px;
     height: auto;
     text-align: center;
     margin: 0 auto;
+}
+
+#music-button-box a {
+    color: #1cc7ff;
 }
 
 #controls-box .ui-slider {
@@ -245,30 +246,9 @@ body {
     border-radius: 25px !important;
 }
 
-#play-button {
-
-}
-
-#pause-button {
-
-}
-
-#next-button {
-
-}
-
-#previous-button {
-
-}
-
 .controls {
-    width: 30px;
-    height: 30px;
-    background-repeat: no-repeat;
-    background-size: cover;
-    float: left;
-    border: none;
-    margin-right: 5px;
+    font-size: 2.5rem;
+    padding-left: 5px;
 }
 
 #time-slider {
