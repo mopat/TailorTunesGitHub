@@ -11,7 +11,7 @@ body {
     height: 100%;
     margin: 0px;
     padding: 0px;
-    font-family: 'Source Sans Pro', sans-serif;
+    font-family: 'Ruda', sans-serif;
     position: relative;
 }
 
@@ -72,16 +72,13 @@ body {
     color: gray;
 }
 
-#picker-box {
-    margin-bottom: 10px;
-}
-
 .picker {
     height: 40px;
-    padding-top: 10px;
+    line-height: 40px;
     color: #383838;
     font-weight: bold;
     border-radius: 10px 10px 0 0;
+    font-size: 1.2rem;
 }
 
 .picked {

@@ -5,6 +5,7 @@ App.PlaylistView = (function () {
         $playlist = null,
         playlistItemTpl = null,
         listItemColors = [],
+        $sortSwitchBox = null,
         $sortModeSwitch = null,
         isPlaylistExisting = null,
         $blendUp = null,
@@ -22,6 +23,7 @@ App.PlaylistView = (function () {
             $playlist = $("#playlist");
             isPlaylistExisting = false;
             $stickyFooter = $("#sticky-footer");
+            $sortSwitchBox = $("#sticky-sort-switch-box");
             $sortModeSwitch = $("#sort-mode-switch");
             $savePlaylistButton = $("#save-playlist-button");
             $playlistNameInput = $("#playlist-name-input");
@@ -52,7 +54,7 @@ App.PlaylistView = (function () {
 
         fillPlaylistHeight = function () {
             var distance = $('#controls-box').offset().top - $('#sticky-sort-switch-box').offset().top;
-            $playlist.css("min-height", (distance - $(".marquee").height()));
+            $playlist.css("min-height", (distance - $sortSwitchBox.height() - 1));
         },
 
         swipeleftHandler = function (event) {
