@@ -76,3 +76,4 @@ http://stackoverflow.com/questions/6677035/jquery-scroll-to-element
 https://carldanley.com/js-factory-pattern/
 http://www.lorina.com/assets/images/communs/load.gif
 http://stackoverflow.com/questions/8508275/how-to-center-a-position-absolute-element
+http://stackoverflow.com/questions/8865458/how-to-align-text-vertically-center-in-div-with-css

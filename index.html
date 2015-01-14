@@ -200,9 +200,6 @@
                 <div class="marquee title-info text-center show-for-small" data-duplicated='true'>
                 </div>
             </div>
-            <div class="large-12 medium-12 small-12 columns text-center">
-
-            </div>
             <div id="music-button-box" class="text-center">
                 <div class="large-12 columns">
                     <a href="#">
@@ -292,16 +289,20 @@
     <li class="user-playlist-item" data-stream-url="<%= stream_url %>">
         <a href="#"><span class="user-playlist-number"></span>
             <img class="user-playlist-item-image" src="<%= artwork_url %>"><span
-                    class="user-playlist-track-duration"><%= duration %></span><span
-                    class="user-playlist-title"><%= title %></span></a>
+                    class="user-playlist-track-duration"><%= duration %></span>
+
+            <div class="user-playlist-title"><%= title %></div>
+        </a>
     </li>
 </script>
 <script type="text/html" id="playlist-item-tpl">
     <li class="playlist-item" data-stream-url="<%= stream_url %>">
         <a href="#"><span class="playlist-number"></span>
             <img class="playlist-item-image" src="<%= artwork_url %>"><span
-                    class="playlist-track-duration"><%= duration %></span><span
-                    class="playlist-title"><%= title %></span></a>
+                    class="playlist-track-duration"><%= duration %></span>
+
+            <div class="playlist-title"><%= title %></div>
+        </a>
     </li>
 </script>
 <script>

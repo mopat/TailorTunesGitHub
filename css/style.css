@@ -149,34 +149,44 @@ body {
 .playlist-item, .user-playlist-item {
     clear: both;
     color: white;
-    min-height: 20px;
-    font-size: 0.8rem;
+    height: 35px;
+    line-height: 35px;
+    font-size: 1rem;
     border-bottom: solid;
     border-width: 1px;
-    overflow: hidden;
 }
 
 .playlist-number, .user-playlist-number {
     float: left;
+    width: 20px;
+    margin-left: 5px;
+    border-right: 1px solid #f5f5f5;
 }
 
 .playlist-title, .user-playlist-title {
     float: left;
     position: relative;
-    margin-left: 10px;
+    padding-left: 10px;
     width: 70%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    border-left: 1px solid #f5f5f5;
 }
 
 .playlist-item-image, .user-playlist-item-image {
     float: left;
-    width: 3%;
-    margin-left: 3px;
+    height: 30px;
+    padding-left: 5px;
+    padding-right: 5px;
+    border-right: 1px solid #f5f5f5;
 }
 
 .playlist-track-duration, .user-playlist-track-duration {
     float: left;
     width: auto;
-    margin-left: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .blend {
