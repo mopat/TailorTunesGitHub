@@ -6,7 +6,7 @@ App.PlaylistView = (function () {
         playlistItemTpl = null,
         listItemColors = [],
         $sortModeSwitch = null,
-        addedPlaylists = 0,
+        isPlaylistExisting = null,
         $blendUp = null,
         $blendDown = null,
         $stickyFooter = null,
@@ -16,10 +16,10 @@ App.PlaylistView = (function () {
         $playlistSpaceFiller = null,
         $loadingAnimation = null,
 
-
         init = function () {
             $playlistBox = $("#playlist-box");
             $playlist = $("#playlist");
+            isPlaylistExisting = false;
             $stickyFooter = $("#sticky-footer");
             $sortModeSwitch = $("#sort-mode-switch");
             $savePlaylistButton = $("#save-playlist-button");
@@ -73,7 +73,7 @@ App.PlaylistView = (function () {
 
         addPlaylist = function (playlist) {
             console.log("playlist", playlist)
-            addedPlaylists++;
+            isPlaylistExisting = true;
             for (var i in playlist) {
                 $playlistSpaceFiller.hide(0);
                 var artworkUrl = playlist[i].artwork_url;
@@ -97,17 +97,19 @@ App.PlaylistView = (function () {
                 $playlist.append(playlistItem);
             }
             setPlaylistIds();
-            if (addedPlaylists == 1)
-                startPlaylist();
-
-            if ($sortModeSwitch.attr("checked", true)) {
-                $sortModeSwitch.click();
-            }
+            startPlaylist();
+            checkSortModeSwitch();
         },
 
         startPlaylist = function () {
             var firstTrack = $("#playlist .playlist-item").first();
-            handlePlayTrack(firstTrack);
+            if (isPlaylistExisting)
+                handlePlayTrack(firstTrack);
+        },
+
+        checkSortModeSwitch = function () {
+            if ($sortModeSwitch.attr("checked"))
+                $sortModeSwitch.click();
         },
 
         handlePrevOrNextClicked = function (indicator) {
@@ -277,7 +279,6 @@ App.PlaylistView = (function () {
             return JSON.parse(JSON.stringify(playlistAsJSON))
         },
 
-
         savePlaylist = function () {
             var playlistName = $playlistNameInput.val();
             if (!playlistName || getPlaylistAsJSON().length == 0)
@@ -287,7 +288,7 @@ App.PlaylistView = (function () {
         },
 
         clearPlaylist = function () {
-            addedPlaylists = 0;
+            isPlaylistExisting = false;
             $playlist.find("li").remove();
             $(that).trigger("playlistCleared");
             $playlistSpaceFiller.show();
