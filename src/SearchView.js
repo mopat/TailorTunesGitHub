@@ -8,8 +8,9 @@ App.SearchView = (function () {
         $picker = null,
         $artistDropdownBox = null,
         $trackDropwdownBox = null,
-        $genreDropwdownBox = null,
+        $genreDropdownBox = null,
         $searchDropdown = null,
+        mode = null,
 
         init = function () {
             $searchField = $("#search-field");
@@ -19,7 +20,9 @@ App.SearchView = (function () {
 
             $artistDropdownBox = $("#artist-dropdown-box");
             $trackDropwdownBox = $("#track-dropdown-box");
-            $genreDropwdownBox = $("#genre-dropdown-box");
+            $genreDropdownBox = $("#genre-dropdown-box");
+
+            mode = "artist";
 
             $searchField.keydown(handleSubmitForm);
             $searchField.on("click", handleSearchFieldClick);
@@ -32,14 +35,15 @@ App.SearchView = (function () {
         },
 
         handleSearch = function () {
-           var visibleDropdownValue = getVisibleDropdownValue();
-            if (visibleDropdownValue == "simple")
-                $(that).trigger("searchButtonClickedSoundcloud", [$searchField.val()]);
-            else if ($(".picked").attr("id") == "track-tab" && visibleDropdownValue == "similar") {
-                $(that).trigger("searchEchoNestSimilarTracks", [$searchField.val()]);
+            var option = getVisibleDropdownValue();
+            var query = $searchField.val();
+            if (option == "simple")
+                $(that).trigger("searchButtonClickedSoundcloud", [query]);
+            else if (mode == "track" && option == "similar") {
+                $(that).trigger("searchEchoNestSimilarTracks", [query]);
             }
             else
-                $(that).trigger("searchButtonClickedEchoNest", [$searchField.val(), $(".picked").attr("id"), visibleDropdownValue]);
+                $(that).trigger("searchButtonClickedEchoNest", [query, mode, option, null]);
         },
 
         handleSubmitForm = function (e) {
@@ -75,29 +79,34 @@ App.SearchView = (function () {
             $artistDropdownBox.show();
 
             $trackDropwdownBox.hide();
-            $genreDropwdownBox.hide();
+            $genreDropdownBox.hide();
             $searchField.removeAttr('disabled');
+
+            mode = "artist";
         },
 
         trackMode = function () {
             $trackDropwdownBox.show();
 
             $artistDropdownBox.hide();
-            $genreDropwdownBox.hide();
+            $genreDropdownBox.hide();
             if (getVisibleDropdownValue() == "hottest") {
                 $searchField.attr('disabled', 'disabled');
             }
             else {
                 $searchField.removeAttr('disabled');
             }
+            mode = "track";
         },
 
         genreMode = function () {
-            $genreDropwdownBox.show();
+            $genreDropdownBox.show();
 
             $trackDropwdownBox.hide();
             $artistDropdownBox.hide();
             $searchField.removeAttr('disabled');
+
+            mode = "genre";
         },
 
         getVisibleDropdownValue = function(){

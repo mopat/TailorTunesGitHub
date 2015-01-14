@@ -21,33 +21,32 @@ App.MainModel = (function () {
             });
         },
 
-        searchEchoNestTracks = function (query, type, visibleDropdownValue, trackID) {
-                var queryFactory = new QueryFactory();
-                var queryBuilder = queryFactory.createQuery({
-                    type: type,
-                    query: query,
-                    option: visibleDropdownValue,
-                    trackID: trackID
-                });
-                $.ajax({
-                    type: "GET",
-                    url: queryBuilder.queryUrl,
-                    cache: false,
-                    success: function (jsonObject) {
-                        var tracks = removeEchoNestDuplicates(jsonObject.response.songs);
-                        console.log(tracks)
-                        playlist = [];
-                        searchSoundCloudTracks(tracks, "soundcloud", query);
-                    },
-                    error: function (XMLHttpRequest, textStatus, errorThrown) {
-                        alert("ECHONEST ERROR " + errorThrown + " at" + XMLHttpRequest);
-                    }
-                });
+        searchEchoNestTracks = function (query, type, option, trackID) {
+            var queryFactory = new QueryFactory();
+            var queryBuilder = queryFactory.createQuery({
+                type: type,
+                query: query,
+                option: option,
+                trackID: trackID
+            });
+
+            $.ajax({
+                type: "GET",
+                url: queryBuilder.queryUrl,
+                cache: false,
+                success: function (jsonObject) {
+                    var tracks = removeEchoNestDuplicates(jsonObject.response.songs);
+                    console.log(tracks)
+                    searchSoundCloudTracks(tracks, "soundcloud", query);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert("ECHONEST ERROR " + errorThrown + " at" + XMLHttpRequest);
+                }
+            });
         },
 
         searchEchoNestSimilarTracks = function (query) {
             var getIdQuery = "http://developer.echonest.com/api/v4/song/search?api_key=" + echoNestAPIKey + "&format=json&results=20" + "&title=" + query + "&sort=song_hotttnesss-desc";
-
             $.ajax({
                 type: "GET",
                 url: getIdQuery,
@@ -64,30 +63,27 @@ App.MainModel = (function () {
 
         searchSoundcloudTracksSimple = function (query) {
             playlist = [];
-            ajaxQuery(query);
-            function ajaxQuery(query) {
-                return $.ajax({
-                    url: getScUrl(query),
-                    data: {
-                        format: 'json'
-                    },
-                    error: function (XMLHttpRequest, textStatus, errorThrown) {
-                        alert("ECHONEST ERROR " + errorThrown + " at" + XMLHttpRequest);
-                    },
-                    dataType: 'json',
-                    success: function (data) {
-                        if (data.length != 0) {
-                            var matchingTracks = getMatchingResults(data, query);
-                            $(that).trigger("soundcloudTrackSearchResultsComplete", [matchingTracks]);
-                            console.log("QUERY ", query);
-                        }
-                    },
-                    type: 'GET'
-                });
-            }
+            $.ajax({
+                url: getScUrl(query),
+                data: {
+                    format: 'json'
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert("ECHONEST ERROR " + errorThrown + " at" + XMLHttpRequest);
+                },
+                dataType: 'json',
+                success: function (data) {
+                    if (data.length != 0) {
+                        var matchingTracks = getMatchingResults(data, query);
+                        $(that).trigger("soundcloudTrackSearchResultsComplete", [matchingTracks]);
+                    }
+                },
+                type: 'GET'
+            });
         },
 
         searchSoundCloudTracks = function (tracks) {
+            playlist = [];
             var count = tracks.length;
 
             requestInterval = setInterval(function () {
@@ -112,7 +108,6 @@ App.MainModel = (function () {
                         dataType: 'json',
                         success: function (data) {
                             count--;
-                            //console.log(data)
                             if (data.length != 0) {
                                 var matchingTracks = getMatchingResults(data, query);
                                 console.log("QUERY ", query);
@@ -322,7 +317,6 @@ App.MainModel = (function () {
     that.searchEchoNestTracks = searchEchoNestTracks;
     that.searchEchoNestSimilarTracks = searchEchoNestSimilarTracks;
     that.searchSoundcloudTracksSimple = searchSoundcloudTracksSimple;
-    that.searchSimilarTracksById = searchSimilarTracksById;
     that.init = init;
 
     return that;

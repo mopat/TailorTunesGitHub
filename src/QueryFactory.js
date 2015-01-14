@@ -45,13 +45,13 @@ function QueryFactory() {
 QueryFactory.prototype.createQuery = function createQuery(options) {
     var parentClass = null;
 
-    if (options.type === "artist-tab") {
+    if (options.type === "artist") {
         parentClass = artistQuery;
     }
-    else if (options.type === "track-tab") {
+    else if (options.type === "track") {
         parentClass = trackQuery;
     }
-    else if (options.type === "genre-tab") {
+    else if (options.type === "genre") {
         parentClass = genreQuery;
     }
 

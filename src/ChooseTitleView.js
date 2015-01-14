@@ -62,7 +62,7 @@ App.ModalView = (function () {
         handleEchoNestListItemClick = function (event) {
             var trackID = $(event.target).closest(".modal-echonest-list-item").attr("data-track-id");
             var query = $(event.target).closest(".modal-echonest-list-item").html();
-            $(that).trigger("trackIdPicked", [query, "track-tab", null, trackID]);
+            $(that).trigger("trackIdPicked", [query, "track", null, trackID]);
             $chooseModalEchoNest.foundation('reveal', 'close');
         },
 

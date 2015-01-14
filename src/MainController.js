@@ -80,8 +80,6 @@ App.MainController = (function () {
 
             $(playlistView).on("playlistCleared", handlePlaylistCleared);
             $(playlistView).on("playlistSpaceFillerClicked", handlePlaylistSpaceFillerClick);
-
-            //handleLoginButtonClick(event, "patrick", "killer");
         },
 
         handleTrackPick = function (event, src, title) {
@@ -96,8 +94,8 @@ App.MainController = (function () {
             playlistView.handlePrevOrNextClicked("next");
         },
 
-        handleSearchButtonClickedEchoNest = function (event, searchVal, pickedTab, visibleDropdownValue) {
-            mainModel.searchEchoNestTracks(searchVal, pickedTab, visibleDropdownValue, null);
+        handleSearchButtonClickedEchoNest = function (event, searchVal, pickedTab, option, trackID) {
+            mainModel.searchEchoNestTracks(searchVal, pickedTab, option, trackID);
         },
 
         handleSearchEchoNestSimilarTracks = function (event, query) {
