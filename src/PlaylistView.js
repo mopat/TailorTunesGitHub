@@ -53,7 +53,8 @@ App.PlaylistView = (function () {
 
         swipeleftHandler = function (event) {
             $.event.special.swipe.horizontalDistanceThreshold = 50;
-            var $swipedItem = $(this).closest(".playlist-item");
+            var $swipedItem = $(event.target).closest(".playlist-item");
+            console.log($swipedItem)
             var $nowPlaying = $("#playlist .now-playing");
             var playlistSize = $("#playlist .playlist-item").size();
             $swipedItem.fadeOut(500, fadeOutComplete);
