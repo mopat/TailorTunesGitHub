@@ -37,7 +37,7 @@ App.SearchView = (function () {
                 $(that).trigger("searchButtonClickedSoundcloud", [$searchField.val()]);
             else
                 //search Echonest
-                $(that).trigger("searchButtonClickedEchoNest", [$searchField.val(), $(".picked").attr("id"), 10, 20, visibleDropdownValue]);
+                $(that).trigger("searchButtonClickedEchoNest", [$searchField.val(), $(".picked").attr("id"), visibleDropdownValue]);
         },
 
         handleSubmitForm = function (e) {

@@ -21,60 +21,31 @@ App.MainModel = (function () {
             });
         },
 
-        searchEchoNestTracks = function (query, type, lowerVal, upperVal, visibleDropdownValue) {
+        searchEchoNestTracks = function (query, type, visibleDropdownValue) {
             if (type == "track-tab" && visibleDropdownValue == "similar")
                 searchEchoNestSimilarTracks(query);
-            else $.ajax({
-                type: "GET",
-                url: buildEchoNestUrl(query, type, lowerVal, upperVal, visibleDropdownValue),
-                cache: false,
-                success: function (jsonObject) {
-                    var tracks = removeEchoNestDuplicates(jsonObject.response.songs);
-                    console.log(tracks)
-                    playlist = [];
-                    searchSoundCloudTracks(tracks, "soundcloud", query);
-                },
-                error: function (XMLHttpRequest, textStatus, errorThrown) {
-                    alert("ECHONEST ERROR " + errorThrown + " at" + XMLHttpRequest);
-                }
-            });
-        },
-
-        buildEchoNestUrl = function (query, type, lowerVal, upperVal, visibleDropdownValue) {
-            switch (type) {
-                case "artist-tab":
-                    return echoNestArtistQueryBuilder(query, visibleDropdownValue);
-                    break;
-                case "track-tab":
-                    return echoNestTrackQueryBuilder();
-                    break;
-                case "genre-tab":
-                    return echoNestGenreQueryBuilder(query, visibleDropdownValue);
-                    break;
+            else {
+                var queryFactory = new QueryFactory();
+                var queryBuilder = queryFactory.createQuery({
+                    type: type,
+                    query: query,
+                    option: visibleDropdownValue
+                });
+                $.ajax({
+                    type: "GET",
+                    url: queryBuilder.queryUrl,
+                    cache: false,
+                    success: function (jsonObject) {
+                        var tracks = removeEchoNestDuplicates(jsonObject.response.songs);
+                        console.log(tracks)
+                        playlist = [];
+                        searchSoundCloudTracks(tracks, "soundcloud", query);
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert("ECHONEST ERROR " + errorThrown + " at" + XMLHttpRequest);
+                    }
+                });
             }
-        },
-
-        echoNestArtistQueryBuilder = function (query, visibleDropdownValue) {
-            switch (visibleDropdownValue) {
-                case "similar":
-                    return "https://developer.echonest.com/api/v4/playlist/static?api_key=" + echoNestAPIKey + "&format=json&artist=" + query + "&type=artist-radio&sort=song_hotttnesss-desc&results=" + searchLimit;
-                    break;
-                case "song_hotttnesss-desc":
-                    return "https://developer.echonest.com/api/v4/playlist/static?api_key=" + echoNestAPIKey + "&format=json&artist=" + query + "&sort=song_hotttnesss-desc&results=" + searchLimit;
-                    break;
-                default :
-                    return "https://developer.echonest.com/api/v4/playlist/static?api_key=" + echoNestAPIKey + "&format=json&artist=" + query + "&song_selection=" + visibleDropdownValue + "&results=" + searchLimit;
-                    break;
-            }
-
-        },
-
-        echoNestTrackQueryBuilder = function () {
-            return "http://developer.echonest.com/api/v4/song/search?api_key=" + echoNestAPIKey + "&sort=song_hotttnesss-desc&bucket=song_hotttnesss&results=40";
-        },
-
-        echoNestGenreQueryBuilder = function (query, visibleDropdownValue) {
-            return "https://developer.echonest.com/api/v4/playlist/static?api_key=" + echoNestAPIKey + "&format=json&genre=" + query + "&type=genre-radio&song_selection=" + visibleDropdownValue + "&results=" + searchLimit;
         },
 
         searchEchoNestSimilarTracks = function (query) {
