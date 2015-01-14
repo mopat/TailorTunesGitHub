@@ -39,11 +39,13 @@ App.SearchView = (function () {
                 $("#options-box").slideUp(500);
                 $("#search-form").slideDown(500);
                 $searchField.focus();
+                $("#controls-box").hide();
                 $searchField.on("focusout", function () {
                     $("body").on("click", function (e) {
                         if ($(e.target).attr("class") != "search-dropdown" && $(e.target).attr("id") != $searchField.attr("id") && $(e.target).hasClass("picker") == false) {
                             $("#options-box").slideDown(500);
                             $("#search-form").slideUp(500);
+                            $("#controls-box").show();
                         }
                     });
                 });
