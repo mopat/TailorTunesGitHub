@@ -10,6 +10,7 @@ App.SearchView = (function () {
         $trackDropwdownBox = null,
         $genreDropdownBox = null,
         $searchDropdown = null,
+        $searchIcon = null,
         mode = null,
 
         init = function () {
@@ -21,6 +22,7 @@ App.SearchView = (function () {
             $artistDropdownBox = $("#artist-dropdown-box");
             $trackDropwdownBox = $("#track-dropdown-box");
             $genreDropdownBox = $("#genre-dropdown-box");
+            $searchIcon = $("#search-icon");
 
             mode = "artist";
 
@@ -32,6 +34,21 @@ App.SearchView = (function () {
             $picker.on("click", handleTabClicked);
 
             $trackDropwdownBox.on("change", handleTrackDropdownChange);
+
+            $searchIcon.on("click", function () {
+                $("#options-box").slideUp(500);
+                $("#search-form").slideDown(500);
+                $searchField.focus();
+                $searchField.on("focusout", function () {
+                    $("body").on("click", function (e) {
+                        if ($(e.target).attr("class") != "search-dropdown" && $(e.target).attr("id") != $searchField.attr("id") && $(e.target).hasClass("picker") == false) {
+                            $("#options-box").slideDown(500);
+                            $("#search-form").slideUp(500);
+                        }
+                    });
+                });
+                $("body").off("click");
+            });
         },
 
         handleSearch = function () {

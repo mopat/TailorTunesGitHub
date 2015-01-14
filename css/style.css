@@ -95,6 +95,7 @@ body {
 
 #search-form {
     background-color: #333333;
+    display: none;
 }
 
 /*Playlist CSS*/
@@ -135,7 +136,6 @@ body {
     text-decoration: none;
     display: block;
     width: 100%;
-    min-height: 20px;
     color: #222222;
 }
 
@@ -149,7 +149,6 @@ body {
     line-height: 35px;
     font-size: 1rem;
     border-radius: 10px;
-    margin-top: 2px;
 }
 
 .playlist-number, .user-playlist-number {
@@ -219,9 +218,6 @@ body {
     width: 100%;
 }
 
-#clear-playlist-button {
-    width: 150px;
-}
 
 #sticky {
     color: #fff;
