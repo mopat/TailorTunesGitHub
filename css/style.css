@@ -105,6 +105,12 @@ body {
 }
 
 /*Playlist CSS*/
+#spinner-loader-box {
+    display: none;
+    width: 100px;
+    height: 100px;
+    margin: 0 auto;
+}
 #playlist-space-filler {
     margin: 0 auto;
     width: 200px;

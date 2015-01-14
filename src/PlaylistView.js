@@ -14,6 +14,7 @@ App.PlaylistView = (function () {
         $playlistNameInput = null,
         $clearPlaylistButton = null,
         $playlistSpaceFiller = null,
+        $loadingAnimation = null,
 
 
         init = function () {
@@ -27,6 +28,7 @@ App.PlaylistView = (function () {
             $blendDown = $("#blend-down");
             $clearPlaylistButton = $("#clear-playlist-button");
             $playlistSpaceFiller = $("#playlist-space-filler");
+            $loadingAnimation = $("#spinner-loader-box");
 
             playlistItemTpl = _.template($("#playlist-item-tpl").html());
 
@@ -294,11 +296,23 @@ App.PlaylistView = (function () {
         playlistSpaceFillerClick = function (e) {
             e.preventDefault();
             $(that).trigger("playlistSpaceFillerClicked");
+        },
+
+        hideLoadingAnimation = function () {
+            $loadingAnimation.hide();
+            $loadingAnimation.undim();
+        },
+
+        showLoadingAnimation = function () {
+            $loadingAnimation.show();
+            $loadingAnimation.dimBackground();
         };
 
     that.addPlaylist = addPlaylist;
     that.handlePrevOrNextClicked = handlePrevOrNextClicked;
     that.getPlaylistAsJSON = getPlaylistAsJSON;
+    that.hideLoadingAnimation = hideLoadingAnimation;
+    that.showLoadingAnimation = showLoadingAnimation;
     that.init = init;
 
     return that;

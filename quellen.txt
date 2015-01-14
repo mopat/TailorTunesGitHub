@@ -74,3 +74,4 @@ http://stackoverflow.com/questions/15149573/find-distance-between-two-divs-using
 http://robertnyman.com/2010/01/11/css-background-transparency-without-affecting-child-elements-through-rgba-and-filters/
 http://stackoverflow.com/questions/6677035/jquery-scroll-to-element
 https://carldanley.com/js-factory-pattern/
+http://www.kirkwood.com/Content/component-themes/lessons/images/ajax_loader_vector.gif

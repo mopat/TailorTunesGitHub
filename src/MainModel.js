@@ -22,6 +22,7 @@ App.MainModel = (function () {
         },
 
         searchEchoNestTracks = function (query, type, option, trackID) {
+            $(that).trigger("showLoadingAnimation");
             var queryFactory = new QueryFactory();
             var queryBuilder = queryFactory.createQuery({
                 type: type,
@@ -41,6 +42,7 @@ App.MainModel = (function () {
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     alert("ECHONEST ERROR " + errorThrown + " at" + XMLHttpRequest);
+                    $(that).trigger("hideLoadingAnimation");
                 }
             });
         },
@@ -62,6 +64,7 @@ App.MainModel = (function () {
         },
 
         searchSoundcloudTracksSimple = function (query) {
+            $(that).trigger("showLoadingAnimation");
             playlist = [];
             $.ajax({
                 url: getScUrl(query),
@@ -77,6 +80,10 @@ App.MainModel = (function () {
                         var matchingTracks = getMatchingResults(data, query);
                         $(that).trigger("soundcloudTrackSearchResultsComplete", [matchingTracks]);
                     }
+                    $(that).trigger("hideLoadingAnimation");
+                },
+                error: function () {
+                    $(that).trigger("hideLoadingAnimation");
                 },
                 type: 'GET'
             });
@@ -117,6 +124,7 @@ App.MainModel = (function () {
                                 playlist = removeSoundCloudDuplicates(playlist);
                                 setPlaylistView();
                                 clearInterval(requestInterval);
+                                $(that).trigger("hideLoadingAnimation");
                             }
                         },
                         type: 'GET'

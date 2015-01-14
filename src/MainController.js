@@ -39,6 +39,10 @@ App.MainController = (function () {
 
             $(playlistView).on("playlistItemClicked", handlePlaylistItemClick);
 
+            $(mainModel).on("showLoadingAnimation", handleShowLoadingAnimation);
+
+            $(mainModel).on("hideLoadingAnimation", handleHideLoadingAnimation);
+
             $(searchView).on("searchButtonClickedEchoNest", handleSearchButtonClickedEchoNest);
 
             $(searchView).on("searchEchoNestSimilarTracks", handleSearchEchoNestSimilarTracks);
@@ -92,6 +96,14 @@ App.MainController = (function () {
 
         handleTrackEnd = function () {
             playlistView.handlePrevOrNextClicked("next");
+        },
+
+        handleShowLoadingAnimation = function () {
+            playlistView.showLoadingAnimation();
+        },
+
+        handleHideLoadingAnimation = function () {
+            playlistView.hideLoadingAnimation();
         },
 
         handleSearchButtonClickedEchoNest = function (event, searchVal, pickedTab, option, trackID) {
