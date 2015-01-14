@@ -31,6 +31,9 @@ body {
     background-color: #aaa59d;
 }
 
+.button {
+    z-index: 0;
+}
 /*Login CSS*/
 
 #login-form-box, #sign-in-form-box {

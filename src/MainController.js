@@ -79,7 +79,7 @@ App.MainController = (function () {
             $(playlistView).on("playlistCleared", handlePlaylistCleared);
             $(playlistView).on("playlistSpaceFillerClicked", handlePlaylistSpaceFillerClick);
 
-            handleLoginButtonClick(event, "patrick", "killer");
+            //handleLoginButtonClick(event, "patrick", "killer");
         },
 
         handleTrackPick = function (event, src, title) {

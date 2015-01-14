@@ -10,6 +10,18 @@ App.PlaylistManager = (function () {
 
         init = function () {
             Parse.initialize(APPLICATION_ID, JAVASCRIPT_KEY);
+
+            checkCurrentUser();
+        },
+
+        checkCurrentUser = function () {
+            $(document).ready(function () {
+                currentUser = Parse.User.current();
+                if (currentUser != null) {
+                    $(that).trigger("loginSuccessful");
+                    loadPlaylists();
+                }
+            });
         },
 
         signIn = function (username, password, email) {
