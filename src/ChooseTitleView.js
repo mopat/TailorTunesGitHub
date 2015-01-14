@@ -1,7 +1,7 @@
 /**
  * Created by Patrick on 27.12.2014.
  */
-App.ModalView = (function () {
+App.ChooseTitleView = (function () {
 
     var that = {},
         $chooseModalEchoNest = null,

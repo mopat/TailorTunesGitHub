@@ -5,7 +5,7 @@ App.MainController = (function () {
         playlistView = null,
         controlsView = null,
         searchView = null,
-        modalView = null,
+        chooseTitleView = null,
         playlistManager = null,
         userPlaylistView = null,
         loginRegisterView = null,
@@ -15,7 +15,7 @@ App.MainController = (function () {
             playlistView = App.PlaylistView;
             controlsView = App.ControlsView;
             searchView = App.SearchView;
-            modalView = App.ModalView;
+            chooseTitleView = App.ChooseTitleView;
             playlistManager = App.PlaylistManager;
             userPlaylistView = App.UserPlaylistView;
             loginRegisterView = App.LoginRegisterView;
@@ -24,7 +24,7 @@ App.MainController = (function () {
             playlistView.init();
             controlsView.init();
             searchView.init();
-            modalView.init();
+            chooseTitleView.init();
             playlistManager.init();
             userPlaylistView.init();
             loginRegisterView.init();
@@ -49,9 +49,9 @@ App.MainController = (function () {
 
             $(mainModel).on("soundcloudTrackSearchResultsComplete", handleSoundcloudTrackSearchResultsComplete);
 
-            $(modalView).on("trackIdPicked", handleTrackIdPicked);
+            $(chooseTitleView).on("trackIdPicked", handleTrackIdPicked);
 
-            $(modalView).on("soundcloudTrackPicked", handleSoundlcoudTrackPicked);
+            $(chooseTitleView).on("soundcloudTrackPicked", handleSoundlcoudTrackPicked);
 
             $(playlistView).on("savePlaylistClicked", handleSavePlaylistClicked);
 
@@ -127,11 +127,11 @@ App.MainController = (function () {
         },
 
         handleEchoNestTrackSearchResultsComplete = function (event, query, tracks) {
-            modalView.setModalEchoNestContent(query, tracks);
+            chooseTitleView.setModalEchoNestContent(query, tracks);
         },
 
         handleSoundcloudTrackSearchResultsComplete = function(event, tracks){
-            modalView.setModalSoundcloudContent(tracks);
+            chooseTitleView.setModalSoundcloudContent(tracks);
         },
 
         handleTrackIdPicked = function (event, query, type, visibleDropdownValue, trackID) {
