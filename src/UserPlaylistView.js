@@ -12,10 +12,12 @@ App.UserPlaylistView = (function () {
         listItemColors = null,
         preview = new Audio(),
         $playlistContainerToDelete = null,
+        defaultTextColor = null,
 
 
         init = function () {
-            listItemColors = ["#464646", "#292929"];
+            listItemColors = ["#F6F6F5", "#FFFFFF"];
+            defaultTextColor = "#222222";
             $userPlaylistBox = $("#user-playlist-box");
             userPlaylistTpl = _.template($("#user-playlist-tpl").html());
 

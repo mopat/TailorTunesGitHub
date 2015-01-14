@@ -15,6 +15,7 @@ App.PlaylistView = (function () {
         $clearPlaylistButton = null,
         $playlistSpaceFiller = null,
         $loadingAnimation = null,
+        defaultTextColor = null,
 
         init = function () {
             $playlistBox = $("#playlist-box");
@@ -29,10 +30,11 @@ App.PlaylistView = (function () {
             $clearPlaylistButton = $("#clear-playlist-button");
             $playlistSpaceFiller = $("#playlist-space-filler");
             $loadingAnimation = $("#spinner-loader-box");
+            defaultTextColor = "#222222";
 
             playlistItemTpl = _.template($("#playlist-item-tpl").html());
 
-            listItemColors = ["#464646", "#292929"];
+            listItemColors = ["#F6F6F5", "#FFFFFF"];
 
             $playlist.on("click", handleListItemClick);
             $playlist.on("swipeleft", swipeleftHandler);
@@ -114,7 +116,7 @@ App.PlaylistView = (function () {
 
         handlePrevOrNextClicked = function (indicator) {
             var $nowPlaying = $("#playlist .now-playing");
-            $nowPlaying.find(".playlist-title").css("color", "white");
+            $nowPlaying.find(".playlist-title").css("color", defaultTextColor);
             var $nowPlayingId = parseInt($nowPlaying.attr("id"));
             var playlistSize = $("#playlist .playlist-item").size();
 
@@ -140,7 +142,7 @@ App.PlaylistView = (function () {
         handleListItemClick = function (event) {
             event.preventDefault();
             var $nowPlaying = $("#playlist .now-playing");
-            $nowPlaying.find(".playlist-title").css("color", "white");
+            $nowPlaying.find(".playlist-title").css("color", defaultTextColor);
             $nowPlaying.removeClass("now-playing");
             var $clickedItem = $(event.target).closest(".playlist-item");
             handlePlayTrack($clickedItem);
@@ -150,12 +152,10 @@ App.PlaylistView = (function () {
             current.addClass("now-playing");
             var streamUrl = current.attr("data-stream-url");
             var title = current.find(".playlist-title").html();
-            current.find(".playlist-title").css("color", "lightblue");
             $(that).trigger("trackPicked", [streamUrl, title]);
         },
 
         handleResetTrack = function (nowPlaying) {
-            nowPlaying.find(".playlist-title").css("color", "lightblue");
             var streamUrl = nowPlaying.attr("data-stream-url");
             var title = nowPlaying.find(".playlist-title").html();
             $(that).trigger("trackPicked", [streamUrl, title]);
