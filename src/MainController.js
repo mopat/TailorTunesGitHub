@@ -41,6 +41,8 @@ App.MainController = (function () {
 
             $(searchView).on("searchButtonClickedEchoNest", handleSearchButtonClickedEchoNest);
 
+            $(searchView).on("searchEchoNestSimilarTracks", handleSearchEchoNestSimilarTracks);
+
             $(searchView).on("searchButtonClickedSoundcloud", handleSearchButtonClickedSoundcloud);
 
             $(mainModel).on("echoNestTrackSearchResultsComplete", handleEchoNestTrackSearchResultsComplete);
@@ -95,7 +97,11 @@ App.MainController = (function () {
         },
 
         handleSearchButtonClickedEchoNest = function (event, searchVal, pickedTab, visibleDropdownValue) {
-            mainModel.searchEchoNestTracks(searchVal, pickedTab, visibleDropdownValue);
+            mainModel.searchEchoNestTracks(searchVal, pickedTab, visibleDropdownValue, null);
+        },
+
+        handleSearchEchoNestSimilarTracks = function (event, query) {
+            mainModel.searchEchoNestSimilarTracks(query);
         },
 
         handleSearchButtonClickedSoundcloud = function (event, searchVal) {
@@ -122,16 +128,16 @@ App.MainController = (function () {
             controlsView.handleTrackPicked(streamUrl, title);
         },
 
-        handleEchoNestTrackSearchResultsComplete = function(event, tracks){
-            modalView.setModalEchoNestContent(tracks);
+        handleEchoNestTrackSearchResultsComplete = function (event, query, tracks) {
+            modalView.setModalEchoNestContent(query, tracks);
         },
 
         handleSoundcloudTrackSearchResultsComplete = function(event, tracks){
             modalView.setModalSoundcloudContent(tracks);
         },
 
-        handleTrackIdPicked = function(event, trackId, query){
-            mainModel.searchSimilarTracksById(trackId, query);
+        handleTrackIdPicked = function (event, query, type, visibleDropdownValue, trackID) {
+            mainModel.searchEchoNestTracks(query, type, visibleDropdownValue, trackID);
         },
 
         handleSavePlaylistClicked = function (event, JSONPlaylist, playlistName) {

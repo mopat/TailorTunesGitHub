@@ -35,8 +35,10 @@ App.SearchView = (function () {
            var visibleDropdownValue = getVisibleDropdownValue();
             if (visibleDropdownValue == "simple")
                 $(that).trigger("searchButtonClickedSoundcloud", [$searchField.val()]);
+            else if ($(".picked").attr("id") == "track-tab" && visibleDropdownValue == "similar") {
+                $(that).trigger("searchEchoNestSimilarTracks", [$searchField.val()]);
+            }
             else
-                //search Echonest
                 $(that).trigger("searchButtonClickedEchoNest", [$searchField.val(), $(".picked").attr("id"), visibleDropdownValue]);
         },
 

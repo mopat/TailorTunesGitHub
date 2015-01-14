@@ -15,7 +15,7 @@ function artistQuery(options) {
         case "song_hotttnesss-desc":
             queryUrl = "https://developer.echonest.com/api/v4/playlist/static?api_key=" + echoNestAPIKey + "&format=json&artist=" + query + "&sort=song_hotttnesss-desc&results=" + searchLimit;
             break;
-        default :
+        default:
             queryUrl = "https://developer.echonest.com/api/v4/playlist/static?api_key=" + echoNestAPIKey + "&format=json&artist=" + query + "&song_selection=" + option + "&results=" + searchLimit;
             break;
     }
@@ -23,7 +23,13 @@ function artistQuery(options) {
 }
 
 function trackQuery(options) {
-    var queryUrl = "http://developer.echonest.com/api/v4/song/search?api_key=" + echoNestAPIKey + "&sort=song_hotttnesss-desc&bucket=song_hotttnesss&results=40";
+    var trackID = options.trackID;
+    var queryUrl = null;
+    if (trackID == null)
+        queryUrl = "http://developer.echonest.com/api/v4/song/search?api_key=" + echoNestAPIKey + "&sort=song_hotttnesss-desc&bucket=song_hotttnesss&results=40";
+    else {
+        queryUrl = "http://developer.echonest.com/api/v4/playlist/static?api_key=" + echoNestAPIKey + "&song_id=" + trackID + "&format=json&results=20&type=song-radio";
+    }
     this.queryUrl = queryUrl;
 }
 

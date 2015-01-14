@@ -21,15 +21,13 @@ App.MainModel = (function () {
             });
         },
 
-        searchEchoNestTracks = function (query, type, visibleDropdownValue) {
-            if (type == "track-tab" && visibleDropdownValue == "similar")
-                searchEchoNestSimilarTracks(query);
-            else {
+        searchEchoNestTracks = function (query, type, visibleDropdownValue, trackID) {
                 var queryFactory = new QueryFactory();
                 var queryBuilder = queryFactory.createQuery({
                     type: type,
                     query: query,
-                    option: visibleDropdownValue
+                    option: visibleDropdownValue,
+                    trackID: trackID
                 });
                 $.ajax({
                     type: "GET",
@@ -45,7 +43,6 @@ App.MainModel = (function () {
                         alert("ECHONEST ERROR " + errorThrown + " at" + XMLHttpRequest);
                     }
                 });
-            }
         },
 
         searchEchoNestSimilarTracks = function (query) {
@@ -57,31 +54,13 @@ App.MainModel = (function () {
                 cache: false,
                 success: function (jsonObject) {
                     var tracks = removeEchoNestDuplicates(jsonObject.response.songs);
-                    $(that).trigger("echoNestTrackSearchResultsComplete", [tracks]);
+                    $(that).trigger("echoNestTrackSearchResultsComplete", [query, tracks]);
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     alert("ERROR " + errorThrown + " at" + XMLHttpRequest);
                 }
             });
         },
-
-        searchSimilarTracksById = function (trackId, query) {
-            var searchUrl = "http://developer.echonest.com/api/v4/playlist/static?api_key=" + echoNestAPIKey + "&song_id=" + trackId + "&format=json&results=20&type=song-radio";
-            $.ajax({
-                type: "GET",
-                url: searchUrl,
-                cache: false,
-                success: function (jsonObject) {
-                    var tracks = jsonObject.response.songs;
-                    playlist = [];
-                    searchSoundCloudTracks(tracks, "soundcloud", query);
-                },
-                error: function (XMLHttpRequest, textStatus, errorThrown) {
-                    sweetAlert("ERROR " + errorThrown + " at" + XMLHttpRequest, "error");
-                }
-            });
-        },
-
 
         searchSoundcloudTracksSimple = function (query) {
             playlist = [];
@@ -341,6 +320,7 @@ App.MainModel = (function () {
         };
 
     that.searchEchoNestTracks = searchEchoNestTracks;
+    that.searchEchoNestSimilarTracks = searchEchoNestSimilarTracks;
     that.searchSoundcloudTracksSimple = searchSoundcloudTracksSimple;
     that.searchSimilarTracksById = searchSimilarTracksById;
     that.init = init;

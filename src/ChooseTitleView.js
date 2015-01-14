@@ -9,6 +9,7 @@ App.ModalView = (function () {
         $chooseModalSoundcloud = null,
         $chooseModalListSoundcloud = null,
         foundTracks = [],
+        echoNestQuery = null,
 
         init = function () {
             $chooseModalEchoNest = $("#choose-modal-echonest");
@@ -21,7 +22,8 @@ App.ModalView = (function () {
             $chooseModalListSoundcloud.on("click", handleSoundcloudListItemClick);
         },
 
-        setModalEchoNestContent = function (tracks) {
+        setModalEchoNestContent = function (query, tracks) {
+            echoNestQuery = query;
             foundTracks = tracks;
             $chooseModalListEchoNest.empty();
             for (var i in tracks) {
@@ -58,9 +60,9 @@ App.ModalView = (function () {
         },
 
         handleEchoNestListItemClick = function (event) {
-            var dataTrackId = $(event.target).closest(".modal-echonest-list-item").attr("data-track-id");
+            var trackID = $(event.target).closest(".modal-echonest-list-item").attr("data-track-id");
             var query = $(event.target).closest(".modal-echonest-list-item").html();
-            $(that).trigger("trackIdPicked", [dataTrackId, query]);
+            $(that).trigger("trackIdPicked", [query, "track-tab", null, trackID]);
             $chooseModalEchoNest.foundation('reveal', 'close');
         },
 
