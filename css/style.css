@@ -1,8 +1,9 @@
 html {
-    transform: rotate(-90deg);
+    transform: rotate(90deg);
     width: 45%;
     height: 100%;
     padding: 0px;
+
 }
 
 body {
@@ -13,7 +14,6 @@ body {
     padding: 0px;
     font-family: 'Ruda', sans-serif;
     position: relative;
-    bottom: 0;
 }
 
 *,

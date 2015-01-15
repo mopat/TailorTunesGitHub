@@ -29,3 +29,18 @@ Nachher:
 overflow-y: scroll; -> nach oben unten scrollen
     overflow-x: hidden;
 }
+
+Vorher:
+
+#controls-box {
+    background-color: #777777;
+    height: auto;
+
+}
+
+Nachher:
+#controls-box {
+    background-color: #777777;
+    height: auto;
+    margin-bottom: 10px;
+}
