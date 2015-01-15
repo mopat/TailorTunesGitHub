@@ -17,6 +17,7 @@ App.PlaylistView = (function () {
         $playlistSpaceFiller = null,
         $loadingAnimation = null,
         defaultTextColor = null,
+        playlistSortable = null,
 
         init = function () {
             $playlistBox = $("#playlist-box");
@@ -54,7 +55,7 @@ App.PlaylistView = (function () {
 
         fillPlaylistHeight = function () {
             var distance = $('#controls-box').offset().top - $('#sticky-sort-switch-box').offset().top;
-            $playlist.css("max-height", "400px");
+            $playlist.css("height", "400px");
         },
 
         swipeleftHandler = function (event) {
@@ -199,29 +200,23 @@ App.PlaylistView = (function () {
 
         addSortable = function () {
             var autoScroll;
-            $playlist.sortable({
-                scroll: true,
-                sort: function (event, ui) {
+            var playlist = document.getElementById('playlist');
 
-                    var currentScrollTop = $('html, body').scrollTop(),
-                        topHelper = ui.offset.top,
-                        delta = topHelper - currentScrollTop;
-                    $blendUp.on("hover", function () {
-                        $('html, body').animate({scrollTop: topHelper - 50}, 300);
-                    });
-                    $blendUp.on("hover", function () {
-                        $('html, body').animate({scrollTop: topHelper + 50}, 300);
-                    });
-                },
-                stop: function (event, ui) {
+            playlistSortable = new Sortable(playlist, {
+                scroll: true, // or HTMLElement
+                scrollSensitivity: 30, // px, how near the mouse must be to an edge to start scrolling.
+                scrollSpeed: 10, // px
+                sort: true,
+                onEnd: function (evt) {
                     setPlaylistIds();
+                    setPlaylistMarginBottomZero();
                 }
             });
         },
 
         removeSortable = function () {
-            $playlist.sortable("destroy");
-
+            playlistSortable.destroy();
+            setPlaylistMarginBottomControlsBoxHeight();
         },
 
         getMinutesAndSeconds = function (duration) {

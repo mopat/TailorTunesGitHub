@@ -44,3 +44,10 @@ Nachher:
     height: auto;
     margin-bottom: 10px;
 }
+
+jquery sortable durch rubaxa sortable ersetzen -> cursor bleibt : funktioniert
+problem bei autoscroll von rubaxa: lösung: umdrehen der blenden je nach rotation
+
+außerdem: andern des margins der playlist bei +90 und -90
+
+FILLPLAYLISTHEIGHT und marginbottomset FUNKTION MODIFIZIEREN
