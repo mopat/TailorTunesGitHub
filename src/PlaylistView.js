@@ -54,7 +54,7 @@ App.PlaylistView = (function () {
 
         fillPlaylistHeight = function () {
             var distance = $('#controls-box').offset().top - $('#sticky-sort-switch-box').offset().top;
-            $playlist.css("min-height", (distance - $sortSwitchBox.height() - 1));
+            $playlist.css("max-height", "400px");
         },
 
         swipeleftHandler = function (event) {

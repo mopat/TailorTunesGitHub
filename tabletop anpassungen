@@ -1,0 +1,31 @@
+Nachher: html {
+             transform: rotate(90deg); //rotieren
+             width: 45%; //geringere Scroll nach unten
+             height: 100%;
+             padding: 0px;
+             margin-left: 25%; in der mitte
+         }
+Vorher: html {
+            width: 100%;
+            height: 100%;
+            margin: 0px;
+            padding: 0px;
+        }
+
+vorher:
+
+
+#playlist {
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#99333333, endColorstr=#99333333);
+    background: rgb(33, 33, 33);
+    background: rgba(33, 33, 33, 0.3);
+}
+
+Nachher:
+#playlist {
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#99333333, endColorstr=#99333333);
+    background: rgb(33, 33, 33);
+    background: rgba(33, 33, 33, 0.3);
+overflow-y: scroll; -> nach oben unten scrollen
+    overflow-x: hidden;
+}
