@@ -35,7 +35,8 @@ App.PlaylistView = (function () {
             $playlistSpaceFiller = $("#playlist-space-filler");
             $loadingAnimation = $("#spinner-loader-box");
             defaultTextColor = "#222222";
-            ninetyDeg = false;
+            ninetyDeg = true;
+
 
             playlistItemTpl = _.template($("#playlist-item-tpl").html());
 
@@ -54,25 +55,64 @@ App.PlaylistView = (function () {
             resizePlaylistHeight();
             stickyRelocate();
 
+
+            $("#mode-dropdown").on("change", function () {
+                setMode($(this).val());
+            });
+
             $(document).on("ready", function () {
-                if (ninetyDeg) {
-                    document.body.style.setProperty("transform", "rotate(90deg)", null);
 
-                    $("body").width($(window).height())
-                    $("#controls-box .row").width($(window).height())
-                }
-
-            })
+            });
             //Enable swiping...
             $playlist.swipe({
                 //Generic swipe handler for all directions
-                swipe: function (event, direction, distance, duration, fingerCount, fingerData) {
+                swipeUp: function (event, direction, distance, duration, fingerCount, fingerData) {
+                    if (ninetyDeg)
+                        swipeHandler(event);
+                },
+                swipeLeft: function (event, direction, distance, duration, fingerCount, fingerData) {
                     swipeHandler(event);
                 },
                 //Default is 75px, set to 0 for demo so any distance triggers swipe
                 threshold: 10,
                 excludedElements: "button, input, select, textarea, .noSwipe"
             });
+        },
+
+        setMode = function (mode) {
+            if (mode == 1) {
+                document.body.style.setProperty("transform", "none", null);
+                document.body.style.setProperty("transform", "rotate(90deg)", null);
+
+                $("body").width($(window).height());
+                $("#controls-box .row").width($(window).height());
+                $("body").css("float", "left");
+                resizePlaylistHeight();
+            }
+            else if (mode == 2) {
+                document.body.style.setProperty("transform", "none", null);
+                document.body.style.setProperty("transform", "rotate(180deg)", null);
+
+                $("body").width("100%");
+                $("body").css("float", "none");
+                $("#controls-box .row").width($(".row").width());
+            }
+            else if (mode == 3) {
+                document.body.style.setProperty("transform", "none", null);
+                document.body.style.setProperty("transform", "rotate(-90deg)", null);
+
+                $("body").width($(window).height());
+                $("body").css("float", "right");
+                $("#controls-box .row").width($(window).height());
+
+                resizePlaylistHeight();
+            }
+            else if (mode == 0) {
+                document.body.style.setProperty("transform", "none", null);
+                $("body").width("100%");
+                $("body").css("float", "none");
+                $("#controls-box .row").width($(".row").width());
+            }
         },
 
         swipeHandler = function (event) {
@@ -187,6 +227,7 @@ App.PlaylistView = (function () {
                 resizePlaylistHeight();
                 $blendUp.slideUp(500);
                 $blendDown.slideUp(500);
+                $playlist.swipe("enable");
             }
             else {
                 $sortModeSwitch.attr("checked", true);
@@ -195,6 +236,7 @@ App.PlaylistView = (function () {
                 fullPlaylistHeight();
                     $blendUp.slideDown(500);
                 $blendDown.slideDown(500);
+                $playlist.swipe("disable");
             }
         },
 
@@ -212,7 +254,6 @@ App.PlaylistView = (function () {
         },
 
         addSortable = function () {
-            var autoScroll;
             var playlist = document.getElementById('playlist');
 
             playlistSortable = new Sortable(playlist, {
@@ -222,8 +263,6 @@ App.PlaylistView = (function () {
                 sort: true,
                 ghostClass: "ghost",
                 onStart: function (evt) {
-
-                    ;
                     $blendUp.on("hover", function () {
                         $('html, body').animate({scrollTop: 100 - 50}, 300);
                     });
