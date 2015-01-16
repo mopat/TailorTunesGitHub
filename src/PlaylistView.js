@@ -18,6 +18,7 @@ App.PlaylistView = (function () {
         $loadingAnimation = null,
         defaultTextColor = null,
         playlistSortable = null,
+        ninetyDeg = null,
 
         init = function () {
             $playlistBox = $("#playlist-box");
@@ -34,27 +35,48 @@ App.PlaylistView = (function () {
             $playlistSpaceFiller = $("#playlist-space-filler");
             $loadingAnimation = $("#spinner-loader-box");
             defaultTextColor = "#222222";
+            ninetyDeg = false;
 
             playlistItemTpl = _.template($("#playlist-item-tpl").html());
 
             listItemColors = ["#F6F6F5", "#FFFFFF"];
 
             $playlist.on("click", handleListItemClick);
-            $playlist.on("swipeleft", swipeleftHandler);
+
+            //$playlist.hammer().on("swipe", swipeHandler);
             $sortModeSwitch.on("click", handleSortSwitchClick);
             $savePlaylistButton.on("click", savePlaylist);
             $clearPlaylistButton.on("click", clearPlaylist);
             $playlistSpaceFiller.on("click", playlistSpaceFillerClick);
 
+
             setPlaylistIds();
             resizePlaylistHeight();
             stickyRelocate();
+
+            $(document).on("ready", function () {
+                if (ninetyDeg) {
+                    document.body.style.setProperty("transform", "rotate(90deg)", null);
+
+                    $("body").width($(window).height())
+                    $("#controls-box .row").width($(window).height())
+                }
+
+            })
+            //Enable swiping...
+            $playlist.swipe({
+                //Generic swipe handler for all directions
+                swipe: function (event, direction, distance, duration, fingerCount, fingerData) {
+                    swipeHandler(event);
+                },
+                //Default is 75px, set to 0 for demo so any distance triggers swipe
+                threshold: 10,
+                excludedElements: "button, input, select, textarea, .noSwipe"
+            });
         },
 
-        swipeleftHandler = function (event) {
-            $.event.special.swipe.horizontalDistanceThreshold = 50;
-            var $swipedItem = $(event.target).closest(".playlist-item");
-            console.log($swipedItem)
+        swipeHandler = function (event) {
+            var $swipedItem = $(event.target).closest(".playlist-item").remove();
             var $nowPlaying = $("#playlist .now-playing");
             var playlistSize = $("#playlist .playlist-item").size();
             $swipedItem.fadeOut(500, fadeOutComplete);
@@ -169,11 +191,8 @@ App.PlaylistView = (function () {
             else {
                 $sortModeSwitch.attr("checked", true);
                 addSortable();
-                $playlist.disableSelection();
                 $stickyFooter.slideUp(300);
                 fullPlaylistHeight();
-                ;
-                if ($stickyFooter.hasClass("stick"))
                     $blendUp.slideDown(500);
                 $blendDown.slideDown(500);
             }
@@ -197,10 +216,22 @@ App.PlaylistView = (function () {
             var playlist = document.getElementById('playlist');
 
             playlistSortable = new Sortable(playlist, {
-                scroll: true, // or HTMLElement
+                scroll: false, // or HTMLElement
                 scrollSensitivity: 30, // px, how near the mouse must be to an edge to start scrolling.
                 scrollSpeed: 10, // px
                 sort: true,
+                ghostClass: "ghost",
+                onStart: function (evt) {
+
+                    ;
+                    $blendUp.on("hover", function () {
+                        $('html, body').animate({scrollTop: 100 - 50}, 300);
+                    });
+                    $blendUp.on("hover", function () {
+                        $('html, body').animate({scrollTop: $(document).height() + 50}, 300);
+                    });
+                },
+
                 onEnd: function (evt) {
                     setPlaylistIds();
                     fullPlaylistHeight();
@@ -228,23 +259,23 @@ App.PlaylistView = (function () {
                 var divTop = $('#sticky-anchor').offset().top;
                 if (windowTop > divTop) {
                     $('#sticky').addClass('stick');
-                    if ($sortModeSwitch.attr("checked"))
-                        $blendUp.slideDown(500);
                 }
                 else {
-                    $('#sticky').removeClass('stick');
-                    $blendUp.slideUp(500);
                 }
             });
         },
 
         fullPlaylistHeight = function () {
-            var distance = $(document).height() - $("#header").height() - $('#sticky-sort-switch-box').height() - $blendDown.height();
+            var distance = $(document).height() - $("#header").height() - $('#sticky-sort-switch-box').height()
+            $playlist.css("margin-top", $blendUp.height());
+            $playlist.css("margin-bottom", $blendDown.height());
             $playlist.css("height", distance);
         },
 
         resizePlaylistHeight = function () {
-            var distance = $(document).height() - $("#header").height() - $("#controls-box").height() - $('#sticky-sort-switch-box').height()
+            var distance = $(document).height() - $("#header").height() - $("#controls-box").height() - $('#sticky-sort-switch-box').height();
+            $playlist.css("margin-top", 0);
+            $playlist.css("margin-bottom", 0);
             $playlist.css("height", distance);
         },
 

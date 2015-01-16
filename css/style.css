@@ -3,7 +3,6 @@ html {
     height: 100%;
     margin: 0px;
     padding: 0px;
-
 }
 
 body {
@@ -201,7 +200,6 @@ body {
 }
 
 #blend-up {
-    top: 0;
 }
 
 #blend-down {

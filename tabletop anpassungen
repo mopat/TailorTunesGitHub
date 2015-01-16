@@ -51,3 +51,8 @@ problem bei autoscroll von rubaxa: lösung: umdrehen der blenden je nach rotatio
 außerdem: andern des margins der playlist bei +90 und -90
 
 FILLPLAYLISTHEIGHT und marginbottomset FUNKTION MODIFIZIEREN
+
+- ohne Blenden: höhe passt immer von playlist
+problem: kein scroll mehr möglich
+
+-jquery hat keine swipe up funktion -> tuchswipe library https://github.com/mattbryson/TouchSwipe-Jquery-Plugin, feuert nicht auf anchor -> excludedElements:"button, input, select, textarea, .noSwipe" Quelle: http://stackoverflow.com/questions/15368514/caroufredsel-plugin-using-touchswipe-with-links-not-working
