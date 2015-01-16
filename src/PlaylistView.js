@@ -53,11 +53,6 @@ App.PlaylistView = (function () {
             stickyRelocate();
         },
 
-        fillPlaylistHeight = function () {
-            var distance = $('#controls-box').offset().top - $('#sticky-sort-switch-box').offset().top;
-            $playlist.css("height", "400px");
-        },
-
         swipeleftHandler = function (event) {
             $.event.special.swipe.horizontalDistanceThreshold = 50;
             var $swipedItem = $(event.target).closest(".playlist-item");
@@ -244,13 +239,23 @@ App.PlaylistView = (function () {
             });
         },
 
+        fillPlaylistHeight = function () {
+            var distance = $('#controls-box').offset().top - $('#sticky-sort-switch-box').offset().top;
+            $playlist.css("height", distance);
+        },
+
         setPlaylistMarginBottomControlsBoxHeight = function () {
             var controlsBoxHeight = $("#controls-box").height();
-            $playlistBox.css("margin-bottom", controlsBoxHeight)
+            var distance = $(document).height() - $('#sticky-sort-switch-box').offset().top - $("#controls-box").height();
+            $playlist.css("height", distance);
+            $playlist.css("margin-bottom", controlsBoxHeight);
         },
 
         setPlaylistMarginBottomZero = function () {
-            $playlistBox.css("margin-bottom", 0)
+            var distance = $(document).height() - $('#sticky-sort-switch-box').offset().top;
+            console.log($(document).height(), $('#sticky-sort-switch-box').offset().top);
+            $playlist.css("height", distance);
+            $playlist.css("margin-bottom", 0);
         },
 
         getPlaylistAsJSON = function () {
