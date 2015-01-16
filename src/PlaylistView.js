@@ -47,9 +47,7 @@ App.PlaylistView = (function () {
             $playlistSpaceFiller.on("click", playlistSpaceFillerClick);
 
             setPlaylistIds();
-            setPlaylistMarginBottomZero();
-            setPlaylistMarginBottomControlsBoxHeight();
-            fillPlaylistHeight();
+            resizePlaylistHeight();
             stickyRelocate();
         },
 
@@ -164,7 +162,7 @@ App.PlaylistView = (function () {
                 $sortModeSwitch.removeAttr("checked");
                 removeSortable();
                 $stickyFooter.slideDown(300);
-                setPlaylistMarginBottomControlsBoxHeight();
+                resizePlaylistHeight();
                 $blendUp.slideUp(500);
                 $blendDown.slideUp(500);
             }
@@ -173,7 +171,8 @@ App.PlaylistView = (function () {
                 addSortable();
                 $playlist.disableSelection();
                 $stickyFooter.slideUp(300);
-                setPlaylistMarginBottomZero();
+                fullPlaylistHeight();
+                ;
                 if ($stickyFooter.hasClass("stick"))
                     $blendUp.slideDown(500);
                 $blendDown.slideDown(500);
@@ -204,14 +203,14 @@ App.PlaylistView = (function () {
                 sort: true,
                 onEnd: function (evt) {
                     setPlaylistIds();
-                    setPlaylistMarginBottomZero();
+                    fullPlaylistHeight();
                 }
             });
         },
 
         removeSortable = function () {
             playlistSortable.destroy();
-            setPlaylistMarginBottomControlsBoxHeight();
+            resizePlaylistHeight();
         },
 
         getMinutesAndSeconds = function (duration) {
@@ -239,24 +238,16 @@ App.PlaylistView = (function () {
             });
         },
 
-        fillPlaylistHeight = function () {
-            var distance = $('#controls-box').offset().top - $('#sticky-sort-switch-box').offset().top;
+        fullPlaylistHeight = function () {
+            var distance = $(document).height() - $("#header").height() - $('#sticky-sort-switch-box').height() - $blendDown.height();
             $playlist.css("height", distance);
         },
 
-        setPlaylistMarginBottomControlsBoxHeight = function () {
-            var controlsBoxHeight = $("#controls-box").height();
-            var distance = $(document).height() - $('#sticky-sort-switch-box').offset().top - $("#controls-box").height();
+        resizePlaylistHeight = function () {
+            var distance = $(document).height() - $("#header").height() - $("#controls-box").height() - $('#sticky-sort-switch-box').height()
             $playlist.css("height", distance);
-            $playlist.css("margin-bottom", controlsBoxHeight);
         },
 
-        setPlaylistMarginBottomZero = function () {
-            var distance = $(document).height() - $('#sticky-sort-switch-box').offset().top;
-            console.log($(document).height(), $('#sticky-sort-switch-box').offset().top);
-            $playlist.css("height", distance);
-            $playlist.css("margin-bottom", 0);
-        },
 
         getPlaylistAsJSON = function () {
             var playlistAsJSON = [];
