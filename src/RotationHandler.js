@@ -5,6 +5,7 @@ App.RotationHandler = (function () {
         rotationMode = false,
         oldRotation = 0,
         newRotation = 0,
+        ROTATE_DURATION = 1000,
 
         init = function () {
             $rotate = $(".rotate");
@@ -12,6 +13,7 @@ App.RotationHandler = (function () {
 
             $rotate.on("click", handleRotateClick);
             rotationMode = true;
+            if (rotationMode)
             showRotateTriggers();
         },
 
@@ -22,7 +24,7 @@ App.RotationHandler = (function () {
             if (rotationMode) {
                 if (rotation == 90) {
 
-                    $rotatable.animateRotate(newRotation, 2000);
+                    $rotatable.animateRotate(newRotation, ROTATE_DURATION);
 
                     $rotatable.width($(window).height());
                     $("#controls-box .row").width($(window).height());
@@ -30,7 +32,7 @@ App.RotationHandler = (function () {
                 }
                 else if (rotation == 180) {
 
-                    $rotatable.animateRotate(newRotation, 2000);
+                    $rotatable.animateRotate(newRotation, ROTATE_DURATION);
 
                     $rotatable.width("100%");
                     $rotatable.css("float", "none");
@@ -39,7 +41,7 @@ App.RotationHandler = (function () {
                 }
                 else if (rotation == -90) {
 
-                    $rotatable.animateRotate(newRotation, 2000);
+                    $rotatable.animateRotate(newRotation, ROTATE_DURATION);
 
                     $rotatable.width($(window).height());
                     $rotatable.css("float", "right");
