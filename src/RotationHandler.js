@@ -3,6 +3,8 @@ App.RotationHandler = (function () {
         $rotate = null,
         $rotatable = null,
         rotationMode = false,
+        oldRotation = 0,
+        newRotation = 0,
 
         init = function () {
             $rotate = $(".rotate");
@@ -14,18 +16,21 @@ App.RotationHandler = (function () {
         },
 
         rotate = function (rotation) {
+            newRotation = rotation //parseInt(rotation) - parseInt(oldRotation);
+            oldRotation = newRotation;
+            console.log(newRotation, oldRotation)
             if (rotationMode) {
                 if (rotation == 90) {
-                    $rotatable.css("transform", "none");
-                    $rotatable.animateRotate(rotation);
+
+                    $rotatable.animateRotate(newRotation, 2000);
 
                     $rotatable.width($(window).height());
                     $("#controls-box .row").width($(window).height());
                     $rotatable.css("float", "left");
                 }
                 else if (rotation == 180) {
-                    $rotatable.css("transform", "none");
-                    $rotatable.animateRotate(rotation);
+
+                    $rotatable.animateRotate(newRotation, 2000);
 
                     $rotatable.width("100%");
                     $rotatable.css("float", "none");
@@ -33,18 +38,15 @@ App.RotationHandler = (function () {
 
                 }
                 else if (rotation == -90) {
-                    $rotatable.css("transform", "none");
-                    $("#rotatable").animateRotate(rotation);
+
+                    $rotatable.animateRotate(newRotation, 2000);
 
                     $rotatable.width($(window).height());
                     $rotatable.css("float", "right");
                     $("#controls-box .row").width($(window).height());
                 }
-                else if (rotation == "none") {
-                    $("#rotatable").css("transform", "none");
-
-                    $rotatable.width("100%");
-                    $rotatable.css("float", "none");
+                else if (rotation == 360) {
+                    $rotatable.css("transform", "none").width("100%").css("float", "none");
                 }
             }
         },

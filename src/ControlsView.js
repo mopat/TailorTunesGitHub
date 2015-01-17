@@ -2,6 +2,7 @@
 App.ControlsView = (function () {
     var that = {},
         sc_client_id = '23a3031c7cd251c7c217ca127777e48b',
+        $controlsBox = null,
         $timeSlider = null,
         $volumeMinus = null,
         $volumePlus = null,
@@ -18,6 +19,7 @@ App.ControlsView = (function () {
         $marquee = null,
 
         init = function () {
+            $controlsBox = $("#controls-box");
             $timeSlider = $("#time-slider");
             $volumeMinus = $("#volume-minus");
             $volumePlus = $("#volume-plus");
@@ -167,12 +169,22 @@ App.ControlsView = (function () {
 
         resetTitleInfo = function(){
             $titleInfo.empty();
+        },
+
+        _hideControlsBox = function () {
+            $controlsBox.hide();
+        },
+
+        _showControlsBox = function () {
+            $controlsBox.show();
         };
 
     that.handleTrackPicked = handleTrackPicked;
     that.resetPlayer = resetPlayer;
     that.pauseTrack = pauseTrack;
     that.playTrack = playTrack;
+    that._hideControlsBox = _hideControlsBox;
+    that._showControlsBox = _showControlsBox;
     that.init = init;
 
     return that;

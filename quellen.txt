@@ -78,3 +78,4 @@ http://www.lorina.com/assets/images/communs/load.gif
 http://stackoverflow.com/questions/8508275/how-to-center-a-position-absolute-element
 http://stackoverflow.com/questions/8865458/how-to-align-text-vertically-center-in-div-with-css
 http://stackoverflow.com/questions/15368514/caroufredsel-plugin-using-touchswipe-with-links-not-working
+http://stackoverflow.com/questions/15191058/css-rotation-cross-browser-with-jquery-animate

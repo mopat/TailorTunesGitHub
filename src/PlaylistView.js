@@ -48,7 +48,7 @@ App.PlaylistView = (function () {
 
 
             setPlaylistIds();
-            resizePlaylistHeight();
+            _resizePlaylistHeight();
             stickyRelocate();
             setupSwipe();
         },
@@ -187,7 +187,7 @@ App.PlaylistView = (function () {
                 $sortModeSwitch.removeAttr("checked");
                 removeSortable();
                 $stickyFooter.slideDown(300);
-                resizePlaylistHeight();
+                _resizePlaylistHeight();
                 $blendUp.slideUp(500);
                 $blendDown.slideUp(500);
                 $playlist.swipe("enable");
@@ -196,7 +196,7 @@ App.PlaylistView = (function () {
                 $sortModeSwitch.attr("checked", true);
                 addSortable();
                 $stickyFooter.slideUp(300);
-                fullPlaylistHeight();
+                _fullPlaylistHeight();
                     $blendUp.slideDown(500);
                 $blendDown.slideDown(500);
                 $playlist.swipe("disable");
@@ -237,14 +237,14 @@ App.PlaylistView = (function () {
 
                 onEnd: function (evt) {
                     setPlaylistIds();
-                    fullPlaylistHeight();
+                    _fullPlaylistHeight();
                 }
             });
         },
 
         removeSortable = function () {
             playlistSortable.destroy();
-            resizePlaylistHeight();
+            _resizePlaylistHeight();
         },
 
         getMinutesAndSeconds = function (duration) {
@@ -268,14 +268,14 @@ App.PlaylistView = (function () {
             });
         },
 
-        fullPlaylistHeight = function () {
+        _fullPlaylistHeight = function () {
             var distance = $(document).height() - $("#header").height() - $('#sticky-sort-switch-box').height()
             $playlist.css("margin-top", $blendUp.height());
             $playlist.css("margin-bottom", $blendDown.height());
             $playlist.css("height", distance);
         },
 
-        resizePlaylistHeight = function () {
+        _resizePlaylistHeight = function () {
             var distance = $(document).height() - $("#header").height() - $("#controls-box").height() - $('#sticky-sort-switch-box').height();
             $playlist.css("margin-top", 0);
             $playlist.css("margin-bottom", 0);
@@ -341,7 +341,8 @@ App.PlaylistView = (function () {
     that.getPlaylistAsJSON = getPlaylistAsJSON;
     that.hideLoadingAnimation = hideLoadingAnimation;
     that.showLoadingAnimation = showLoadingAnimation;
-    that.resizePlaylistHeight = resizePlaylistHeight;
+    that._resizePlaylistHeight = _resizePlaylistHeight;
+    that._fullPlaylistHeight = _fullPlaylistHeight;
     that.init = init;
 
     return that;

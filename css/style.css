@@ -369,6 +369,8 @@ footer {
 
 #rotate-90 {
     left: 0;
+    top: 45%;
+    display: block;
 }
 
 #rotate-180 {
@@ -381,6 +383,7 @@ footer {
 #rotate-minus-90 {
     right: 0;
     display: block;
+    top: 45%;
 }
 
 #rotate-none {

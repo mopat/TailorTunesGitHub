@@ -88,6 +88,11 @@ App.MainController = (function () {
             $(playlistView).on("playlistSpaceFillerClicked", handlePlaylistSpaceFillerClick);
 
 
+            //search icon click
+            $(searchView).on("searchIconFocus", handleSearchIconFocus);
+            $(searchView).on("searchIconFocusOut", handleSearchIconFocusOut);
+
+
             //ROTATION
             $(rotationHandler).on("setRotation", handleRotationChange);
         },
@@ -96,7 +101,7 @@ App.MainController = (function () {
             controlsView.handleTrackPicked(src, title);
         },
 
-        handleResetPlayer = function(){
+        handleResetPlayer = function () {
             controlsView.resetPlayer();
         },
 
@@ -148,7 +153,7 @@ App.MainController = (function () {
             chooseTitleView.setModalEchoNestContent(query, tracks);
         },
 
-        handleSoundcloudTrackSearchResultsComplete = function(event, tracks){
+        handleSoundcloudTrackSearchResultsComplete = function (event, tracks) {
             chooseTitleView.setModalSoundcloudContent(tracks);
         },
 
@@ -226,7 +231,17 @@ App.MainController = (function () {
         },
 
         handleRotationChange = function () {
-            playlistView.resizePlaylistHeight();
+            playlistView._resizePlaylistHeight();
+        },
+
+        handleSearchIconFocus = function () {
+            controlsView._hideControlsBox();
+            playlistView._fullPlaylistHeight();
+        },
+
+        handleSearchIconFocusOut = function () {
+            controlsView._showControlsBox();
+            playlistView._resizePlaylistHeight();
         };
 
 

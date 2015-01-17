@@ -3,6 +3,7 @@
  */
 App.SearchView = (function () {
     var that = {},
+        $searchForm = null,
         $searchField = null,
         $searchButton = null,
         $picker = null,
@@ -11,13 +12,16 @@ App.SearchView = (function () {
         $genreDropdownBox = null,
         $searchDropdown = null,
         $searchIcon = null,
+        $optionsBox = null,
         mode = null,
 
         init = function () {
+            $searchForm = $("#search-form");
             $searchField = $("#search-field");
             $searchButton = $("#search-button");
             $picker = $(".picker");
             $searchDropdown = $(".search-dropdown");
+            $optionsBox = $("#options-box");
 
             $artistDropdownBox = $("#artist-dropdown-box");
             $trackDropwdownBox = $("#track-dropdown-box");
@@ -36,16 +40,16 @@ App.SearchView = (function () {
             $trackDropwdownBox.on("change", handleTrackDropdownChange);
 
             $searchIcon.on("click", function () {
-                $("#options-box").slideUp(500);
-                $("#search-form").slideDown(500);
+                $optionsBox.slideUp(500);
+                $searchForm.slideDown(500);
                 $searchField.focus();
-                $("#controls-box").hide();
+                $(that).trigger("searchIconFocus");
                 $searchField.on("focusout", function () {
                     $("body").on("click", function (e) {
                         if ($(e.target).attr("class") != "search-dropdown" && $(e.target).attr("id") != $searchField.attr("id") && $(e.target).hasClass("picker") == false) {
-                            $("#options-box").slideDown(500);
-                            $("#search-form").slideUp(500);
-                            $("#controls-box").show();
+                            $optionsBox.slideDown(500);
+                            $searchForm.slideUp(500);
+                            $(that).trigger("searchIconFocusOut");
                         }
                     });
                 });
