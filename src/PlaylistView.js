@@ -18,7 +18,6 @@ App.PlaylistView = (function () {
         $loadingAnimation = null,
         defaultTextColor = null,
         playlistSortable = null,
-        ninetyDeg = null,
 
         init = function () {
             $playlistBox = $("#playlist-box");
@@ -35,8 +34,6 @@ App.PlaylistView = (function () {
             $playlistSpaceFiller = $("#playlist-space-filler");
             $loadingAnimation = $("#spinner-loader-box");
             defaultTextColor = "#222222";
-            ninetyDeg = true;
-
 
             playlistItemTpl = _.template($("#playlist-item-tpl").html());
 
@@ -44,7 +41,6 @@ App.PlaylistView = (function () {
 
             $playlist.on("click", handleListItemClick);
 
-            //$playlist.hammer().on("swipe", swipeHandler);
             $sortModeSwitch.on("click", handleSortSwitchClick);
             $savePlaylistButton.on("click", savePlaylist);
             $clearPlaylistButton.on("click", clearPlaylist);
@@ -54,65 +50,32 @@ App.PlaylistView = (function () {
             setPlaylistIds();
             resizePlaylistHeight();
             stickyRelocate();
+            setupSwipe();
+        },
 
-
-            $("#mode-dropdown").on("change", function () {
-                setMode($(this).val());
-            });
-
-            $(document).on("ready", function () {
-
-            });
-            //Enable swiping...
+        setupSwipe = function () {
             $playlist.swipe({
-                //Generic swipe handler for all directions
                 swipeUp: function (event, direction, distance, duration, fingerCount, fingerData) {
-                    if (ninetyDeg)
+                    if (getRotation() == 90)
                         swipeHandler(event);
                 },
-                swipeLeft: function (event, direction, distance, duration, fingerCount, fingerData) {
-                    swipeHandler(event);
+                swipeRight: function (event, direction, distance, duration, fingerCount, fingerData) {
+                    if (getRotation() == 180)
+                        swipeHandler(event);
                 },
-                //Default is 75px, set to 0 for demo so any distance triggers swipe
+                swipeDown: function (event, direction, distance, duration, fingerCount, fingerData) {
+                    if (getRotation() == -90)
+                        swipeHandler(event);
+                },
+
+                swipeLeft: function (event, direction, distance, duration, fingerCount, fingerData) {
+                    if (getRotation() == "none")
+                        swipeHandler(event);
+                },
+                allowPageScroll: "vertical",
                 threshold: 10,
                 excludedElements: "button, input, select, textarea, .noSwipe"
             });
-        },
-
-        setMode = function (mode) {
-            if (mode == 1) {
-                document.body.style.setProperty("transform", "none", null);
-                document.body.style.setProperty("transform", "rotate(90deg)", null);
-
-                $("body").width($(window).height());
-                $("#controls-box .row").width($(window).height());
-                $("body").css("float", "left");
-                resizePlaylistHeight();
-            }
-            else if (mode == 2) {
-                document.body.style.setProperty("transform", "none", null);
-                document.body.style.setProperty("transform", "rotate(180deg)", null);
-
-                $("body").width("100%");
-                $("body").css("float", "none");
-                $("#controls-box .row").width($(".row").width());
-            }
-            else if (mode == 3) {
-                document.body.style.setProperty("transform", "none", null);
-                document.body.style.setProperty("transform", "rotate(-90deg)", null);
-
-                $("body").width($(window).height());
-                $("body").css("float", "right");
-                $("#controls-box .row").width($(window).height());
-
-                resizePlaylistHeight();
-            }
-            else if (mode == 0) {
-                document.body.style.setProperty("transform", "none", null);
-                $("body").width("100%");
-                $("body").css("float", "none");
-                $("#controls-box .row").width($(".row").width());
-            }
         },
 
         swipeHandler = function (event) {
@@ -270,6 +233,7 @@ App.PlaylistView = (function () {
                         $('html, body').animate({scrollTop: $(document).height() + 50}, 300);
                     });
                 },
+                animation: 150,
 
                 onEnd: function (evt) {
                     setPlaylistIds();
@@ -377,6 +341,7 @@ App.PlaylistView = (function () {
     that.getPlaylistAsJSON = getPlaylistAsJSON;
     that.hideLoadingAnimation = hideLoadingAnimation;
     that.showLoadingAnimation = showLoadingAnimation;
+    that.resizePlaylistHeight = resizePlaylistHeight;
     that.init = init;
 
     return that;

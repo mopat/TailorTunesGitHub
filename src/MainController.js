@@ -9,6 +9,7 @@ App.MainController = (function () {
         playlistManager = null,
         userPlaylistView = null,
         loginRegisterView = null,
+        rotationHandler = null,
 
         init = function () {
             mainModel = App.MainModel;
@@ -19,6 +20,7 @@ App.MainController = (function () {
             playlistManager = App.PlaylistManager;
             userPlaylistView = App.UserPlaylistView;
             loginRegisterView = App.LoginRegisterView;
+            rotationHandler = App.RotationHandler;
 
             mainModel.init();
             playlistView.init();
@@ -28,7 +30,7 @@ App.MainController = (function () {
             playlistManager.init();
             userPlaylistView.init();
             loginRegisterView.init();
-
+            rotationHandler.init();
             $(playlistView).on("trackPicked", handleTrackPick);
             $(playlistView).on("resetPlayer", handleResetPlayer);
             $(controlsView).on("trackEnded", handleTrackEnd);
@@ -84,6 +86,10 @@ App.MainController = (function () {
 
             $(playlistView).on("playlistCleared", handlePlaylistCleared);
             $(playlistView).on("playlistSpaceFillerClicked", handlePlaylistSpaceFillerClick);
+
+
+            //ROTATION
+            $(rotationHandler).on("setRotation", handleRotationChange);
         },
 
         handleTrackPick = function (event, src, title) {
@@ -217,6 +223,10 @@ App.MainController = (function () {
 
         handlePlaylistSpaceFillerClick = function () {
             searchView.scrollToSearchField();
+        },
+
+        handleRotationChange = function () {
+            playlistView.resizePlaylistHeight();
         };
 
 

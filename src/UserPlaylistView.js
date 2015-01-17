@@ -89,9 +89,12 @@ App.UserPlaylistView = (function () {
         },
 
         handleUserPlaylistModalClosed = function () {
-            preview.pause();
-            preview.currentTime = 0;
-            $(that).trigger("previewPlayingStop");
+            if (preview.currentTime != 0 || preview == null) {
+                preview.pause();
+                preview.currentTime = 0;
+                $(that).trigger("previewPlayingStop");
+            }
+
         },
 
         handleLoadPlaylist = function () {
