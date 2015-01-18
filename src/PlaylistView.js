@@ -69,7 +69,7 @@ App.PlaylistView = (function () {
                 },
 
                 swipeLeft: function (event, direction, distance, duration, fingerCount, fingerData) {
-                    if (getRotation() == "none")
+                    if (getRotation() == 360)
                         swipeHandler(event);
                 },
                 allowPageScroll: "vertical",
@@ -220,27 +220,27 @@ App.PlaylistView = (function () {
 
         addSortable = function () {
             var playlist = document.getElementById('playlist');
+            $blendUp.on("mouseover", function () {
+                console.log("HOVER")
+                $playlistBox.animate({scrollTop: $playlistBox.scrollTop() + 100}, 300);
 
+            });
+            $blendDown.on("hover", function () {
+                $playlistBox.animate({scrollTop: -50}, 300);
+            });
             playlistSortable = new Sortable(playlist, {
-                scroll: false, // or HTMLElement
-                scrollSensitivity: 30, // px, how near the mouse must be to an edge to start scrolling.
-                scrollSpeed: 10, // px
                 sort: true,
                 ghostClass: "ghost",
-                onStart: function (evt) {
-                    $blendUp.on("hover", function () {
-                        $('html, body').animate({scrollTop: 100 - 50}, 300);
-                    });
-                    $blendUp.on("hover", function () {
-                        $('html, body').animate({scrollTop: $(document).height() + 50}, 300);
-                    });
-                },
                 animation: 150,
 
                 onEnd: function (evt) {
                     setPlaylistIds();
                     _fullPlaylistHeight();
-                }
+                },
+
+                scroll: true, // or HTMLElement
+                scrollSensitivity: 30, // px, how near the mouse must be to an edge to start scrolling.
+                scrollSpeed: 10 // px
             });
         },
 
@@ -272,15 +272,11 @@ App.PlaylistView = (function () {
 
         _fullPlaylistHeight = function () {
             var distance = $(document).height() - $("#header").height() - $('#sticky-sort-switch-box').height()
-            $playlist.css("margin-top", $blendUp.height());
-            $playlist.css("margin-bottom", $blendDown.height());
             $playlist.css("height", distance);
         },
 
         _resizePlaylistHeight = function () {
             var distance = $(document).height() - $("#header").height() - $("#controls-box").height() - $('#sticky-sort-switch-box').height();
-            $playlist.css("margin-top", 0);
-            $playlist.css("margin-bottom", 0);
             $playlist.css("height", distance);
         },
 

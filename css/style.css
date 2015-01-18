@@ -209,6 +209,7 @@ body {
 }
 
 #blend-up {
+    top: 0;
 }
 
 #blend-down {
@@ -391,4 +392,8 @@ footer {
     bottom: 0;
     right: 50%;
     left: 45%;
+}
+
+.ghost {
+    background: black;
 }

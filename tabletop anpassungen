@@ -57,3 +57,5 @@ problem: kein scroll mehr möglich
 
 -jquery hat keine swipe up funktion -> tuchswipe library https://github.com/mattbryson/TouchSwipe-Jquery-Plugin, feuert nicht auf anchor -> excludedElements:"button, input, select, textarea, .noSwipe" Quelle: http://stackoverflow.com/questions/15368514/caroufredsel-plugin-using-touchswipe-with-links-not-working
 - swipe umdrehen für modus
+
+Schwierigkeiten: neu skalierung bei drehen, richtige swipe event
