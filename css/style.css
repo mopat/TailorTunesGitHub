@@ -153,8 +153,8 @@ body {
 
 .playlist-item, .user-playlist-item {
     clear: both;
-    height: 35px;
-    line-height: 35px;
+    height: 50px;
+    line-height: 20px;
     font-size: 1rem;
     border-radius: 10px;
 }
@@ -163,6 +163,7 @@ body {
     float: left;
     width: 20px;
     margin-left: 5px;
+    line-height: 40px;
 }
 
 .playlist-title, .user-playlist-title {
@@ -177,9 +178,10 @@ body {
 
 .playlist-item-image, .user-playlist-item-image {
     float: left;
-    height: 35px;
+    height: 45px;
     padding-left: 5px;
     padding-right: 5px;
+    line-height: 50px;
 }
 
 .playlist-track-duration, .user-playlist-track-duration {
@@ -187,6 +189,7 @@ body {
     width: auto;
     padding-left: 10px;
     padding-right: 10px;
+    line-height: 30px;
 }
 
 .blend {

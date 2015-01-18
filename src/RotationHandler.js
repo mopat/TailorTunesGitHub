@@ -12,9 +12,9 @@ App.RotationHandler = (function () {
             $rotatable = $("#rotatable");
 
             $rotate.on("click", handleRotateClick);
-            rotationMode = true;
+            rotationMode = false;
             if (rotationMode)
-            showRotateTriggers();
+                showRotateTriggers();
         },
 
         rotate = function (rotation) {
