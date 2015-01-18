@@ -191,6 +191,7 @@ App.PlaylistView = (function () {
                 $blendUp.slideUp(500);
                 $blendDown.slideUp(500);
                 $playlist.swipe("enable");
+                $(that).trigger("sortEnabled");
             }
             else {
                 $sortModeSwitch.attr("checked", true);
@@ -200,6 +201,7 @@ App.PlaylistView = (function () {
                     $blendUp.slideDown(500);
                 $blendDown.slideDown(500);
                 $playlist.swipe("disable");
+                $(that).trigger("sortDisabled");
             }
         },
 

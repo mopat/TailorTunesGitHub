@@ -95,6 +95,11 @@ App.MainController = (function () {
 
             //ROTATION
             $(rotationHandler).on("setRotation", handleRotationChange);
+
+
+            //sort Click
+            $(playlistView).on("sortEnabled", handleSortEnabled);
+            $(playlistView).on("sortDisabled", handleSortDisabled);
         },
 
         handleTrackPick = function (event, src, title) {
@@ -242,6 +247,14 @@ App.MainController = (function () {
         handleSearchIconFocusOut = function () {
             controlsView._showControlsBox();
             playlistView._resizePlaylistHeight();
+        },
+
+        handleSortEnabled = function () {
+            controlsView._showControlsBox();
+        },
+
+        handleSortDisabled = function () {
+            controlsView._showControlsBox();
         };
 
 
