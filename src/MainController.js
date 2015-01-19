@@ -6,7 +6,8 @@ App.MainController = (function () {
         controlsView = null,
         searchView = null,
         pickTrackView = null,
-        playlistManager = null,
+        userPlaylistManager = null,
+        userManager = null,
         userPlaylistView = null,
         userManagementView = null,
         rotationHandler = null,
@@ -17,7 +18,8 @@ App.MainController = (function () {
             controlsView = App.ControlsView;
             searchView = App.SearchView;
             pickTrackView = App.PickTrackView;
-            playlistManager = App.PlaylistManager;
+            userPlaylistManager = App.UserPlaylistManager;
+            userManager = App.UserManager;
             userPlaylistView = App.UserPlaylistView;
             userManagementView = App.UserManagementView;
             rotationHandler = App.RotationHandler;
@@ -27,7 +29,8 @@ App.MainController = (function () {
             controlsView.init();
             searchView.init();
             pickTrackView.init();
-            playlistManager.init();
+            userPlaylistManager.init();
+            userManager.init();
             userPlaylistView.init();
             userManagementView.init();
             rotationHandler.init();
@@ -57,32 +60,14 @@ App.MainController = (function () {
 
             //user playlist management
             $(playlistView).on("savePlaylistClicked", handleSavePlaylistClicked);
-            $(playlistManager).on("userPlaylistTitlesLoaded", handleUserPlaylistTitlesLoaded);
+            $(userPlaylistManager).on("userPlaylistTitlesLoaded", handleUserPlaylistTitlesLoaded);
             $(userPlaylistView).on("userPlaylistLoaded", handleUserPlaylistLoaded);
-            $(playlistManager).on("emptyOldUserPlaylistView", handleEmptyUserPlaylistView);
+            $(userPlaylistManager).on("emptyOldUserPlaylistView", handleEmptyUserPlaylistView);
             //playing user playlist
             $(userPlaylistView).on("previewPlayingStart", handlePreviewPlayingStart);
             $(userPlaylistView).on("previewPlayingStop", handlePreviewPlayingStop);
 
-
-            //login, signin, show playlists
-            $(userManagementView).on("loginButtonClicked", handleLoginButtonClick);
-            $(playlistManager).on("loginSuccessful", handleLoginSuccessful);
-            $(playlistManager).on("loginFailed", handleLoginFailed);
-            //signin
-            $(userManagementView).on("signInButtonClick", handleSignInButtonClick);
-            $(playlistManager).on("signInSuccessful", handleLoginSuccessful);
-            $(playlistManager).on("signInFailed", handleSignInFailed);
-            //Logout, show playlists
-            $(userManagementView).on("handleLogoutClicked", handleLogoutClick);
-            $(userManagementView).on("myPlaylistsAnchorClick", handleMyPlaylistsAnchorClick);
-            //delete user playlist
-            $(userPlaylistView).on("deleteUserPlaylist", handleDeleteUserPlaylist);
-            $(playlistManager).on("userPlaylistDeleteSuccess", handleDeleteUserPlaylistSuccess);
-            //empty playlist
-            $(userManagementView).on("emptyOldUserPlaylistView", handleEmptyUserPlaylistView);
-            $(playlistView).on("playlistCleared", handlePlaylistCleared);
-            $(playlistView).on("playlistSpaceFillerClicked", handlePlaylistSpaceFillerClick);
+            initUserAndPlaylistManagementHandler();
 
 
             //search icon click
@@ -97,6 +82,27 @@ App.MainController = (function () {
             //sort Click
             $(playlistView).on("sortEnabled", handleSortEnabled);
             $(playlistView).on("sortDisabled", handleSortDisabled);
+        },
+
+        initUserAndPlaylistManagementHandler = function () {
+            //login, signin, show playlists
+            $(userManagementView).on("loginButtonClicked", handleLoginButtonClick);
+            $(userManager).on("loginSuccessful", handleLoginSuccessful);
+            $(userManager).on("loginFailed", handleLoginFailed);
+            //signin
+            $(userManagementView).on("signInButtonClick", handleSignInButtonClick);
+            $(userManager).on("signInSuccessful", handleSignInSuccessful);
+            $(userManager).on("signInFailed", handleSignInFailed);
+            //Logout, show playlists
+            $(userManagementView).on("handleLogoutClicked", handleLogoutClick);
+            $(userManagementView).on("myPlaylistsAnchorClick", handleMyPlaylistsAnchorClick);
+            //delete user playlist
+            $(userPlaylistView).on("deleteUserPlaylist", handleDeleteUserPlaylist);
+            $(userPlaylistManager).on("userPlaylistDeleteSuccess", handleDeleteUserPlaylistSuccess);
+            //empty playlist
+            $(userManagementView).on("emptyOldUserPlaylistView", handleEmptyUserPlaylistView);
+            $(playlistView).on("playlistCleared", handlePlaylistCleared);
+            $(playlistView).on("playlistSpaceFillerClicked", handlePlaylistSpaceFillerClick);
         },
 
         handleTrackPick = function (event, src, title) {
@@ -164,7 +170,7 @@ App.MainController = (function () {
         },
 
         handleSavePlaylistClicked = function (event, JSONPlaylist, playlistName) {
-            playlistManager.startPlaylistPost(JSONPlaylist, playlistName);
+            userPlaylistManager._startPlaylistPost(JSONPlaylist, playlistName);
         },
 
         handleUserPlaylistTitlesLoaded = function (event, title, date, length, playlistId, JSONPlaylist) {
@@ -184,14 +190,19 @@ App.MainController = (function () {
         },
 
         handleLoginButtonClick = function (event, username, password) {
-            playlistManager.login(username, password);
+            userManager._logIn(username, password);
         },
 
         handleLogoutClick = function () {
-            playlistManager.logOut();
+            userManager._logOut();
         },
 
         handleLoginSuccessful = function () {
+            userManagementView._loginSuccessful();
+            userPlaylistManager._loadPlaylists();
+        },
+
+        handleSignInSuccessful = function () {
             userManagementView._loginSuccessful();
         },
 
@@ -208,7 +219,7 @@ App.MainController = (function () {
         },
 
         handleSignInButtonClick = function (event, username, password, email) {
-            playlistManager.signIn(username, password, email);
+            userManager._signIn(username, password, email);
         },
 
         handleSignInFailed = function (event, errorMessage) {
@@ -216,7 +227,7 @@ App.MainController = (function () {
         },
 
         handleDeleteUserPlaylist = function (event, playlistId) {
-            playlistManager.deleteUserPlaylist(playlistId);
+            userPlaylistManager._deleteUserPlaylist(playlistId);
         },
 
         handleDeleteUserPlaylistSuccess = function () {
