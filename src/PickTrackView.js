@@ -4,30 +4,34 @@
 App.ChooseTitleView = (function () {
 
     var that = {},
-        $chooseModalEchoNest = null,
-        $chooseModalListEchoNest = null,
-        $chooseModalSoundcloud = null,
-        $chooseModalListSoundcloud = null,
+        $echoNestTrackPicker = null,
+        $echoNestTrackPickerList = null,
+        $soundcloudTrackPicker = null,
+        $soundcloudTrackPickerList = null,
         foundTracks = [],
         echoNestQuery = null,
 
         init = function () {
-            $chooseModalEchoNest = $("#choose-modal-echonest");
-            $chooseModalListEchoNest = $("#choose-modal-echonest-ul");
+            $echoNestTrackPicker = $("#echonest-trackID-picker");
+            $echoNestTrackPickerList = $("#echonest-trackID-picker-ul");
 
-            $chooseModalSoundcloud = $("#choose-modal-soundcloud");
-            $chooseModalListSoundcloud = $("#choose-modal-soundcloud-ul");
+            $soundcloudTrackPicker = $("#soundcloud-track-picker");
+            $soundcloudTrackPickerList = $("#soundcloud-track-picker-ul");
 
-            $chooseModalListEchoNest.on("click", handleEchoNestListItemClick);
-            $chooseModalListSoundcloud.on("click", handleSoundcloudListItemClick);
+            initHandler();
 
             return that;
         },
 
-        setModalEchoNestContent = function (query, tracks) {
+        initHandler = function () {
+            $echoNestTrackPickerList.on("click", pickEchoNestTrack);
+            $soundcloudTrackPickerList.on("click", pickSoundcloudTrack);
+        },
+
+        _setEchoNestTrackIdPicker = function (query, tracks) {
             echoNestQuery = query;
             foundTracks = tracks;
-            $chooseModalListEchoNest.empty();
+            $echoNestTrackPickerList.empty();
             for (var i in tracks) {
                 var currentArtistName = tracks[i].artist_name;
                 var currentTitle = tracks[i].title;
@@ -37,18 +41,17 @@ App.ChooseTitleView = (function () {
                 listItem.html(currentArtistName + " - " + currentTitle);
                 listItem.attr("data-track-id", currentTrackId);
 
-                $chooseModalListEchoNest.append(listItem);
+                $echoNestTrackPickerList.append(listItem);
             }
-            $chooseModalEchoNest.foundation('reveal', 'open');
+            $echoNestTrackPicker.foundation('reveal', 'open');
         },
 
-        setModalSoundcloudContent = function (tracks) {
-            $chooseModalListSoundcloud.empty();
+        _setSoundcloudTrackPicker = function (tracks) {
+            $soundcloudTrackPickerList.empty();
             foundTracks = tracks;
             for (var i in foundTracks) {
                 var title = foundTracks[i].title;
                 var duration = foundTracks[i].duration;
-                //var permalinkUrl = playlist[i].permalink_url;
                 var streamUrl = foundTracks[i].stream_url;
 
                 var listItem = $("<li class='modal-soundcloud-list-item'>");
@@ -56,30 +59,29 @@ App.ChooseTitleView = (function () {
                 listItem.attr("data-stream-url", streamUrl);
                 listItem.attr("list-id", i);
 
-                $chooseModalListSoundcloud.append(listItem);
+                $soundcloudTrackPickerList.append(listItem);
             }
-            $chooseModalSoundcloud.foundation('reveal', 'open');
+            $soundcloudTrackPicker.foundation('reveal', 'open');
         },
 
-        handleEchoNestListItemClick = function (event) {
+        pickEchoNestTrack = function (event) {
             var trackID = $(event.target).closest(".modal-echonest-list-item").attr("data-track-id");
             var query = $(event.target).closest(".modal-echonest-list-item").html();
-            $(that).trigger("trackIdPicked", [query, "track", null, trackID]);
-            $chooseModalEchoNest.foundation('reveal', 'close');
+            $(that).trigger("echonestTrackIDPicked", [query, "track", null, trackID]);
+            $echoNestTrackPicker.foundation('reveal', 'close');
         },
 
-        handleSoundcloudListItemClick = function (event) {
+        pickSoundcloudTrack = function (event) {
             var listId = $(event.target).closest(".modal-soundcloud-list-item").attr("list-id");
             var track = [foundTracks[listId]];
 
             $(that).trigger("soundcloudTrackPicked", [track]);
-            $chooseModalSoundcloud.foundation('reveal', 'close');
+            $soundcloudTrackPicker.foundation('reveal', 'close');
         };
 
-    that.setModalEchoNestContent = setModalEchoNestContent;
-    that.setModalSoundcloudContent = setModalSoundcloudContent;
+    that._setEchoNestTrackIdPicker = _setEchoNestTrackIdPicker;
+    that._setSoundcloudTrackPicker = _setSoundcloudTrackPicker;
     that.init = init;
 
     return that;
-
 }());

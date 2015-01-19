@@ -46,7 +46,7 @@ App.MainController = (function () {
 
             //ZUSAMMEN START
             $(searchView).on("searchEchoNestSimilarTracks", handleSearchEchoNestSimilarTracks);
-            $(chooseTitleView).on("trackIdPicked", handleTrackIdPicked);
+            $(chooseTitleView).on("echonestTrackIDPicked", handleTrackIdPicked);
             //ZUSAMMEN END
             $(mainModel).on("showLoadingAnimation", handleShowLoadingAnimation);
             $(mainModel).on("hideLoadingAnimation", handleHideLoadingAnimation);
@@ -152,11 +152,11 @@ App.MainController = (function () {
         },
 
         handleEchoNestTrackSearchResultsComplete = function (event, query, tracks) {
-            chooseTitleView.setModalEchoNestContent(query, tracks);
+            chooseTitleView._setEchoNestTrackIdPicker(query, tracks);
         },
 
         handleSoundcloudTrackSearchResultsComplete = function (event, tracks) {
-            chooseTitleView.setModalSoundcloudContent(tracks);
+            chooseTitleView._setSoundcloudTrackPicker(tracks);
         },
 
         handleTrackIdPicked = function (event, query, type, visibleDropdownValue, trackID) {
