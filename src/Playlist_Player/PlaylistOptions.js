@@ -56,10 +56,10 @@ App.PlaylistOptions = (function () {
 
         savePlaylist = function () {
             var playlistName = $playlistNameInput.val();
-            if (!playlistName || getPlaylistAsJSON().length == 0)
+            if (!playlistName)
                 swal("Oops...", "Your playlist or your playlist name is empty!", "error");
             else
-                $(that).trigger("savePlaylistClicked", [getPlaylistAsJSON(), $playlistNameInput.val()]);
+                $(that).trigger("savePlaylistClicked", [$playlistNameInput.val()]);
         },
 
         _checkSortModeSwitch = function () {

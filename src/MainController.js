@@ -51,7 +51,7 @@ App.MainController = (function () {
             $(pickTrackView).on("soundcloudTrackPicked", handleSoundlcoudTrackPicked);
 
             //user playlist management
-            $(playlistView).on("savePlaylistClicked", handleSavePlaylistClicked);
+            $(playlistOptions).on("savePlaylistClicked", handleSavePlaylistClicked);
             $(userPlaylistManager).on("userPlaylistTitlesLoaded", handleUserPlaylistTitlesLoaded);
             $(userPlaylistView).on("userPlaylistLoaded", handleUserPlaylistLoaded);
             $(userPlaylistManager).on("emptyOldUserPlaylistView", handleEmptyUserPlaylistView);
@@ -167,7 +167,10 @@ App.MainController = (function () {
             mainModel.searchEchoNestTracks(query, type, visibleDropdownValue, trackID);
         },
 
-        handleSavePlaylistClicked = function (event, JSONPlaylist, playlistName) {
+        handleSavePlaylistClicked = function (event, playlistName) {
+            //Überprüfung ob playlist leer
+
+            var JSONPlaylist = playlistView._getPlaylistAsJSON();
             userPlaylistManager._startPlaylistPost(JSONPlaylist, playlistName);
         },
 

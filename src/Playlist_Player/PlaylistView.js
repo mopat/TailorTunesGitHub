@@ -131,7 +131,6 @@ App.PlaylistView = (function () {
         },
 
 
-
         handlePrevOrNextClicked = function (indicator) {
             var $nowPlaying = $("#playlist .now-playing");
             $nowPlaying.find(".playlist-title").css("color", defaultTextColor);
@@ -178,7 +177,6 @@ App.PlaylistView = (function () {
             var title = nowPlaying.find(".playlist-title").html();
             $(that).trigger("trackPicked", [streamUrl, title]);
         },
-
 
 
         setPlaylistIds = function () {
@@ -259,29 +257,28 @@ App.PlaylistView = (function () {
             $stickyFooter.slideUp(300);
         },
 
-        getPlaylistAsJSON = function () {
+        _getPlaylistAsJSON = function () {
             var playlistAsJSON = [];
 
             $("#playlist .playlist-item").each(function () {
-                var playlistNumber = $(this).attr("id");
-                var imageUrl = $(this).find(".playlist-item-image").attr("src");
-                var streamURL = $(this).attr("data-stream-url");
-                var duration = $(this).find(".playlist-track-duration").html();
-                var title = $(this).find(".playlist-title").html();
+                var playlistNumber = $(this).attr("id"),
+                    imageUrl = $(this).find(".playlist-item-image").attr("src"),
+                    streamURL = $(this).attr("data-stream-url"),
+                    duration = $(this).find(".playlist-track-duration").html(),
+                    title = $(this).find(".playlist-title").html(),
 
-                var playlistObject = {
-                    number: playlistNumber,
-                    image_url: imageUrl,
-                    stream_url: streamURL,
-                    duration: duration,
-                    title: title
-                };
+                    playlistObject = {
+                        number: playlistNumber,
+                        image_url: imageUrl,
+                        stream_url: streamURL,
+                        duration: duration,
+                        title: title
+                    };
                 playlistAsJSON.push(playlistObject);
             });
             console.log(JSON.parse(JSON.stringify(playlistAsJSON)))
             return JSON.parse(JSON.stringify(playlistAsJSON))
         },
-
 
 
         playlistSpaceFillerClick = function (e) {
@@ -305,7 +302,7 @@ App.PlaylistView = (function () {
 
     that.addPlaylist = addPlaylist;
     that.handlePrevOrNextClicked = handlePrevOrNextClicked;
-    that.getPlaylistAsJSON = getPlaylistAsJSON;
+    that._getPlaylistAsJSON = _getPlaylistAsJSON;
     that.hideLoadingAnimation = hideLoadingAnimation;
     that.showLoadingAnimation = showLoadingAnimation;
     that._resizePlaylistHeight = _resizePlaylistHeight;
