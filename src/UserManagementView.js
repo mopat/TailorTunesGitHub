@@ -1,8 +1,9 @@
 /**
  * Created by Patrick on 07.01.2015.
  */
-App.LoginRegisterView = (function () {
+App.UserManagementView = (function () {
     var that = {},
+        $formBox = null,
         $loginAnchor = null,
         $loginUsername = null,
         $loginPassword = null,
@@ -22,6 +23,8 @@ App.LoginRegisterView = (function () {
         $signInFailed = null,
 
         init = function () {
+            $formBox = $(".form-box");
+
             $loginAnchor = $("#login-anchor");
             $loginUsername = $("#login-username");
             $loginPassword = $("#login-password");
@@ -41,6 +44,12 @@ App.LoginRegisterView = (function () {
             $signInForm = $("#sign-in-form-box");
             $signInFailed = $("#sign-in-failed");
 
+            initHandler();
+
+            return that;
+        },
+
+        initHandler = function () {
             $loginAnchor.on("click", handleLoginAnchorClick);
             $loginButton.on("click", handleLoginButtonClick)
             $myPlaylistsAnchor.on("click", hanldeMyPlaylistsAnchorClick);
@@ -51,21 +60,21 @@ App.LoginRegisterView = (function () {
         },
 
         handleLoginButtonClick = function () {
-            var username = $loginUsername.val();
-            var password = $loginPassword.val();
+            var username = $loginUsername.val(),
+                password = $loginPassword.val();
 
             $(that).trigger("loginButtonClicked", [username, password]);
         },
 
         handleSignInButtonClick = function () {
-            var username = $signInUsername.val();
-            var password = $signInPassword.val();
-            var email = $signInEmail.val();
+            var username = $signInUsername.val(),
+                password = $signInPassword.val(),
+                email = $signInEmail.val();
 
             $(that).trigger("signInButtonClick", [username, password, email]);
         },
 
-        loginSuccessful = function () {
+        _loginSuccessful = function () {
             $.undim();
             $loginAnchor.hide();
             $loginForm.hide();
@@ -80,11 +89,11 @@ App.LoginRegisterView = (function () {
             $loggedInBox.show();
         },
 
-        loginFailed = function (errorMessage) {
+        _loginFailed = function (errorMessage) {
             $loginFailed.html("Login Failed due to " + errorMessage);
         },
 
-        signInFailed = function (errorMessage) {
+        _signInFailed = function (errorMessage) {
             $signInFailed.html("Sign In Failed: " + errorMessage);
         },
 
@@ -128,15 +137,14 @@ App.LoginRegisterView = (function () {
         addDimBackgroundClickHandler = function () {
             $(".dimbackground-curtain").on("click", function () {
                 $.undim();
-                $(".form-box").hide();
+                $formBox.hide();
             });
         };
 
-    that.loginSuccessful = loginSuccessful;
-    that.loginFailed = loginFailed;
-    that.signInFailed = signInFailed;
+    that._loginSuccessful = _loginSuccessful;
+    that._loginFailed = _loginFailed;
+    that._signInFailed = _signInFailed;
     that.init = init;
 
     return that;
-
 }());

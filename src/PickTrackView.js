@@ -1,7 +1,7 @@
 /**
  * Created by Patrick on 27.12.2014.
  */
-App.ChooseTitleView = (function () {
+App.PickTrackView = (function () {
 
     var that = {},
         $echoNestTrackPicker = null,
