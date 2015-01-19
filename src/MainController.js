@@ -3,6 +3,7 @@ App.MainController = (function () {
     var that = {},
         mainModel = null,
         playlistView = null,
+        playlistOptions = null,
         controlsView = null,
         searchView = null,
         pickTrackView = null,
@@ -15,6 +16,7 @@ App.MainController = (function () {
         init = function () {
             mainModel = App.MainModel.init();
             playlistView = App.PlaylistView.init();
+            playlistOptions = App.PlaylistOptions.init();
             controlsView = App.ControlsView.init();
             searchView = App.SearchView.init();
             pickTrackView = App.PickTrackView;
@@ -57,6 +59,8 @@ App.MainController = (function () {
             $(userPlaylistView).on("previewPlayingStart", handlePreviewPlayingStart);
             $(userPlaylistView).on("previewPlayingStop", handlePreviewPlayingStop);
 
+
+            $(playlistView).on("checkSortModeSwitch", handleCheckSortModeSwitch);
             initUserAndPlaylistManagementHandler();
 
 
@@ -72,6 +76,10 @@ App.MainController = (function () {
             //sort Click
             $(playlistView).on("sortEnabled", handleSortEnabled);
             $(playlistView).on("sortDisabled", handleSortDisabled);
+        },
+
+        handleCheckSortModeSwitch = function () {
+            playlistOptions._checkSortModeSwitch();
         },
 
         initUserAndPlaylistManagementHandler = function () {
@@ -91,7 +99,7 @@ App.MainController = (function () {
             $(userPlaylistManager).on("userPlaylistDeleteSuccess", handleDeleteUserPlaylistSuccess);
             //empty playlist
             $(userManagementView).on("emptyOldUserPlaylistView", handleEmptyUserPlaylistView);
-            $(playlistView).on("playlistCleared", handlePlaylistCleared);
+            $(playlistOptions).on("playlistCleared", handlePlaylistCleared);
             $(playlistView).on("playlistSpaceFillerClicked", handlePlaylistSpaceFillerClick);
         },
 
@@ -227,6 +235,7 @@ App.MainController = (function () {
         handlePlaylistCleared = function () {
             controlsView._resetPlayer();
             userPlaylistView._removeLoadedStatus();
+            playlistView._clearPlaylist();
         },
 
         handlePlaylistSpaceFillerClick = function () {
@@ -249,10 +258,16 @@ App.MainController = (function () {
 
         handleSortEnabled = function () {
             controlsView._showControlsBox();
+            playlistView._removeSortable();
+            playlistView._resizePlaylistHeight();
+            playlistView._enableSwipe();
         },
 
         handleSortDisabled = function () {
             controlsView._showControlsBox();
+            playlistView._addSortable();
+            playlistView._fullPlaylistHeight();
+            playlistView._disableSwipe();
         };
 
 
