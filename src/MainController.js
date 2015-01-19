@@ -74,8 +74,8 @@ App.MainController = (function () {
 
 
             //sort Click
-            $(playlistView).on("sortEnabled", handleSortEnabled);
-            $(playlistView).on("sortDisabled", handleSortDisabled);
+            $(playlistOptions).on("sortEnabled", handleSortEnabled);
+            $(playlistOptions).on("sortDisabled", handleSortDisabled);
         },
 
         handleCheckSortModeSwitch = function () {
@@ -264,6 +264,8 @@ App.MainController = (function () {
             playlistView._removeSortable();
             playlistView._resizePlaylistHeight();
             playlistView._enableSwipe();
+            //$blendUp.slideUp(500);
+            //$blendDown.slideUp(500);
         },
 
         handleSortDisabled = function () {
@@ -271,6 +273,10 @@ App.MainController = (function () {
             playlistView._addSortable();
             playlistView._fullPlaylistHeight();
             playlistView._disableSwipe();
+
+            // $blendUp.slideDown(500);
+            //$blendDown.slideDown(500);
+
         };
 
 

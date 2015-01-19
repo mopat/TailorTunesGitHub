@@ -288,6 +288,7 @@ App.PlaylistView = (function () {
 
         _clearPlaylist = function () {
             $playlist.find("li").remove();
+            isPlaylistExisting = false;
         },
 
         hideLoadingAnimation = function () {

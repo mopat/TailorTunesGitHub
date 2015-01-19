@@ -4,40 +4,38 @@
 App.PlaylistOptions = (function () {
     var that = {},
         $sortModeSwitch = null,
+        $sortSwitchBox = null,
+        $savePlaylistButton = null,
+        $playlistNameInput = null,
+        $clearPlaylistButton = null,
+
         init = function () {
             $sortModeSwitch = $("#sort-mode-switch");
             $sortSwitchBox = $("#sticky-sort-switch-box");
             $savePlaylistButton = $("#save-playlist-button");
             $playlistNameInput = $("#playlist-name-input");
             $clearPlaylistButton = $("#clear-playlist-button");
-            $sortModeSwitch.on("click", handleSortSwitchClick);
 
-
-            $savePlaylistButton.on("click", savePlaylist);
-            $clearPlaylistButton.on("click", clearPlaylist);
+            initHandler();
             stickyRelocate();
             _checkSortModeSwitch();
             return that;
         },
 
+        initHandler = function () {
+            $sortModeSwitch.on("click", handleSortSwitchClick);
+
+            $savePlaylistButton.on("click", savePlaylist);
+            $clearPlaylistButton.on("click", clearPlaylist);
+        },
+
         handleSortSwitchClick = function () {
-            $(that).trigger("sortSwitchChanged", [$sortModeSwitch.attr("checked")]);
             if ($sortModeSwitch.attr("checked")) {
                 $sortModeSwitch.removeAttr("checked");
-
-
-                //$blendUp.slideUp(500);
-                //$blendDown.slideUp(500);
-
                 $(that).trigger("sortEnabled");
             }
             else {
                 $sortModeSwitch.attr("checked", true);
-
-
-                // $blendUp.slideDown(500);
-                //$blendDown.slideDown(500);
-
                 $(that).trigger("sortDisabled");
             }
         },
@@ -59,7 +57,7 @@ App.PlaylistOptions = (function () {
             if (!playlistName)
                 swal("Oops...", "Your playlist or your playlist name is empty!", "error");
             else
-                $(that).trigger("savePlaylistClicked", [$playlistNameInput.val()]);
+                $(that).trigger("savePlaylistClicked", [playlistName]);
         },
 
         _checkSortModeSwitch = function () {
@@ -68,8 +66,6 @@ App.PlaylistOptions = (function () {
         },
 
         clearPlaylist = function () {
-            isPlaylistExisting = false;
-
             $(that).trigger("playlistCleared");
             // $playlistSpaceFiller.show();
         };
