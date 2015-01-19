@@ -9,7 +9,6 @@ App.ChooseTitleView = (function () {
         $soundcloudTrackPicker = null,
         $soundcloudTrackPickerList = null,
         foundTracks = [],
-        echoNestQuery = null,
 
         init = function () {
             $echoNestTrackPicker = $("#echonest-trackID-picker");
@@ -29,15 +28,15 @@ App.ChooseTitleView = (function () {
         },
 
         _setEchoNestTrackIdPicker = function (query, tracks) {
-            echoNestQuery = query;
             foundTracks = tracks;
             $echoNestTrackPickerList.empty();
             for (var i in tracks) {
-                var currentArtistName = tracks[i].artist_name;
-                var currentTitle = tracks[i].title;
-                var currentTrackId = tracks[i].id;
+                var currentArtistName = tracks[i].artist_name,
+                    currentTitle = tracks[i].title,
+                    currentTrackId = tracks[i].id,
 
-                var listItem = $("<li class='modal-echonest-list-item'>");
+                    listItem = $("<li class='modal-echonest-list-item'>");
+
                 listItem.html(currentArtistName + " - " + currentTitle);
                 listItem.attr("data-track-id", currentTrackId);
 
@@ -50,11 +49,11 @@ App.ChooseTitleView = (function () {
             $soundcloudTrackPickerList.empty();
             foundTracks = tracks;
             for (var i in foundTracks) {
-                var title = foundTracks[i].title;
-                var duration = foundTracks[i].duration;
-                var streamUrl = foundTracks[i].stream_url;
+                var title = foundTracks[i].title,
+                    duration = foundTracks[i].duration,
+                    streamUrl = foundTracks[i].stream_url,
 
-                var listItem = $("<li class='modal-soundcloud-list-item'>");
+                    listItem = $("<li class='modal-soundcloud-list-item'>");
                 listItem.html(title);
                 listItem.attr("data-stream-url", streamUrl);
                 listItem.attr("list-id", i);
@@ -64,16 +63,16 @@ App.ChooseTitleView = (function () {
             $soundcloudTrackPicker.foundation('reveal', 'open');
         },
 
-        pickEchoNestTrack = function (event) {
-            var trackID = $(event.target).closest(".modal-echonest-list-item").attr("data-track-id");
-            var query = $(event.target).closest(".modal-echonest-list-item").html();
+        pickEchoNestTrack = function (e) {
+            var trackID = $(e.target).closest(".modal-echonest-list-item").attr("data-track-id"),
+                query = $(e.target).closest(".modal-echonest-list-item").html();
             $(that).trigger("echonestTrackIDPicked", [query, "track", null, trackID]);
             $echoNestTrackPicker.foundation('reveal', 'close');
         },
 
-        pickSoundcloudTrack = function (event) {
-            var listId = $(event.target).closest(".modal-soundcloud-list-item").attr("list-id");
-            var track = [foundTracks[listId]];
+        pickSoundcloudTrack = function (e) {
+            var listId = $(e.target).closest(".modal-soundcloud-list-item").attr("list-id"),
+                track = [foundTracks[listId]];
 
             $(that).trigger("soundcloudTrackPicked", [track]);
             $soundcloudTrackPicker.foundation('reveal', 'close');
