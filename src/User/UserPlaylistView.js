@@ -42,7 +42,7 @@ App.UserPlaylistView = (function () {
             $userPlaylisBox.on("click", ".stop-icon", handleStopIconClick);
         },
 
-        setUserPlaylistView = function (playlistTitle, date, length, playlistId, JSONPlaylist) {
+        _setUserPlaylistView = function (playlistTitle, date, length, playlistId, JSONPlaylist) {
             var playlistHeaderItem = userPlaylistTpl({
                 playlist_id: playlistId,
                 title: playlistTitle,
@@ -84,11 +84,11 @@ App.UserPlaylistView = (function () {
             });
         },
 
-        openUserPlaylistModal = function () {
+        _openUserPlaylistModal = function () {
             $userPlaylistModal.foundation('reveal', 'open');
         },
 
-        emptyUserPlaylistModal = function () {
+        _emptyUserPlaylistModal = function () {
             $userPlaylistBox.empty();
         },
 
@@ -142,10 +142,9 @@ App.UserPlaylistView = (function () {
         swipeleftHandler = function (e) {
             $.e.special.swipe.horizontalDistanceThreshold = 50;
             var $swipedItem = $(e.target).closest(".user-playlist-item");
-            $swipedItem.fadeOut(500, fadeOutComplete);
-            function fadeOutComplete() {
+            $swipedItem.fadeOut(500, function () {
                 $swipedItem.remove();
-            }
+            });
         },
 
         handleOpenPlaylist = function (event) {
@@ -178,23 +177,23 @@ App.UserPlaylistView = (function () {
             });
         },
 
-        removeUserPlaylist = function () {
+        _removeUserPlaylist = function () {
             if ($playlistContainerToDelete != null) {
                 $playlistContainerToDelete.remove();
                 $playlistContainerToDelete = null;
             }
         },
 
-        removeLoadedStatus = function () {
+        _removeLoadedStatus = function () {
             $(".loaded").removeClass("loaded");
         };
 
 
-    that.setUserPlaylistView = setUserPlaylistView;
-    that.openUserPlaylistModal = openUserPlaylistModal;
-    that.emptyUserPlaylistModal = emptyUserPlaylistModal;
-    that.removeUserPlaylist = removeUserPlaylist;
-    that.removeLoadedStatus = removeLoadedStatus;
+    that._setUserPlaylistView = _setUserPlaylistView;
+    that._openUserPlaylistModal = _openUserPlaylistModal;
+    that._emptyUserPlaylistModal = _emptyUserPlaylistModal;
+    that._removeUserPlaylist = _removeUserPlaylist;
+    that._removeLoadedStatus = _removeLoadedStatus;
     that.init = init;
 
     return that;

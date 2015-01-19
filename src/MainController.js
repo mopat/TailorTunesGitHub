@@ -164,7 +164,7 @@ App.MainController = (function () {
         },
 
         handleUserPlaylistTitlesLoaded = function (event, title, date, length, playlistId, JSONPlaylist) {
-            userPlaylistView.setUserPlaylistView(title, date, length, playlistId, JSONPlaylist);
+            userPlaylistView._setUserPlaylistView(title, date, length, playlistId, JSONPlaylist);
         },
 
         handleUserPlaylistLoaded = function (event, playlist) {
@@ -201,11 +201,11 @@ App.MainController = (function () {
         },
 
         handleMyPlaylistsAnchorClick = function () {
-            userPlaylistView.openUserPlaylistModal();
+            userPlaylistView._openUserPlaylistModal();
         },
 
         handleEmptyUserPlaylistView = function () {
-            userPlaylistView.emptyUserPlaylistModal();
+            userPlaylistView._emptyUserPlaylistModal();
         },
 
         handleSignInButtonClick = function (event, username, password, email) {
@@ -221,12 +221,12 @@ App.MainController = (function () {
         },
 
         handleDeleteUserPlaylistSuccess = function () {
-            userPlaylistView.removeUserPlaylist();
+            userPlaylistView._removeUserPlaylist();
         },
 
         handlePlaylistCleared = function () {
             controlsView._resetPlayer();
-            userPlaylistView.removeLoadedStatus();
+            userPlaylistView._removeLoadedStatus();
         },
 
         handlePlaylistSpaceFillerClick = function () {
