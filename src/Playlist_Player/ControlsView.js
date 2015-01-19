@@ -41,6 +41,8 @@ App.ControlsView = (function () {
             initHandler();
 
             player.volume = 0;
+
+            return that;
         },
 
         addTrackEndListener = function () {

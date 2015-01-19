@@ -3,7 +3,6 @@
  */
 App.UserPlaylistView = (function () {
     var that = {},
-        sc_client_id = "23a3031c7cd251c7c217ca127777e48b",
         $userPlaylistBox = null,
         userPlaylistTpl = null,
         userPlaylistItemTpl = null,
@@ -26,6 +25,12 @@ App.UserPlaylistView = (function () {
             $userPlaylistModal = $("#user-playlist-modal");
             $userPlaylisBox = $("#user-playlist-box");
 
+            initHandler();
+
+            return that;
+        },
+
+        initHandler = function () {
             $userPlaylistModal.on("close", handleUserPlaylistModalClosed);
 
             $userPlaylisBox.on("click", ".load-playlist", handleLoadPlaylist);
@@ -47,14 +52,14 @@ App.UserPlaylistView = (function () {
             $userPlaylistBox.append(playlistHeaderItem);
 
             for (var j in JSONPlaylist) {
-                var JSONItem = JSONPlaylist[j];
-                var number = JSONItem.number;
-                var imageUrl = JSONItem.image_url;
-                var duration = JSONItem.duration;
-                var songTitle = JSONItem.title;
-                var streamUrl = JSONItem.stream_url;
+                var JSONItem = JSONPlaylist[j],
+                    number = JSONItem.number,
+                    imageUrl = JSONItem.image_url,
+                    duration = JSONItem.duration,
+                    songTitle = JSONItem.title,
+                    streamUrl = JSONItem.stream_url,
 
-                var playlistItem = userPlaylistItemTpl({
+                    playlistItem = userPlaylistItemTpl({
                     stream_url: streamUrl,
                     artwork_url: imageUrl,
                     title: songTitle,
@@ -64,7 +69,6 @@ App.UserPlaylistView = (function () {
                 $("#" + playlistId).append(playlistItem);
             }
             setPlaylistIds();
-            //openUserPlaylistModal();
         },
 
         setPlaylistIds = function () {
@@ -94,7 +98,6 @@ App.UserPlaylistView = (function () {
                 preview.currentTime = 0;
                 $(that).trigger("previewPlayingStop");
             }
-
         },
 
         handleLoadPlaylist = function () {
@@ -104,11 +107,11 @@ App.UserPlaylistView = (function () {
                 $userPlaylist.addClass("loading");
                 var loadedPlaylist = [];
                 $(".loading .user-playlist-item").each(function () {
-                    var streamUrl = $(this).attr("data-stream-url");
-                    var title = $(this).find(".user-playlist-title").html();
-                    var artworkUrl = $(this).find(".user-playlist-item-image").attr("src");
-                    var duration = $(this).find(".user-playlist-track-duration").html();
-                    var playlistObject = {
+                    var streamUrl = $(this).attr("data-stream-url"),
+                        title = $(this).find(".user-playlist-title").html(),
+                        artworkUrl = $(this).find(".user-playlist-item-image").attr("src"),
+                        duration = $(this).find(".user-playlist-track-duration").html(),
+                        playlistObject = {
                         stream_url: streamUrl,
                         title: title,
                         artwork_url: artworkUrl,
@@ -121,24 +124,24 @@ App.UserPlaylistView = (function () {
             }
         },
 
-        handleListItemClick = function (event) {
-            event.preventDefault();
-            var $clickedItem = $(event.target).closest(".user-playlist-item");
+        handleListItemClick = function (e) {
+            e.preventDefault();
+            var $clickedItem = $(e.target).closest(".user-playlist-item");
             $(".preview-playing").removeClass("preview-playing");
             $clickedItem.addClass("preview-playing");
             var streamUrl = $clickedItem.attr("data-stream-url");
 
-            preview.src = streamUrl + "?client_id=" + sc_client_id;
+            preview.src = streamUrl + "?client_id=" + SC_CLIENT_ID;
             preview.play();
             $clickedItem.addClass("preview-playing");
             $(that).trigger("previewPlayingStart");
-            $(".stop-icon").show(0);
+            $(".stop-icon").show();
         },
 
 
-        swipeleftHandler = function (event) {
-            $.event.special.swipe.horizontalDistanceThreshold = 50;
-            var $swipedItem = $(event.target).closest(".user-playlist-item");
+        swipeleftHandler = function (e) {
+            $.e.special.swipe.horizontalDistanceThreshold = 50;
+            var $swipedItem = $(e.target).closest(".user-playlist-item");
             $swipedItem.fadeOut(500, fadeOutComplete);
             function fadeOutComplete() {
                 $swipedItem.remove();

@@ -13,27 +13,17 @@ App.MainController = (function () {
         rotationHandler = null,
 
         init = function () {
-            mainModel = App.MainModel;
-            playlistView = App.PlaylistView;
-            controlsView = App.ControlsView;
-            searchView = App.SearchView;
+            mainModel = App.MainModel.init();
+            playlistView = App.PlaylistView.init();
+            controlsView = App.ControlsView.init();
+            searchView = App.SearchView.init();
             pickTrackView = App.PickTrackView;
-            userPlaylistManager = App.UserPlaylistManager;
-            userManager = App.UserManager;
-            userPlaylistView = App.UserPlaylistView;
-            userManagementView = App.UserManagementView;
-            rotationHandler = App.RotationHandler;
+            userPlaylistManager = App.UserPlaylistManager.init();
+            userManager = App.UserManager.init();
+            userPlaylistView = App.UserPlaylistView.init();
+            userManagementView = App.UserManagementView.init();
+            rotationHandler = App.RotationHandler.init();
 
-            mainModel.init();
-            playlistView.init();
-            controlsView.init();
-            searchView.init();
-            pickTrackView.init();
-            userPlaylistManager.init();
-            userManager.init();
-            userPlaylistView.init();
-            userManagementView.init();
-            rotationHandler.init();
 
             //playlist and player
             $(playlistView).on("trackPicked", handleTrackPick);

@@ -55,6 +55,8 @@ App.SearchView = (function () {
                 });
                 $("body").off("click");
             });
+
+            return that;
         },
 
         handleSearch = function () {

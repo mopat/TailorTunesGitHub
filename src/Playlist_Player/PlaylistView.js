@@ -51,6 +51,8 @@ App.PlaylistView = (function () {
             _resizePlaylistHeight();
             stickyRelocate();
             setupSwipe();
+
+            return that;
         },
 
         setupSwipe = function () {

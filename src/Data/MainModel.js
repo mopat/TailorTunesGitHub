@@ -11,6 +11,8 @@ App.MainModel = (function () {
 
         init = function () {
             initSoundCloud();
+
+            return that;
         },
 
         initSoundCloud = function () {

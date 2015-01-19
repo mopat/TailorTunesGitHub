@@ -15,6 +15,8 @@ App.RotationHandler = (function () {
             rotationMode = false;
             if (rotationMode)
                 showRotateTriggers();
+
+            return that;
         },
 
         rotate = function (rotation) {
