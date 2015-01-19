@@ -31,59 +31,56 @@ App.MainController = (function () {
             userPlaylistView.init();
             loginRegisterView.init();
             rotationHandler.init();
+
+            //playlist and player
             $(playlistView).on("trackPicked", handleTrackPick);
             $(playlistView).on("resetPlayer", handleResetPlayer);
             $(controlsView).on("trackEnded", handleTrackEnd);
             $(controlsView).on("nextButtonClick", handleNextButtonClick);
             $(controlsView).on("previousButtonClick", handlePreviousButtonClick);
-
+            $(playlistView).on("playlistItemClicked", handlePlaylistItemClick);
             $(mainModel).on("playlistCreated", handlePlaylistCreated);
 
-            $(playlistView).on("playlistItemClicked", handlePlaylistItemClick);
-
-            $(mainModel).on("showLoadingAnimation", handleShowLoadingAnimation);
-
-            $(mainModel).on("hideLoadingAnimation", handleHideLoadingAnimation);
-
+            //search
             $(searchView).on("searchButtonClickedEchoNest", handleSearchButtonClickedEchoNest);
 
+            //ZUSAMMEN START
             $(searchView).on("searchEchoNestSimilarTracks", handleSearchEchoNestSimilarTracks);
-
-            $(searchView).on("searchButtonClickedSoundcloud", handleSearchButtonClickedSoundcloud);
-
-            $(mainModel).on("echoNestTrackSearchResultsComplete", handleEchoNestTrackSearchResultsComplete);
-
-            $(mainModel).on("soundcloudTrackSearchResultsComplete", handleSoundcloudTrackSearchResultsComplete);
-
             $(chooseTitleView).on("trackIdPicked", handleTrackIdPicked);
-
+            //ZUSAMMEN END
+            $(mainModel).on("showLoadingAnimation", handleShowLoadingAnimation);
+            $(mainModel).on("hideLoadingAnimation", handleHideLoadingAnimation);
+            $(searchView).on("searchButtonClickedSoundcloud", handleSearchButtonClickedSoundcloud);
+            $(mainModel).on("echoNestTrackSearchResultsComplete", handleEchoNestTrackSearchResultsComplete);
+            $(mainModel).on("soundcloudTrackSearchResultsComplete", handleSoundcloudTrackSearchResultsComplete);
             $(chooseTitleView).on("soundcloudTrackPicked", handleSoundlcoudTrackPicked);
 
+            //user playlist management
             $(playlistView).on("savePlaylistClicked", handleSavePlaylistClicked);
-
             $(playlistManager).on("userPlaylistTitlesLoaded", handleUserPlaylistTitlesLoaded);
-
             $(userPlaylistView).on("userPlaylistLoaded", handleUserPlaylistLoaded);
-
             $(playlistManager).on("emptyOldUserPlaylistView", handleEmptyUserPlaylistView);
-
+            //playing user playlist
             $(userPlaylistView).on("previewPlayingStart", handlePreviewPlayingStart);
             $(userPlaylistView).on("previewPlayingStop", handlePreviewPlayingStop);
 
+
+            //login, signin, show playlists
             $(loginRegisterView).on("loginButtonClicked", handleLoginButtonClick);
-            $(loginRegisterView).on("handleLogoutClicked", handleLogoutClick);
-            $(loginRegisterView).on("emptyOldUserPlaylistView", handleEmptyUserPlaylistView);
-            $(loginRegisterView).on("myPlaylistsAnchorClick", handleMyPlaylistsAnchorClick);
             $(playlistManager).on("loginSuccessful", handleLoginSuccessful);
             $(playlistManager).on("loginFailed", handleLoginFailed);
-
+            //signin
             $(loginRegisterView).on("signInButtonClick", handleSignInButtonClick);
             $(playlistManager).on("signInSuccessful", handleLoginSuccessful);
             $(playlistManager).on("signInFailed", handleSignInFailed);
-
+            //Logout, show playlists
+            $(loginRegisterView).on("handleLogoutClicked", handleLogoutClick);
+            $(loginRegisterView).on("myPlaylistsAnchorClick", handleMyPlaylistsAnchorClick);
+            //delete user playlist
             $(userPlaylistView).on("deleteUserPlaylist", handleDeleteUserPlaylist);
             $(playlistManager).on("userPlaylistDeleteSuccess", handleDeleteUserPlaylistSuccess);
-
+            //empty playlist
+            $(loginRegisterView).on("emptyOldUserPlaylistView", handleEmptyUserPlaylistView);
             $(playlistView).on("playlistCleared", handlePlaylistCleared);
             $(playlistView).on("playlistSpaceFillerClicked", handlePlaylistSpaceFillerClick);
 
@@ -103,11 +100,11 @@ App.MainController = (function () {
         },
 
         handleTrackPick = function (event, src, title) {
-            controlsView.handleTrackPicked(src, title);
+            controlsView._handleTrackPicked(src, title);
         },
 
         handleResetPlayer = function () {
-            controlsView.resetPlayer();
+            controlsView._resetPlayer();
         },
 
         handleTrackEnd = function () {
@@ -151,7 +148,7 @@ App.MainController = (function () {
         },
 
         handlePlaylistItemClick = function (event, streamUrl, title) {
-            controlsView.handleTrackPicked(streamUrl, title);
+            controlsView._handleTrackPicked(streamUrl, title);
         },
 
         handleEchoNestTrackSearchResultsComplete = function (event, query, tracks) {
@@ -179,11 +176,11 @@ App.MainController = (function () {
         },
 
         handlePreviewPlayingStart = function () {
-            controlsView.pauseTrack();
+            controlsView._pauseTrack();
         },
 
         handlePreviewPlayingStop = function () {
-            controlsView.playTrack();
+            controlsView._playTrack();
         },
 
         handleLoginButtonClick = function (event, username, password) {
@@ -227,7 +224,7 @@ App.MainController = (function () {
         },
 
         handlePlaylistCleared = function () {
-            controlsView.resetPlayer();
+            controlsView._resetPlayer();
             userPlaylistView.removeLoadedStatus();
         },
 

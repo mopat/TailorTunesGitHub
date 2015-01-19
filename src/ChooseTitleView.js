@@ -20,6 +20,8 @@ App.ChooseTitleView = (function () {
 
             $chooseModalListEchoNest.on("click", handleEchoNestListItemClick);
             $chooseModalListSoundcloud.on("click", handleSoundcloudListItemClick);
+
+            return that;
         },
 
         setModalEchoNestContent = function (query, tracks) {

@@ -37,18 +37,24 @@ App.ControlsView = (function () {
 
             initTimeSlider();
             initPlayerControls();
-
-            player.addEventListener("ended", function () {
-                $(that).trigger("trackEnded");
-            });
-            $volumeMinus.on("click", handleVolumeMinus);
-            $volumePlus.on("click", handleVolumePlus);
-            $nextButton.on("click", handleNextButtonClick);
-            $previousButton.on("click", handlePreviousButtonClick);
+            addTrackEndListener();
+            initHandler();
 
             player.volume = 0;
         },
 
+        addTrackEndListener = function () {
+            player.addEventListener("ended", function () {
+                $(that).trigger("trackEnded");
+            });
+        },
+
+        initHandler = function () {
+            $volumeMinus.on("click", handleVolumeMinus);
+            $volumePlus.on("click", handleVolumePlus);
+            $nextButton.on("click", handleNextButtonClick);
+            $previousButton.on("click", handlePreviousButtonClick);
+        },
 
         initTimeSlider = function () {
             $timeSlider.slider();
@@ -116,7 +122,7 @@ App.ControlsView = (function () {
             });
         },
 
-        handleTrackPicked = function (streamUrl, title) {
+        _handleTrackPicked = function (streamUrl, title) {
             resetTimer();
             streamUrl += '?client_id=' + sc_client_id;
             $player.attr('src', streamUrl);
@@ -135,18 +141,18 @@ App.ControlsView = (function () {
             });
         },
 
-        resetPlayer = function(){
+        _resetPlayer = function () {
             player.pause();
             player.currentTime = 0;
             resetTimer();
             resetTitleInfo();
         },
 
-        pauseTrack = function () {
+        _pauseTrack = function () {
             player.pause();
         },
 
-        playTrack = function () {
+        _playTrack = function () {
             player.play();
         },
 
@@ -179,10 +185,10 @@ App.ControlsView = (function () {
             $controlsBox.show();
         };
 
-    that.handleTrackPicked = handleTrackPicked;
-    that.resetPlayer = resetPlayer;
-    that.pauseTrack = pauseTrack;
-    that.playTrack = playTrack;
+    that._handleTrackPicked = _handleTrackPicked;
+    that._resetPlayer = _resetPlayer;
+    that._pauseTrack = _pauseTrack;
+    that._playTrack = _playTrack;
     that._hideControlsBox = _hideControlsBox;
     that._showControlsBox = _showControlsBox;
     that.init = init;

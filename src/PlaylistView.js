@@ -232,15 +232,20 @@ App.PlaylistView = (function () {
                 sort: true,
                 ghostClass: "ghost",
                 animation: 150,
+                onStart: function (evt) {
+                    $(".playlist-item").each(function (index) {
+                        if ($(this).attr("draggable") == "true") {
 
+
+                            console.log($(this))
+                        }
+
+                    });
+                },
                 onEnd: function (evt) {
                     setPlaylistIds();
                     _fullPlaylistHeight();
-                },
-
-                scroll: true, // or HTMLElement
-                scrollSensitivity: 30, // px, how near the mouse must be to an edge to start scrolling.
-                scrollSpeed: 10 // px
+                }
             });
         },
 
