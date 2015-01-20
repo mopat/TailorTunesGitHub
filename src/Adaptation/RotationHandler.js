@@ -3,8 +3,6 @@ App.RotationHandler = (function () {
         $rotate = null,
         $rotatable = null,
         rotationMode = false,
-        oldRotation = 0,
-        newRotation = 0,
         ROTATE_DURATION = 1000,
 
         init = function () {
@@ -20,36 +18,37 @@ App.RotationHandler = (function () {
         },
 
         rotate = function (rotation, side) {
-            newRotation = rotation //parseInt(rotation) - parseInt(oldRotation);
-            oldRotation = newRotation;
-            console.log(newRotation, oldRotation)
+            $rotatable.transition({rotate: rotation}, ROTATE_DURATION, function () {
+                $(that).trigger("setRotation");
+            });
             if (rotationMode) {
                 switch (side) {
                     case "left":
-                        $rotatable.animateRotate(newRotation, ROTATE_DURATION);
-                        $rotatable.width($(window).height());
-                        $("#controls-box .row").width($(window).height());
                         $rotatable.css("float", "left");
-                        break;
-                    case "top":
-                        $rotatable.animateRotate(newRotation, ROTATE_DURATION);
-
-                        $rotatable.width("100%");
-                        $rotatable.css("float", "none");
-                        $("#controls-box .row").width($(".row").width());
+                        leftOrRightResize();
                         break;
                     case "right":
-                        $rotatable.animateRotate(newRotation, ROTATE_DURATION);
-
-                        $rotatable.width($(window).height());
                         $rotatable.css("float", "right");
-                        $("#controls-box .row").width($(window).height());
+                        leftOrRightResize();
+                        break;
+                    case "top":
+                        topOrBottomModeResize();
                         break;
                     case "bottom":
-                        $rotatable.css("transform", "none").width("100%").css("float", "none");
+                        topOrBottomModeResize();
                         break;
                 }
             }
+        },
+
+        leftOrRightResize = function () {
+            $rotatable.width($(window).height());
+            $("#controls-box .row").width($(window).height());
+        },
+
+        topOrBottomModeResize = function () {
+            $rotatable.width("100%");
+            $("#controls-box .row").width($(".row").width());
         },
 
         hideRotateTriggers = function () {
@@ -64,16 +63,14 @@ App.RotationHandler = (function () {
             var $clickedRotation = $(e.target),
                 rotation = $clickedRotation.attr("data-rotate"),
                 side = $clickedRotation.attr("data-side");
-            $rotate.fadeIn(500);
+            showRotateTriggers();
             $clickedRotation.fadeOut(500);
             setRotation(rotation)
-            $(that).trigger("setRotation");
             rotate(rotation, side);
         };
 
     that.init = init;
 
     return that;
-
 }());
 
