@@ -20,7 +20,7 @@ App.MainController = (function () {
             playlistOptions = App.PlaylistOptions.init();
             controlsView = App.ControlsView.init();
             searchView = App.SearchView.init();
-            pickTrackView = App.PickTrackView;
+            pickTrackView = App.PickTrackView.init();
             userPlaylistManager = App.UserPlaylistManager.init();
             userManager = App.UserManager.init();
             userPlaylistView = App.UserPlaylistView.init();
@@ -256,19 +256,19 @@ App.MainController = (function () {
 
         handleSearchIconFocusOut = function () {
             controlsView._showControlsBox();
-            playlistView._resizePlaylistHeight();
-        },
-
-        handleSortEnabled = function () {
-            controlsView._showControlsBox();
-            playlistView._removeSortable()._enableSwipe();
             resize._resizePlaylistHeight();
         },
 
-        handleSortDisabled = function () {
+        handleSortEnabled = function () {
             controlsView._hideControlsBox();
             playlistView._addSortable()._disableSwipe();
             resize._fullPlaylistHeight();
+        },
+
+        handleSortDisabled = function () {
+            controlsView._showControlsBox();
+            playlistView._removeSortable()._enableSwipe();
+            resize._resizePlaylistHeight();
         };
 
 

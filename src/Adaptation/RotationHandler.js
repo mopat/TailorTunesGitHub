@@ -51,6 +51,7 @@ App.RotationHandler = (function () {
             $("#controls-box .row").width($(".row").width());
         },
 
+
         hideRotateTriggers = function () {
             $rotate.fadeOut(500);
         },

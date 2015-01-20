@@ -32,11 +32,11 @@ App.PlaylistOptions = (function () {
         handleSortSwitchClick = function () {
             if ($sortModeSwitch.attr("checked")) {
                 $sortModeSwitch.removeAttr("checked");
-                $(that).trigger("sortEnabled");
+                $(that).trigger("sortDisabled");
             }
             else {
                 $sortModeSwitch.attr("checked", true);
-                $(that).trigger("sortDisabled");
+                $(that).trigger("sortEnabled");
             }
         },
 

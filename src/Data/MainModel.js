@@ -55,6 +55,7 @@ App.MainModel = (function () {
                 cache: false,
                 success: function (jsonObject) {
                     var tracks = removeEchoNestDuplicates(jsonObject.response.songs);
+                    console.log(tracks)
                     $(that).trigger("echoNestTrackSearchResultsComplete", [query, tracks]);
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
