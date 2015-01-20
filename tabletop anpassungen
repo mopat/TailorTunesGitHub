@@ -59,3 +59,5 @@ problem: kein scroll mehr möglich
 - swipe umdrehen für modus
 
 Schwierigkeiten: neu skalierung bei drehen, richtige swipe event
+
+-Drehen von Modal geht, neu skalierung und positionierung wichtig

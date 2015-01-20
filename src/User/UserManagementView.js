@@ -57,6 +57,11 @@ App.UserManagementView = (function () {
 
             $signInAnchor.on("click", handleSignInAnchorClick);
             $signInButton.on("click", handleSignInButtonClick);
+
+            $("html, body").on("click", ".dimbackground-curtain", function () {
+                $.undim();
+                $formBox.hide();
+            });
         },
 
         handleLoginButtonClick = function () {
@@ -112,33 +117,20 @@ App.UserManagementView = (function () {
 
         handleLoginAnchorClick = function () {
             if ($loginForm.is(":visible")) {
-                $(this).undim();
-                $loginForm.hide();
+                $loginForm.undim().hide();
             }
             else {
-                $loginForm.show();
-                $(this).dimBackground();
-                addDimBackgroundClickHandler();
+                $loginForm.show().dimBackground();
             }
         },
 
         handleSignInAnchorClick = function () {
             if ($signInForm.is(":visible")) {
-                $(this).undim();
-                $signInForm.hide();
+                $signInForm.undim().hide();
             }
             else {
-                $signInForm.show();
-                $(this).dimBackground();
-                addDimBackgroundClickHandler();
+                $signInForm.show().dimBackground();
             }
-        },
-
-        addDimBackgroundClickHandler = function () {
-            $(".dimbackground-curtain").on("click", function () {
-                $.undim();
-                $formBox.hide();
-            });
         };
 
     that._loginSuccessful = _loginSuccessful;

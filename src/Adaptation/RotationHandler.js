@@ -3,11 +3,13 @@ App.RotationHandler = (function () {
         $rotate = null,
         $rotatable = null,
         rotationMode = false,
+        $modals = null,
         ROTATE_DURATION = 1000,
 
         init = function () {
             $rotate = $(".rotate");
             $rotatable = $("#rotatable");
+            $modals = $(".reveal-modal");
 
             $rotate.on("click", handleRotateClick);
             rotationMode = true;
@@ -18,6 +20,7 @@ App.RotationHandler = (function () {
         },
 
         rotate = function (rotation, side) {
+            $modals.transition({rotate: rotation}, ROTATE_DURATION);
             $rotatable.transition({rotate: rotation}, ROTATE_DURATION, function () {
                 $(that).trigger("setRotation");
             });
@@ -26,10 +29,12 @@ App.RotationHandler = (function () {
                     case "left":
                         $rotatable.css("float", "left");
                         leftOrRightResize();
+                        resizeLeftDistanceModal();
                         break;
                     case "right":
                         $rotatable.css("float", "right");
                         leftOrRightResize();
+                        resizeRightDistanceModal();
                         break;
                     case "top":
                         topOrBottomModeResize();
@@ -44,11 +49,21 @@ App.RotationHandler = (function () {
         leftOrRightResize = function () {
             $rotatable.width($(window).height());
             $("#controls-box .row").width($(window).height());
+            $modals.width($(window).height() * 0.8).css("top", "10%").css("bottom", "10%")
         },
 
         topOrBottomModeResize = function () {
             $rotatable.width("100%");
             $("#controls-box .row").width($(".row").width());
+            $modals.css("top", "10%").css("bottom", "10%").width("80%").css("left", "10%").css("right", "10%");
+        },
+
+        resizeLeftDistanceModal = function () {
+            $modals.css("left", "5%").css("right", $(document).width() - $rotatable.width())
+        },
+
+        resizeRightDistanceModal = function () {
+            $modals.css("right", "5%").css("left", $(document).width() - $rotatable.width())
         },
 
 
