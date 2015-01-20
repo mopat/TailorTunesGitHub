@@ -12,6 +12,7 @@ App.MainController = (function () {
         userPlaylistView = null,
         userManagementView = null,
         rotationHandler = null,
+        resize = null,
 
         init = function () {
             mainModel = App.MainModel.init();
@@ -25,6 +26,7 @@ App.MainController = (function () {
             userPlaylistView = App.UserPlaylistView.init();
             userManagementView = App.UserManagementView.init();
             rotationHandler = App.RotationHandler.init();
+            resize = App.Resize.init();
 
 
             //playlist and player
@@ -168,8 +170,6 @@ App.MainController = (function () {
         },
 
         handleSavePlaylistClicked = function (event, playlistName) {
-            //Überprüfung ob playlist leer
-
             var JSONPlaylist = playlistView._getPlaylistAsJSON();
             userPlaylistManager._startPlaylistPost(JSONPlaylist, playlistName);
         },
@@ -246,12 +246,12 @@ App.MainController = (function () {
         },
 
         handleRotationChange = function () {
-            playlistView._resizePlaylistHeight();
+            resize._resizePlaylistHeight();
         },
 
         handleSearchIconFocus = function () {
             controlsView._hideControlsBox();
-            playlistView._fullPlaylistHeight();
+            resize._fullPlaylistHeight();
         },
 
         handleSearchIconFocusOut = function () {
@@ -261,22 +261,14 @@ App.MainController = (function () {
 
         handleSortEnabled = function () {
             controlsView._showControlsBox();
-            playlistView._removeSortable();
-            playlistView._resizePlaylistHeight();
-            playlistView._enableSwipe();
-            //$blendUp.slideUp(500);
-            //$blendDown.slideUp(500);
+            playlistView._removeSortable()._enableSwipe();
+            resize._resizePlaylistHeight();
         },
 
         handleSortDisabled = function () {
-            controlsView._showControlsBox();
-            playlistView._addSortable();
-            playlistView._fullPlaylistHeight();
-            playlistView._disableSwipe();
-
-            // $blendUp.slideDown(500);
-            //$blendDown.slideDown(500);
-
+            controlsView._hideControlsBox();
+            playlistView._addSortable()._disableSwipe();
+            resize._fullPlaylistHeight();
         };
 
 

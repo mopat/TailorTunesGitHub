@@ -29,36 +29,42 @@ App.UserPlaylistManager = (function () {
         },
 
         _startPlaylistPost = function (JSONPlaylist, playlistName) {
-            if (getCurrentUser() != null) {
-                $(that).trigger("emptyOldUserPlaylistView");
-                if ($.inArray(playlistName, playlistTitles) == -1) {
-                    postPlaylist(JSONPlaylist, playlistName);
-                }
-                else {
-                    swal({
-                        title: "Are you sure?",
-                        text: "You will not be able to recover this imaginary file!",
-                        type: "warning",
-                        showCancelButton: true,
-                        confirmButtonColor: "#DD6B55",
-                        confirmButtonText: "Yes, delete it!",
-                        closeOnConfirm: false
-                    }, function () {
-                        swal("Deleted!", "Your imaginary file has been deleted.", "success");
-                        var Playlists = Parse.Object.extend("Playlists"),
-                            query = new Parse.Query(Playlists);
-                        query.equalTo("title", playlistName);
-                        query.find({
-                            success: function (playlist) {
-                                var playlistId = playlist[0].id;
-                                _deleteUserPlaylist(playlistId);
-                                postPlaylist(JSONPlaylist, playlistName);
-                            }
+            if (JSONPlaylist != null) {
+                if (getCurrentUser() != null) {
+                    $(that).trigger("emptyOldUserPlaylistView");
+                    if ($.inArray(playlistName, playlistTitles) == -1) {
+                        postPlaylist(JSONPlaylist, playlistName);
+                    }
+                    else {
+                        swal({
+                            title: "Are you sure?",
+                            text: "You will not be able to recover this imaginary file!",
+                            type: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#DD6B55",
+                            confirmButtonText: "Yes, delete it!",
+                            closeOnConfirm: false
+                        }, function () {
+                            swal("Deleted!", "Your imaginary file has been deleted.", "success");
+                            var Playlists = Parse.Object.extend("Playlists"),
+                                query = new Parse.Query(Playlists);
+                            query.equalTo("title", playlistName);
+                            query.find({
+                                success: function (playlist) {
+                                    var playlistId = playlist[0].id;
+                                    _deleteUserPlaylist(playlistId);
+                                    postPlaylist(JSONPlaylist, playlistName);
+                                }
+                            });
                         });
-                    });
+                    }
                 }
+                else swal("Saving failed!", "You need to login to save playlists.", "error");
             }
-            else swal("Saving failed!", "You need to login to save playlists.", "error");
+            else {
+                swal("Saving failed!", "Your Playlist is empty!", "error");
+
+            }
         },
 
         postPlaylist = function (JSONPlaylist, playlistName) {

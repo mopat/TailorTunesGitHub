@@ -5,15 +5,9 @@ App.PlaylistView = (function () {
         $playlist = null,
         playlistItemTpl = null,
         listItemColors = [],
-        $sortSwitchBox = null,
-        $sortModeSwitch = null,
         isPlaylistExisting = null,
         $blendUp = null,
         $blendDown = null,
-        $stickyFooter = null,
-        $savePlaylistButton = null,
-        $playlistNameInput = null,
-        $clearPlaylistButton = null,
         $playlistSpaceFiller = null,
         $loadingAnimation = null,
         defaultTextColor = null,
@@ -23,8 +17,6 @@ App.PlaylistView = (function () {
             $playlistBox = $("#playlist-box");
             $playlist = $("#playlist");
             isPlaylistExisting = false;
-            $stickyFooter = $("#sticky-footer");
-
 
             $blendUp = $("#blend-up");
             $blendDown = $("#blend-down");
@@ -40,7 +32,6 @@ App.PlaylistView = (function () {
             initHandler();
 
             setPlaylistIds();
-            _resizePlaylistHeight();
 
             setupSwipe();
 
@@ -49,8 +40,6 @@ App.PlaylistView = (function () {
 
         initHandler = function () {
             $playlist.on("click", handleListItemClick);
-
-
         },
 
         setupSwipe = function () {
@@ -78,10 +67,11 @@ App.PlaylistView = (function () {
             });
         },
 
-        swipeHandler = function (event) {
-            var $swipedItem = $(event.target).closest(".playlist-item").remove();
-            var $nowPlaying = $("#playlist .now-playing");
-            var playlistSize = $("#playlist .playlist-item").size();
+        swipeHandler = function (e) {
+            console.log("SWIPE")
+            var $swipedItem = $(e.target).closest(".playlist-item").remove(),
+                $nowPlaying = $("#playlist .now-playing"),
+                playlistSize = $("#playlist .playlist-item").size();
             $swipedItem.fadeOut(500, fadeOutComplete);
             function fadeOutComplete() {
                 if (playlistSize - 1 == 0)
@@ -98,7 +88,7 @@ App.PlaylistView = (function () {
             console.log("playlist", playlist)
             isPlaylistExisting = true;
             for (var i in playlist) {
-                $playlistSpaceFiller.hide(0);
+                $playlistSpaceFiller.hide();
                 var artworkUrl = playlist[i].artwork_url;
                 if (artworkUrl == null)
                     artworkUrl = playlist[i].user.avatar_url;
@@ -107,11 +97,11 @@ App.PlaylistView = (function () {
                 if (duration == null)
                     duration = getMinutesAndSeconds(playlist[i].duration);
 
-                var title = playlist[i].title;
+                var title = playlist[i].title,
 
-                var streamUrl = playlist[i].stream_url;
+                    streamUrl = playlist[i].stream_url,
 
-                var playlistItem = playlistItemTpl({
+                    playlistItem = playlistItemTpl({
                     stream_url: streamUrl,
                     artwork_url: artworkUrl,
                     title: title,
@@ -130,12 +120,11 @@ App.PlaylistView = (function () {
                 handlePlayTrack(firstTrack);
         },
 
-
         handlePrevOrNextClicked = function (indicator) {
             var $nowPlaying = $("#playlist .now-playing");
             $nowPlaying.find(".playlist-title").css("color", defaultTextColor);
-            var $nowPlayingId = parseInt($nowPlaying.attr("id"));
-            var playlistSize = $("#playlist .playlist-item").size();
+            var $nowPlayingId = parseInt($nowPlaying.attr("id")),
+                playlistSize = $("#playlist .playlist-item").size();
 
             if ($nowPlayingId < playlistSize - 1 && indicator == "next") {
                 var $nextTrack = $nowPlaying.next();
@@ -156,25 +145,25 @@ App.PlaylistView = (function () {
             }
         },
 
-        handleListItemClick = function (event) {
-            event.preventDefault();
+        handleListItemClick = function (e) {
+            e.preventDefault();
             var $nowPlaying = $("#playlist .now-playing");
             $nowPlaying.find(".playlist-title").css("color", defaultTextColor);
             $nowPlaying.removeClass("now-playing");
-            var $clickedItem = $(event.target).closest(".playlist-item");
+            var $clickedItem = $(e.target).closest(".playlist-item");
             handlePlayTrack($clickedItem);
         },
 
         handlePlayTrack = function (current) {
             current.addClass("now-playing");
-            var streamUrl = current.attr("data-stream-url");
-            var title = current.find(".playlist-title").html();
+            var streamUrl = current.attr("data-stream-url"),
+                title = current.find(".playlist-title").html();
             $(that).trigger("trackPicked", [streamUrl, title]);
         },
 
         handleResetTrack = function (nowPlaying) {
-            var streamUrl = nowPlaying.attr("data-stream-url");
-            var title = nowPlaying.find(".playlist-title").html();
+            var streamUrl = nowPlaying.attr("data-stream-url"),
+                title = nowPlaying.find(".playlist-title").html();
             $(that).trigger("trackPicked", [streamUrl, title]);
         },
 
@@ -194,6 +183,8 @@ App.PlaylistView = (function () {
 
         _addSortable = function () {
             var playlist = document.getElementById('playlist');
+            $blendUp.slideDown(500);
+            $blendDown.slideDown(500);
             $blendUp.on("mouseover", function () {
                 console.log("HOVER")
                 $playlistBox.animate({scrollTop: $playlistBox.scrollTop() + 100}, 300);
@@ -206,55 +197,46 @@ App.PlaylistView = (function () {
                 sort: true,
                 ghostClass: "ghost",
                 animation: 150,
-                onStart: function (evt) {
+                onStart: function (e) {
                     $(".playlist-item").each(function (index) {
                         if ($(this).attr("draggable") == "true") {
-
-
                             console.log($(this))
                         }
-
                     });
                 },
-                onEnd: function (evt) {
+                onEnd: function (e) {
                     setPlaylistIds();
-                    _fullPlaylistHeight();
+                    $(that).trigger("fullPlaylistHeight")
                 }
             });
+            return this;
         },
 
         _removeSortable = function () {
+            $blendUp.slideUp(500);
+            $blendDown.slideUp(500);
             playlistSortable.destroy();
-            _resizePlaylistHeight();
+            return this;
         },
 
         getMinutesAndSeconds = function (duration) {
-            var minutes = Math.floor((duration / 1000) / 60);
-            var seconds = Math.floor(duration % 60);
+            var minutes = Math.floor((duration / 1000) / 60),
+                seconds = Math.floor(duration % 60);
             if (seconds < 10)
                 seconds = "0" + seconds;
             var minutesAndSeconds = minutes + ":" + seconds;
             return minutesAndSeconds;
         },
 
-        _fullPlaylistHeight = function () {
-            var distance = $(document).height() - $("#header").height() - $('#sticky-sort-switch-box').height()
-            $playlist.css("height", distance);
-        },
-
-        _resizePlaylistHeight = function () {
-            var distance = $(document).height() - $("#header").height() - $("#controls-box").height() - $('#sticky-sort-switch-box').height();
-            $playlist.css("height", distance);
-        },
-
         _enableSwipe = function () {
             $playlist.swipe("enable");
-            $stickyFooter.slideDown(300);
+            console.log("ENABLE")
+            return this;
         },
 
         _disableSwipe = function () {
             $playlist.swipe("disable");
-            $stickyFooter.slideUp(300);
+            return this;
         },
 
         _getPlaylistAsJSON = function () {
@@ -277,7 +259,10 @@ App.PlaylistView = (function () {
                 playlistAsJSON.push(playlistObject);
             });
             console.log(JSON.parse(JSON.stringify(playlistAsJSON)))
-            return JSON.parse(JSON.stringify(playlistAsJSON))
+            if (playlistAsJSON.length == 0)
+                return null;
+            else
+                return JSON.parse(JSON.stringify(playlistAsJSON))
         },
 
 
@@ -306,8 +291,6 @@ App.PlaylistView = (function () {
     that._getPlaylistAsJSON = _getPlaylistAsJSON;
     that.hideLoadingAnimation = hideLoadingAnimation;
     that.showLoadingAnimation = showLoadingAnimation;
-    that._resizePlaylistHeight = _resizePlaylistHeight;
-    that._fullPlaylistHeight = _fullPlaylistHeight;
     that._addSortable = _addSortable;
     that._removeSortable = _removeSortable;
     that._enableSwipe = _enableSwipe;
