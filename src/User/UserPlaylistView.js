@@ -174,6 +174,7 @@ App.UserPlaylistView = (function () {
         },
 
         handleOpenPlaylist = function () {
+            $(".user-playlist").height($("#playlist").height() - $("#controls-box").height())
             $(".user-playlist-header").hide();
             $(this).parents(".user-playlist-container").find(".user-playlist-header").show();
             $(this).parents(".user-playlist-container").find(".user-playlist").slideDown(300);
