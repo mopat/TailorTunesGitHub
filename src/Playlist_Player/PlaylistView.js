@@ -44,21 +44,20 @@ App.PlaylistView = (function () {
 
         setupSwipe = function () {
             $playlist.swipe({
-                swipeUp: function (event, direction, distance, duration, fingerCount, fingerData) {
-                    if (getRotation() == 90)
+                swipeLeft: function (event) {
+                    if (getUserSide() == "bottom")
                         swipeHandler(event);
                 },
-                swipeRight: function (event, direction, distance, duration, fingerCount, fingerData) {
-                    if (getRotation() == 180)
+                swipeUp: function (event) {
+                    if (getUserSide() == "left")
                         swipeHandler(event);
                 },
-                swipeDown: function (event, direction, distance, duration, fingerCount, fingerData) {
-                    if (getRotation() == -90)
+                swipeRight: function (event) {
+                    if (getUserSide() == "top")
                         swipeHandler(event);
                 },
-
-                swipeLeft: function (event, direction, distance, duration, fingerCount, fingerData) {
-                    if (getRotation() == 360)
+                swipeDown: function (event) {
+                    if (getUserSide() == "right")
                         swipeHandler(event);
                 },
                 allowPageScroll: "vertical",

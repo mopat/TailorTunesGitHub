@@ -65,7 +65,8 @@ App.RotationHandler = (function () {
                 side = $clickedRotation.attr("data-side");
             showRotateTriggers();
             $clickedRotation.fadeOut(500);
-            setRotation(rotation)
+            setRotation(rotation);
+            setUserSider(side);
             rotate(rotation, side);
         };
 

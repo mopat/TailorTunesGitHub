@@ -4,6 +4,7 @@ var PARSE_APPLICATION_ID = "yOTWw2niwOWRTql2MtewglSVcXYQa36Bld6ztZX3",
     SC_CLIENT_ID = "23a3031c7cd251c7c217ca127777e48b";
 
 var rotation = "none";
+var userSide = "bottom";
 
 function setRotation(value) {
     rotation = value;
@@ -11,4 +12,12 @@ function setRotation(value) {
 
 function getRotation() {
     return rotation;
+};
+
+function setUserSider(side) {
+    userSide = side;
+};
+
+function getUserSide() {
+    return userSide;
 };
