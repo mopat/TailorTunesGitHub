@@ -78,30 +78,12 @@
             </div>
             <a class="close-reveal-modal">&#215;</a>
         </div>
-        <div id="picker-box">
-            <div class="row text-center">
-                <a href="#">
-                    <div class="large-4 medium-4 small-4 columns picker picked" id="artist-tab">
-                        Artist
-                    </div>
-                </a>
-                <a href="#">
-                    <div class="large-4 medium-4 small-4 columns picker unpicked" id="track-tab">
-                        Track
-                    </div>
-                </a>
-                <a href="#">
-                    <div class="large-4 medium-4 small-4 columns picker unpicked" id="genre-tab">
-                        Genre
-                    </div>
-                </a>
-            </div>
-        </div>
+
         <div class="row" id="options-box">
             <div class="large-2 medium-2 small-2 columns right" id="search-icon-box">
-            <span id="search-icon">
-                <i class="fi-magnifying-glass">Search</i>
-            </span>
+                <a href="#" class="button postfix" id="search-icon">
+                    <i class="fi-magnifying-glass"></i>
+                </a>
             </div>
             <form>
                 <div class="large-4 medium-4 small-4 columns">
@@ -120,10 +102,28 @@
         <div class="row">
             <form onsubmit="return false;" id="search-form">
                 <div class="row collapse postfix-round">
-                    <div class="large-6 medium-6 columns">
+                    <div id="picker-box" class="text-center">
+
+                        <a href="#">
+                            <div class="large-1 medium-1 small-4 columns picker picked" id="artist-tab">
+                                Artist
+                            </div>
+                        </a>
+                        <a href="#">
+                            <div class="large-1 medium-1 small-4 columns picker unpicked" id="track-tab">
+                                Track
+                            </div>
+                        </a>
+                        <a href="#">
+                            <div class="large-1 medium-1 small-4 columns picker unpicked" id="genre-tab">
+                                Genre
+                            </div>
+                        </a>
+                    </div>
+                    <div class="large-4 medium-4 small-12 columns">
                         <input type="text" placeholder="Value" id="search-field" value="snoop dogg">
                     </div>
-                    <div class="large-3 medium-3 columns" id="artist-dropdown-box">
+                    <div class="large-2 medium-2 small-6 columns" id="artist-dropdown-box">
                         <select id="artist-dropdown" class="search-dropdown">
                             <option value="song_hotttnesss-desc">Hottest</option>
                             <option value="similar">Similar</option>
@@ -135,14 +135,14 @@
                             <option value="danceability-bottom">Low Danceability</option>
                         </select>
                     </div>
-                    <div class="large-3 medium-3 columns" id="track-dropdown-box">
+                    <div class="large-2 medium-2 small-6  columns" id="track-dropdown-box">
                         <select id="track-dropdown" class="search-dropdown">
                             <option value="hottest">Hottest</option>
                             <option value="simple">Simple</option>
                             <option value="similar">Similar</option>
                         </select>
                     </div>
-                    <div class="large-3 medium-3 columns" id="genre-dropdown-box">
+                    <div class="large-2 medium-2 small-6  columns" id="genre-dropdown-box">
                         <select id="genre-dropdown" class="search-dropdown">
                             <option value="song_hotttnesss-top">Hottest</option>
                             <option value="tempo-top">Slow</option>
@@ -153,7 +153,7 @@
                             <option value="danceability-bottom">Low Danceability</option>
                         </select>
                     </div>
-                    <div class="large-3 medium-3 columns">
+                    <div class="large-3 medium-3 small-6  columns">
                         <a href="#" class="button postfix" id="search-button">Search</a>
                     </div>
                 </div>

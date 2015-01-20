@@ -8,7 +8,7 @@ App.SearchView = (function () {
         $searchButton = null,
         $picker = null,
         $artistDropdownBox = null,
-        $trackDropwdownBox = null,
+        $trackDropdownBox = null,
         $genreDropdownBox = null,
         $searchDropdown = null,
         $searchIcon = null,
@@ -24,12 +24,19 @@ App.SearchView = (function () {
             $optionsBox = $("#options-box");
 
             $artistDropdownBox = $("#artist-dropdown-box");
-            $trackDropwdownBox = $("#track-dropdown-box");
+            $trackDropdownBox = $("#track-dropdown-box");
             $genreDropdownBox = $("#genre-dropdown-box");
             $searchIcon = $("#search-icon");
 
             mode = "artist";
 
+            initHandler();
+            openSearchOnEmpty();
+
+            return that;
+        },
+
+        initHandler = function () {
             $searchField.keydown(handleSubmitForm);
             $searchField.on("click", handleSearchFieldClick);
             $searchField.select();
@@ -37,27 +44,61 @@ App.SearchView = (function () {
             $searchButton.on("click", handleSearch);
             $picker.on("click", handleTabClicked);
 
-            $trackDropwdownBox.on("change", handleTrackDropdownChange);
+            $trackDropdownBox.on("change", handleTrackDropdownChange);
 
             $searchIcon.on("click", function () {
-                $optionsBox.slideUp(500);
-                $searchForm.slideDown(500);
-                $searchField.focus();
-                $(that).trigger("searchIconFocus");
+                searchFieldFocusIn();
                 $searchField.on("focusout", function () {
                     $("body").on("click", function (e) {
-                        if ($(e.target).attr("class") != "search-dropdown" && $(e.target).attr("id") != $searchField.attr("id") && $(e.target).hasClass("picker") == false) {
-                            $optionsBox.slideDown(500);
-                            $searchForm.slideUp(500);
-                            $(that).trigger("searchIconFocusOut");
+                        var target = $(e.target);
+                        if (needFocusOut(target)) {
+                            searchFieldFocusOut();
+                            $("body").off("click");
+                        }
+                        else {
+                            $("body").off("click");
                         }
                     });
                 });
-                $("body").off("click");
-            });
 
-            return that;
+            });
         },
+
+        searchFieldFocusIn = function () {
+            $optionsBox.slideUp(500);
+            $searchForm.slideDown(500, function () {
+                $(that).trigger("searchIconFocusIn");
+            });
+            $searchField.focus();
+        },
+
+        searchFieldFocusOut = function () {
+            $optionsBox.slideDown(500);
+            $searchForm.slideUp(500, function () {
+                $(that).trigger("searchIconFocusOut");
+            });
+        },
+
+        openSearchOnEmpty = function () {
+            searchFieldFocusIn();
+            $("body").on("click", function (e) {
+                var target = $(e.target);
+                if (needFocusOut(target)) {
+                    searchFieldFocusOut();
+                    $("body").off("click");
+                }
+                else {
+                    $("body").off("click");
+                }
+            });
+        },
+
+        needFocusOut = function (target) {
+            if (target.attr("class") != "search-dropdown" && target.attr("id") != $searchField.attr("id") && target.hasClass("picker") == false)
+                return true;
+            else return false;
+        },
+
 
         handleSearch = function () {
             var option = getVisibleDropdownValue();
@@ -103,7 +144,7 @@ App.SearchView = (function () {
         artistMode = function () {
             $artistDropdownBox.show();
 
-            $trackDropwdownBox.hide();
+            $trackDropdownBox.hide();
             $genreDropdownBox.hide();
             $searchField.removeAttr('disabled');
 
@@ -111,7 +152,7 @@ App.SearchView = (function () {
         },
 
         trackMode = function () {
-            $trackDropwdownBox.show();
+            $trackDropdownBox.show();
 
             $artistDropdownBox.hide();
             $genreDropdownBox.hide();
@@ -127,17 +168,17 @@ App.SearchView = (function () {
         genreMode = function () {
             $genreDropdownBox.show();
 
-            $trackDropwdownBox.hide();
+            $trackDropdownBox.hide();
             $artistDropdownBox.hide();
             $searchField.removeAttr('disabled');
 
             mode = "genre";
         },
 
-        getVisibleDropdownValue = function(){
+        getVisibleDropdownValue = function () {
             var visibleDropdownValue = "";
-            $searchDropdown.each(function( index ) {
-                if($(this).is(":visible")){
+            $searchDropdown.each(function (index) {
+                if ($(this).is(":visible")) {
                     visibleDropdownValue = $(this).val();
                 }
             });
@@ -153,8 +194,8 @@ App.SearchView = (function () {
             }
         },
 
-        resetDropdowns = function(){
-            $searchDropdown.each(function() {
+        resetDropdowns = function () {
+            $searchDropdown.each(function () {
                 $(this).find('option:first').prop('selected', 'selected');
             });
         },

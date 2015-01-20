@@ -67,7 +67,7 @@ App.MainController = (function () {
 
 
             //search icon click
-            $(searchView).on("searchIconFocus", handleSearchIconFocus);
+            $(searchView).on("searchIconFocusIn", handleSearchIconFocusIn);
             $(searchView).on("searchIconFocusOut", handleSearchIconFocusOut);
 
 
@@ -249,7 +249,7 @@ App.MainController = (function () {
             resize._resizePlaylistHeight();
         },
 
-        handleSearchIconFocus = function () {
+        handleSearchIconFocusIn = function () {
             controlsView._hideControlsBox();
             resize._fullPlaylistHeight();
         },

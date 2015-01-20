@@ -77,21 +77,23 @@ body {
     color: gray;
 }
 
+#options-box {
+    background-color: #333333;
+}
 .picker {
-    height: 40px;
+    height: 37px;
     line-height: 40px;
     color: #383838;
     font-weight: bold;
-    border-radius: 10px 10px 0 0;
-    font-size: 1.2rem;
+    font-size: 0.9rem;
 }
 
 .picked {
-    background-color: #A2E1FF;
+    background-color: #E8E7E6;
 }
 
 .unpicked {
-    background-color: #3AC4CC;
+    background-color: #b3b3b3;
 }
 
 #artist-tab, #track-tab {
@@ -101,6 +103,12 @@ body {
 #search-form {
     background-color: #333333;
     display: none;
+}
+
+#search-icon {
+    font-size: 2rem;
+    width: 100%;
+    background-color: #b81900;
 }
 
 /*Playlist CSS*/

@@ -19,6 +19,7 @@ App.PlaylistOptions = (function () {
             initHandler();
             stickyRelocate();
             _checkSortModeSwitch();
+
             return that;
         },
 
