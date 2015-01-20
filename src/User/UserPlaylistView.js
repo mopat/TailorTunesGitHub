@@ -27,6 +27,7 @@ App.UserPlaylistView = (function () {
 
             initHandler();
 
+            setupSwipe();
             return that;
         },
 
@@ -34,12 +35,35 @@ App.UserPlaylistView = (function () {
             $userPlaylistModal.on("close", handleUserPlaylistModalClosed);
 
             $userPlaylisBox.on("click", ".load-playlist", handleLoadPlaylist);
-            $userPlaylisBox.on("swipeleft", ".user-playlist-item", swipeleftHandler);
             $userPlaylisBox.on("click", ".open-icon", handleOpenPlaylist);
             $userPlaylisBox.on("click", ".trash-icon", handleDeletePlaylistClicked);
             $userPlaylisBox.on("click", ".close-icon", handleClosePlaylist);
             $userPlaylisBox.on("click", ".user-playlist-item", handleListItemClick);
             $userPlaylisBox.on("click", ".stop-icon", handleStopIconClick);
+        },
+
+        setupSwipe = function () {
+            $userPlaylisBox.swipe({
+                swipeLeft: function (event) {
+                    if (getUserSide() == "bottom")
+                        swipeHandler(event);
+                },
+                swipeUp: function (event) {
+                    if (getUserSide() == "left")
+                        swipeHandler(event);
+                },
+                swipeRight: function (event) {
+                    if (getUserSide() == "top")
+                        swipeHandler(event);
+                },
+                swipeDown: function (event) {
+                    if (getUserSide() == "right")
+                        swipeHandler(event);
+                },
+                allowPageScroll: "vertical",
+                threshold: 10,
+                excludedElements: "button, input, select, textarea, .noSwipe"
+            });
         },
 
         _setUserPlaylistView = function (playlistTitle, date, length, playlistId, JSONPlaylist) {
@@ -139,19 +163,24 @@ App.UserPlaylistView = (function () {
         },
 
 
-        swipeleftHandler = function (e) {
-            $.e.special.swipe.horizontalDistanceThreshold = 50;
+        swipeHandler = function (e) {
+            console.log("SWIPE")
+
             var $swipedItem = $(e.target).closest(".user-playlist-item");
             $swipedItem.fadeOut(500, function () {
                 $swipedItem.remove();
+                setPlaylistIds();
             });
         },
 
-        handleOpenPlaylist = function (event) {
+        handleOpenPlaylist = function () {
+            $(".user-playlist-header").hide();
+            $(this).parents(".user-playlist-container").find(".user-playlist-header").show();
             $(this).parents(".user-playlist-container").find(".user-playlist").slideDown(300);
         },
 
-        handleClosePlaylist = function (event) {
+        handleClosePlaylist = function () {
+            $(".user-playlist-header").show();
             $(this).parents(".user-playlist-container").find(".user-playlist").slideUp(300);
         },
 

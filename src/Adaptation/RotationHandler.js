@@ -12,7 +12,7 @@ App.RotationHandler = (function () {
             $modals = $(".reveal-modal");
 
             $rotate.on("click", handleRotateClick);
-            rotationMode = true;
+            rotationMode = false;
             if (rotationMode)
                 showRotateTriggers();
 
@@ -59,11 +59,11 @@ App.RotationHandler = (function () {
         },
 
         resizeLeftDistanceModal = function () {
-            $modals.css("left", "5%").css("right", $(document).width() - $rotatable.width())
+            $modals.css("left", "5%").css("right", $(document).width() - $rotatable.width());
         },
 
         resizeRightDistanceModal = function () {
-            $modals.css("right", "5%").css("left", $(document).width() - $rotatable.width())
+            $modals.css("right", "5%").css("left", $(document).width() - $rotatable.width());
         },
 
 

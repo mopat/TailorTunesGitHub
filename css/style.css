@@ -39,6 +39,7 @@ body {
 .button {
     z-index: 0;
 }
+
 /*Login CSS*/
 
 #login-form-box, #sign-in-form-box {
@@ -80,6 +81,7 @@ body {
 #options-box {
     background-color: #333333;
 }
+
 .picker {
     height: 37px;
     line-height: 40px;
@@ -128,6 +130,7 @@ body {
     margin: 0 auto;
     width: 200px;
 }
+
 #playlist-box, #user-playlist-box {
     height: 100%;
     width: 100%;
@@ -200,6 +203,52 @@ body {
     line-height: 30px;
 }
 
+/*user playlist mods*/
+.user-playlist-container {
+    line-height: 25px;
+    width: 100%;
+}
+
+.user-playlist {
+    max-height: 400px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    display: none;
+    border-bottom: 1px solid #3AC4CC;
+}
+
+.user-playlist-name {
+    width: 35%;
+    display: inline-block;
+}
+
+.user-playlist-date {
+    width: 25%;
+    display: none;
+}
+
+.user-playlist-length {
+    width: 5%;
+    display: inline-block;
+}
+
+.add-playlist, .load-playlist {
+    width: 8%;
+    display: inline-block;
+    text-align: center;
+}
+
+.trash-icon, .open-icon, .close-icon {
+    width: 3%;
+    display: inline-block;
+}
+
+.rename-playlist {
+    width: 10%;
+    display: inline-block;
+    text-align: center;
+}
+
 .blend {
     position: fixed;
     margin: 0;
@@ -224,11 +273,6 @@ body {
     bottom: 0;
 }
 
-.user-playlist {
-    display: none;
-    border-bottom: 1px solid #3AC4CC;
-}
-
 #sticky-sort-switch-box {
     background-color: #333;
     margin: 0;
@@ -236,7 +280,6 @@ body {
     height: 38px;
     width: 100%;
 }
-
 
 #sticky {
     color: #fff;
@@ -293,6 +336,7 @@ body {
 #time-slider-box {
     padding-top: 14px;
 }
+
 #time-slider {
     background-color: #df151d;
     margin-left: 30px;
@@ -305,6 +349,7 @@ body {
     font-size: 0.8rem;
     float: right;
 }
+
 #volume-box {
     color: #ffffff;
     font-size: 1.5rem;
@@ -405,3 +450,10 @@ footer {
 .ghost {
     background: black;
 }
+
+/*modification for rotation*/
+.reveal-modal {
+    bottom: 10%;
+    top: 10%;
+}
+
