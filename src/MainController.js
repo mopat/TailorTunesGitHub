@@ -60,6 +60,7 @@ App.MainController = (function () {
             //playing user playlist
             $(userPlaylistView).on("previewPlayingStart", handlePreviewPlayingStart);
             $(userPlaylistView).on("previewPlayingStop", handlePreviewPlayingStop);
+            $(userPlaylistView).on("resizeUserPlaylistHeight", handleResizeUserPlaylistHeight);
 
 
             $(playlistView).on("checkSortModeSwitch", handleCheckSortModeSwitch);
@@ -190,6 +191,10 @@ App.MainController = (function () {
             controlsView._playTrack();
         },
 
+        handleResizeUserPlaylistHeight = function () {
+            resize._resizeUserPlaylistHeight();
+        },
+
         handleLoginButtonClick = function (event, username, password) {
             userManager._logIn(username, password);
         },
@@ -247,6 +252,7 @@ App.MainController = (function () {
 
         handleRotationChange = function () {
             resize._resizePlaylistHeight();
+            resize._resizeUserPlaylistHeight();
         },
 
         handleSearchIconFocusIn = function () {

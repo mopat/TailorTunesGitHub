@@ -33,10 +33,15 @@ App.Resize = (function () {
             var height = $(document).height() - $header.height() - $controlsBox.height() - $sortSwitchBox.height();
             $playlist.css("height", height);
             return this;
+        },
+
+        _resizeUserPlaylistHeight = function () {
+            $(".user-playlist").height($("#user-playlist-box").innerHeight());
         };
 
     that._fullPlaylistHeight = _fullPlaylistHeight;
     that._resizePlaylistHeight = _resizePlaylistHeight;
+    that._resizeUserPlaylistHeight = _resizeUserPlaylistHeight;
     that.init = init;
 
     return that;
