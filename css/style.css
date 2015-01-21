@@ -7,7 +7,7 @@ html {
 }
 
 body {
-    background-image: url("../ui-images/pw_maze_white.png");
+    background-image: url("../ui-images/footer_lodyas.png");
     width: 100%;
     height: 100%;
     margin: 0px;
@@ -40,6 +40,12 @@ body {
     z-index: 0;
 }
 
+#search-form, #options-box {
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#99333333, endColorstr=#99333333);
+    background: rgb(33, 33, 33);
+    background: rgba(188, 188, 188, 0.5);
+}
+
 /*Login CSS*/
 
 #login-form-box, #sign-in-form-box {
@@ -52,8 +58,17 @@ body {
 
 #loggedin-box {
     display: none;
+    color: #ffffff;
+    line-height: 30px;
+    padding: 5px;
+    font-weight: bold;
+    font-size: 1.2rem;
+    float: right;
 }
 
+#loggedin-box a {
+    font-weight: bold;
+}
 #login-failed, #sign-in-failed {
     color: #df151d;
     font-weight: bold;
@@ -78,10 +93,6 @@ body {
     color: gray;
 }
 
-#options-box {
-    background-color: #333333;
-}
-
 .picker {
     height: 37px;
     line-height: 40px;
@@ -103,10 +114,46 @@ body {
 }
 
 #search-form {
-    background-color: #333333;
     display: none;
 }
 
+.switch {
+    left: 10%;
+    right: 10%;
+}
+
+#header input, #header #search-icon, #header .button, #header select {
+    margin: 0;
+}
+
+.options-button {
+    color: white;
+    line-height: 37px;
+    font-size: 1.3rem;
+    width: 100%;
+    text-align: center;
+    border: none;
+}
+
+#options-box a:visited {
+    color: white;
+    border: none;
+}
+
+#options-box a:hover {
+    color: white;
+    border: none;
+}
+
+#options-box a:active {
+    color: lightgray;
+    border: none;
+}
+
+#options-box a:link {
+    color: white;
+    border: none;
+}
 #search-icon {
     font-size: 2rem;
     width: 100%;
@@ -146,7 +193,7 @@ body {
 #playlist {
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#99333333, endColorstr=#99333333);
     background: rgb(33, 33, 33);
-    background: rgba(33, 33, 33, 0.3);
+    background: rgba(255, 255, 255, 0.5);
     overflow-y: scroll;
     overflow-x: hidden;
 }
@@ -180,11 +227,14 @@ body {
 .playlist-title, .user-playlist-title {
     float: left;
     position: relative;
-    padding-left: 10px;
-    width: 70%;
+    width: 65%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.duration-and-title {
+    line-height: 25px;
 }
 
 .playlist-item-image, .user-playlist-item-image {
@@ -196,11 +246,7 @@ body {
 }
 
 .playlist-track-duration, .user-playlist-track-duration {
-    float: left;
-    width: auto;
-    padding-left: 10px;
-    padding-right: 10px;
-    line-height: 30px;
+    font-size: 0.9rem;
 }
 
 /*user playlist mods*/
@@ -273,32 +319,6 @@ body {
     bottom: 0;
 }
 
-#sticky-sort-switch-box {
-    background-color: #333;
-    margin: 0;
-    padding-top: 1px;
-    height: 38px;
-    width: 100%;
-}
-
-#sticky {
-    color: #fff;
-    max-width: 200px;
-    font-size: 0.9rem;
-    padding-right: 2px;
-    padding-left: 5px;
-}
-
-#sticky.stick {
-    background-color: gray;
-    position: fixed;
-    top: 0;
-    height: 35px;
-    z-index: 10000;
-    border-radius: 5px;
-    opacity: 0.95;
-}
-
 /*Controls-Box: Slider and Buttons*/
 #controls-box {
     background-color: #777777;
@@ -351,6 +371,7 @@ body {
 }
 
 #volume-box {
+    padding-top: 2px;
     color: #ffffff;
     font-size: 1.5rem;
 }

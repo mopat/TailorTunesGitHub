@@ -17,9 +17,7 @@ App.PlaylistOptions = (function () {
             $clearPlaylistButton = $("#clear-playlist-button");
 
             initHandler();
-            stickyRelocate();
             _checkSortModeSwitch();
-
             return that;
         },
 
@@ -39,18 +37,6 @@ App.PlaylistOptions = (function () {
                 $sortModeSwitch.attr("checked", true);
                 $(that).trigger("sortEnabled");
             }
-        },
-
-        stickyRelocate = function () {
-            $(window).on("scroll", function () {
-                var windowTop = $(window).scrollTop();
-                var divTop = $('#sticky-anchor').offset().top;
-                if (windowTop > divTop) {
-                    $('#sticky').addClass('stick');
-                }
-                else {
-                }
-            });
         },
 
         savePlaylist = function () {
