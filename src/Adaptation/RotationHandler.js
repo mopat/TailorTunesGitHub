@@ -22,9 +22,6 @@ App.RotationHandler = (function () {
         rotate = function (rotation, side) {
             $modals.transition({rotate: rotation}, ROTATE_DURATION);
             $rotatable.transition({rotate: rotation}, ROTATE_DURATION, function () {
-                $(that).trigger("setRotation");
-            });
-            if (rotationMode) {
                 switch (side) {
                     case "left":
                         $rotatable.css("float", "left");
@@ -43,27 +40,29 @@ App.RotationHandler = (function () {
                         topOrBottomModeResize();
                         break;
                 }
-            }
+                $(that).trigger("setRotation");
+            });
+
         },
 
         leftOrRightResize = function () {
             $rotatable.width($(window).height());
             $("#controls-box .row").width($(window).height());
-            $modals.width($(window).height() * 0.8).css("top", "10%").css("bottom", "10%")
+            $modals.width($(window).height()).css("top", "0").css("bottom", "10%")
         },
 
         topOrBottomModeResize = function () {
             $rotatable.width("100%");
             $("#controls-box .row").width($(".row").width());
-            $modals.css("top", "10%").css("bottom", "10%").width("80%").css("left", "10%").css("right", "10%");
+            $modals.css("top", "50px").css("bottom", "50px").width("80%").css("left", 0).css("right", 0);
         },
 
         resizeLeftDistanceModal = function () {
-            $modals.css("left", "5%").css("right", $(document).width() - $rotatable.width());
+            $modals.css("left", "0").css("right", $(document).width() - $rotatable.width());
         },
 
         resizeRightDistanceModal = function () {
-            $modals.css("right", "5%").css("left", $(document).width() - $rotatable.width());
+            $modals.css("right", "0").css("left", $(document).width() - $rotatable.width());
         },
 
 

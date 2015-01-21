@@ -453,7 +453,9 @@ footer {
 
 /*modification for rotation*/
 .reveal-modal {
-    bottom: 10%;
-    top: 10%;
+    bottom: 50px !important;
+    top: 50px !important;
 }
+
+
 
