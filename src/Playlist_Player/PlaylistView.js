@@ -283,6 +283,10 @@ App.PlaylistView = (function () {
         showLoadingAnimation = function () {
             $loadingAnimation.show();
             $loadingAnimation.dimBackground();
+        },
+
+        _isPlaylistExisting = function () {
+            return isPlaylistExisting;
         };
 
     that.addPlaylist = addPlaylist;
@@ -295,6 +299,7 @@ App.PlaylistView = (function () {
     that._enableSwipe = _enableSwipe;
     that._disableSwipe = _disableSwipe;
     that._clearPlaylist = _clearPlaylist;
+    that._isPlaylistExisting = _isPlaylistExisting;
     that.init = init;
 
     return that;

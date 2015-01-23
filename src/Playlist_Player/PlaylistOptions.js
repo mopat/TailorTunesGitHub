@@ -6,9 +6,14 @@ App.PlaylistOptions = (function () {
         $sortModeSwitch = null,
         $sortSwitchBox = null,
         $savePlaylistButton = null,
+        $postPlaylistBox = null,
+        $postPlaylistButton = null,
         $playlistNameInput = null,
         $clearPlaylistButton = null,
         isSortEnabled = null,
+        $cancelPostPlaylistButton = null,
+        $postSaveButtonBox = null,
+        isPlaylistExisting = false,
 
         init = function () {
             $sortModeSwitch = $("#sort-mode-switch");
@@ -16,6 +21,10 @@ App.PlaylistOptions = (function () {
             $savePlaylistButton = $("#save-playlist-button");
             $playlistNameInput = $("#playlist-name-input");
             $clearPlaylistButton = $("#clear-playlist-button");
+            $postPlaylistButton = $("#post-playlist-button");
+            $postPlaylistBox = $("#post-playlist-box");
+            $cancelPostPlaylistButton = $("#cancel-post-playlist-button");
+            $postSaveButtonBox = $("#post-save-button-box");
 
             initHandler();
             _checkSortModeSwitch();
@@ -27,6 +36,9 @@ App.PlaylistOptions = (function () {
 
             $savePlaylistButton.on("click", savePlaylist);
             $clearPlaylistButton.on("click", clearPlaylist);
+
+            $postPlaylistButton.on("click", postPlaylist);
+            $cancelPostPlaylistButton.on("click", cancelPostPlaylist);
         },
 
         handleSortSwitchClick = function () {
@@ -43,11 +55,28 @@ App.PlaylistOptions = (function () {
         },
 
         savePlaylist = function () {
+            $postPlaylistBox.fadeIn(300);
+            $clearPlaylistButton.hide();
+            $savePlaylistButton.hide();
+            $(that).trigger("postPlaylistClicked");
+        },
+
+        postPlaylist = function () {
             var playlistName = $playlistNameInput.val();
-            if (!playlistName)
+            if (!playlistName || !isPlaylistExisting)
                 swal("Oops...", "Your playlist or your playlist name is empty!", "error");
-            else
+            else {
                 $(that).trigger("savePlaylistClicked", [playlistName]);
+                $postPlaylistBox.hide();
+                $clearPlaylistButton.fadeIn(300);
+                $savePlaylistButton.fadeIn(300);
+            }
+        },
+
+        cancelPostPlaylist = function () {
+            $postPlaylistBox.hide();
+            $clearPlaylistButton.fadeIn(300);
+            $savePlaylistButton.fadeIn(300);
         },
 
         _checkSortModeSwitch = function () {
@@ -62,10 +91,15 @@ App.PlaylistOptions = (function () {
 
         _isSortEnabled = function () {
             return isSortEnabled;
+        },
+
+        _setIsPlaylistExisting = function (isExisting) {
+            isPlaylistExisting = isExisting;
         };
 
     that._checkSortModeSwitch = _checkSortModeSwitch;
     that._isSortEnabled = _isSortEnabled;
+    that._setIsPlaylistExisting = _setIsPlaylistExisting;
     that.init = init;
 
     return that;

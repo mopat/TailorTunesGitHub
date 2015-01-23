@@ -54,6 +54,7 @@ App.MainController = (function () {
 
             //user playlist management
             $(playlistOptions).on("savePlaylistClicked", handleSavePlaylistClicked);
+            $(playlistOptions).on("postPlaylistClicked", handlePostPlaylistClicked);
             $(userPlaylistManager).on("userPlaylistTitlesLoaded", handleUserPlaylistTitlesLoaded);
             $(userPlaylistView).on("userPlaylistLoaded", handleUserPlaylistLoaded);
             $(userPlaylistManager).on("emptyOldUserPlaylistView", handleEmptyUserPlaylistView);
@@ -148,10 +149,12 @@ App.MainController = (function () {
 
         handlePlaylistCreated = function (event, playlist) {
             playlistView.addPlaylist(playlist);
+            playlistOptions._setIsPlaylistExisting(playlistView._isPlaylistExisting());
         },
 
         handleSoundlcoudTrackPicked = function (event, track) {
             playlistView.addPlaylist(track);
+            playlistOptions._setIsPlaylistExisting(playlistView._isPlaylistExisting());
         },
 
         handlePlaylistItemClick = function (event, streamUrl, title) {
@@ -175,12 +178,17 @@ App.MainController = (function () {
             userPlaylistManager._startPlaylistPost(JSONPlaylist, playlistName);
         },
 
+        handlePostPlaylistClicked = function () {
+            resize._resizePlaylistHeight();
+        },
+
         handleUserPlaylistTitlesLoaded = function (event, title, date, length, playlistId, JSONPlaylist) {
             userPlaylistView._setUserPlaylistView(title, date, length, playlistId, JSONPlaylist);
         },
 
         handleUserPlaylistLoaded = function (event, playlist) {
             playlistView.addPlaylist(playlist);
+            playlistOptions._setIsPlaylistExisting(playlistView._isPlaylistExisting());
         },
 
         handlePreviewPlayingStart = function () {
@@ -244,6 +252,9 @@ App.MainController = (function () {
             controlsView._resetPlayer();
             userPlaylistView._removeLoadedStatus();
             playlistView._clearPlaylist();
+
+            var isPlaylistExisting = playlistView._isPlaylistExisting();
+            playlistOptions._setIsPlaylistExisting(isPlaylistExisting);
         },
 
         handlePlaylistSpaceFillerClick = function () {

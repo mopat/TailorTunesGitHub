@@ -61,14 +61,12 @@ body {
     color: #ffffff;
     line-height: 30px;
     padding: 5px;
-    font-weight: bold;
-    font-size: 1.2rem;
-    float: right;
 }
 
-#loggedin-box a {
-    font-weight: bold;
+#loggedin-box, #login-box {
+    font-size: 1.1rem;
 }
+
 #login-failed, #sign-in-failed {
     color: #df151d;
     font-weight: bold;
@@ -129,7 +127,7 @@ body {
 .options-button {
     color: white;
     line-height: 37px;
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     width: 100%;
     text-align: center;
     border: none;
