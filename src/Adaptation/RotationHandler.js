@@ -12,7 +12,7 @@ App.RotationHandler = (function () {
             $modals = $(".reveal-modal");
 
             $rotate.on("click", handleRotateClick);
-            rotationMode = false;
+            rotationMode = true;
             if (rotationMode)
                 showRotateTriggers();
 

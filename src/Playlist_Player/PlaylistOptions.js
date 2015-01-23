@@ -8,6 +8,7 @@ App.PlaylistOptions = (function () {
         $savePlaylistButton = null,
         $playlistNameInput = null,
         $clearPlaylistButton = null,
+        isSortEnabled = null,
 
         init = function () {
             $sortModeSwitch = $("#sort-mode-switch");
@@ -31,10 +32,12 @@ App.PlaylistOptions = (function () {
         handleSortSwitchClick = function () {
             if ($sortModeSwitch.attr("checked")) {
                 $sortModeSwitch.removeAttr("checked");
+                isSortEnabled = false;
                 $(that).trigger("sortDisabled");
             }
             else {
                 $sortModeSwitch.attr("checked", true);
+                isSortEnabled = true;
                 $(that).trigger("sortEnabled");
             }
         },
@@ -55,9 +58,14 @@ App.PlaylistOptions = (function () {
         clearPlaylist = function () {
             $(that).trigger("playlistCleared");
             // $playlistSpaceFiller.show();
+        },
+
+        _isSortEnabled = function () {
+            return isSortEnabled;
         };
 
     that._checkSortModeSwitch = _checkSortModeSwitch;
+    that._isSortEnabled = _isSortEnabled;
     that.init = init;
 
     return that;

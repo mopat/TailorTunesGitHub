@@ -251,7 +251,12 @@ App.MainController = (function () {
         },
 
         handleRotationChange = function () {
+            var sortEnabled = playlistOptions._isSortEnabled();
+            if (sortEnabled)
+                resize._fullPlaylistHeight();
+            else
             resize._resizePlaylistHeight();
+
             resize._resizeUserPlaylistHeight();
         },
 
