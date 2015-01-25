@@ -6,6 +6,7 @@ App.SearchView = (function () {
         $searchForm = null,
         $searchField = null,
         $searchButton = null,
+        $closeSearchButton = null,
         $picker = null,
         $artistDropdownBox = null,
         $trackDropdownBox = null,
@@ -19,6 +20,7 @@ App.SearchView = (function () {
             $searchForm = $("#search-form");
             $searchField = $("#search-field");
             $searchButton = $("#search-button");
+            $closeSearchButton = $("#close-search-button");
             $picker = $(".picker");
             $searchDropdown = $(".search-dropdown");
             $optionsBox = $("#options-box");
@@ -42,25 +44,13 @@ App.SearchView = (function () {
             $searchField.select();
 
             $searchButton.on("click", handleSearch);
+            $closeSearchButton.on("click", handleCloseSearch);
             $picker.on("click", handleTabClicked);
 
             $trackDropdownBox.on("change", handleTrackDropdownChange);
 
             $searchIcon.on("click", function () {
                 searchFieldFocusIn();
-                $searchField.on("focusout", function () {
-                    $("body").on("click", function (e) {
-                        var target = $(e.target);
-                        if (needFocusOut(target)) {
-                            searchFieldFocusOut();
-                            $("body").off("click");
-                        }
-                        else {
-                            $("body").off("click");
-                        }
-                    });
-                });
-
             });
         },
 
@@ -109,6 +99,10 @@ App.SearchView = (function () {
             }
             else
                 $(that).trigger("searchButtonClickedEchoNest", [query, mode, option, null]);
+        },
+
+        handleCloseSearch = function () {
+            searchFieldFocusOut();
         },
 
         handleSubmitForm = function (e) {

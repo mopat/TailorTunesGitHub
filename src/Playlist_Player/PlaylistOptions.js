@@ -95,7 +95,6 @@ App.PlaylistOptions = (function () {
 
         _setIsPlaylistExisting = function (isExisting) {
             isPlaylistExisting = isExisting;
-            console.log(isExisting)
             if (isPlaylistExisting) {
                 $clearPlaylistButton.fadeIn(300);
                 $savePlaylistButton.fadeIn(300);

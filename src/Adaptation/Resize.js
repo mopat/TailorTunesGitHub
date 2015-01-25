@@ -10,6 +10,8 @@ App.Resize = (function () {
         $playlist = null,
         $header = null,
         $controlsBox = null,
+        isKeyboard = false,
+        initialScreenSize = null,
 
         init = function () {
             $sortSwitchBox = $("#sticky-sort-switch-box");
@@ -20,17 +22,30 @@ App.Resize = (function () {
             $(document).on("ready", function () {
                 _resizePlaylistHeight();
             });
+            isKeyboard = false;
+            initialScreenSize = window.innerHeight;
+
+            window.addEventListener("resize", function () {
+                isKeyboard = (window.innerHeight < initialScreenSize);
+
+                if (!isKeyboard)
+                    if ($controlsBox.is(":visible"))
+                        _resizePlaylistHeight();
+                    else if (!$controlsBox.is(":visible"))
+                        _fullPlaylistHeight();
+
+            }, false);
             return that;
         },
 
         _fullPlaylistHeight = function () {
-            var height = $(document).height() - $header.height();
+            var height = $(window).height() - $header.height();
             $playlist.css("height", height);
             return this;
         },
 
         _resizePlaylistHeight = function () {
-            var height = $(document).height() - $header.height() - $controlsBox.height();
+            var height = $(window).height() - $header.height() - $controlsBox.height();
             $playlist.css("height", height);
             return this;
         },
