@@ -73,9 +73,9 @@ App.SearchView = (function () {
         },
 
         searchFieldFocusOut = function () {
-            $optionsBox.show(0);
+            $optionsBox.show();
             $searchForm.hide();
-                $(that).trigger("searchIconFocusOut");
+            $(that).trigger("searchIconFocusOut");
         },
 
         openSearchOnEmpty = function () {
