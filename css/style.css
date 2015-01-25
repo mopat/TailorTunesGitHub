@@ -46,6 +46,7 @@ body {
     background: rgba(188, 188, 188, 0.5);
 }
 
+
 /*Login CSS*/
 
 #login-form-box, #sign-in-form-box {
@@ -151,6 +152,10 @@ body {
 #options-box a:link {
     color: white;
     border: none;
+}
+
+#save-playlist-button, #clear-playlist-button {
+    display: none;
 }
 #search-icon {
     font-size: 2rem;

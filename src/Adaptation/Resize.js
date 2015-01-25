@@ -36,7 +36,7 @@ App.Resize = (function () {
         },
 
         _resizeUserPlaylistHeight = function () {
-            $(".user-playlist").height($("#user-playlist-box").innerHeight());
+            $(".user-playlist").height($("#user-playlist-box").innerHeight() - 50);
         };
 
     that._fullPlaylistHeight = _fullPlaylistHeight;
