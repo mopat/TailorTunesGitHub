@@ -251,10 +251,10 @@ body {
 .user-playlist-container {
     line-height: 25px;
     width: 100%;
+    font-size: 1.1rem;
 }
 
 .user-playlist {
-
     overflow-y: scroll;
     overflow-x: hidden;
     display: none;
@@ -262,7 +262,7 @@ body {
 }
 
 .user-playlist-name {
-    width: 35%;
+    width: 40%;
     display: inline-block;
 }
 
@@ -272,27 +272,33 @@ body {
 }
 
 .user-playlist-length {
-    width: 5%;
+    width: 8%;
     display: inline-block;
 }
 
-.add-playlist, .load-playlist {
-    width: 8%;
+.load-playlist {
+    width: 12%;
     display: inline-block;
     text-align: center;
 }
 
 .trash-icon, .open-icon, .close-icon {
-    width: 3%;
-    display: inline-block;
-}
-
-.rename-playlist {
     width: 10%;
     display: inline-block;
     text-align: center;
 }
 
+.stop-icon {
+    display: none;
+    width: 5%;
+    float: right;
+    text-align: center;
+    padding-right: 5px;
+}
+
+.arrow-up-down {
+    height: 1.8rem;
+}
 .blend {
     position: fixed;
     margin: 0;

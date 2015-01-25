@@ -124,7 +124,8 @@ App.UserPlaylistView = (function () {
             }
         },
 
-        handleLoadPlaylist = function () {
+        handleLoadPlaylist = function (e) {
+            e.preventDefault();
             //playlist in playlistview laden
             var $userPlaylist = $(this).parents(".user-playlist-container").find(".user-playlist");
             if ($userPlaylist.hasClass("loaded") == false) {
@@ -173,26 +174,34 @@ App.UserPlaylistView = (function () {
             });
         },
 
-        handleOpenPlaylist = function () {
+        handleOpenPlaylist = function (e) {
+            e.preventDefault();
             $(that).trigger("resizeUserPlaylistHeight");
             $(".user-playlist-header").hide();
             $(this).parents(".user-playlist-container").find(".user-playlist-header").show();
             $(this).parents(".user-playlist-container").find(".user-playlist").slideDown(300);
+            $(".open-icon").hide();
+            $(".close-icon").show();
         },
 
-        handleClosePlaylist = function () {
+        handleClosePlaylist = function (e) {
+            e.preventDefault();
             $(".user-playlist-header").show();
             $(this).parents(".user-playlist-container").find(".user-playlist").slideUp(300);
+            $(".close-icon").hide();
+            $(".open-icon").show();
         },
 
-        handleStopIconClick = function () {
+        handleStopIconClick = function (e) {
+            e.preventDefault();
             preview.pause();
             preview.currentTime = 0;
             $(".stop-icon").hide();
             $(".preview-playing").removeClass("preview-playing");
         },
 
-        handleDeletePlaylistClicked = function () {
+        handleDeletePlaylistClicked = function (e) {
+            e.preventDefault();
             $playlistContainerToDelete = $(this).parents(".user-playlist-container");
             var playlistId = $playlistContainerToDelete.find(".user-playlist").attr("id");
             swal({
@@ -207,7 +216,8 @@ App.UserPlaylistView = (function () {
             });
         },
 
-        _removeUserPlaylist = function () {
+        _removeUserPlaylist = function (e) {
+            e.preventDefault();
             if ($playlistContainerToDelete != null) {
                 $playlistContainerToDelete.remove();
                 $playlistContainerToDelete = null;

@@ -313,15 +313,28 @@
         <div class="large-12 columns">
             <div class="user-playlist-header">
                 <div class="user-playlist-name"><%= title %></div>
-                <div class="user-playlist-date"><%= date %></div>
-                <div class="user-playlist-length"><%= length %></div>
-                <div class="trash-icon"><i class="fi-trash"></i></div>
-                <div class="open-icon"><i class="fi-arrow-down"></i></div>
-                <div class="close-icon"><i class="fi-arrow-up"></i></div>
-                <div class="load-playlist">LOAD</div>
-                <div class="add-playlist">ADD</div>
-                <div class="rename-playlist">RENAME</div>
-                <div class="stop-icon"><i class="fi-stop"></i></div>
+                <a href="#">
+                    <div class="user-playlist-date"><%= date %></div>
+                </a>
+                <a href="#">
+                    <div class="user-playlist-length"><%= length %></div>
+                </a>
+                <a href="#">
+                    <div class="trash-icon"><i class="fi-trash"></i></div>
+                </a>
+                <a href="#">
+                    <div class="load-playlist">LOAD</div>
+                </a>
+                <a href="#">
+                    <div class="open-icon"><img src="ui-images/arrow-down-icon.png" class="arrow-up-down"></div>
+                </a>
+                <a href="#">
+                    <div class="close-icon" style="display: none"><img src="ui-images/arrow-up-icon.png"
+                                                                       class="arrow-up-down"></div>
+                </a>
+                <a href="#">
+                    <div class="stop-icon"><i class="fi-stop"></i></div>
+                </a>
             </div>
             <div class="large-12 columns">
                 <ul class="user-playlist" id="<%= playlist_id %>">
