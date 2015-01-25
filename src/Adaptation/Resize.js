@@ -24,7 +24,7 @@ App.Resize = (function () {
         },
 
         _fullPlaylistHeight = function () {
-            var height = $(document).height() - $header.height()
+            var height = $(document).height() - $header.height();
             $playlist.css("height", height);
             return this;
         },
