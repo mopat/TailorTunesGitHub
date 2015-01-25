@@ -289,11 +289,10 @@ body {
 }
 
 .stop-icon {
-    display: none;
     width: 5%;
-    float: right;
     text-align: center;
     padding-right: 5px;
+    display: inline-block;
 }
 
 .arrow-up-down {

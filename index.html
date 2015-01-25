@@ -312,7 +312,12 @@
     <div class="row user-playlist-container">
         <div class="large-12 columns">
             <div class="user-playlist-header">
-                <div class="user-playlist-name"><%= title %></div>
+
+                <div class="user-playlist-name"><%= title %>
+                    <a href="#" class="right">
+                        <div class="stop-icon"><i class="fi-stop"></i></div>
+                    </a>
+                </div>
                 <a href="#">
                     <div class="user-playlist-date"><%= date %></div>
                 </a>
@@ -332,9 +337,7 @@
                     <div class="close-icon" style="display: none"><img src="ui-images/arrow-up-icon.png"
                                                                        class="arrow-up-down"></div>
                 </a>
-                <a href="#">
-                    <div class="stop-icon"><i class="fi-stop"></i></div>
-                </a>
+
             </div>
             <div class="large-12 columns">
                 <ul class="user-playlist" id="<%= playlist_id %>">
