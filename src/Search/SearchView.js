@@ -33,7 +33,7 @@ App.SearchView = (function () {
             mode = "artist";
 
             initHandler();
-            openSearchOnEmpty();
+            searchFieldFocusIn();
 
             return that;
         },
@@ -67,27 +67,6 @@ App.SearchView = (function () {
             $searchForm.hide();
             $(that).trigger("searchIconFocusOut");
         },
-
-        openSearchOnEmpty = function () {
-            searchFieldFocusIn();
-            $("body").on("click", function (e) {
-                var target = $(e.target);
-                if (needFocusOut(target)) {
-                    searchFieldFocusOut();
-                    $("body").off("click");
-                }
-                else {
-                    $("body").off("click");
-                }
-            });
-        },
-
-        needFocusOut = function (target) {
-            if (target.attr("class") != "search-dropdown" && target.attr("id") != $searchField.attr("id") && target.hasClass("picker") == false)
-                return true;
-            else return false;
-        },
-
 
         handleSearch = function () {
             var option = getVisibleDropdownValue();

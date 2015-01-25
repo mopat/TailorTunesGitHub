@@ -262,18 +262,12 @@ App.MainController = (function () {
         },
 
         handleRotationChange = function () {
-            var sortEnabled = playlistOptions._isSortEnabled();
-            if (sortEnabled)
-                resize._fullPlaylistHeight();
-            else
-            resize._resizePlaylistHeight();
-
             resize._resizeUserPlaylistHeight();
         },
 
         handleSearchIconFocusIn = function () {
             controlsView._hideControlsBox();
-            resize._fullPlaylistHeight();
+            resize._resizePlaylistHeight();
         },
 
         handleSearchIconFocusOut = function () {
@@ -284,7 +278,7 @@ App.MainController = (function () {
         handleSortEnabled = function () {
             controlsView._hideControlsBox();
             playlistView._addSortable()._disableSwipe();
-            resize._fullPlaylistHeight();
+            resize._resizePlaylistHeight();
         },
 
         handleSortDisabled = function () {

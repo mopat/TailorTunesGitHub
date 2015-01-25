@@ -22,30 +22,18 @@ App.Resize = (function () {
             $(document).on("ready", function () {
                 _resizePlaylistHeight();
             });
-            isKeyboard = false;
-            initialScreenSize = window.innerHeight;
 
             window.addEventListener("resize", function () {
-                isKeyboard = (window.innerHeight < initialScreenSize);
-
-                if (!isKeyboard)
-                    if ($controlsBox.is(":visible"))
-                        _resizePlaylistHeight();
-                    else if (!$controlsBox.is(":visible"))
-                        _fullPlaylistHeight();
-
+                _resizePlaylistHeight();
             }, false);
             return that;
         },
 
-        _fullPlaylistHeight = function () {
-            var height = $(window).height() - $header.height();
-            $playlist.css("height", height);
-            return this;
-        },
-
         _resizePlaylistHeight = function () {
-            var height = $(window).height() - $header.height() - $controlsBox.height();
+            var height = $(document).height() - $header.height();
+            if ($controlsBox.is(":visible"))
+                height -= $controlsBox.height();
+
             $playlist.css("height", height);
             return this;
         },
@@ -54,7 +42,6 @@ App.Resize = (function () {
             $(".user-playlist").height($("#user-playlist-box").innerHeight() - 50);
         };
 
-    that._fullPlaylistHeight = _fullPlaylistHeight;
     that._resizePlaylistHeight = _resizePlaylistHeight;
     that._resizeUserPlaylistHeight = _resizeUserPlaylistHeight;
     that.init = init;
