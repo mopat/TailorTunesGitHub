@@ -23,11 +23,11 @@ App.PlaylistView = (function () {
 
             $playlistSpaceFiller = $("#playlist-space-filler");
             $loadingAnimation = $("#spinner-loader-box");
-            defaultTextColor = "#222222";
+            defaultTextColor = "#f5f5f5";
 
             playlistItemTpl = _.template($("#playlist-item-tpl").html());
 
-            listItemColors = ["#F6F6F5", "#FFFFFF"];
+            listItemColors = ["rgba(0,0,0,0.1)", "rgba(0,0,0,0.2)"];
 
             initHandler();
 
@@ -170,10 +170,10 @@ App.PlaylistView = (function () {
         setPlaylistIds = function () {
             $("#playlist .playlist-item").each(function (index) {
                 if (index % 2 == 0) {
-                    $(this).css("background-color", listItemColors[0]);
+                    $(this).css("background", listItemColors[0]);
                 }
                 else {
-                    $(this).css("background-color", listItemColors[1]);
+                    $(this).css("background", listItemColors[1]);
                 }
                 $(this).attr("id", index);
                 $(this).find(".playlist-number").html(index + 1 + ".");

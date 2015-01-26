@@ -53,9 +53,8 @@ App.SearchView = (function () {
         },
 
         searchFieldFocusIn = function () {
-            $searchForm.slideDown(500, function () {
-                $(that).trigger("searchIconFocusIn");
-            });
+            $searchForm.fadeIn(500);
+            $(that).trigger("searchIconFocusIn");
             $searchField.focus();
         },
 

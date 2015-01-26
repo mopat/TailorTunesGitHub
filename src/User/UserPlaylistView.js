@@ -15,8 +15,8 @@ App.UserPlaylistView = (function () {
 
 
         init = function () {
-            listItemColors = ["#F6F6F5", "#FFFFFF"];
-            defaultTextColor = "#222222";
+            listItemColors = ["rgba(0,0,0,0.1)", "rgba(0,0,0,0.2)"];
+            defaultTextColor = "#f5f5f5";
             $userPlaylistBox = $("#user-playlist-box");
             userPlaylistTpl = _.template($("#user-playlist-tpl").html());
 
@@ -99,10 +99,10 @@ App.UserPlaylistView = (function () {
         setPlaylistIds = function () {
             $(".user-playlist-item").each(function (index) {
                 if (index % 2 == 0) {
-                    $(this).css("background-color", listItemColors[0]);
+                    $(this).css("background", listItemColors[0]);
                 }
                 else {
-                    $(this).css("background-color", listItemColors[1]);
+                    $(this).css("background", listItemColors[1]);
                 }
                 $(this).attr("id", index);
                 $(this).find(".user-playlist-number").html(index + 1 + ".");
