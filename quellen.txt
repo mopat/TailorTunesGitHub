@@ -81,3 +81,4 @@ http://stackoverflow.com/questions/15368514/caroufredsel-plugin-using-touchswipe
 http://stackoverflow.com/questions/15191058/css-rotation-cross-browser-with-jquery-animate
 https://github.com/rstacruz/jquery.transit
 http://stackoverflow.com/questions/11600040/jquery-js-html5-change-page-content-when-keyboard-is-visible-on-mobile-devices
+http://stackoverflow.com/questions/376253/stretch-and-scale-css-background
