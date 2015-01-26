@@ -39,26 +39,27 @@ App.PlaylistView = (function () {
         },
 
         initHandler = function () {
-            $playlist.on("click", handleListItemClick);
+            $playlist.on("click", ".playlist-item-anchor", handleListItemClick);
+            $playlist.on("click", ".playlist-item-delete", removeListItem);
         },
 
         setupSwipe = function () {
             $playlist.swipe({
                 swipeLeft: function (event) {
                     if (getUserSide() == "bottom")
-                        swipeHandler(event);
+                        removeListItem(event);
                 },
                 swipeUp: function (event) {
                     if (getUserSide() == "left")
-                        swipeHandler(event);
+                        removeListItem(event);
                 },
                 swipeRight: function (event) {
                     if (getUserSide() == "top")
-                        swipeHandler(event);
+                        removeListItem(event);
                 },
                 swipeDown: function (event) {
                     if (getUserSide() == "right")
-                        swipeHandler(event);
+                        removeListItem(event);
                 },
                 allowPageScroll: "vertical",
                 threshold: 10,
@@ -66,19 +67,19 @@ App.PlaylistView = (function () {
             });
         },
 
-        swipeHandler = function (e) {
+        removeListItem = function (e) {
             console.log("SWIPE")
-            var $swipedItem = $(e.target).closest(".playlist-item").remove(),
+            var $itemToRemove = $(e.target).closest(".playlist-item").remove(),
                 $nowPlaying = $("#playlist .now-playing"),
                 playlistSize = $("#playlist .playlist-item").size();
-            $swipedItem.fadeOut(500, fadeOutComplete);
+            $itemToRemove.fadeOut(500, fadeOutComplete);
             function fadeOutComplete() {
                 if (playlistSize - 1 == 0)
                     $(that).trigger("resetPlayer");
-                else if ($swipedItem.attr("id") == $nowPlaying.attr("id"))
+                else if ($itemToRemove.attr("id") == $nowPlaying.attr("id"))
                     handlePrevOrNextClicked("next");
 
-                $swipedItem.remove();
+                $itemToRemove.remove();
                 setPlaylistIds();
             };
         },
@@ -147,7 +148,6 @@ App.PlaylistView = (function () {
         handleListItemClick = function (e) {
             e.preventDefault();
             var $nowPlaying = $("#playlist .now-playing");
-            $nowPlaying.find(".playlist-title").css("color", defaultTextColor);
             $nowPlaying.removeClass("now-playing");
             var $clickedItem = $(e.target).closest(".playlist-item");
             handlePlayTrack($clickedItem);

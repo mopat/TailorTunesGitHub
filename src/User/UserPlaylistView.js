@@ -38,7 +38,8 @@ App.UserPlaylistView = (function () {
             $userPlaylisBox.on("click", ".open-icon", handleOpenPlaylist);
             $userPlaylisBox.on("click", ".trash-icon", handleDeletePlaylistClicked);
             $userPlaylisBox.on("click", ".close-icon", handleClosePlaylist);
-            $userPlaylisBox.on("click", ".user-playlist-item", handleListItemClick);
+            $userPlaylisBox.on("click", ".user-playlist-item-anchor", handleListItemClick);
+            $userPlaylisBox.on("click", ".user-playlist-item-delete", removeListItem);
             $userPlaylisBox.on("click", ".stop-icon", handleStopIconClick);
         },
 
@@ -46,19 +47,19 @@ App.UserPlaylistView = (function () {
             $userPlaylisBox.swipe({
                 swipeLeft: function (event) {
                     if (getUserSide() == "bottom")
-                        swipeHandler(event);
+                        removeListItem(event);
                 },
                 swipeUp: function (event) {
                     if (getUserSide() == "left")
-                        swipeHandler(event);
+                        removeListItem(event);
                 },
                 swipeRight: function (event) {
                     if (getUserSide() == "top")
-                        swipeHandler(event);
+                        removeListItem(event);
                 },
                 swipeDown: function (event) {
                     if (getUserSide() == "right")
-                        swipeHandler(event);
+                        removeListItem(event);
                 },
                 allowPageScroll: "vertical",
                 threshold: 10,
@@ -164,12 +165,12 @@ App.UserPlaylistView = (function () {
         },
 
 
-        swipeHandler = function (e) {
+        removeListItem = function (e) {
             console.log("SWIPE")
 
-            var $swipedItem = $(e.target).closest(".user-playlist-item");
-            $swipedItem.fadeOut(500, function () {
-                $swipedItem.remove();
+            var $itemToRemove = $(e.target).closest(".user-playlist-item");
+            $itemToRemove.fadeOut(500, function () {
+                $itemToRemove.remove();
                 setPlaylistIds();
             });
         },

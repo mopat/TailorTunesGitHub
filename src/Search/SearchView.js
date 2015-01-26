@@ -13,7 +13,6 @@ App.SearchView = (function () {
         $genreDropdownBox = null,
         $searchDropdown = null,
         $searchIcon = null,
-        $optionsBox = null,
         mode = null,
 
         init = function () {
@@ -23,7 +22,6 @@ App.SearchView = (function () {
             $closeSearchButton = $("#close-search-button");
             $picker = $(".picker");
             $searchDropdown = $(".search-dropdown");
-            $optionsBox = $("#options-box");
 
             $artistDropdownBox = $("#artist-dropdown-box");
             $trackDropdownBox = $("#track-dropdown-box");
@@ -55,7 +53,6 @@ App.SearchView = (function () {
         },
 
         searchFieldFocusIn = function () {
-            $optionsBox.slideUp(500);
             $searchForm.slideDown(500, function () {
                 $(that).trigger("searchIconFocusIn");
             });
@@ -63,9 +60,9 @@ App.SearchView = (function () {
         },
 
         searchFieldFocusOut = function () {
-            $optionsBox.show();
             $searchForm.hide();
             $(that).trigger("searchIconFocusOut");
+            $searchField.focusout();
         },
 
         handleSearch = function () {
@@ -78,6 +75,7 @@ App.SearchView = (function () {
             }
             else
                 $(that).trigger("searchButtonClickedEchoNest", [query, mode, option, null]);
+            searchFieldFocusOut();
         },
 
         handleCloseSearch = function () {

@@ -46,7 +46,6 @@ body {
     background: rgba(188, 188, 188, 0.5);
 }
 
-
 /*Login CSS*/
 
 #login-form-box, #sign-in-form-box {
@@ -125,6 +124,10 @@ body {
     margin: 0;
 }
 
+#options-box {
+    display: none;
+}
+
 .options-button {
     color: white;
     line-height: 37px;
@@ -157,6 +160,7 @@ body {
 #save-playlist-button, #clear-playlist-button {
     display: none;
 }
+
 #search-icon {
     font-size: 2rem;
     width: 100%;
@@ -204,7 +208,7 @@ body {
 #playlist a, .user-playlist a {
     text-decoration: none;
     display: block;
-    width: 100%;
+    width: 95%;
     color: #222222;
 }
 
@@ -224,16 +228,24 @@ body {
     float: left;
     width: 20px;
     margin-left: 5px;
-    line-height: 40px;
+    line-height: 50px;
 }
 
 .playlist-title, .user-playlist-title {
     float: left;
     position: relative;
-    width: 65%;
+    width: 70%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.playlist-item-delete, .user-playlist-item-delete {
+    width: 40px;
+    float: right;
+    line-height: 50px;
+    padding-right: 20px;
+    margin-left: 30px;
 }
 
 .duration-and-title {
@@ -242,9 +254,8 @@ body {
 
 .playlist-item-image, .user-playlist-item-image {
     float: left;
-    height: 45px;
-    padding-left: 5px;
-    padding-right: 5px;
+    height: 50px;
+    padding: 3px 5px 3px 5px;
     line-height: 50px;
 }
 
@@ -303,6 +314,7 @@ body {
 .arrow-up-down {
     height: 1.8rem;
 }
+
 .blend {
     position: fixed;
     margin: 0;

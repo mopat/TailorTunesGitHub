@@ -3,6 +3,7 @@
  */
 App.PlaylistOptions = (function () {
     var that = {},
+        $optionsBox = null,
         $sortModeSwitch = null,
         $sortSwitchBox = null,
         $savePlaylistButton = null,
@@ -16,6 +17,7 @@ App.PlaylistOptions = (function () {
         isPlaylistExisting = false,
 
         init = function () {
+            $optionsBox = $("#options-box");
             $sortModeSwitch = $("#sort-mode-switch");
             $sortSwitchBox = $("#sticky-sort-switch-box");
             $savePlaylistButton = $("#save-playlist-button");
@@ -103,11 +105,25 @@ App.PlaylistOptions = (function () {
                 $clearPlaylistButton.fadeOut(300);
                 $savePlaylistButton.fadeOut(300);
             }
+        },
+
+        _hideOptionsBox = function () {
+            $optionsBox.hide();
+
+            return this;
+        },
+
+        _showOptionsBox = function () {
+            $optionsBox.show();
+
+            return this;
         };
 
     that._checkSortModeSwitch = _checkSortModeSwitch;
     that._isSortEnabled = _isSortEnabled;
     that._setIsPlaylistExisting = _setIsPlaylistExisting;
+    that._hideOptionsBox = _hideOptionsBox;
+    that._showOptionsBox = _showOptionsBox;
     that.init = init;
 
     return that;

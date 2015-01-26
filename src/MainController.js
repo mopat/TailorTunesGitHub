@@ -266,12 +266,14 @@ App.MainController = (function () {
         },
 
         handleSearchIconFocusIn = function () {
+            playlistOptions._hideOptionsBox();
             controlsView._hideControlsBox();
             resize._resizePlaylistHeight();
         },
 
         handleSearchIconFocusOut = function () {
             controlsView._showControlsBox();
+            playlistOptions._showOptionsBox();
             resize._resizePlaylistHeight();
         },
 

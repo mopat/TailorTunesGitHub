@@ -170,11 +170,11 @@
                             <option value="danceability-bottom">Low Danceability</option>
                         </select>
                     </div>
-                    <div class="large-2 medium-2 small-3  columns">
+                    <div class="large-2 medium-2 small-4  columns">
                         <a href="#" class="button postfix" id="search-button">Search</a>
                     </div>
-                    <div class="large-1 medium-1 small-3  columns">
-                        <a href="#" class="button postfix" id="close-search-button">Close</a>
+                    <div class="large-1 medium-1 small-2  columns">
+                        <a href="#" class="button postfix" id="close-search-button"><i class="fi-x"></i> </a>
                     </div>
                 </div>
             </form>
@@ -340,7 +340,6 @@
                     <div class="close-icon" style="display: none"><img src="ui-images/arrow-up-icon.png"
                                                                        class="arrow-up-down"></div>
                 </a>
-
             </div>
             <div class="large-12 columns">
                 <ul class="user-playlist" id="<%= playlist_id %>">
@@ -351,9 +350,14 @@
 </script>
 <script type="text/html" id="user-playlist-item-tpl">
     <li class="user-playlist-item" data-stream-url="<%= stream_url %>">
-        <a href="#"><span class="user-playlist-number"></span>
+        <a href="#" class="show-for-large-only">
+            <div class="user-playlist-item-delete">
+                <i class="fi-trash"></i>
+            </div>
+        </a>
+        <a href="#" class="user-playlist-item-anchor">
+            <span class="user-playlist-number"></span>
             <img class="user-playlist-item-image" src="<%= artwork_url %>">
-
             <div class="duration-and-title">
                 <div class="user-playlist-title"><%= title %></div>
                 <br>
@@ -365,13 +369,19 @@
 </script>
 <script type="text/html" id="playlist-item-tpl">
     <li class="playlist-item" data-stream-url="<%= stream_url %>">
-        <a href="#"><span class="playlist-number"></span>
+
+        <a href="#" class="show-for-large-only">
+            <div class="playlist-item-delete">
+                <i class="fi-trash"></i>
+            </div>
+        </a>
+        <a href="#" class="playlist-item-anchor">
+            <span class="playlist-number"></span>
             <img class="playlist-item-image" src="<%= artwork_url %>">
 
             <div class="duration-and-title">
                 <div class="playlist-title"><%= title %></div>
                 <br>
-
                 <div class="playlist-track-duration"><%= duration %></div>
             </div>
         </a>
