@@ -235,8 +235,8 @@
                     <div class="marquee title-info text-center show-for-small" data-duplicated='true'>
                     </div>
                 </div>
-                <div id="music-button-box" class="text-center">
-                    <div class="large-12 columns">
+                <div id="music-button-box-wrapper" class="text-center">
+                    <div class="large-12 columns" id="music-button-box">
                         <a href="#">
                             <i class="controls fi-previous" id="previous-button"></i>
                         </a>
@@ -369,7 +369,6 @@
 </script>
 <script type="text/html" id="playlist-item-tpl">
     <li class="playlist-item" data-stream-url="<%= stream_url %>">
-
         <a href="#" class="show-for-large-only">
             <div class="playlist-item-delete">
                 <i class="fi-trash"></i>

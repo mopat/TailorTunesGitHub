@@ -349,9 +349,12 @@ body {
     border: none;
 }
 
-#music-button-box {
-    width: 200px;
+#music-button-box-wrapper {
     margin: 0 auto;
+}
+
+#music-button-box {
+    height: 40px;
 }
 
 #music-button-box a {
