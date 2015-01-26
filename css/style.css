@@ -7,7 +7,7 @@ html {
 }
 
 body {
-    background-image: url("../ui-images/footer_lodyas.png");
+    background: #000000;
     width: 100%;
     height: 100%;
     margin: 0px;
@@ -32,18 +32,18 @@ body {
     padding: 0;
 }
 
-.button a:hover {
-    background-color: #aaa59d;
-}
-
 .button {
+    background: #f85e02;
+    font-family: 'Ruda', sans-serif !important;
     z-index: 0;
 }
 
-#search-form, #options-box {
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#99333333, endColorstr=#99333333);
-    background: rgb(33, 33, 33);
-    background: rgba(188, 188, 188, 0.5);
+.button:hover {
+    background: #f8b91b;
+}
+
+#search-button {
+    border-right: 1px solid black;
 }
 
 /*Login CSS*/
@@ -100,11 +100,11 @@ body {
 }
 
 .picked {
-    background-color: #E8E7E6;
+    background: #f85f02;
 }
 
 .unpicked {
-    background-color: #b3b3b3;
+    background: #f8b91b;
 }
 
 #artist-tab, #track-tab {
@@ -126,6 +126,7 @@ body {
 
 #options-box {
     display: none;
+    background: #f8b91b;
 }
 
 .options-button {
@@ -164,7 +165,6 @@ body {
 #search-icon {
     font-size: 2rem;
     width: 100%;
-    background-color: #b81900;
 }
 
 /*Playlist CSS*/
@@ -198,9 +198,7 @@ body {
 }
 
 #playlist {
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#99333333, endColorstr=#99333333);
-    background: rgb(33, 33, 33);
-    background: rgba(255, 255, 255, 0.5);
+    background: #646360;
     overflow-y: scroll;
     overflow-x: hidden;
 }
@@ -341,9 +339,18 @@ body {
 
 /*Controls-Box: Slider and Buttons*/
 #controls-box {
-    background-color: #777777;
     height: auto;
+
+    background: rgb(125, 126, 125); /* Old browsers */
+    background: -moz-linear-gradient(top, rgba(125, 126, 125, 1) 0%, rgba(14, 14, 14, 1) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(125, 126, 125, 1)), color-stop(100%, rgba(14, 14, 14, 1))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, rgba(125, 126, 125, 1) 0%, rgba(14, 14, 14, 1) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, rgba(125, 126, 125, 1) 0%, rgba(14, 14, 14, 1) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, rgba(125, 126, 125, 1) 0%, rgba(14, 14, 14, 1) 100%); /* IE10+ */
+    background: linear-gradient(to bottom, rgba(125, 126, 125, 1) 0%, rgba(14, 14, 14, 1) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#7d7e7d', endColorstr='#0e0e0e', GradientType=0); /* IE6-9 */
 }
+
 
 #controls-box input {
     border: none;
@@ -358,17 +365,37 @@ body {
 }
 
 #music-button-box a {
-    color: #1cc7ff;
+    color: #f8b91b;
 }
 
 #controls-box .ui-slider {
     height: 0.35em !important;
+    border: none;
+    background: rgb(181, 189, 200); /* Old browsers */
+    background: -moz-linear-gradient(top, rgba(181, 189, 200, 1) 0%, rgba(130, 140, 149, 1) 36%, rgba(40, 52, 59, 1) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(181, 189, 200, 1)), color-stop(36%, rgba(130, 140, 149, 1)), color-stop(100%, rgba(40, 52, 59, 1))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, rgba(181, 189, 200, 1) 0%, rgba(130, 140, 149, 1) 36%, rgba(40, 52, 59, 1) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, rgba(181, 189, 200, 1) 0%, rgba(130, 140, 149, 1) 36%, rgba(40, 52, 59, 1) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, rgba(181, 189, 200, 1) 0%, rgba(130, 140, 149, 1) 36%, rgba(40, 52, 59, 1) 100%); /* IE10+ */
+    background: linear-gradient(to bottom, rgba(181, 189, 200, 1) 0%, rgba(130, 140, 149, 1) 36%, rgba(40, 52, 59, 1) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#b5bdc8', endColorstr='#28343b', GradientType=0); /* IE6-9 */
+
+
 }
 
 #controls-box .ui-slider .ui-slider-handle {
     height: 0.9em !important;
     width: 0.9em !important;
-    border-radius: 25px !important;
+    border-radius: 50% !important;
+    border: none;
+    background: rgb(252, 234, 187); /* Old browsers */
+    background: -moz-linear-gradient(top, rgba(252, 234, 187, 1) 0%, rgba(252, 205, 77, 1) 37%, rgba(248, 181, 0, 1) 57%, rgba(251, 223, 147, 1) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(252, 234, 187, 1)), color-stop(37%, rgba(252, 205, 77, 1)), color-stop(57%, rgba(248, 181, 0, 1)), color-stop(100%, rgba(251, 223, 147, 1))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, rgba(252, 234, 187, 1) 0%, rgba(252, 205, 77, 1) 37%, rgba(248, 181, 0, 1) 57%, rgba(251, 223, 147, 1) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, rgba(252, 234, 187, 1) 0%, rgba(252, 205, 77, 1) 37%, rgba(248, 181, 0, 1) 57%, rgba(251, 223, 147, 1) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, rgba(252, 234, 187, 1) 0%, rgba(252, 205, 77, 1) 37%, rgba(248, 181, 0, 1) 57%, rgba(251, 223, 147, 1) 100%); /* IE10+ */
+    background: linear-gradient(to bottom, rgba(252, 234, 187, 1) 0%, rgba(252, 205, 77, 1) 37%, rgba(248, 181, 0, 1) 57%, rgba(251, 223, 147, 1) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fceabb', endColorstr='#fbdf93', GradientType=0); /* IE6-9 */
 }
 
 .controls {
@@ -378,12 +405,11 @@ body {
 
 #time-slider-box {
     padding-top: 14px;
+    margin-left: 50px;
 }
 
 #time-slider {
-    background-color: #df151d;
-    margin-left: 30px;
-    width: 90%;
+    width: 100%;
     bottom: 0px;
 }
 
@@ -394,9 +420,9 @@ body {
 }
 
 #volume-box {
-    padding-top: 2px;
+    padding-top: 3px;
     color: #ffffff;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
 }
 
 #volume-box a {
@@ -406,7 +432,8 @@ body {
 #volume-value {
     color: #fff;
     font-size: 0.7rem;
-    padding-left: 10px;
+    margin-left: 3px;
+    margin-right: 3px;
 }
 
 .volume-controls {
@@ -421,14 +448,13 @@ body {
 
 #title-info-box {
     height: 1.3rem;
-
     width: 100%;
     border: 1px solid #ccc;
     background: #ccc;
 }
 
 .title-info {
-    color: white;
+    color: #000000;
     font-weight: bold;
     font-size: 0.8rem;
 }
