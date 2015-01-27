@@ -36,7 +36,7 @@ App.MainModel = (function () {
                 url: queryBuilder.queryUrl,
                 cache: false,
                 success: function (jsonObject) {
-                    var tracks = removeEchoNestDuplicates(jsonObject.response.songs);
+                    var tracks = removeDuplicates(jsonObject.response.songs, "echoNest");
                     console.log(tracks)
                     searchSoundCloudTracks(tracks, "soundcloud", query);
                 },
@@ -54,7 +54,7 @@ App.MainModel = (function () {
                 url: getIdQuery,
                 cache: false,
                 success: function (jsonObject) {
-                    var tracks = removeEchoNestDuplicates(jsonObject.response.songs);
+                    var tracks = removeDuplicates(jsonObject.response.songs, "echoNest");
                     console.log(tracks)
                     $(that).trigger("echoNestTrackSearchResultsComplete", [query, tracks]);
                 },
@@ -78,7 +78,7 @@ App.MainModel = (function () {
                 dataType: 'json',
                 success: function (data) {
                     if (data.length != 0) {
-                        var matchingTracks = getMatchingResults(data, query);
+                        var matchingTracks = filterResults(data, query);
                         $(that).trigger("soundcloudTrackSearchResultsComplete", [matchingTracks]);
                     }
                     $(that).trigger("hideLoadingAnimation");
@@ -117,12 +117,12 @@ App.MainModel = (function () {
                         success: function (data) {
                             count--;
                             if (data.length != 0) {
-                                var matchingTracks = getMatchingResults(data, query);
+                                var matchingTracks = filterResults(data, query);
                                 console.log("QUERY ", query);
                                 addToPlayList(matchingTracks);
                             }
                             if (count == 0) {
-                                playlist = removeSoundCloudDuplicates(playlist);
+                                playlist = removeDuplicates(playlist, "soundCloud");
                                 setPlaylistView();
                                 clearInterval(requestInterval);
                                 $(that).trigger("hideLoadingAnimation");
@@ -163,7 +163,7 @@ App.MainModel = (function () {
                         success: function (data) {
                             console.log(data)
                             if (data.length != 0) {
-                                var matchingTracks = getMatchingResults(data, query);
+                                var matchingTracks = filterResults(data, query);
                                 console.log("QUERY ", query);
                                 addToPlayList(matchingTracks);
                             }
@@ -174,7 +174,7 @@ App.MainModel = (function () {
                 ajaxCalls.push(ajaxCaller(queryOne));
             }
              $.when.apply($, ajaxCalls).done(function () {
-                playlist = removeSoundCloudDuplicates(playlist);
+                playlist = removeDuplicates(playlist);
                 setPlaylistView();
             })
              */
@@ -213,33 +213,19 @@ App.MainModel = (function () {
              ***/
         },
 
-        removeEchoNestDuplicates = function (tracks) {
+        removeDuplicates = function (tracks, sender) {
             var uniqueTracks = [];
-            var artistAndTitle = [];
-            artistAndTitle.length = tracks.length;
+            var indentification = [];
+            indentification.length = tracks.length;
 
             var result = [];
-            $.each(artistAndTitle, function (i, e) {
-                artistAndTitle[i] = tracks[i].artist_name + " - " + tracks[i].title;
-                if ($.inArray(artistAndTitle[i], result) == -1) {
-                    result.push(artistAndTitle[i]);
+            $.each(indentification, function (i, e) {
+                if (sender == "echoNest")
+                    indentification[i] = tracks[i].artist_name + " - " + tracks[i].title;
+                else indentification[i] = tracks[i].id;
+                if ($.inArray(indentification[i], result) == -1) {
+                    result.push(indentification[i]);
                     uniqueTracks.push(tracks[i])
-                }
-            });
-            return uniqueTracks;
-        },
-
-        removeSoundCloudDuplicates = function (tracks) {
-            var uniqueTracks = [];
-            var artistAndTitle = [];
-            artistAndTitle.length = tracks.length;
-
-            var result = [];
-            $.each(artistAndTitle, function (i, e) {
-                artistAndTitle[i] = tracks[i].id;
-                if ($.inArray(artistAndTitle[i], result) == -1) {
-                    result.push(artistAndTitle[i]);
-                    uniqueTracks.push(tracks[i]);
                 }
             });
             return uniqueTracks;
@@ -264,7 +250,7 @@ App.MainModel = (function () {
 
         },
 
-        getMatchingResults = function (tracks, query) {
+        filterResults = function (tracks, query) {
             var count = 0;
             var matchingTracks = [];
 
@@ -273,10 +259,10 @@ App.MainModel = (function () {
                 currentTitle = normalize(currentTitle);
                 // console.log(currentTitle);
 
-                var score = currentTitle.score(query);
-                var streamable = tracks[i].streamable;
-                var sharing = tracks[i].sharing;
-                var duration = tracks[i].duration;
+                var score = currentTitle.score(query),
+                    streamable = tracks[i].streamable,
+                    sharing = tracks[i].sharing,
+                    duration = tracks[i].duration;
 
                 if (score > stringScoreTolerance && streamable == true && sharing == "public" && duration > 90000) {
                     count++;
