@@ -183,37 +183,26 @@ App.PlaylistView = (function () {
         _addSortable = function () {
             var playlist = document.getElementById('playlist');
             $blendUp.slideDown(500);
-            $blendDown.slideDown(500);
-            $blendUp.on("mouseover", function () {
-                console.log("HOVER")
-                $playlistBox.animate({scrollTop: $playlistBox.scrollTop() + 100}, 300);
+            $blendDown.fadeIn(300);
 
-            });
-            $blendDown.on("hover", function () {
-                $playlistBox.animate({scrollTop: -50}, 300);
-            });
+
             playlistSortable = new Sortable(playlist, {
-                sort: true,
                 ghostClass: "ghost",
                 animation: 150,
-                onStart: function (e) {
-                    $(".playlist-item").each(function (index) {
-                        if ($(this).attr("draggable") == "true") {
-                            console.log($(this))
-                        }
-                    });
-                },
+
                 onEnd: function (e) {
                     setPlaylistIds();
-                    $(that).trigger("fullPlaylistHeight")
-                }
+                },
+                scroll: true, // or HTMLElement
+                scrollSensitivity: 30, // px, how near the mouse must be to an edge to start scrolling.
+                scrollSpeed: 10 // px
             });
             return this;
         },
 
         _removeSortable = function () {
             $blendUp.slideUp(500);
-            $blendDown.slideUp(500);
+            $blendDown.hide();
             playlistSortable.destroy();
             return this;
         },

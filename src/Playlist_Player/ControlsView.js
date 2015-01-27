@@ -184,7 +184,7 @@ App.ControlsView = (function () {
         },
 
         _showControlsBox = function () {
-            $controlsBox.show();
+            $controlsBox.fadeIn(500);
         };
 
     that._handleTrackPicked = _handleTrackPicked;
