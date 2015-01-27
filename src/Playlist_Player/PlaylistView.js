@@ -124,30 +124,6 @@ App.PlaylistView = (function () {
                 playTrack(firstTrack);
         },
 
-        handlePrevOrNextClicked = function (indicator) {
-            var $nowPlaying = $("#playlist .now-playing");
-            var $nowPlayingId = parseInt($nowPlaying.attr("id")),
-                playlistSize = $("#playlist .playlist-item").size();
-
-            if ($nowPlayingId < playlistSize - 1 && indicator == "next") {
-                var $nextTrack = $nowPlaying.next();
-                $nowPlaying.removeClass("now-playing");
-                playTrack($nextTrack);
-            }
-            else if ($nowPlayingId > 0 && indicator == "previous") {
-                var $previousTrack = $nowPlaying.prev();
-                $nowPlaying.removeClass("now-playing");
-                playTrack($previousTrack);
-            }
-            else if ($nowPlayingId == playlistSize - 1 && indicator == "next") {
-                $nowPlaying.removeClass("now-playing");
-                startPlaylist();
-            }
-            else {
-                handleResetTrack($nowPlaying);
-            }
-        },
-
         _playNextTrack = function () {
             var $nowPlaying = $("#playlist .now-playing");
             if ($("#playlist .playlist-item:last-child").hasClass("now-playing")) {
@@ -307,7 +283,6 @@ App.PlaylistView = (function () {
         };
 
     that.addPlaylist = addPlaylist;
-    that.handlePrevOrNextClicked = handlePrevOrNextClicked;
     that._playNextTrack = _playNextTrack;
     that._playPreviousTrack = _playPreviousTrack;
     that._getPlaylistAsJSON = _getPlaylistAsJSON;
