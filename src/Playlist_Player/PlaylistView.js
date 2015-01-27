@@ -12,6 +12,7 @@ App.PlaylistView = (function () {
         $loadingAnimation = null,
         defaultTextColor = null,
         playlistSortable = null,
+        playlistLength = 0,
 
         init = function () {
             $playlistBox = $("#playlist-box");
@@ -81,7 +82,15 @@ App.PlaylistView = (function () {
 
                 $itemToRemove.remove();
                 setPlaylistIds();
+                checkPlaylistLength();
             };
+        },
+
+        checkPlaylistLength = function () {
+            if (playlistLength == 0) {
+                isPlaylistExisting = false;
+                $(that).trigger("allPlaylistItemsRemoved");
+            }
         },
 
         addPlaylist = function (playlist) {
@@ -168,7 +177,9 @@ App.PlaylistView = (function () {
 
 
         setPlaylistIds = function () {
+            playlistLength = 0;
             $("#playlist .playlist-item").each(function (index) {
+                playlistLength++;
                 if (index % 2 == 0) {
                     $(this).css("background", listItemColors[0]);
                 }
@@ -184,7 +195,6 @@ App.PlaylistView = (function () {
             var playlist = document.getElementById('playlist');
             $blendUp.slideDown(500);
             $blendDown.fadeIn(300);
-
 
             playlistSortable = new Sortable(playlist, {
                 ghostClass: "ghost",

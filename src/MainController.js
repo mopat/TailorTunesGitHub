@@ -105,6 +105,7 @@ App.MainController = (function () {
             $(userManagementView).on("emptyOldUserPlaylistView", handleEmptyUserPlaylistView);
             $(playlistOptions).on("playlistCleared", handlePlaylistCleared);
             $(playlistView).on("playlistSpaceFillerClicked", handlePlaylistSpaceFillerClick);
+            $(playlistView).on("allPlaylistItemsRemoved", handleAllPlaylistItemsRemoved);
         },
 
         handleTrackPick = function (event, src, title) {
@@ -253,8 +254,14 @@ App.MainController = (function () {
             userPlaylistView._removeLoadedStatus();
             playlistView._clearPlaylist();
 
-            var isPlaylistExisting = playlistView._isPlaylistExisting();
-            playlistOptions._setIsPlaylistExisting(isPlaylistExisting);
+            playlistOptions._setIsPlaylistExisting(playlistView._isPlaylistExisting());
+        },
+
+        handleAllPlaylistItemsRemoved = function () {
+            controlsView._resetPlayer();
+            userPlaylistView._removeLoadedStatus();
+
+            playlistOptions._setIsPlaylistExisting(playlistView._isPlaylistExisting());
         },
 
         handlePlaylistSpaceFillerClick = function () {
