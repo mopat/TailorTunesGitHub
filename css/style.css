@@ -222,8 +222,8 @@ body {
 .playlist-item, .user-playlist-item {
     clear: both;
     height: 50px;
-    line-height: 20px;
-    font-size: 1rem;
+    line-height: 25px;
+    font-size: 0.9rem;
     border-radius: 10px;
 }
 
@@ -235,25 +235,21 @@ body {
 }
 
 .playlist-title, .user-playlist-title {
-    float: left;
-    position: relative;
-    width: 70%;
+    max-width: 100%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    position: relative;
 }
 
 .playlist-item-delete, .user-playlist-item-delete {
-    width: 40px;
+    max-width: 40px;
     float: right;
     line-height: 50px;
     padding-right: 20px;
     margin-left: 30px;
 }
 
-.duration-and-title {
-    line-height: 25px;
-}
 
 .playlist-item-image, .user-playlist-item-image {
     float: left;
