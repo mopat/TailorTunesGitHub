@@ -69,21 +69,16 @@ App.PlaylistView = (function () {
         },
 
         removeListItem = function (e) {
-            console.log("SWIPE")
-            var $itemToRemove = $(e.target).closest(".playlist-item").remove(),
-                $nowPlaying = $("#playlist .now-playing"),
-                playlistSize = $("#playlist .playlist-item").size();
-            $itemToRemove.fadeOut(500, fadeOutComplete);
-            function fadeOutComplete() {
-                if (playlistSize - 1 == 0)
-                    $(that).trigger("resetPlayer");
-                else if ($itemToRemove.attr("id") == $nowPlaying.attr("id"))
-                    handlePrevOrNextClicked("next");
+            var $itemToRemove = $(e.target).closest(".playlist-item");
+
+            $itemToRemove.fadeOut(200, function fadeOutComplete() {
+                if ($itemToRemove.hasClass("now-playing"))
+                    _playNextTrack();
 
                 $itemToRemove.remove();
                 setPlaylistIds();
                 checkPlaylistLength();
-            };
+            });
         },
 
         checkPlaylistLength = function () {
@@ -126,24 +121,23 @@ App.PlaylistView = (function () {
         startPlaylist = function () {
             var firstTrack = $("#playlist .playlist-item").first();
             if (isPlaylistExisting)
-                handlePlayTrack(firstTrack);
+                playTrack(firstTrack);
         },
 
         handlePrevOrNextClicked = function (indicator) {
             var $nowPlaying = $("#playlist .now-playing");
-            $nowPlaying.find(".playlist-title").css("color", defaultTextColor);
             var $nowPlayingId = parseInt($nowPlaying.attr("id")),
                 playlistSize = $("#playlist .playlist-item").size();
 
             if ($nowPlayingId < playlistSize - 1 && indicator == "next") {
                 var $nextTrack = $nowPlaying.next();
                 $nowPlaying.removeClass("now-playing");
-                handlePlayTrack($nextTrack);
+                playTrack($nextTrack);
             }
             else if ($nowPlayingId > 0 && indicator == "previous") {
                 var $previousTrack = $nowPlaying.prev();
                 $nowPlaying.removeClass("now-playing");
-                handlePlayTrack($previousTrack);
+                playTrack($previousTrack);
             }
             else if ($nowPlayingId == playlistSize - 1 && indicator == "next") {
                 $nowPlaying.removeClass("now-playing");
@@ -154,19 +148,43 @@ App.PlaylistView = (function () {
             }
         },
 
+        _playNextTrack = function () {
+            var $nowPlaying = $("#playlist .now-playing");
+            if ($("#playlist .playlist-item:last-child").hasClass("now-playing")) {
+                startPlaylist();
+            }
+            else {
+                var $nextTrack = $nowPlaying.next();
+                playTrack($nextTrack);
+            }
+            $nowPlaying.removeClass("now-playing");
+        },
+
+        _playPreviousTrack = function () {
+            var $nowPlaying = $("#playlist .now-playing");
+            if ($("#playlist .playlist-item:first-child").hasClass("now-playing")) {
+                handleResetTrack($nowPlaying);
+            }
+            else {
+                var $previousTrack = $nowPlaying.prev();
+                $nowPlaying.removeClass("now-playing");
+                playTrack($previousTrack);
+            }
+        },
+
+        playTrack = function (current) {
+            current.addClass("now-playing");
+            var streamUrl = current.attr("data-stream-url"),
+                title = current.find(".playlist-title").html();
+            $(that).trigger("trackPicked", [streamUrl, title]);
+        },
+
         handleListItemClick = function (e) {
             e.preventDefault();
             var $nowPlaying = $("#playlist .now-playing");
             $nowPlaying.removeClass("now-playing");
             var $clickedItem = $(e.target).closest(".playlist-item");
-            handlePlayTrack($clickedItem);
-        },
-
-        handlePlayTrack = function (current) {
-            current.addClass("now-playing");
-            var streamUrl = current.attr("data-stream-url"),
-                title = current.find(".playlist-title").html();
-            $(that).trigger("trackPicked", [streamUrl, title]);
+            playTrack($clickedItem);
         },
 
         handleResetTrack = function (nowPlaying) {
@@ -290,6 +308,8 @@ App.PlaylistView = (function () {
 
     that.addPlaylist = addPlaylist;
     that.handlePrevOrNextClicked = handlePrevOrNextClicked;
+    that._playNextTrack = _playNextTrack;
+    that._playPreviousTrack = _playPreviousTrack;
     that._getPlaylistAsJSON = _getPlaylistAsJSON;
     that.hideLoadingAnimation = hideLoadingAnimation;
     that.showLoadingAnimation = showLoadingAnimation;

@@ -31,7 +31,7 @@ App.MainController = (function () {
 
             //playlist and player
             $(playlistView).on("trackPicked", handleTrackPick);
-            $(playlistView).on("resetPlayer", handleResetPlayer);
+            $(playlistView).on("playlistItemsRemoved", handleAllPlaylistItemsRemoved);
             $(controlsView).on("trackEnded", handleTrackEnd);
             $(controlsView).on("nextButtonClick", handleNextButtonClick);
             $(controlsView).on("previousButtonClick", handlePreviousButtonClick);
@@ -112,12 +112,13 @@ App.MainController = (function () {
             controlsView._handleTrackPicked(src, title);
         },
 
-        handleResetPlayer = function () {
+        handleAllPlaylistItemsRemoved = function () {
             controlsView._resetPlayer();
         },
 
         handleTrackEnd = function () {
-            playlistView.handlePrevOrNextClicked("next");
+            playlistView._playNextTrack();
+            ;
         },
 
         handleShowLoadingAnimation = function () {
@@ -141,11 +142,12 @@ App.MainController = (function () {
         },
 
         handleNextButtonClick = function () {
-            playlistView.handlePrevOrNextClicked("next");
+            playlistView._playNextTrack();
+            ;
         },
 
         handlePreviousButtonClick = function () {
-            playlistView.handlePrevOrNextClicked("previous");
+            playlistView._playPreviousTrack();
         },
 
         handlePlaylistCreated = function (event, playlist) {
