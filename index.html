@@ -317,34 +317,52 @@
 <script type="text/javascript" src="src/Adaptation/RotationHandler.js"></script>
 <script type="text/javascript" src="src/Config/CONFIG.js"></script>
 <script type="text/html" id="user-playlist-tpl">
-    <div class="row user-playlist-container">
-        <div class="large-12 columns">
-            <div class="user-playlist-header">
+    <div class=" user-playlist-container">
 
-                <div class="user-playlist-name"><%= title %>
-                    <a href="#" class="right">
+        <div class="user-playlist-header">
+            <div class="row">
+                <div class="large-8 medium-8 small-8 columns">
+
+                    <div class="user-playlist-name"><%= title %>
+
+                    </div>
+                    <a href="#">
+                        <div class="user-playlist-date"><%= date %></div>
+                    </a>
+                </div>
+                <div class="large-2 medium-2 small-2 columns">
+                    <a href="#">
+                        <div class="user-playlist-length"><%= length %></div>
+                    </a>
+                </div>
+                <div class="large-2 medium-2 small-2 columns">
+                    <a href="#">
                         <div class="stop-icon"><i class="fi-stop"></i></div>
                     </a>
                 </div>
-                <a href="#">
-                    <div class="user-playlist-date"><%= date %></div>
-                </a>
-                <a href="#">
-                    <div class="user-playlist-length"><%= length %></div>
-                </a>
-                <a href="#">
-                    <div class="trash-icon"><i class="fi-trash"></i></div>
-                </a>
-                <a href="#">
-                    <div class="load-playlist">LOAD</div>
-                </a>
-                <a href="#">
-                    <div class="open-icon"><img src="ui-images/arrow-down-icon.png" class="arrow-up-down"></div>
-                </a>
-                <a href="#">
-                    <div class="close-icon" style="display: none"><img src="ui-images/arrow-up-icon.png"
-                                                                       class="arrow-up-down"></div>
-                </a>
+            </div>
+            <div class="row">
+                <div class="large-12 medium-12 small-12 columns">
+                    <a href="#">
+                        <div class="load-playlist">LOAD</div>
+                    </a>
+
+
+                    <a href="#">
+                        <div class="trash-icon"><i class="fi-trash"></i></div>
+                    </a>
+
+
+                    <a href="#">
+                        <div class="open-icon"><img src="ui-images/arrow-down-icon.png" class="arrow-up-down"></div>
+                    </a>
+                    <a href="#">
+                        <div class="close-icon" style="display: none"><img src="ui-images/arrow-up-icon.png"
+                                                                           class="arrow-up-down"></div>
+                    </a>
+
+                </div>
+
             </div>
             <div class="large-12 columns">
                 <ul class="user-playlist" id="<%= playlist_id %>">
