@@ -216,7 +216,7 @@ body {
 }
 
 .now-playing, .preview-playing {
-    font-weight: bold;
+    font-weight: bolder;
 }
 
 .playlist-item, .user-playlist-item {
@@ -520,5 +520,22 @@ footer {
     top: 50px !important;
 }
 
+/*scrollbar modifications*/
+/*webkit*/
+#playlist::-webkit-scrollbar {
+    width: 10px; /* for vertical scrollbars */
+    height: 10px; /* for horizontal scrollbars */
+}
 
+#playlist::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+}
 
+#playlist::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+* /IE/ *
+body {
+    scrollbar-face-color: rgba(0, 0, 0, 0.5);
+}

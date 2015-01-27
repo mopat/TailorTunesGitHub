@@ -130,10 +130,10 @@ App.PlaylistView = (function () {
                 startPlaylist();
             }
             else {
+                $nowPlaying.removeClass("now-playing");
                 var $nextTrack = $nowPlaying.next();
                 playTrack($nextTrack);
             }
-            $nowPlaying.removeClass("now-playing");
         },
 
         _playPreviousTrack = function () {
@@ -148,10 +148,10 @@ App.PlaylistView = (function () {
             }
         },
 
-        playTrack = function (current) {
-            current.addClass("now-playing");
-            var streamUrl = current.attr("data-stream-url"),
-                title = current.find(".playlist-title").html();
+        playTrack = function ($track) {
+            $track.addClass("now-playing");
+            var streamUrl = $track.attr("data-stream-url"),
+                title = $track.find(".playlist-title").html();
             $(that).trigger("trackPicked", [streamUrl, title]);
         },
 
