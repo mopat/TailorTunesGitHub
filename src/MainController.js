@@ -184,8 +184,8 @@ App.MainController = (function () {
             resize._resizePlaylistHeight();
         },
 
-        handleUserPlaylistTitlesLoaded = function (event, title, date, length, playlistId, JSONPlaylist) {
-            userPlaylistView._setUserPlaylistView(title, date, length, playlistId, JSONPlaylist);
+        handleUserPlaylistTitlesLoaded = function (event, userPlaylistObj) {
+            userPlaylistView._setUserPlaylistView(userPlaylistObj);
         },
 
         handleUserPlaylistLoaded = function (event, playlist) {

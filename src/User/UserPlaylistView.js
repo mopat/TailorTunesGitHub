@@ -67,31 +67,29 @@ App.UserPlaylistView = (function () {
             });
         },
 
-        _setUserPlaylistView = function (playlistTitle, date, length, playlistId, JSONPlaylist) {
+        _setUserPlaylistView = function (userPlaylistObj) {
+            //create Header
             var playlistHeaderItem = userPlaylistTpl({
-                playlist_id: playlistId,
-                title: playlistTitle,
-                date: date,
-                length: length
+                playlist_id: userPlaylistObj.playlistId,
+                title: userPlaylistObj.palylistTitle,
+                date: userPlaylistObj.date,
+                length: userPlaylistObj.length
             });
             $userPlaylistBox.append(playlistHeaderItem);
 
+            //create list
+            var JSONPlaylist = userPlaylistObj.JSONPlaylist;
             for (var j in JSONPlaylist) {
                 var JSONItem = JSONPlaylist[j],
-                    number = JSONItem.number,
-                    imageUrl = JSONItem.image_url,
-                    duration = JSONItem.duration,
-                    songTitle = JSONItem.title,
-                    streamUrl = JSONItem.stream_url,
 
                     playlistItem = userPlaylistItemTpl({
-                    stream_url: streamUrl,
-                    artwork_url: imageUrl,
-                    title: songTitle,
-                    duration: duration,
-                    playlist_number: number
+                        stream_url: JSONItem.stream_url,
+                        artwork_url: JSONItem.image_url,
+                        title: JSONItem.title,
+                        duration: JSONItem.duration,
+                        playlist_number: JSONItem.number
                 });
-                $("#" + playlistId).append(playlistItem);
+                $("#" + userPlaylistObj.playlistId).append(playlistItem);
             }
             setPlaylistIds();
         },

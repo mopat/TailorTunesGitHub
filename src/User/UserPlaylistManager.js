@@ -22,7 +22,8 @@ App.UserPlaylistManager = (function () {
 
                         playlistTitles.push(userPost._serverData.title);
 
-                        $(that).trigger("userPlaylistTitlesLoaded", [usersPosts[i]._serverData.title, usersPosts[i]._serverData.lastUpdate, usersPosts[i]._serverData.length, usersPosts[i].id, JSONPlaylist]);
+                        var userPlaylistObj = createUserPlaylistObj(usersPosts[i]._serverData.title, usersPosts[i]._serverData.lastUpdate, usersPosts[i]._serverData.length, usersPosts[i].id, JSONPlaylist);
+                        $(that).trigger("userPlaylistTitlesLoaded", [userPlaylistObj]);
                     }
                 }
             });
