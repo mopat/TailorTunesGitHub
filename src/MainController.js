@@ -129,21 +129,20 @@ App.MainController = (function () {
             playlistView.hideLoadingAnimation();
         },
 
-        handleSearchButtonClickedEchoNest = function (event, searchVal, pickedTab, option, trackID) {
-            mainModel.searchEchoNestTracks(searchVal, pickedTab, option, trackID);
+        handleSearchButtonClickedEchoNest = function (event, srchObj) {
+            mainModel.searchEchoNestTracks(srchObj);
         },
 
-        handleSearchEchoNestSimilarTracks = function (event, query) {
-            mainModel.searchEchoNestSimilarTracks(query);
+        handleSearchEchoNestSimilarTracks = function (event, srchObj) {
+            mainModel.searchEchoNestSimilarTracks(srchObj);
         },
 
-        handleSearchButtonClickedSoundcloud = function (event, searchVal) {
-            mainModel.searchSoundcloudTracksSimple(searchVal);
+        handleSearchButtonClickedSoundcloud = function (event, srchObj) {
+            mainModel.searchSoundcloudTracksSimple(srchObj);
         },
 
         handleNextButtonClick = function () {
             playlistView._playNextTrack();
-            ;
         },
 
         handlePreviousButtonClick = function () {
@@ -172,8 +171,8 @@ App.MainController = (function () {
             pickTrackView._setSoundcloudTrackPicker(tracks);
         },
 
-        handleTrackIdPicked = function (event, query, type, visibleDropdownValue, trackID) {
-            mainModel.searchEchoNestTracks(query, type, visibleDropdownValue, trackID);
+        handleTrackIdPicked = function (event, srchObj) {
+            mainModel.searchEchoNestTracks(srchObj);
         },
 
         handleSavePlaylistClicked = function (event, playlistName) {

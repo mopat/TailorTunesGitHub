@@ -21,14 +21,14 @@ App.MainModel = (function () {
             });
         },
 
-        searchEchoNestTracks = function (query, type, option, trackID) {
+        searchEchoNestTracks = function (srchObj) {
             $(that).trigger("showLoadingAnimation");
             var queryFactory = new QueryFactory();
             var queryBuilder = queryFactory.createQuery({
-                type: type,
-                query: query,
-                option: option,
-                trackID: trackID
+                type: srchObj.type,
+                query: srchObj.query,
+                option: srchObj.option,
+                trackID: srchObj.trackID
             });
 
             $.ajax({
@@ -38,7 +38,7 @@ App.MainModel = (function () {
                 success: function (jsonObject) {
                     var tracks = removeDuplicates(jsonObject.response.songs, "echoNest");
                     console.log(tracks)
-                    searchSoundCloudTracks(tracks, "soundcloud", query);
+                    searchSoundCloudTracks(tracks, "soundcloud", srchObj.query);
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     alert("ECHONEST ERROR " + errorThrown + " at" + XMLHttpRequest);
@@ -47,8 +47,8 @@ App.MainModel = (function () {
             });
         },
 
-        searchEchoNestSimilarTracks = function (query) {
-            var getIdQuery = "http://developer.echonest.com/api/v4/song/search?api_key=" + echoNestAPIKey + "&format=json&results=20" + "&title=" + query + "&sort=song_hotttnesss-desc";
+        searchEchoNestSimilarTracks = function (srchObj) {
+            var getIdQuery = "http://developer.echonest.com/api/v4/song/search?api_key=" + echoNestAPIKey + "&format=json&results=20" + "&title=" + srchObj.query + "&sort=song_hotttnesss-desc";
             $.ajax({
                 type: "GET",
                 url: getIdQuery,
@@ -56,7 +56,7 @@ App.MainModel = (function () {
                 success: function (jsonObject) {
                     var tracks = removeDuplicates(jsonObject.response.songs, "echoNest");
                     console.log(tracks)
-                    $(that).trigger("echoNestTrackSearchResultsComplete", [query, tracks]);
+                    $(that).trigger("echoNestTrackSearchResultsComplete", [srchObj.query, tracks]);
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     alert("ERROR " + errorThrown + " at" + XMLHttpRequest);
@@ -64,11 +64,11 @@ App.MainModel = (function () {
             });
         },
 
-        searchSoundcloudTracksSimple = function (query) {
+        searchSoundcloudTracksSimple = function (srchObj) {
             $(that).trigger("showLoadingAnimation");
             playlist = [];
             $.ajax({
-                url: getScUrl(query),
+                url: getScUrl(srchObj.query),
                 data: {
                     format: 'json'
                 },
@@ -78,8 +78,8 @@ App.MainModel = (function () {
                 dataType: 'json',
                 success: function (data) {
                     if (data.length != 0) {
-                        var matchingTracks = filterResults(data, query);
-                        $(that).trigger("soundcloudTrackSearchResultsComplete", [matchingTracks]);
+                        var filteredTracks = filterResults(data, srchObj.query);
+                        $(that).trigger("soundcloudTrackSearchResultsComplete", [filteredTracks]);
                     }
                     $(that).trigger("hideLoadingAnimation");
                 },
@@ -117,9 +117,9 @@ App.MainModel = (function () {
                         success: function (data) {
                             count--;
                             if (data.length != 0) {
-                                var matchingTracks = filterResults(data, query);
+                                var filteredTracks = filterResults(data, query);
                                 console.log("QUERY ", query);
-                                addToPlayList(matchingTracks);
+                                addToPlayList(filteredTracks);
                             }
                             if (count == 0) {
                                 playlist = removeDuplicates(playlist, "soundCloud");
@@ -163,9 +163,9 @@ App.MainModel = (function () {
                         success: function (data) {
                             console.log(data)
                             if (data.length != 0) {
-                                var matchingTracks = filterResults(data, query);
+                                var filteredTracks = filterResults(data, query);
                                 console.log("QUERY ", query);
-                                addToPlayList(matchingTracks);
+                                addToPlayList(filteredTracks);
                             }
                         },
                         type: 'GET'
@@ -232,14 +232,14 @@ App.MainModel = (function () {
         },
 
 
-        addToPlayList = function (matchingTracks) {
+        addToPlayList = function (filteredTracks) {
             var tracks = [];
 
             //sort tracks by score
-            matchingTracks.sort(sortByFavoritingsCount);
+            filteredTracks.sort(sortByFavoritingsCount);
             //take tracks with best match
             for (var i = 0; i < 20; i++) {
-                tracks[i] = matchingTracks[i];
+                tracks[i] = filteredTracks[i];
             }
             //sort tracks by playback_count
             tracks.sort(sortByFavoritingsCount);
@@ -252,7 +252,7 @@ App.MainModel = (function () {
 
         filterResults = function (tracks, query) {
             var count = 0;
-            var matchingTracks = [];
+            var filteredTracks = [];
 
             for (var i in tracks) {
                 var currentTitle = tracks[i].title;
@@ -267,10 +267,10 @@ App.MainModel = (function () {
                 if (score > stringScoreTolerance && streamable == true && sharing == "public" && duration > 90000) {
                     count++;
                     tracks[i].score = score;
-                    matchingTracks.push(tracks[i]);
+                    filteredTracks.push(tracks[i]);
                 }
             }
-            return matchingTracks;
+            return filteredTracks;
         },
 
         sortByScore = function (a, b) {

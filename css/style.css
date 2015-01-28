@@ -264,7 +264,7 @@ body {
 
 /*user playlist mods*/
 #user-playlist-modal {
-    background: url("../ui-images/bgr.jpg");
+    background: rgb(54, 51, 53);
 }
 .user-playlist-container {
     line-height: 25px;

@@ -141,33 +141,33 @@
                         <input type="text" placeholder="Value" id="search-field" value="snoop dogg">
                     </div>
                     <div class="large-2 medium-2 small-6 columns" id="artist-dropdown-box">
-                        <select id="artist-dropdown" class="search-dropdown">
-                            <option value="song_hotttnesss-desc">Hottest</option>
-                            <option value="similar">Similar</option>
-                            <option value="tempo-top">Slow</option>
-                            <option value="tempo-bottom">Fast</option>
-                            <option value="energy-top">High Energy</option>
-                            <option value="energy-bottom">Low Energy</option>
-                            <option value="danceability-top">High Danceability</option>
-                            <option value="danceability-bottom">Low Danceability</option>
+                        <select id="artist-dropdown" class="search-dropdown" data-type="artist">
+                            <option value="song_hotttnesss-desc" data-api="echonest">Hottest</option>
+                            <option value="similar" data-api="echonest">Similar</option>
+                            <option value="tempo-top" data-api="echonest">Slow</option>
+                            <option value="tempo-bottom" data-api="echonest">Fast</option>
+                            <option value="energy-top" data-api="echonest">High Energy</option>
+                            <option value="energy-bottom" data-api="echonest">Low Energy</option>
+                            <option value="danceability-top" data-api="echonest">High Danceability</option>
+                            <option value="danceability-bottom" data-api="echonest">Low Danceability</option>
                         </select>
                     </div>
                     <div class="large-2 medium-2 small-6  columns" id="track-dropdown-box">
-                        <select id="track-dropdown" class="search-dropdown">
-                            <option value="hottest">Hottest</option>
-                            <option value="simple">Simple</option>
-                            <option value="similar">Similar</option>
+                        <select id="track-dropdown" class="search-dropdown" data-type="track">
+                            <option value="hottest" data-api="echonest">Hottest</option>
+                            <option value="simple" data-api="soundcloud">Simple</option>
+                            <option value="similar" data-api="echonest">Similar</option>
                         </select>
                     </div>
                     <div class="large-2 medium-2 small-6  columns" id="genre-dropdown-box">
-                        <select id="genre-dropdown" class="search-dropdown">
-                            <option value="song_hotttnesss-top">Hottest</option>
-                            <option value="tempo-top">Slow</option>
-                            <option value="tempo-bottom">Fast</option>
-                            <option value="energy-top">High Energy</option>
-                            <option value="energy-bottom">Low Energy</option>
-                            <option value="danceability-top">High Danceability</option>
-                            <option value="danceability-bottom">Low Danceability</option>
+                        <select id="genre-dropdown" class="search-dropdown" data-type="genre">
+                            <option value="song_hotttnesss-top" data-api="echonest">Hottest</option>
+                            <option value="tempo-top" data-api="echonest">Slow</option>
+                            <option value="tempo-bottom" data-api="echonest">Fast</option>
+                            <option value="energy-top" data-api="echonest">High Energy</option>
+                            <option value="energy-bottom" data-api="echonest">Low Energy</option>
+                            <option value="danceability-top" data-api="echonest">High Danceability</option>
+                            <option value="danceability-bottom" data-api="echonest">Low Danceability</option>
                         </select>
                     </div>
                     <div class="large-2 medium-2 small-4  columns">
@@ -316,6 +316,7 @@
 <script type="text/javascript" src="src/QueryFactory.js"></script>
 <script type="text/javascript" src="src/Adaptation/RotationHandler.js"></script>
 <script type="text/javascript" src="src/Config/CONFIG.js"></script>
+<script type="text/javascript" src="src/SearchObject.js"></script>
 <script type="text/html" id="user-playlist-tpl">
     <div class=" user-playlist-container">
 

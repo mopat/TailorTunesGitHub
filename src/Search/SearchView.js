@@ -30,6 +30,8 @@ App.SearchView = (function () {
 
             mode = "artist";
 
+            $searchField.select();
+
             initHandler();
             searchFieldFocusIn();
 
@@ -39,7 +41,6 @@ App.SearchView = (function () {
         initHandler = function () {
             $searchField.keydown(handleSubmitForm);
             $searchField.on("click", handleSearchFieldClick);
-            $searchField.select();
 
             $searchButton.on("click", handleSearch);
             $closeSearchButton.on("click", handleCloseSearch);
@@ -65,17 +66,24 @@ App.SearchView = (function () {
         },
 
         handleSearch = function () {
-            var option = getVisibleDropdownValue();
-            var query = $searchField.val();
-            if (option == "simple")
-                $(that).trigger("searchButtonClickedSoundcloud", [query]);
-            else if (mode == "track" && option == "similar") {
-                $(that).trigger("searchEchoNestSimilarTracks", [query]);
+            var srchObj = {};
+            $searchDropdown.each(function (index) {
+                if ($(this).is(":visible")) {
+                    srchObj = createSrchObj($searchField.val(), $(this).attr("data-type"), $(this).val(), null, $("option:selected", this).attr("data-api"));
+                }
+            });
+            if (srchObj.dataApi == "echonest") {
+                if (srchObj.type == "track" && srchObj.option == "similar")
+                    $(that).trigger("searchEchoNestSimilarTracks", [srchObj]);
+                else
+                    $(that).trigger("searchButtonClickedEchoNest", [srchObj]);
             }
             else
-                $(that).trigger("searchButtonClickedEchoNest", [query, mode, option, null]);
+                $(that).trigger("searchButtonClickedSoundcloud", [srchObj]);
+
             searchFieldFocusOut();
         },
+
 
         handleCloseSearch = function () {
             searchFieldFocusOut();
@@ -125,7 +133,7 @@ App.SearchView = (function () {
 
             $artistDropdownBox.hide();
             $genreDropdownBox.hide();
-            if (getVisibleDropdownValue() == "hottest") {
+            if (getSelectedDropdownValue() == "hottest") {
                 $searchField.attr('disabled', 'disabled');
             }
             else {
@@ -144,8 +152,8 @@ App.SearchView = (function () {
             mode = "genre";
         },
 
-        getVisibleDropdownValue = function () {
-            var visibleDropdownValue = "";
+        getSelectedDropdownValue = function () {
+            var visibleDropdownValue = null;
             $searchDropdown.each(function (index) {
                 if ($(this).is(":visible")) {
                     visibleDropdownValue = $(this).val();

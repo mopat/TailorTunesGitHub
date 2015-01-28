@@ -64,9 +64,13 @@ App.PickTrackView = (function () {
         },
 
         pickEchoNestTrack = function (e) {
-            var trackID = $(e.target).closest(".modal-echonest-list-item").attr("data-track-id"),
-                query = $(e.target).closest(".modal-echonest-list-item").html();
-            $(that).trigger("echonestTrackIDPicked", [query, "track", null, trackID]);
+            var $closestItem = $(e.target).closest(".modal-echonest-list-item"),
+                trackID = $closestItem.attr("data-track-id"),
+                query = $closestItem.html();
+
+            var srchObj = createSrchObj(query, "track", "similar", trackID, $("option:selected", this).attr("data-api"));
+
+            $(that).trigger("echonestTrackIDPicked", [srchObj]);
             $echoNestTrackPicker.foundation('reveal', 'close');
         },
 
