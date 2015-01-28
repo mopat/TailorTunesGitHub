@@ -34,7 +34,7 @@ function trackQuery(options) {
 }
 
 function genreQuery(options) {
-    var query = options.query;
+    var query = options.query.toLowerCase();
     var option = options.option;
     var queryUrl = "https://developer.echonest.com/api/v4/playlist/static?api_key=" + echoNestAPIKey + "&format=json&genre=" + query + "&type=genre-radio&song_selection=" + option + "&results=" + searchLimit;
     this.queryUrl = queryUrl;

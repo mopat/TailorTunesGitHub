@@ -38,10 +38,11 @@ App.MainModel = (function () {
                 success: function (jsonObject) {
                     var tracks = removeDuplicates(jsonObject.response.songs, "echoNest");
                     console.log(tracks)
-                    searchSoundCloudTracks(tracks, "soundcloud", srchObj.query);
+                    searchSoundCloudTracks(tracks);
+
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
-                    alert("ECHONEST ERROR " + errorThrown + " at" + XMLHttpRequest);
+                    swal("No results found for " + '"' + srchObj.query + '"' + " in " + srchObj.type, null, "error");
                     $(that).trigger("hideLoadingAnimation");
                 }
             });
@@ -59,7 +60,7 @@ App.MainModel = (function () {
                     $(that).trigger("echoNestTrackSearchResultsComplete", [srchObj.query, tracks]);
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
-                    alert("ERROR " + errorThrown + " at" + XMLHttpRequest);
+                    swal("No results found for " + '"' + srchObj.query + '"' + " in " + srchObj.type, null, "error");
                 }
             });
         },
@@ -84,6 +85,7 @@ App.MainModel = (function () {
                     $(that).trigger("hideLoadingAnimation");
                 },
                 error: function () {
+                    swal("No results found for " + '"' + srchObj.query + '"' + " in " + srchObj.type, null, "error");
                     $(that).trigger("hideLoadingAnimation");
                 },
                 type: 'GET'
@@ -110,7 +112,7 @@ App.MainModel = (function () {
                             format: 'json'
                         },
                         error: function (XMLHttpRequest, textStatus, errorThrown) {
-                            alert("SOUNDCLOUD ERROR " + errorThrown + " at" + XMLHttpRequest);
+                            swal("No results found for " + '"' + query + '".', null, "error");
                             count--;
                         },
                         dataType: 'json',
