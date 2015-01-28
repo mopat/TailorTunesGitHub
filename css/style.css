@@ -263,14 +263,26 @@ body {
 }
 
 /*trackpicker style*/
+
+.reveal-modal {
+    background: rgba(54, 51, 53, 0.5);
+}
 #echonest-trackID-picker-ul, #soundcloud-track-picker-ul {
-    overflow-y: scroll;
+    overflow-y: auto;
     max-height: 93%;
+    background: rgba(54, 51, 53, 0.9);
+    border-radius: 10px;
+}
+
+.modal-echonest-list-item, .modal-soundcloud-list-item {
+    min-height: 50px;
+    line-height: 25px;
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+    padding: 3px 5px 2px 5px;
+    color: whitesmoke;
 }
 /*user playlist mods*/
-#user-playlist-modal {
-    background: rgb(54, 51, 53);
-}
 .user-playlist-container {
     line-height: 25px;
     width: 100%;
@@ -278,16 +290,16 @@ body {
 }
 
 .user-playlist {
-    overflow-y: scroll;
-    overflow-x: hidden;
+    overflow-y: auto;
     display: none;
-    border-bottom: 1px solid #3AC4CC;
+    background: rgba(54, 51, 53, 0.9);
+    border-radius: 10px;
 }
 
 .user-playlist-header {
     height: 50px;
     line-height: 25px;
-    background: lightcyan;
+    background: #D7D9DC;
     margin-bottom: 5px;
     padding-left: 5px;
     border-radius: 10px;
@@ -515,14 +527,11 @@ footer {
     left: 45%;
 }
 
-.ghost {
-    background: black;
-}
 
 /*modification for rotation*/
 .reveal-modal {
-    bottom: 50px !important;
-    top: 50px !important;
+    bottom: 0 !important;
+    top: 0 !important;
 }
 
 /*scrollbar modifications*/

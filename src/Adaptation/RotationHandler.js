@@ -55,14 +55,16 @@ App.RotationHandler = (function () {
         topOrBottomModeResize = function () {
             $rotatable.width("100%");
             $("#controls-box .row").width($(".row").width());
-            $modals.css("top", "50px").css("bottom", "50px").width("80%").css("left", 0).css("right", 0);
+            $modals.css("top", "0").css("bottom", "0").width($(".row").width()).css("left", 0).css("right", 0);
         },
 
         resizeLeftDistanceModal = function () {
+            $modals.width($(window).height());
             $modals.css("left", "0").css("right", $(document).width() - $rotatable.width());
         },
 
         resizeRightDistanceModal = function () {
+            $modals.width($(window).height());
             $modals.css("right", "0").css("left", $(document).width() - $rotatable.width());
         },
 

@@ -36,6 +36,11 @@ App.PickTrackView = (function () {
                     currentTrackId = tracks[i].id,
 
                     $listItem = $("<li class='modal-echonest-list-item'>").html(currentArtistName + " - " + currentTitle).attr("data-track-id", currentTrackId);
+
+                if (i % 2 == 0)
+                    $listItem.css("background", "rgba(0,0,0,0.1)");
+                else $listItem.css("background", "rgba(0,0,0,0.2)");
+
                 $anchor = $("<a href='#'></a>").append($listItem);
 
                 $echoNestTrackPickerList.append($anchor);
@@ -52,9 +57,13 @@ App.PickTrackView = (function () {
                     streamUrl = foundTracks[i].stream_url,
 
                     $listItem = $("<li class='modal-soundcloud-list-item'>").html(title).attr("data-stream-url", streamUrl).attr("list-id", i);
+                if (i % 2 == 0)
+                    $listItem.css("background", "rgba(0,0,0,0.1)");
+                else $listItem.css("background", "rgba(0,0,0,0.2)");
                 $anchor = $("<a href='#'></a>").append($listItem);
 
                 $soundcloudTrackPickerList.append($anchor);
+
             }
             $soundcloudTrackPicker.foundation('reveal', 'open');
         },
