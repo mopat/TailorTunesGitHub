@@ -35,12 +35,10 @@ App.PickTrackView = (function () {
                     currentTitle = tracks[i].title,
                     currentTrackId = tracks[i].id,
 
-                    listItem = $("<li class='modal-echonest-list-item'>");
+                    $listItem = $("<li class='modal-echonest-list-item'>").html(currentArtistName + " - " + currentTitle).attr("data-track-id", currentTrackId);
+                $anchor = $("<a href='#'></a>").append($listItem);
 
-                listItem.html(currentArtistName + " - " + currentTitle);
-                listItem.attr("data-track-id", currentTrackId);
-
-                $echoNestTrackPickerList.append(listItem);
+                $echoNestTrackPickerList.append($anchor);
             }
             $echoNestTrackPicker.foundation('reveal', 'open');
         },
@@ -53,12 +51,10 @@ App.PickTrackView = (function () {
                     duration = foundTracks[i].duration,
                     streamUrl = foundTracks[i].stream_url,
 
-                    listItem = $("<li class='modal-soundcloud-list-item'>");
-                listItem.html(title);
-                listItem.attr("data-stream-url", streamUrl);
-                listItem.attr("list-id", i);
+                    $listItem = $("<li class='modal-soundcloud-list-item'>").html(title).attr("data-stream-url", streamUrl).attr("list-id", i);
+                $anchor = $("<a href='#'></a>").append($listItem);
 
-                $soundcloudTrackPickerList.append(listItem);
+                $soundcloudTrackPickerList.append($anchor);
             }
             $soundcloudTrackPicker.foundation('reveal', 'open');
         },

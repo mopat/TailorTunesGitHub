@@ -262,6 +262,11 @@ body {
     font-size: 0.9rem;
 }
 
+/*trackpicker style*/
+#echonest-trackID-picker-ul, #soundcloud-track-picker-ul {
+    overflow-y: scroll;
+    max-height: 93%;
+}
 /*user playlist mods*/
 #user-playlist-modal {
     background: rgb(54, 51, 53);
