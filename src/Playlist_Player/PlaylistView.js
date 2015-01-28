@@ -90,7 +90,6 @@ App.PlaylistView = (function () {
 
         addPlaylist = function (playlist) {
             console.log("playlist", playlist)
-            isPlaylistExisting = true;
             for (var i in playlist) {
                 $playlistSpaceFiller.hide();
                 var artworkUrl = playlist[i].artwork_url;
@@ -115,12 +114,13 @@ App.PlaylistView = (function () {
             }
             setPlaylistIds();
             startPlaylist();
+            isPlaylistExisting = true;
             $(that).trigger("checkSortModeSwitch");
         },
 
         startPlaylist = function () {
             var firstTrack = $("#playlist .playlist-item").first();
-            if (isPlaylistExisting)
+            if (!isPlaylistExisting)
                 playTrack(firstTrack);
         },
 
