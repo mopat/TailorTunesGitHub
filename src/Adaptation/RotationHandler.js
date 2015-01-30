@@ -12,7 +12,7 @@ App.RotationHandler = (function () {
             $modals = $(".reveal-modal");
 
             $rotate.on("click", handleRotateClick);
-            rotationMode = false;
+            rotationMode = true;
             if (rotationMode)
                 showRotateTriggers();
 
@@ -42,7 +42,7 @@ App.RotationHandler = (function () {
                         topOrBottomModeResize();
                         break;
                 }
-                $(that).trigger("setRotation");
+                $(that).trigger("rotationChanged");
             });
         },
 

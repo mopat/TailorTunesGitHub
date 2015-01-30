@@ -34,7 +34,7 @@ App.PlaylistView = (function () {
 
             setPlaylistIds();
 
-            setupSwipe();
+            _changeSwipeEvent();
 
             return that;
         },
@@ -46,6 +46,10 @@ App.PlaylistView = (function () {
 
         setupSwipe = function () {
             $playlist.swipe({
+                swipe: function (event, direction, distance, duration, fingerCount, fingerData) {
+                    console.log(getUserSide(), direction)
+                },
+
                 swipeLeft: function (event) {
                     if (getUserSide() == "bottom")
                         removeListItem(event);
@@ -60,6 +64,26 @@ App.PlaylistView = (function () {
                 },
                 swipeDown: function (event) {
                     if (getUserSide() == "right")
+                        removeListItem(event);
+                },
+                allowPageScroll: "vertical",
+                threshold: 10,
+                excludedElements: "button, input, select, textarea, .noSwipe"
+            });
+        },
+
+        _changeSwipeEvent = function () {
+            $playlist.swipe("destroy");
+            $playlist.swipe({
+                swipe: function (event, direction, distance, duration, fingerCount, fingerData) {
+                    console.log(getUserSide(), direction)
+                    if (getUserSide() == "bottom" && direction == "left")
+                        removeListItem(event);
+                    else if (getUserSide() == "left" && direction == "up")
+                        removeListItem(event);
+                    else if (getUserSide() == "top" && direction == "right")
+                        removeListItem(event);
+                    else if (getUserSide() == "right" && direction == "down")
                         removeListItem(event);
                 },
                 allowPageScroll: "vertical",
@@ -105,11 +129,11 @@ App.PlaylistView = (function () {
                     streamUrl = playlist[i].stream_url,
 
                     playlistItem = playlistItemTpl({
-                    stream_url: streamUrl,
-                    artwork_url: artworkUrl,
-                    title: title,
-                    duration: duration
-                });
+                        stream_url: streamUrl,
+                        artwork_url: artworkUrl,
+                        title: title,
+                        duration: duration
+                    });
                 $playlist.append(playlistItem);
             }
             setPlaylistIds();
@@ -294,6 +318,7 @@ App.PlaylistView = (function () {
     that._disableSwipe = _disableSwipe;
     that._clearPlaylist = _clearPlaylist;
     that._isPlaylistExisting = _isPlaylistExisting;
+    that._changeSwipeEvent = _changeSwipeEvent;
     that.init = init;
 
     return that;

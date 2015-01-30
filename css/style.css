@@ -28,23 +28,6 @@ body {
     box-sizing: border-box;
 }
 
-.columns {
-    padding: 0;
-}
-
-.switch {
-    color: #f5f5f5;
-}
-.button {
-    background: transparent;
-    font-family: 'Ruda', sans-serif !important;
-    z-index: 0;
-}
-
-.button:hover {
-    background: #ff8700;
-}
-
 #search-button {
     border-right: 1px solid black;
 }
@@ -527,11 +510,23 @@ footer {
     left: 45%;
 }
 
+/*foundation modifications*/
+.columns {
+    padding: 0;
+}
 
-/*modification for rotation*/
-.reveal-modal {
-    bottom: 0 !important;
-    top: 0 !important;
+.switch {
+    color: #f5f5f5;
+}
+
+.button {
+    background: transparent;
+    font-family: 'Ruda', sans-serif !important;
+    z-index: 0;
+}
+
+.button:hover {
+    background: #ff8700;
 }
 
 /*scrollbar modifications*/

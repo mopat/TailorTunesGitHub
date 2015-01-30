@@ -74,7 +74,7 @@ App.MainController = (function () {
 
 
             //ROTATION
-            $(rotationHandler).on("setRotation", handleRotationChange);
+            $(rotationHandler).on("rotationChanged", handleRotationChange);
 
 
             //sort Click
@@ -271,6 +271,7 @@ App.MainController = (function () {
 
         handleRotationChange = function () {
             resize._resizeUserPlaylistHeight();
+            playlistView._changeSwipeEvent();
         },
 
         handleSearchIconFocusIn = function () {
