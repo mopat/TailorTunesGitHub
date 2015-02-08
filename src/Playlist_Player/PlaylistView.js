@@ -34,7 +34,7 @@ App.PlaylistView = (function () {
 
             setPlaylistIds();
 
-            _changeSwipeEvent();
+            //_changeSwipeEvent();
 
             return that;
         },

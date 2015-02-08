@@ -271,7 +271,7 @@ App.MainController = (function () {
 
         handleRotationChange = function () {
             resize._resizeUserPlaylistHeight();
-            playlistView._changeSwipeEvent();
+            //playlistView._changeSwipeEvent();
         },
 
         handleSearchIconFocusIn = function () {
