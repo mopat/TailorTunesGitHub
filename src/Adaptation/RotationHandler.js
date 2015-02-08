@@ -12,7 +12,7 @@ App.RotationHandler = (function () {
             $modals = $(".reveal-modal");
 
             $rotate.on("click", handleRotateClick);
-            rotationMode = false;
+            rotationMode = true;
             if (rotationMode)
                 showRotateTriggers();
 
@@ -23,23 +23,28 @@ App.RotationHandler = (function () {
             $.undim();
 
             $modals.transition({rotate: rotation}, ROTATE_DURATION);
+            $(".sweet-alert").transition({rotate: rotation}, ROTATE_DURATION);
             $rotatable.transition({rotate: rotation}, ROTATE_DURATION, function () {
                 switch (side) {
                     case "left":
                         $rotatable.css("float", "left");
                         leftOrRightResize();
                         resizeLeftDistanceModal();
+                        sweetAlertLeft();
                         break;
                     case "right":
                         $rotatable.css("float", "right");
                         leftOrRightResize();
                         resizeRightDistanceModal();
+                        sweetAlertRight();
                         break;
                     case "top":
                         topOrBottomModeResize();
+                        sweetAlertDefault();
                         break;
                     case "bottom":
                         topOrBottomModeResize();
+                        sweetAlertDefault();
                         break;
                 }
                 $(that).trigger("rotationChanged");
@@ -68,6 +73,21 @@ App.RotationHandler = (function () {
             $modals.css("right", "0").css("left", $(document).width() - $rotatable.width());
         },
 
+
+    //ALERT BOXES
+        sweetAlertLeft = function () {
+            var left = $("#rotatable").width() / 2;
+            $(".sweet-alert").css("left", left);
+        },
+
+        sweetAlertRight = function () {
+            var right = $(document).width() - $("#rotatable").width() / 2;
+            $(".sweet-alert").css("left", right);
+        },
+
+        sweetAlertDefault = function () {
+            $(".sweet-alert").css("left", "50%");
+        },
 
         hideRotateTriggers = function () {
             $rotate.fadeOut(500);

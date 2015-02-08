@@ -62,6 +62,10 @@ Schwierigkeiten: neu skalierung bei drehen, richtige swipe event
 
 -Drehen von Modal geht, neu skalierung und positionierung wichtig
 
+-Alertboxen werden gedreht mit jquery transit, einstellen der Position nur über css Eigenschaft "left" möglicht
+
 
 //für smartphone!
-Virtuelle Tastatur "drückt" den Content zusammen ->
+Virtuelle Tastatur "drückt" den Content zusammen -> wird bei nichtgebrauchen ausgeblendet
+
+
