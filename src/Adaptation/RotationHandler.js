@@ -76,12 +76,12 @@ App.RotationHandler = (function () {
 
     //ALERT BOXES
         sweetAlertLeft = function () {
-            var left = $("#rotatable").width() / 2;
+            var left = $rotatable.width() / 2;
             $(".sweet-alert").css("left", left);
         },
 
         sweetAlertRight = function () {
-            var right = $(document).width() - $("#rotatable").width() / 2;
+            var right = $(document).width() - $rotatable.width() / 2;
             $(".sweet-alert").css("left", right);
         },
 

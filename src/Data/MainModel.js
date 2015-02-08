@@ -1,8 +1,6 @@
 /*** Created by Patrick on 19.11.2014.*/
 App.MainModel = (function () {
     var that = {},
-        sc_client_id = '23a3031c7cd251c7c217ca127777e48b',
-        echoNestAPIKey = "N2U2OZ8ZDCXNV9DBG",
         scLimit = 50,
         searchLimit = 10,
         playlist = [],
@@ -17,7 +15,7 @@ App.MainModel = (function () {
 
         initSoundCloud = function () {
             SC.initialize({
-                client_id: sc_client_id
+                client_id: SC_CLIENT_ID
             });
         },
 
@@ -49,7 +47,7 @@ App.MainModel = (function () {
         },
 
         searchEchoNestSimilarTracks = function (srchObj) {
-            var getIdQuery = "http://developer.echonest.com/api/v4/song/search?api_key=" + echoNestAPIKey + "&format=json&results=20" + "&title=" + srchObj.query + "&sort=song_hotttnesss-desc";
+            var getIdQuery = "http://developer.echonest.com/api/v4/song/search?api_key=" + ECHONEST_API_KEY + "&format=json&results=20" + "&title=" + srchObj.query + "&sort=song_hotttnesss-desc";
             $.ajax({
                 type: "GET",
                 url: getIdQuery,
@@ -308,7 +306,7 @@ App.MainModel = (function () {
         },
 
         getScUrl = function (query) {
-            return "https://api.soundcloud.com/tracks?&q=" + query + "&client_id=" + sc_client_id + "&limit=" + scLimit;
+            return "https://api.soundcloud.com/tracks?&q=" + query + "&client_id=" + SC_CLIENT_ID + "&limit=" + scLimit;
         };
 
     that.searchEchoNestTracks = searchEchoNestTracks;
