@@ -113,6 +113,7 @@ App.PlaylistView = (function () {
         },
 
         addPlaylist = function (playlist) {
+
             console.log("playlist", playlist)
             for (var i in playlist) {
                 $playlistSpaceFiller.hide();

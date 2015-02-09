@@ -249,7 +249,12 @@ body {
 
 .reveal-modal {
     background: rgba(54, 51, 53, 0.5);
-    height: 90%;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
 }
 #echonest-trackID-picker-ul, #soundcloud-track-picker-ul {
     overflow-y: auto;

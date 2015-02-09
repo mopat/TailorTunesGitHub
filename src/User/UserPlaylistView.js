@@ -28,6 +28,7 @@ App.UserPlaylistView = (function () {
             initHandler();
 
             setupSwipe();
+
             return that;
         },
 
