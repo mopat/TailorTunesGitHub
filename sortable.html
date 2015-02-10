@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+
+<style type="text/css">
+    #list {
+        list-style-type: none;
+    }
+
+    li {
+        background-color: lavender;
+        height: 40px;
+        width: 100px;
+        margin: 3px;
+    }
+
+    #drag {
+
+        z-index: 10;
+    }
+</style>
+<body>
+<ul id="list">
+    <li>1</li>
+    <li>2</li>
+    <li>3</li>
+    <li>4</li>
+    <li>5</li>
+    <li>6</li>
+    <li>7</li>
+</ul>
+<script src="js/vendor/jquery.js"></script>
+<script src="libs/jquery.mobile.touchEvents.min.js"></script>
+<script src="libs/jquery-ui.min.js"></script>
+<script src="libs/jquery.ui.touch-punch.min.js"></script>
+<script type="text/javascript">
+    //MOUSE
+    $("li").on("mousedown", function (e) {
+        $(document).css("user-select", "none").attr('unselectable', 'on').on('selectstart', false);
+        $(this).addClass("drag");
+//Invert left right and bottom top for rotation
+        $(document).on("mousemove", function (e) {
+            $(".drag").css({position: "absolute", left: e.pageX, top: e.pageY});
+            $("li").on("mouseenter", function (e) {
+                $(".over").removeClass("over");
+                left = e.pageX;
+                top = e.pageY;
+                $(this).addClass("over");
+                console.log($(this).html())
+
+            })
+
+        });
+        $(document).on("mouseup", function (e) {
+            console.log("UP")
+
+            $(".drag").insertAfter($(".over"));
+
+            $(".drag").css({position: "relative", left: "auto", top: "auto"})
+            $(".over").removeClass("over");
+            $(".drag").removeClass("drag");
+            $(document).off("mousemove")
+        })
+    })
+
+    //TOUCH
+    $("li").on("touchstart", function (e) {
+        $(document).css("user-select", "none").attr('unselectable', 'on').on('selectstart', false);
+        $(this).addClass("drag");
+
+//Invert left right and bottom top for rotation
+        $(document).on("touchmove", function (e) {
+            $(".drag").css({
+                position: "absolute",
+                left: e.originalEvent.targetTouches[0].pageX,
+                top: e.originalEvent.targetTouches[0].pageY
+            });
+            $("li").on("touchenter", function (e) {
+                $(".over").removeClass("over");
+                left = e.originalEvent.targetTouches[0].pageX;
+                top = e.originalEvent.targetTouches[0].pageY;
+                $(this).addClass("over");
+                console.log($(this).html())
+
+            })
+
+        });
+        $(document).on("touchend", function (e) {
+            console.log("UP")
+
+            $(".drag").insertAfter($(".over"));
+            $(".drag").css({position: "relative", left: "auto", top: "auto"});
+
+            $(".over").removeClass("over");
+            $(".drag").removeClass("drag");
+            $(document).off("touchstart")
+        })
+    })
+
+    //http://api.jquery.com/insertafter/
+    //http://stackoverflow.com/questions/13156010/prevent-highlighting-text-on-mousedown
+</script>
+</body>
+</html>

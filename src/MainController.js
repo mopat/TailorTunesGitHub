@@ -80,6 +80,15 @@ App.MainController = (function () {
             //sort Click
             $(playlistOptions).on("sortEnabled", handleSortEnabled);
             $(playlistOptions).on("sortDisabled", handleSortDisabled);
+
+            $(document).on("load", function () {
+                $("#playlist-box").swipe({
+                    swipe: function (event, direction, distance, duration, fingerCount) {
+                        alert("You swiped " + direction);
+                    }
+                });
+            })
+
         },
 
         handleCheckSortModeSwitch = function () {
@@ -118,7 +127,6 @@ App.MainController = (function () {
 
         handleTrackEnd = function () {
             playlistView._playNextTrack();
-            ;
         },
 
         handleShowLoadingAnimation = function () {
