@@ -24,13 +24,13 @@
 </style>
 <body>
 <ul id="list">
-    <li>1</li>
-    <li>2</li>
-    <li>3</li>
-    <li>4</li>
-    <li>5</li>
-    <li>6</li>
-    <li>7</li>
+    <li class="over">1</li>
+    <li class="over">2</li>
+    <li class="over">3</li>
+    <li class="over">4</li>
+    <li class="over">5</li>
+    <li class="over">6</li>
+    <li class="over">7</li>
 </ul>
 <script src="js/vendor/jquery.js"></script>
 <script src="libs/jquery.mobile.touchEvents.min.js"></script>
@@ -78,18 +78,29 @@
                 left: e.originalEvent.targetTouches[0].pageX,
                 top: e.originalEvent.targetTouches[0].pageY
             });
-            $("li").on("touchenter", function (e) {
-                $(".over").removeClass("over");
-                left = e.originalEvent.targetTouches[0].pageX;
-                top = e.originalEvent.targetTouches[0].pageY;
-                $(this).addClass("over");
-                console.log($(this).html())
 
-            })
+
 
         });
         $(document).on("touchend", function (e) {
+            console.log(e)
+
+            var items = $("#list").find(".over");
+            $(".over").each(function (index) {
+                distances = [];
+                var offset = $(this).offset().top
+                console.log(offset)
+                var top = e.originalEvent.targetTouches[0].pageY;
+
+                var dist = offset - top;
+                distances.push(dist)
+            });
+
+            for (var i in distances) {
+                console.log(distances[i])
+            }
             console.log("UP")
+
 
             $(".drag").insertAfter($(".over"));
             $(".drag").css({position: "relative", left: "auto", top: "auto"});
@@ -99,7 +110,9 @@
             $(document).off("touchstart")
         })
     })
+    function closest(selector) {
 
+    }
     //http://api.jquery.com/insertafter/
     //http://stackoverflow.com/questions/13156010/prevent-highlighting-text-on-mousedown
 </script>
