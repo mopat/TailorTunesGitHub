@@ -6,6 +6,9 @@
 </head>
 
 <style type="text/css">
+    body {
+        transform: rotate(0deg);
+    }
     #list {
         list-style-type: none;
     }
@@ -36,6 +39,7 @@
 <script src="libs/jquery.mobile.touchEvents.min.js"></script>
 <script src="libs/jquery-ui.min.js"></script>
 <script src="libs/jquery.ui.touch-punch.min.js"></script>
+<script src="rotatableSortable.js"></script>
 <script type="text/javascript">
     //MOUSE
     $("li").on("mousedown", function (e) {
@@ -67,74 +71,7 @@
     })
 
 
-    //TOUCH
-    $("li").on("touchstart", function (e) {
-        $(document).css("user-select", "none").attr('unselectable', 'on').on('selectstart', false);
-        $("li").addClass("over")
-        $(this).switchClass("over", "drag");
-
-//Invert left right and bottom top for rotation
-        $(document).on("touchmove", function (e) {
-            $(".drag").css({
-                position: "absolute",
-                left: e.originalEvent.targetTouches[0].pageX,
-                top: e.originalEvent.targetTouches[0].pageY
-            });
-            lastmove = e;
-            console.log(e.originalEvent.targetTouches[0].pageY)
-
-        });
-        $(document).on("touchend", function (e) {
-            console.log(e)
-            var items = $("#list").find(".over");
-            distances = [];
-            for (var i = 0; i < items.length; i++) {
-
-
-                var offset = $(items[i]).position().top;
-
-                var top = lastmove.originalEvent.targetTouches[0].pageY;
-
-                var dist = top - offset;
-
-                if (dist < 0) {
-                    dist *= -1;
-                }
-                distances.push(dist)
-
-            }
-
-            var min = 10000000000000000;
-
-            for (var i = 0; i < distances.length; i++) {
-                if (distances[i] < min) {
-                    minIndex = i;
-                    min = distances[i];
-                    console.log(distances[i])
-                    console.log("MININDEX", minIndex)
-                }
-            }
-            $(items[minIndex]).switchClass("drag", "after")
-            console.log("UP")
-
-            console.log(lastmove.originalEvent.targetTouches[0].pageY, $(items[minIndex]).position())
-
-            if (lastmove.originalEvent.targetTouches[0].pageY <= $(items[minIndex]).position().top)
-                $(".drag").insertBefore($(".after"));
-            else // was wenn über oder unter letztem
-                $(".drag").insertAfter($(".after"));
-
-            $(".drag").css({position: "relative", left: "auto", top: "auto"});
-
-            $(".over").removeClass("over");
-            $(".drag").removeClass("drag");
-            $(".after").removeClass("after");
-            $(document).off("touchstart").off("touchmove").off("touchend").off("touchstart");
-        })
-    })
-    function closest(selector) {
-
-    }
+    $("#list").rotatableSortable({listId: "#list", delegates: "li", rotation: 0});
     //http://api.jquery.com/insertafter/
     //http://stackoverflow.com/questions/13156010/prevent-highlighting-text-on-mousedown
 </script>
