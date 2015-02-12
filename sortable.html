@@ -88,10 +88,10 @@
             console.log(e)
             var items = $("#list").find(".over");
             distances = [];
-            for (var i = 0; i < items.length - 1; i++) {
+            for (var i = 0; i < items.length; i++) {
 
 
-                var offset = $(items[i]).position().top
+                var offset = $(items[i]).position().top;
 
                 var top = lastmove.originalEvent.targetTouches[0].pageY;
 
@@ -117,17 +117,19 @@
             $(items[minIndex]).switchClass("drag", "after")
             console.log("UP")
 
-            if (minIndex == 0)
-            // überlegen was wenn über oder unter erstem
+            console.log(lastmove.originalEvent.targetTouches[0].pageY, $(items[minIndex]).position())
+
+            if (lastmove.originalEvent.targetTouches[0].pageY <= $(items[minIndex]).position().top)
                 $(".drag").insertBefore($(".after"));
             else // was wenn über oder unter letztem
                 $(".drag").insertAfter($(".after"));
+
             $(".drag").css({position: "relative", left: "auto", top: "auto"});
 
             $(".over").removeClass("over");
             $(".drag").removeClass("drag");
             $(".after").removeClass("after");
-            $(document).off("touchstart")
+            $(document).off("touchstart").off("touchmove").off("touchend").off("touchstart");
         })
     })
     function closest(selector) {
