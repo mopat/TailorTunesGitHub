@@ -104,6 +104,13 @@ App.RotationHandler = (function () {
             setRotation(rotation);
             setUserSider(side);
             rotate(rotation, side);
+            $("#playlist").destroy();
+            $("#playlist").rotatableSortable({
+                contentId: "#rotatable",
+                listId: "#playlist",
+                delegates: ".playlist-item",
+                rotation: getRotation()
+            });
         };
 
     that.init = init;

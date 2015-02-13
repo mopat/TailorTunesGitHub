@@ -113,7 +113,6 @@ App.PlaylistView = (function () {
         },
 
         addPlaylist = function (playlist) {
-
             console.log("playlist", playlist)
             for (var i in playlist) {
                 $playlistSpaceFiller.hide();
@@ -139,6 +138,12 @@ App.PlaylistView = (function () {
             }
             setPlaylistIds();
             startPlaylist();
+            $playlist.rotatableSortable({
+                contentId: "#rotatable",
+                listId: "#playlist",
+                delegates: ".playlist-item",
+                rotation: getRotation()
+            });
             isPlaylistExisting = true;
             $(that).trigger("checkSortModeSwitch");
         },
