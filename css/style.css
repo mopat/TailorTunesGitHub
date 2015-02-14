@@ -204,6 +204,7 @@ body {
 
 .playlist-item, .user-playlist-item {
     clear: both;
+    width: auto;
     height: 50px;
     line-height: 25px;
     font-size: 0.9rem;

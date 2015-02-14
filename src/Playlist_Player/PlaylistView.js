@@ -142,7 +142,8 @@ App.PlaylistView = (function () {
                 contentId: "#rotatable",
                 listId: "#playlist",
                 delegates: ".playlist-item",
-                rotation: getRotation()
+                rotation: getRotation(),
+                maxWidth: 0.7
             });
             isPlaylistExisting = true;
             $(that).trigger("checkSortModeSwitch");
