@@ -42,7 +42,7 @@
                 var timeout = window.setTimeout(function () {
                     onTouchMove();
                     onTouchEnd();
-                    $list.css("overflow-y", "hidden");
+                    //$list.css("overflow-y", "hidden");
                     $(document).css("user-select", "none").attr('unselectable', 'on').on('selectstart', false);
                     $drag.addClass("drag");
                     $drag.off("touchend");
@@ -61,7 +61,7 @@
                 var timeout = window.setTimeout(function () {
                     onMouseUp();
                     onMouseMove();
-                    $list.css("overflow-y", "hidden");
+                    //  $list.css("overflow-y", "hidden");
                     $(document).css("user-select", "none").attr('unselectable', 'on').on('selectstart', false);
                     $drag.addClass("drag");
                     $drag.off("mouseup");
@@ -87,6 +87,7 @@
                     $drag.css(horizontalSpace, e.originalEvent.targetTouches[0].pageX).css(verticalSpace, e.originalEvent.targetTouches[0].pageY);
                 lastMoveTouch = e;
                 console.log(e.originalEvent.targetTouches[0].pageX, $drag.css("left"));
+                scroll(e);
             });
         }
 
@@ -102,14 +103,72 @@
                 else
                     $drag.css(horizontalSpace, e.pageX).css(verticalSpace, e.pageY);
                 lastMoveMouse = e;
-                console.log(e.pageX, $drag.css("left"));
+                scroll(e)
+
+
             });
+        }
+
+        function scroll(e) {
+            var bottomBorder = 0,
+                topBorder = 0,
+                bottomOffset = 0;
+            if (rotation == 0) {
+                bottomOffset = $(document).height() - ($list.offset().top + $list.height());
+                bottomBorder = $(document).height() - bottomOffset;
+                topBorder = $list.offset().top;
+            }
+            else if (rotation == 180) {
+                var topOffset = $(document).height() - ($list.offset().top + $list.height());
+                bottomBorder = $list.offset().top;
+                topBorder = $(document).height() - topOffset;
+            }
+            else if (rotation == 90) {
+                bottomBorder = $list.offset().left;
+                topBorder = $(document).width() - $list.offset().left;
+            }
+            else if (rotation = 270) {
+                bottomBorder = $(document).width() - $list.offset().left;
+                topBorder = $list.offset().left;
+            }
+            if (rotation == 0) {
+                if ($drag.offset().top >= bottomBorder && $drag.offset().top < $(document).height()) {
+                    $list.animate({scrollTop: '+=100'}, function () {
+                        $list.stop();
+                    });
+                }
+                else if ($drag.offset().top <= topBorder && $drag.offset().top < $list.offset().top) {
+                    $list.animate({scrollTop: '-=100'}, function () {
+                        $list.stop();
+                    });
+                }
+                else {
+                    $list.stop();
+                }
+            }
+            if (rotation == 180) {
+                if ($drag.offset().top <= bottomBorder && $drag.offset().top < topOffset) {
+                    $list.animate({scrollTop: '+=100'}, function () {
+                        $list.stop();
+                    });
+                }
+                else if ($drag.offset().top >= topBorder && $drag.offset().top > $list.offset().top) {
+                    $list.animate({scrollTop: '-=100'}, function () {
+                        $list.stop();
+                    });
+                }
+                else {
+                    $list.stop();
+                }
+            }
+
+            console.log($(document).height(), $list.offset().top + $list.height());
         }
 
         function onMouseUp() {
             $(document).on("mouseup", function (e) {
+                $list.stop();
                 var min = Number.POSITIVE_INFINITY;
-
 
                 for (var i = 0; i < notDraggingItems.length; i++) {
                     var notDraggingItemOffset = null,
@@ -150,6 +209,7 @@
 
         function onTouchEnd() {
             $(document).on("touchend", function (e) {
+                $list.stop();
                 var min = Number.POSITIVE_INFINITY;
 
                 for (var i = 0; i < notDraggingItems.length; i++) {
