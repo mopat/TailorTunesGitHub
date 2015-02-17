@@ -17,7 +17,8 @@
         delay = 0,
         delayTimer = null,
         scrollInterval = null,
-        scrollIntervalDuration = 200;
+        scrollIntervalDuration = 200,
+        scrollTolerance = 100;
 
     $.fn.rotatableSortable = function (options) {
         var listId = options.listId,
@@ -53,8 +54,8 @@
                     $drag.off("touchend");
                     window.clearTimeout(timeout);
                 });
-                scrollInterval = setInterval(function (e) {
-                    scroll(e);
+                scrollInterval = setInterval(function () {
+                    scroll();
                 }, scrollIntervalDuration);
                 return false;
             });
@@ -75,9 +76,8 @@
                     $drag.off("mouseup");
                     window.clearTimeout(timeout);
                 });
-                scrollInterval = setInterval(function (e) {
-                    scroll(e);
-
+                scrollInterval = setInterval(function () {
+                    scroll();
                 }, scrollIntervalDuration);
                 return false;
             }));
@@ -114,7 +114,7 @@
             });
         }
 
-        function scroll(e) {
+        function scroll() {
             var bottomBorder = 0,
                 topBorder = 0,
                 bottomOffset = 0;
@@ -130,19 +130,21 @@
             }
             else if (rotation == 90) {
                 bottomBorder = $list.offset().left;
-                topBorder = $(document).width() - $list.offset().left;
+                topBorder = $list.offset().left + $list.height();
             }
             else if (rotation = 270) {
-                bottomBorder = $(document).width() - $list.offset().left;
+                bottomBorder = $list.offset().left + $list.height();
                 topBorder = $list.offset().left;
             }
+
+
             if (rotation == 0) {
-                if ($drag.offset().top >= bottomBorder && $drag.offset().top < $(document).height()) {
+                if ($drag.offset().top >= bottomBorder && $drag.offset().top <= bottomBorder + scrollTolerance) {
                     $list.animate({scrollTop: '+=100'}, function () {
                         $list.stop();
                     });
                 }
-                else if ($drag.offset().top <= topBorder && $drag.offset().top < $list.offset().top) {
+                else if ($drag.offset().top <= topBorder && $drag.offset().top >= topBorder - scrollTolerance) {
                     $list.animate({scrollTop: '-=100'}, function () {
                         $list.stop();
                     });
@@ -152,12 +154,12 @@
                 }
             }
             if (rotation == 180) {
-                if ($drag.offset().top <= bottomBorder && $drag.offset().top < topOffset) {
+                if ($drag.offset().top <= bottomBorder && $drag.offset().top >= bottomBorder - scrollTolerance) {
                     $list.animate({scrollTop: '+=100'}, function () {
                         $list.stop();
                     });
                 }
-                else if ($drag.offset().top >= topBorder && $drag.offset().top > $list.offset().top) {
+                else if ($drag.offset().top >= topBorder && $drag.offset().top <= topBorder + scrollTolerance) {
                     $list.animate({scrollTop: '-=100'}, function () {
                         $list.stop();
                     });
@@ -167,7 +169,45 @@
                 }
             }
 
-            console.log($(document).height(), $list.offset().top + $list.height());
+            if (rotation == 90) {
+                if ($drag.offset().left <= bottomBorder && $drag.offset().left >= bottomBorder - scrollTolerance) {
+
+                    $list.animate({scrollTop: '+=100'}, function () {
+                        $list.stop();
+
+                    });
+                }
+                else if ($drag.offset().left >= topBorder && $drag.offset().left <= topBorder + scrollTolerance) {
+                    console.log("scrollleftup")
+                    $list.animate({scrollTop: '-=100'}, function () {
+                        $list.stop();
+                    });
+                }
+                else {
+                    $list.stop();
+                }
+            }
+
+            if (rotation == 270) {
+                if ($drag.offset().left >= bottomBorder && $drag.offset().left <= bottomBorder + scrollTolerance) {
+
+                    $list.animate({scrollTop: '+=100'}, function () {
+                        $list.stop();
+
+                    });
+                }
+                else if ($drag.offset().left <= topBorder && $drag.offset().left >= topBorder - scrollTolerance) {
+                    $list.animate({scrollTop: '-=100'}, function () {
+                        $list.stop();
+                    });
+                }
+                else {
+                    $list.stop();
+                }
+            }
+
+
+            console.log(topBorder - scrollTolerance, $drag.offset().left);
         }
 
         function onMouseUp() {
