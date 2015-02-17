@@ -15,7 +15,9 @@
         notDraggingItems = [],
         defaultWidth = null,
         delay = 0,
-        delayTimer = null;
+        delayTimer = null,
+        scrollInterval = null,
+        scrollIntervalDuration = 200;
 
     $.fn.rotatableSortable = function (options) {
         var listId = options.listId,
@@ -51,6 +53,9 @@
                     $drag.off("touchend");
                     window.clearTimeout(timeout);
                 });
+                scrollInterval = setInterval(function (e) {
+                    scroll(e);
+                }, scrollIntervalDuration);
                 return false;
             });
 
@@ -70,6 +75,10 @@
                     $drag.off("mouseup");
                     window.clearTimeout(timeout);
                 });
+                scrollInterval = setInterval(function (e) {
+                    scroll(e);
+
+                }, scrollIntervalDuration);
                 return false;
             }));
         }
@@ -87,7 +96,6 @@
                     $drag.css(horizontalSpace, e.originalEvent.targetTouches[0].pageX).css(verticalSpace, e.originalEvent.targetTouches[0].pageY);
                 lastMoveTouch = e;
                 console.log(e.originalEvent.targetTouches[0].pageX, $drag.css("left"));
-                scroll(e);
             });
         }
 
@@ -103,9 +111,6 @@
                 else
                     $drag.css(horizontalSpace, e.pageX).css(verticalSpace, e.pageY);
                 lastMoveMouse = e;
-                scroll(e)
-
-
             });
         }
 
@@ -168,6 +173,7 @@
         function onMouseUp() {
             $(document).on("mouseup", function (e) {
                 $list.stop();
+                clearInterval(scrollInterval);
                 var min = Number.POSITIVE_INFINITY;
 
                 for (var i = 0; i < notDraggingItems.length; i++) {
@@ -210,6 +216,7 @@
         function onTouchEnd() {
             $(document).on("touchend", function (e) {
                 $list.stop();
+                clearInterval(scrollInterval);
                 var min = Number.POSITIVE_INFINITY;
 
                 for (var i = 0; i < notDraggingItems.length; i++) {
