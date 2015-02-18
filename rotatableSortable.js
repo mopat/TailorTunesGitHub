@@ -23,7 +23,7 @@
 
     var defaultOptions = {
         rotation: 0,
-        delay: 250,
+        delay: 1000,
         scrollIntervalDuration: 200,
         scrollTolerance: 100,
         scrollPx: 100
@@ -171,18 +171,6 @@
         }
 
         function scrollZeroRotation(bottomBorder, topBorder) {
-            if ($drag.offset().top >= bottomBorder && $drag.offset().top <= bottomBorder + scrollTolerance) {
-                scrollPlus();
-            }
-            else if ($drag.offset().top <= topBorder && $drag.offset().top >= topBorder - scrollTolerance) {
-                scrollMinus();
-            }
-            else {
-                $list.stop();
-            }
-        }
-
-        function scrollOneEightyRotation(bottomBorder, topBorder) {
             if ($drag.offset().top <= bottomBorder && $drag.offset().top >= bottomBorder - scrollTolerance) {
                 scrollPlus();
             }
@@ -194,11 +182,23 @@
             }
         }
 
-        function scrollNinetyRotation(bottomBorder, topBorder) {
-            if ($drag.offset().left <= bottomBorder && $drag.offset().left >= bottomBorder - scrollTolerance) {
+        function scrollOneEightyRotation(bottomBorder, topBorder) {
+            if ($drag.offset().top >= bottomBorder && $drag.offset().top <= bottomBorder + scrollTolerance) {
                 scrollPlus();
             }
-            else if ($drag.offset().left >= topBorder && $drag.offset().left <= topBorder + scrollTolerance) {
+            else if ($drag.offset().top <= topBorder && $drag.offset().top >= topBorder - scrollTolerance) {
+                scrollMinus();
+            }
+            else {
+                $list.stop();
+            }
+        }
+
+        function scrollNinetyRotation(bottomBorder, topBorder) {
+            if ($drag.offset().left >= bottomBorder && $drag.offset().left <= bottomBorder + scrollTolerance) {
+                scrollPlus();
+            }
+            else if ($drag.offset().left <= topBorder && $drag.offset().left >= topBorder - scrollTolerance) {
                 scrollMinus();
             }
             else {
@@ -207,10 +207,10 @@
         }
 
         function scrollTwoSeventyRotation(bottomBorder, topBorder) {
-            if ($drag.offset().left >= bottomBorder && $drag.offset().left <= bottomBorder + scrollTolerance) {
+            if ($drag.offset().left <= bottomBorder && $drag.offset().left >= bottomBorder - scrollTolerance) {
                 scrollPlus();
             }
-            else if ($drag.offset().left <= topBorder && $drag.offset().left >= topBorder - scrollTolerance) {
+            else if ($drag.offset().left >= topBorder && $drag.offset().left <= topBorder + scrollTolerance) {
                 scrollMinus();
             }
             else {
@@ -369,6 +369,7 @@
     $.fn.destroy = function (options) {
         var $delegates = $(options.delegates),
             listId = options.listId;
+        $list.stop();
         $delegates.off("touchstart").off("mousedown");
         return this;
     };

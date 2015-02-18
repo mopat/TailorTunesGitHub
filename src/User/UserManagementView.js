@@ -59,7 +59,7 @@ App.UserManagementView = (function () {
             $signInButton.on("click", handleSignInButtonClick);
 
             $("html, body").on("click", ".dimbackground-curtain", function () {
-                $.undim();
+                //$.undim();
                 $formBox.hide();
             });
         },
@@ -80,7 +80,7 @@ App.UserManagementView = (function () {
         },
 
         _loginSuccessful = function () {
-            $.undim();
+            // $.undim();
             $loginAnchor.hide();
             $loginForm.hide();
 
@@ -120,7 +120,7 @@ App.UserManagementView = (function () {
                 $loginForm.undim().hide();
             }
             else {
-                $loginForm.show().dimBackground();
+                $loginForm.show()//.dimBackground();
             }
         },
 
@@ -129,7 +129,7 @@ App.UserManagementView = (function () {
                 $signInForm.undim().hide();
             }
             else {
-                $signInForm.show().dimBackground();
+                $signInForm.show()//.dimBackground();
             }
         };
 

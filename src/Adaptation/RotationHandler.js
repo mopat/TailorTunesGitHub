@@ -5,11 +5,13 @@ App.RotationHandler = (function () {
         rotationMode = false,
         $modals = null,
         ROTATE_DURATION = 1000,
+        $sortModeSwitch = null,
 
         init = function () {
             $rotate = $(".rotate");
             $rotatable = $("#rotatable");
             $modals = $(".reveal-modal");
+            $sortModeSwitch = $("#sort-mode-switch");
 
             $rotate.on("click", handleRotateClick);
             rotationMode = true;
@@ -97,85 +99,103 @@ App.RotationHandler = (function () {
         },
 
         handleRotateGesture = function () {
-            var doc = document.getElementById('body');
-            var docHammer = new Hammer(doc);
-            docHammer.get('rotate').set({enable: true});
-            docHammer.on("rotate", function (e) {
-                e.preventDefault()
-            });
-            var el = document.getElementById("rotatable");
-            var hammertime = new Hammer(el);
-            var lastE = null;
+            var el = document.getElementById("body"),
+                hammertime = new Hammer(el);
+
             hammertime.get('rotate').set({enable: true});
-            hammertime.on('rotate', function (e) {
+            hammertime.get('pinch').set({enable: true});
+            hammertime.on('rotate pinch', function (e) {
                 e.preventDefault();
-                var rotation = e.rotation;
-                if (rotation < 0)
-                    rotation *= -1;
-                lastE = e;
-
+                console.log("rotate")
             });
-            hammertime.on("rotateend", function () {
-                console.log("END")
-                
-                rotateGesture(lastE);
-            })
+            hammertime.on("rotateend", function (e) {
+                var rotationValue = e.rotation;
+
+                if (rotationValue < 0)
+                    rotationValue *= -1;
+                if (rotationValue >= 50)
+                    rotateGesture(e);
+            });
+
             function rotateGesture(e) {
-
                 console.log(e.rotation)
-                var rotation = e.rotation,
-                    side = null;
-
+                var side = null,
+                    newRotation = null;
                 if (getUserSide() == "bottom")
                     if (e.rotation > 0) {
-                        rotate(90, "left")
-                        side = "left"
+                        side = "left";
+                        newRotation = 90;
                     }
 
                     else if (e.rotation < 0) {
-                        rotate(270, "right")
-                        side = "right"
+                        side = "right";
+                        newRotation = 270;
                     }
 
                 if (getUserSide() == "left") {
                     if (e.rotation < 0) {
-                        rotate(0, "bottom")
-                        side = "bottom"
+                        side = "bottom";
+                        newRotation = 0;
                     }
 
                     else if (e.rotation > 0) {
-                        rotate(180, "top")
-                        side = "top"
+                        side = "top";
+                        newRotation = 180;
                     }
-
                 }
                 if (getUserSide() == "top")
                     if (e.rotation > 0) {
-                        rotate(270, "right")
-                        side = "right"
+                        side = "right";
+                        newRotation = 270;
                     }
 
                     else if (e.rotation < 0) {
-                        rotate(90, "left")
-                        side = "left"
+                        side = "left";
+                        newRotation = 90;
                     }
 
                 if (getUserSide() == "right")
                     if (e.rotation < 0) {
-                        rotate(180, "top")
-                        side = "top"
+                        side = "top";
+                        newRotation = 180;
+
                     }
 
                     else if (e.rotation > 0) {
-                        rotate(0, "bottom")
-                        side = "bottom"
+                        side = "bottom";
+                        newRotation = 0;
+
                     }
-
-
-                setRotation(rotation);
+                setRotation(newRotation);
                 setUserSider(side);
-            }
+                rotate(newRotation, side)
 
+                /**    $("#playlist").destroy({
+                    listId: "#playlist",
+                    delegates: ".playlist-item"
+                });
+                 $("#playlist").rotatableSortable({
+                    contentId: "#rotatable",
+                    listId: "#playlist",
+                    delegates: ".playlist-item",
+                    rotation: getRotation()
+                });
+                 **/
+
+                if ($sortModeSwitch.attr("checked")) {
+                    $("#playlist").destroy({
+                        listId: "#playlist",
+                        delegates: ".playlist-item"
+                    });
+                    $("#playlist").rotatableSortable({
+                        contentId: "#rotatable",
+                        listId: "#playlist",
+                        delegates: ".playlist-item",
+                        rotation: getRotation()
+                    });
+                }
+
+            }
         },
 
         handleRotateClick = function (e) {
@@ -187,16 +207,19 @@ App.RotationHandler = (function () {
             setRotation(rotation);
             setUserSider(side);
             rotate(rotation, side);
-            $("#playlist").destroy({
-                listId: "#playlist",
-                delegates: ".playlist-item"
-            });
-            $("#playlist").rotatableSortable({
-                contentId: "#rotatable",
-                listId: "#playlist",
-                delegates: ".playlist-item",
-                rotation: getRotation()
-            });
+
+            if ($sortModeSwitch.attr("checked")) {
+                $("#playlist").destroy({
+                    listId: "#playlist",
+                    delegates: ".playlist-item"
+                });
+                $("#playlist").rotatableSortable({
+                    contentId: "#rotatable",
+                    listId: "#playlist",
+                    delegates: ".playlist-item",
+                    rotation: getRotation()
+                });
+            }
         };
 
     that.init = init;

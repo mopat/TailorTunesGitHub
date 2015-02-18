@@ -138,12 +138,7 @@ App.PlaylistView = (function () {
             }
             setPlaylistIds();
             startPlaylist();
-            $playlist.rotatableSortable({
-                contentId: "#rotatable",
-                listId: "#playlist",
-                delegates: ".playlist-item",
-                rotation: getRotation()
-            });
+
             isPlaylistExisting = true;
             $(that).trigger("checkSortModeSwitch");
         },
@@ -216,28 +211,20 @@ App.PlaylistView = (function () {
         },
 
         _addSortable = function () {
-            var playlist = document.getElementById('playlist');
-            $blendUp.slideDown(500);
-            $blendDown.fadeIn(300);
-
-            playlistSortable = new Sortable(playlist, {
-                ghostClass: "ghost",
-                animation: 150,
-
-                onEnd: function (e) {
-                    setPlaylistIds();
-                },
-                scroll: true, // or HTMLElement
-                scrollSensitivity: 30, // px, how near the mouse must be to an edge to start scrolling.
-                scrollSpeed: 10 // px
+            $playlist.rotatableSortable({
+                contentId: "#rotatable",
+                listId: "#playlist",
+                delegates: ".playlist-item",
+                rotation: getRotation()
             });
             return this;
         },
 
         _removeSortable = function () {
-            $blendUp.slideUp(500);
-            $blendDown.hide();
-            playlistSortable.destroy();
+            $("#playlist").destroy({
+                listId: "#playlist",
+                delegates: ".playlist-item"
+            });
             return this;
         },
 
