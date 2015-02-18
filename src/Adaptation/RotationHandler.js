@@ -16,6 +16,7 @@ App.RotationHandler = (function () {
             if (rotationMode)
                 showRotateTriggers();
 
+            handleRotateGesture();
             return that;
         },
 
@@ -93,6 +94,88 @@ App.RotationHandler = (function () {
 
         showRotateTriggers = function () {
             $rotate.fadeIn(500);
+        },
+
+        handleRotateGesture = function () {
+            var doc = document.getElementById('body');
+            var docHammer = new Hammer(doc);
+            docHammer.get('rotate').set({enable: true});
+            docHammer.on("rotate", function (e) {
+                e.preventDefault()
+            });
+            var el = document.getElementById("rotatable");
+            var hammertime = new Hammer(el);
+            var lastE = null;
+            hammertime.get('rotate').set({enable: true});
+            hammertime.on('rotate', function (e) {
+                e.preventDefault();
+                var rotation = e.rotation;
+                if (rotation < 0)
+                    rotation *= -1;
+                lastE = e;
+
+            });
+            hammertime.on("rotateend", function () {
+                console.log("END")
+                
+                rotateGesture(lastE);
+            })
+            function rotateGesture(e) {
+
+                console.log(e.rotation)
+                var rotation = e.rotation,
+                    side = null;
+
+                if (getUserSide() == "bottom")
+                    if (e.rotation > 0) {
+                        rotate(90, "left")
+                        side = "left"
+                    }
+
+                    else if (e.rotation < 0) {
+                        rotate(270, "right")
+                        side = "right"
+                    }
+
+                if (getUserSide() == "left") {
+                    if (e.rotation < 0) {
+                        rotate(0, "bottom")
+                        side = "bottom"
+                    }
+
+                    else if (e.rotation > 0) {
+                        rotate(180, "top")
+                        side = "top"
+                    }
+
+                }
+                if (getUserSide() == "top")
+                    if (e.rotation > 0) {
+                        rotate(270, "right")
+                        side = "right"
+                    }
+
+                    else if (e.rotation < 0) {
+                        rotate(90, "left")
+                        side = "left"
+                    }
+
+                if (getUserSide() == "right")
+                    if (e.rotation < 0) {
+                        rotate(180, "top")
+                        side = "top"
+                    }
+
+                    else if (e.rotation > 0) {
+                        rotate(0, "bottom")
+                        side = "bottom"
+                    }
+
+
+                setRotation(rotation);
+                setUserSider(side);
+            }
+
         },
 
         handleRotateClick = function (e) {

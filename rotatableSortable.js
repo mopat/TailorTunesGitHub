@@ -314,7 +314,7 @@
 
             });
         }
-        
+
         function insertDragItem() {
             var $insert = $(".insert");
             if (rotation == 180)
