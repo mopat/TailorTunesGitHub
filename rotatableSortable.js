@@ -17,9 +17,9 @@
         scrollInterval = null,
         scrollIntervalDuration = null,
         scrollTolerance = null,
-        scrollPx = null,
+        scrollPx = null;
 
-        min = Number.POSITIVE_INFINITY;
+    min = Number.POSITIVE_INFINITY;
 
     var defaultOptions = {
         rotation: 0,
@@ -32,7 +32,7 @@
     $.fn.rotatableSortable = function (options) {
         //global vars
         rotation = options.rotation;
-            delay = options.delay;
+        delay = options.delay;
         scrollIntervalDuration = options.scrollIntervalDuration;
         scrollTolerance = options.scrollTolerance;
         scrollPx = options.scrollPx;
@@ -64,6 +64,7 @@
 
         function addSortable() {
             $delegates.on("touchstart", function (e) {
+                min = Number.POSITIVE_INFINITY;
                 e.preventDefault();
                 $drag = $(this);
 
@@ -86,6 +87,7 @@
             });
 
             $delegates.on("mousedown", (function (e) {
+                min = Number.POSITIVE_INFINITY;
                 e.preventDefault();
                 $drag = $(this);
 
@@ -120,22 +122,22 @@
                 if (rotation == 270)
                     $drag.css(horizontalSpace, e.originalEvent.targetTouches[0].pageX - ($(document).width() - $content.width())).css(verticalSpace, e.originalEvent.targetTouches[0].pageY);
                 else
-                    $drag.css(horizontalSpace, e.originalEvent.targetTouches[0].pageX).css(verticalSpace, e.originalEvent.targetTouches[0].pageY);
+                    $drag.css(horizontalSpace, e.originalEvent.targetTouches[0].pageX - $list.offset().left).css(verticalSpace, e.originalEvent.targetTouches[0].pageY- list.offset().top);
                 lastMove = e.originalEvent.targetTouches[0];
             });
         }
 
         function onMouseMove() {
             $(document).on("mousemove", function (e) {
-
+console.log(e.pageX, $drag.css("left"))
                 defaultWidth = $delegates.width();
                 notDraggingItems = $delegates.not(".drag");
 
                 $drag.css("position", "absolute").css("width", defaultWidth);
                 if (rotation == 270)
-                    $drag.css(horizontalSpace, e.pageX - ($(document).width() - $content.width())).css(verticalSpace, e.pageY);
+                    $drag.css(horizontalSpace, e.pageX - ($(document).width() - $content.width())).css(verticalSpace, e.pageY- $list.offset().top);
                 else
-                    $drag.css(horizontalSpace, e.pageX).css(verticalSpace, e.pageY);
+                    $drag.css(horizontalSpace, e.pageX- $list.offset().left).css(verticalSpace, e.pageY- $list.offset().top);
                 lastMove = e;
             });
         }
@@ -264,7 +266,7 @@
                 $closestItem.addClass("insert");
 
                 insertDragItem();
-                $drag.css("position", "relative").css(horizontalSpace, "auto").css(verticalSpace, "auto").css("width", "auto");
+                $drag.css("position", "relative").css(horizontalSpace, "auto").css(verticalSpace, "auto").css("width", defaultWidth);
 
                 $drag.removeClass("drag");
                 $(".insert").removeClass("insert");
@@ -306,7 +308,7 @@
                 $closestItem.addClass("insert");
 
                 insertDragItem();
-                $drag.css("position", "relative").css(horizontalSpace, "auto").css(verticalSpace, "auto").css("width", "auto");
+                $drag.css("position", "relative").css(horizontalSpace, "auto").css(verticalSpace, "auto").css("width", defaultWidth);
 
                 $drag.removeClass("drag");
                 $(".insert").removeClass("insert");
