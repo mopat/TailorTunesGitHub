@@ -158,12 +158,12 @@ App.MainController = (function () {
         },
 
         handlePlaylistCreated = function (event, playlist) {
-            playlistView.addPlaylist(playlist);
+            playlistView._addPlaylist(playlist);
             playlistOptions._setIsPlaylistExisting(playlistView._isPlaylistExisting());
         },
 
         handleSoundlcoudTrackPicked = function (event, track) {
-            playlistView.addPlaylist(track);
+            playlistView._addPlaylist(track);
             playlistOptions._setIsPlaylistExisting(playlistView._isPlaylistExisting());
         },
 
@@ -197,7 +197,7 @@ App.MainController = (function () {
         },
 
         handleUserPlaylistLoaded = function (event, playlist) {
-            playlistView.addPlaylist(playlist);
+            playlistView._addPlaylist(playlist);
             playlistOptions._setIsPlaylistExisting(playlistView._isPlaylistExisting());
         },
 

@@ -52,11 +52,12 @@ App.PlaylistView = (function () {
 
                 },
                 swipeStatus: function (event, phase, direction, distance, duration, fingers) {
-                    if (phase == "start")
-                        $playlist.css("overflow-y", "hidden");
-                    if (phase == "end")
-                        $playlist.css("overflow-y", "scroll");
-
+                    if (getUserSide() != "bottom" && getUserSide() != "top") {
+                        if (phase == "start")
+                            $playlist.css("overflow-y", "hidden");
+                        else if (phase == "end")
+                            $playlist.css("overflow-y", "scroll");
+                    }
                 },
                 allowPageScroll: "vertical",
                 threshold: 10,
@@ -76,7 +77,7 @@ App.PlaylistView = (function () {
         },
 
         setupSwipeToScroll = function (event, direction) {
-            if (getUserSide() == "bottom" && direction == "down") {
+            /* if (getUserSide() == "bottom" && direction == "down") {
                 scrollMinus();
             }
             else if (getUserSide() == "bottom" && direction == "up") {
@@ -88,7 +89,8 @@ App.PlaylistView = (function () {
             else if (getUserSide() == "top" && direction == "down") {
                 scrollPlus();
             }
-            else if (getUserSide() == "left" && direction == "left") {
+             else*/
+            if (getUserSide() == "left" && direction == "left") {
                 scrollMinus();
             }
             else if (getUserSide() == "left" && direction == "right") {
@@ -131,7 +133,7 @@ App.PlaylistView = (function () {
             }
         },
 
-        addPlaylist = function (playlist) {
+        _addPlaylist = function (playlist) {
             console.log("playlist", playlist)
             for (var i in playlist) {
                 $playlistSpaceFiller.hide();
@@ -318,7 +320,7 @@ App.PlaylistView = (function () {
             return isPlaylistExisting;
         };
 
-    that.addPlaylist = addPlaylist;
+    that._addPlaylist = _addPlaylist;
     that._playNextTrack = _playNextTrack;
     that._playPreviousTrack = _playPreviousTrack;
     that._getPlaylistAsJSON = _getPlaylistAsJSON;
