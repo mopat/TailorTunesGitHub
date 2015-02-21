@@ -34,7 +34,7 @@ App.PlaylistView = (function () {
 
             setPlaylistIds();
 
-            _changeSwipeEvent();
+            setupSwipeControl();
 
             return that;
         },
@@ -44,88 +44,64 @@ App.PlaylistView = (function () {
             $playlist.on("click", ".playlist-item-delete", removeListItem);
         },
 
-        setupSwipe = function () {
+        setupSwipeControl = function () {
             $playlist.swipe({
                 swipe: function (event, direction, distance, duration, fingerCount, fingerData) {
-                    console.log(getUserSide(), direction)
-                },
+                    setupSwipeToDelete(event, direction);
+                    setupSwipeToScroll(event, direction);
 
-                swipeLeft: function (event) {
-                    if (getUserSide() == "bottom")
-                        removeListItem(event);
-                },
-                swipeUp: function (event) {
-                    if (getUserSide() == "left")
-                        removeListItem(event);
-                },
-                swipeRight: function (event) {
-                    if (getUserSide() == "top")
-                        removeListItem(event);
-                },
-                swipeDown: function (event) {
-                    if (getUserSide() == "right")
-                        removeListItem(event);
-                },
-                allowPageScroll: "vertical",
-                threshold: 10,
-                excludedElements: "button, input, select, textarea, .noSwipe"
-            });
-        },
-
-        _changeSwipeEvent = function () {
-            $playlist.swipe("destroy");
-
-            $playlist.swipe({
-                swipe: function (event, direction, distance, duration, fingerCount, fingerData) {
-
-
-                    console.log(getUserSide(), direction)
-                    if (getUserSide() == "bottom" && direction == "left")
-                        removeListItem(event);
-                    else if (getUserSide() == "left" && direction == "up")
-                        removeListItem(event);
-                    else if (getUserSide() == "top" && direction == "right")
-                        removeListItem(event);
-                    else if (getUserSide() == "right" && direction == "down")
-                        removeListItem(event);
-
-                    if (getUserSide() == "bottom" && direction == "down") {
-                        scrollMinus();
-                    }
-                    else if (getUserSide() == "bottom" && direction == "up") {
-                        scrollPlus();
-                    }
-                    else if (getUserSide() == "top" && direction == "up") {
-                        scrollMinus();
-                    }
-                    else if (getUserSide() == "top" && direction == "down") {
-                        scrollPlus();
-                    }
-                    else if (getUserSide() == "left" && direction == "left") {
-                        scrollMinus();
-                    }
-                    else if (getUserSide() == "left" && direction == "right") {
-                        scrollPlus();
-                    }
-                    else if (getUserSide() == "right" && direction == "right") {
-                        scrollMinus();
-                    }
-                    else if (getUserSide() == "right" && direction == "left") {
-                        scrollPlus();
-                    }
                 },
                 swipeStatus: function (event, phase, direction, distance, duration, fingers) {
+                    if (phase == "start")
+                        $playlist.css("overflow-y", "hidden");
+                    if (phase == "end")
+                        $playlist.css("overflow-y", "scroll");
 
-                    if (phase == "cancel" || phase == "end") {
-                        console.log(phase)
-
-                    }
                 },
                 allowPageScroll: "vertical",
                 threshold: 10,
                 excludedElements: "button, input, select, textarea, .noSwipe"
             });
         },
+
+        setupSwipeToDelete = function (event, direction) {
+            if (getUserSide() == "bottom" && direction == "left")
+                removeListItem(event);
+            else if (getUserSide() == "left" && direction == "up")
+                removeListItem(event);
+            else if (getUserSide() == "top" && direction == "right")
+                removeListItem(event);
+            else if (getUserSide() == "right" && direction == "down")
+                removeListItem(event);
+        },
+
+        setupSwipeToScroll = function (event, direction) {
+            if (getUserSide() == "bottom" && direction == "down") {
+                scrollMinus();
+            }
+            else if (getUserSide() == "bottom" && direction == "up") {
+                scrollPlus();
+            }
+            else if (getUserSide() == "top" && direction == "up") {
+                scrollMinus();
+            }
+            else if (getUserSide() == "top" && direction == "down") {
+                scrollPlus();
+            }
+            else if (getUserSide() == "left" && direction == "left") {
+                scrollMinus();
+            }
+            else if (getUserSide() == "left" && direction == "right") {
+                scrollPlus();
+            }
+            else if (getUserSide() == "right" && direction == "right") {
+                scrollMinus();
+            }
+            else if (getUserSide() == "right" && direction == "left") {
+                scrollPlus();
+            }
+        },
+
 
         scrollMinus = function () {
             $playlist.animate({scrollTop: "-=" + $playlist.height()});
@@ -181,12 +157,7 @@ App.PlaylistView = (function () {
             }
             setPlaylistIds();
             startPlaylist();
-            $playlist.on("scroll", function () {
-                $playlist.css("overflow-y", "hidden");
-                setTimeout(function () {
-                    $playlist.css("overflow-y", "scroll");
-                }, 100)
-            })
+
             isPlaylistExisting = true;
             $(that).trigger("checkSortModeSwitch");
         },
@@ -359,7 +330,6 @@ App.PlaylistView = (function () {
     that._disableSwipe = _disableSwipe;
     that._clearPlaylist = _clearPlaylist;
     that._isPlaylistExisting = _isPlaylistExisting;
-    that._changeSwipeEvent = _changeSwipeEvent;
     that.init = init;
 
     return that;
