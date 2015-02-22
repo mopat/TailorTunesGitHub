@@ -235,8 +235,9 @@ App.PlaylistView = (function () {
             $playlist.rotatableSortable({
                 contentId: "#rotatable",
                 listId: "#playlist",
-
                 rotation: getRotation()
+            }, function () {
+                setPlaylistIds();
             });
             return this;
         },

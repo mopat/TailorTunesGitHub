@@ -29,7 +29,7 @@
         scrollPx: 100
     };
 
-    $.fn.rotatableSortable = function (options) {
+    $.fn.rotatableSortable = function (options, sortEnd) {
         //global vars
         rotation = options.rotation;
         delay = options.delay;
@@ -284,6 +284,9 @@ console.log(e.pageX, $drag.css("left"))
                 $drag.removeClass("drag");
                 $(".insert").removeClass("insert");
                 removeEvents();
+                if (typeof sortEnd == 'function') {
+                    sortEnd.call(this);
+                }
             });
         }
 
@@ -326,7 +329,9 @@ console.log(e.pageX, $drag.css("left"))
                 $drag.removeClass("drag");
                 $(".insert").removeClass("insert");
                 removeEvents();
-
+                if (typeof sortEnd == 'function') {
+                    sortEnd.call(this);
+                }
             });
         }
 
