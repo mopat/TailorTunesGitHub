@@ -43,6 +43,9 @@
             $content = $(options.contentId);
 
         //set default value if necessary
+        if (options.delegates == null || options.delegates == undefined)
+            $delegates = $list.children();
+
         if (rotation == null || rotation == undefined)
             rotation = defaultOptions.rotation;
 
@@ -122,7 +125,7 @@
                 if (rotation == 270)
                     $drag.css(horizontalSpace, e.originalEvent.targetTouches[0].pageX - ($(document).width() - $content.width())).css(verticalSpace, e.originalEvent.targetTouches[0].pageY);
                 else
-                    $drag.css(horizontalSpace, e.originalEvent.targetTouches[0].pageX - $list.offset().left).css(verticalSpace, e.originalEvent.targetTouches[0].pageY- list.offset().top);
+                    $drag.css(horizontalSpace, e.originalEvent.targetTouches[0].pageX - $list.offset().left).css(verticalSpace, e.originalEvent.targetTouches[0].pageY - $list.offset().top);
                 lastMove = e.originalEvent.targetTouches[0];
             });
         }
@@ -369,10 +372,13 @@ console.log(e.pageX, $drag.css("left"))
     };
 
     $.fn.destroy = function (options) {
-        var $delegates = $(options.delegates),
-            listId = options.listId;
-        $list.stop();
+        var $delegates = $(options.delegates);
+        if (options.delegates == null || options.delegates == undefined)
+            $delegates = $(this).children();
+
+        $(this).stop();
         $delegates.off("touchstart").off("mousedown");
+
         return this;
     };
 

@@ -14,7 +14,7 @@ App.RotationHandler = (function () {
             $sortModeSwitch = $("#sort-mode-switch");
 
             $rotate.on("click", handleRotateClick);
-            rotationMode = true;
+            rotationMode = false;
             if (rotationMode)
                 showRotateTriggers();
 
@@ -184,7 +184,6 @@ App.RotationHandler = (function () {
 
                 if ($sortModeSwitch.attr("checked")) {
                     $("#playlist").destroy({
-                        listId: "#playlist",
                         delegates: ".playlist-item"
                     });
                     $("#playlist").rotatableSortable({
