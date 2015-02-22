@@ -120,13 +120,19 @@
             $(document).on("touchmove", function (e) {
                 defaultWidth = $delegates.width();
                 notDraggingItems = $delegates.not(".drag");
+                e = e.originalEvent.targetTouches[0];
 
                 $drag.css("position", "absolute").css("width", defaultWidth);
-                if (rotation == 270)
-                    $drag.css(horizontalSpace, e.originalEvent.targetTouches[0].pageX - ($(document).width() - $content.width())).css(verticalSpace, e.originalEvent.targetTouches[0].pageY);
-                else
-                    $drag.css(horizontalSpace, e.originalEvent.targetTouches[0].pageX - $list.offset().left).css(verticalSpace, e.originalEvent.targetTouches[0].pageY - $list.offset().top);
-                lastMove = e.originalEvent.targetTouches[0];
+
+                if (rotation == 0)
+                    $drag.css(horizontalSpace, e.pageX - $list.offset().left - $drag.width() / 2).css(verticalSpace, e.pageY - $list.offset().top);
+                else if (rotation == 90)
+                    $drag.css(horizontalSpace, e.pageX - $list.offset().left - $drag.height()).css(verticalSpace, e.pageY - $list.offset().top - $drag.width() / 2);
+                else if (rotation == 180)
+                    $drag.css(horizontalSpace, e.pageX - $list.offset().left - $drag.width() / 2).css(verticalSpace, e.pageY - $list.offset().top - $drag.height());
+                else if (rotation == 270)
+                    $drag.css(horizontalSpace, e.pageX - ($(document).width() - $content.width()) - $drag.height()).css(verticalSpace, e.pageY - $list.offset().top - $drag.width() / 2);
+                lastMove = e;
             });
         }
 
@@ -137,10 +143,14 @@ console.log(e.pageX, $drag.css("left"))
                 notDraggingItems = $delegates.not(".drag");
 
                 $drag.css("position", "absolute").css("width", defaultWidth);
-                if (rotation == 270)
-                    $drag.css(horizontalSpace, e.pageX - ($(document).width() - $content.width())).css(verticalSpace, e.pageY- $list.offset().top);
-                else
-                    $drag.css(horizontalSpace, e.pageX- $list.offset().left).css(verticalSpace, e.pageY- $list.offset().top);
+                if (rotation == 0)
+                    $drag.css(horizontalSpace, e.pageX - $list.offset().left - $drag.width() / 2).css(verticalSpace, e.pageY - $list.offset().top);
+                else if (rotation == 90)
+                    $drag.css(horizontalSpace, e.pageX - $list.offset().left - $drag.height()).css(verticalSpace, e.pageY - $list.offset().top - $drag.width() / 2);
+                else if (rotation == 180)
+                    $drag.css(horizontalSpace, e.pageX - $list.offset().left - $drag.width() / 2).css(verticalSpace, e.pageY - $list.offset().top - $drag.height());
+                else if (rotation == 270)
+                    $drag.css(horizontalSpace, e.pageX - ($(document).width() - $content.width()) - $drag.height()).css(verticalSpace, e.pageY - $list.offset().top - $drag.width() / 2);
                 lastMove = e;
             });
         }

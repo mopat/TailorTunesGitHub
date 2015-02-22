@@ -164,7 +164,7 @@ body {
     margin-right: auto;
     left: 0;
     right: 0;
-    z-index: 1000;
+    z-index: 1001;
     position: absolute;
 }
 
@@ -248,6 +248,7 @@ body {
 
 .drag {
     cursor: move;
+    z-index: 10000;
 }
 /*trackpicker style*/
 
