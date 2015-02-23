@@ -237,7 +237,7 @@ App.PlaylistView = (function () {
                 listId: "#playlist",
                 rotation: getRotation()
             }, function () {
-                setPlaylistIds();
+                //setPlaylistIds();
             });
             return this;
         },
