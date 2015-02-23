@@ -67,7 +67,6 @@
 
         function addSortable() {
             $delegates.on("touchstart", function (e) {
-                min = Number.POSITIVE_INFINITY;
                 e.preventDefault();
                 $drag = $(this);
 
@@ -90,7 +89,6 @@
             });
 
             $delegates.on("mousedown", (function (e) {
-                min = Number.POSITIVE_INFINITY;
                 e.preventDefault();
                 $drag = $(this);
 
@@ -158,6 +156,7 @@
 
         function onMouseUp() {
             $(document).on("mouseup", function (e) {
+                min = Number.POSITIVE_INFINITY;
                 $list.stop();
                 clearInterval(scrollInterval);
 
@@ -187,13 +186,11 @@
                         min = dist;
                     }
                 }
-                $closestItem.addClass("insert");
 
                 insertDragItem();
                 $drag.css("position", "relative").css(horizontalSpace, "auto").css(verticalSpace, "auto").css("min-width", defaultWidth);
-
                 $drag.removeClass("drag");
-                $(".insert").removeClass("insert");
+
                 removeEvents();
                 if (typeof sortEnd == 'function') {
                     sortEnd.call(this);
@@ -203,6 +200,7 @@
 
         function onTouchEnd() {
             $(document).on("touchend", function (e) {
+                min = Number.POSITIVE_INFINITY;
                 $list.stop();
                 clearInterval(scrollInterval);
 
@@ -224,21 +222,16 @@
                     }
 
                     dist = top - notDraggingItemOffset;
-                    if (dist < 0) {
-                        dist *= -1;
-                    }
+
                     if (dist < min) {
                         $closestItem = $(notDraggingItems[i]);
                         min = dist;
                     }
                 }
-                $closestItem.addClass("insert");
-
                 insertDragItem();
                 $drag.css("position", "relative").css(horizontalSpace, "auto").css(verticalSpace, "auto").css("width", defaultWidth);
-
                 $drag.removeClass("drag");
-                $(".insert").removeClass("insert");
+
                 removeEvents();
                 if (typeof sortEnd == 'function') {
                     sortEnd.call(this);
@@ -247,30 +240,28 @@
         }
 
         function insertDragItem() {
-            var $insert = $(".insert");
+            console.log(lastMove.pageX, $closestItem.offset().left)
             if (rotation == 180)
-                if (lastMove.pageY >= $closestItem.offset().top)
+                if (lastMove.pageY >= $closestItem.offset().top + $closestItem.height() / 2)
                     $drag.insertBefore($closestItem);
                 else
                     $drag.insertAfter($closestItem);
             else if (rotation == 0)
-                if (lastMove.pageY <= $closestItem.offset().top)
+                if (lastMove.pageY <= $closestItem.offset().top - $closestItem.height() / 2)
                     $drag.insertBefore($closestItem);
                 else
                     $drag.insertAfter($closestItem);
             else if (rotation == 90)
-                if (lastMove.pageX <= $closestItem.offset().left)
+                if (lastMove.pageX >= $closestItem.offset().left + $closestItem.height() / 2)
                     $drag.insertBefore($closestItem);
                 else
                     $drag.insertAfter($closestItem);
             else if (rotation == 270)
-                if (lastMove.pageX - ($(document).width() - $content.width()) <= $closestItem.offset().left)
-                    $drag.insertBefore($closestItem);
-                else
+                if (lastMove.pageX >= $closestItem.offset().left - $closestItem.height() / 2)
                     $drag.insertAfter($closestItem);
+                else
+                    $drag.insertBefore($closestItem);
 
-            console.log(lastMove.pageY, $closestItem.offset().top)
-            //$closestItem.css("background", "red")
 
         }
 
