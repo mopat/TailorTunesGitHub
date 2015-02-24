@@ -17,7 +17,9 @@
         scrollInterval = null,
         scrollIntervalDuration = null,
         scrollTolerance = null,
-        scrollPx = null;
+        scrollPx = null,
+        $oldClosestItem = null,
+        ghostInterval = null;
 
     min = Number.POSITIVE_INFINITY;
 
@@ -49,6 +51,12 @@
                     onTouchMove();
                     onTouchEnd();
 
+                    $clone = $drag.clone();
+                    $clone.switchClass("drag", "ghost");
+                    ghostInterval = setInterval(function () {
+                        cloneDrag();
+                    }, 50);
+
                     $(document).css("user-select", "none").attr('unselectable', 'on').on('selectstart', false);
                     $drag.addClass("drag").off("touchend");
                 }, delay);
@@ -71,6 +79,12 @@
                     onMouseUp();
                     onMouseMove();
 
+                    $clone = $drag.clone();
+                    $clone.switchClass("drag", "ghost");
+                    ghostInterval = setInterval(function () {
+                        cloneDrag();
+                    }, 50);
+
                     $(document).css("user-select", "none").attr('unselectable', 'on').on('selectstart', false);
                     $drag.addClass("drag").off("mouseup");
                 }, delay);
@@ -84,6 +98,92 @@
                 }, scrollIntervalDuration);
                 return false;
             }));
+        }
+
+        function getClosestItem() {
+            var $closestItem = null;
+            for (var i = 0; i < notDraggingItems.length; i++) {
+                var notDraggingItemOffset = null,
+                    top = null,
+                    dist = null;
+                if (rotation == 0 || rotation == 180) {
+                    notDraggingItemOffset = $(notDraggingItems[i]).offset().top;
+                    top = lastMove.pageY;
+                }
+                else if (rotation == 90 || 270) {
+                    notDraggingItemOffset = $(notDraggingItems[i]).offset().left;
+                    top = lastMove.pageX;
+                }
+
+                dist = top - notDraggingItemOffset;
+                if (dist < 0) {
+                    dist *= -1;
+                }
+                if (dist < min) {
+                    $closestItem = $(notDraggingItems[i]);
+                    min = dist;
+                }
+            }
+            return $closestItem;
+        }
+
+        function cloneDrag() {
+            console.log("clone")
+            min = Number.POSITIVE_INFINITY;
+
+            if ($oldClosestItem != $closestItem) {
+                insertClone();
+            }
+
+            $oldClosestItem = $closestItem;
+            for (var i = 0; i < notDraggingItems.length; i++) {
+                var notDraggingItemOffset = null,
+                    top = null,
+                    dist = null;
+                if (rotation == 0 || rotation == 180) {
+                    notDraggingItemOffset = $(notDraggingItems[i]).offset().top;
+                    top = lastMove.pageY;
+                }
+                else if (rotation == 90 || 270) {
+                    notDraggingItemOffset = $(notDraggingItems[i]).offset().left;
+                    top = lastMove.pageX;
+                }
+
+                dist = top - notDraggingItemOffset;
+                if (dist < 0) {
+                    dist *= -1;
+                }
+                if (dist < min) {
+                    $closestItem = $(notDraggingItems[i]);
+                    min = dist;
+                }
+            }
+
+            $clone.css("position", "relative").css(horizontalSpace, "auto").css(verticalSpace, "auto").css("min-width", defaultWidth);
+        }
+
+        function insertClone() {
+            if (rotation == 180)
+                if (lastMove.pageY >= $closestItem.offset().top + $closestItem.height() / 2)
+                    $clone.insertBefore($closestItem);
+                else
+                    $clone.insertAfter($closestItem);
+            else if (rotation == 0)
+                if (lastMove.pageY <= $closestItem.offset().top - $closestItem.height() / 2)
+                    $clone.insertBefore($closestItem);
+                else
+                    $clone.insertAfter($closestItem);
+            else if (rotation == 90)
+                if (lastMove.pageX >= $closestItem.offset().left + $closestItem.height() / 2)
+                    $clone.insertBefore($closestItem);
+                else
+                    $clone.insertAfter($closestItem);
+            else if (rotation == 270)
+                if (lastMove.pageX >= $closestItem.offset().left - $closestItem.height() / 2)
+                    $clone.insertAfter($closestItem);
+                else
+                    $clone.insertBefore($closestItem);
+
         }
 
 
@@ -164,12 +264,12 @@
             $drag.css("position", "relative").css(horizontalSpace, "auto").css(verticalSpace, "auto").css("min-width", defaultWidth);
             $drag.removeClass("drag");
 
+            $clone.remove();
+            clearInterval(ghostInterval);
+
             removeEvents();
 
             settings.sortEnd.call(this);
-            if (typeof sortEnd == 'function') {
-                sortEnd.call(this);
-            }
         }
 
         function insertDragItem() {
@@ -195,8 +295,6 @@
                     $drag.insertAfter($closestItem);
                 else
                     $drag.insertBefore($closestItem);
-
-
         }
 
         function setRotationSpaces() {
