@@ -20,20 +20,20 @@
         scrollPx = null;
 
     min = Number.POSITIVE_INFINITY;
-    
+
 
     $.fn.rotatableSortable = function (options, sortEnd) {
-        var opts = $.extend({}, $.fn.rotatableSortable.defaults, options);
+        var settings = $.extend({}, $.fn.rotatableSortable.defaults, options);
         //global vars
-        rotation = opts.rotation;
-        delay = opts.delay;
-        scrollIntervalDuration = opts.scrollIntervalDuration;
-        scrollTolerance = opts.scrollTolerance;
-        scrollPx = opts.scrollPx;
+        rotation = settings.rotation;
+        delay = settings.delay;
+        scrollIntervalDuration = settings.scrollIntervalDuration;
+        scrollTolerance = settings.scrollTolerance;
+        scrollPx = settings.scrollPx;
 
         $list = $(this);
-        $delegates = $list.find(opts.delegates);
-        $content = $(opts.contentId);
+        $delegates = $list.find(settings.delegates);
+        $content = $(settings.contentId);
 
         setRotationSpaces();
         addSortable();
@@ -165,6 +165,8 @@
             $drag.removeClass("drag");
 
             removeEvents();
+
+            settings.sortEnd.call(this);
             if (typeof sortEnd == 'function') {
                 sortEnd.call(this);
             }
@@ -324,7 +326,11 @@
         delay: 1000,
         scrollIntervalDuration: 200,
         scrollTolerance: 100,
-        scrollPx: 100
+        scrollPx: 100,
+
+        sortEnd: function () {
+            //called when mouse or touch is released
+        }
     };
 
     $.fn.destroy = function (options) {

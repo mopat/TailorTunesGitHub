@@ -209,7 +209,6 @@ App.RotationHandler = (function () {
 
             if ($sortModeSwitch.attr("checked")) {
                 $("#playlist").destroy({
-                    listId: "#playlist",
                     delegates: ".playlist-item"
                 });
                 $("#playlist").rotatableSortable({
