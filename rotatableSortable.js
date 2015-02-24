@@ -130,7 +130,7 @@
                 else if (rotation == 180)
                     $drag.css(horizontalSpace, e.pageX - $list.offset().left - $drag.width() / 2).css(verticalSpace, e.pageY - $list.offset().top - $drag.height());
                 else if (rotation == 270)
-                    $drag.css(horizontalSpace, e.pageX - ($(document).width() - $content.width()) - $drag.height()).css(verticalSpace, e.pageY - $list.offset().top - $drag.width() / 2);
+                    $drag.css(horizontalSpace, e.pageX - $(document).width() + $list.height()).css(verticalSpace, e.pageY - $list.offset().top - $drag.width() / 2);
                 lastMove = e;
             });
         }
@@ -148,7 +148,7 @@
                 else if (rotation == 180)
                     $drag.css(horizontalSpace, e.pageX - $list.offset().left - $drag.width() / 2).css(verticalSpace, e.pageY - $list.offset().top - $drag.height());
                 else if (rotation == 270)
-                    $drag.css(horizontalSpace, e.pageX - ($(document).width() - $content.width()) - $drag.height()).css(verticalSpace, e.pageY - $list.offset().top - $drag.width() / 2);
+                    $drag.css(horizontalSpace, e.pageX - $(document).width() + $list.height()).css(verticalSpace, e.pageY - $list.offset().top - $drag.width() / 2);
                 lastMove = e;
             });
         }
@@ -173,9 +173,7 @@
                         top = lastMove.pageX;
                     }
 
-                    if (rotation == 270) {
-                        top -= ($(document).width() - $content.width());
-                    }
+
 
                     dist = top - notDraggingItemOffset;
                     if (dist < 0) {
@@ -218,7 +216,7 @@
                     }
 
                     if (rotation == 270) {
-                        top -= ($(document).width() - $content.width());
+                        top -= ($(document).width() - $list.height());
                     }
 
                     dist = top - notDraggingItemOffset;
@@ -240,7 +238,7 @@
         }
 
         function insertDragItem() {
-            console.log(lastMove.pageX, $closestItem.offset().left)
+            console.log(lastMove.pageX, $closestItem.offset().left);
             if (rotation == 180)
                 if (lastMove.pageY >= $closestItem.offset().top + $closestItem.height() / 2)
                     $drag.insertBefore($closestItem);
