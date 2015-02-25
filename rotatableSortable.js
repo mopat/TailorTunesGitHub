@@ -19,12 +19,13 @@
         scrollTolerance = null,
         scrollPx = null,
         $oldClosestItem = null,
-        ghostInterval = null;
+        ghostInterval = null,
+        $ghost = null;
 
-    min = Number.POSITIVE_INFINITY;
+    var min = Number.POSITIVE_INFINITY;
 
 
-    $.fn.rotatableSortable = function (options, sortEnd) {
+    $.fn.rotatableSortable = function (options) {
         var settings = $.extend({}, $.fn.rotatableSortable.defaults, options);
         //global vars
         rotation = settings.rotation;
@@ -51,8 +52,8 @@
                     onTouchMove();
                     onTouchEnd();
 
-                    $clone = $drag.clone();
-                    $clone.switchClass("drag", "ghost");
+                    $ghost = $drag.clone();
+                    $ghost.switchClass("drag", "ghost");
                     ghostInterval = setInterval(function () {
                         cloneDrag();
                     }, 50);
@@ -79,8 +80,8 @@
                     onMouseUp();
                     onMouseMove();
 
-                    $clone = $drag.clone();
-                    $clone.switchClass("drag", "ghost");
+                    $ghost = $drag.clone();
+                    $ghost.switchClass("drag", "ghost");
                     ghostInterval = setInterval(function () {
                         cloneDrag();
                     }, 50);
@@ -159,30 +160,30 @@
                 }
             }
 
-            $clone.css("position", "relative").css(horizontalSpace, "auto").css(verticalSpace, "auto").css("min-width", defaultWidth);
+            $ghost.css("position", "relative").css(horizontalSpace, "auto").css(verticalSpace, "auto").css("min-width", defaultWidth);
         }
 
         function insertClone() {
             if (rotation == 180)
                 if (lastMove.pageY >= $closestItem.offset().top + $closestItem.height() / 2)
-                    $clone.insertBefore($closestItem);
+                    $ghost.insertBefore($closestItem);
                 else
-                    $clone.insertAfter($closestItem);
+                    $ghost.insertAfter($closestItem);
             else if (rotation == 0)
                 if (lastMove.pageY <= $closestItem.offset().top - $closestItem.height() / 2)
-                    $clone.insertBefore($closestItem);
+                    $ghost.insertBefore($closestItem);
                 else
-                    $clone.insertAfter($closestItem);
+                    $ghost.insertAfter($closestItem);
             else if (rotation == 90)
                 if (lastMove.pageX >= $closestItem.offset().left + $closestItem.height() / 2)
-                    $clone.insertBefore($closestItem);
+                    $ghost.insertBefore($closestItem);
                 else
-                    $clone.insertAfter($closestItem);
+                    $ghost.insertAfter($closestItem);
             else if (rotation == 270)
                 if (lastMove.pageX >= $closestItem.offset().left - $closestItem.height() / 2)
-                    $clone.insertAfter($closestItem);
+                    $ghost.insertAfter($closestItem);
                 else
-                    $clone.insertBefore($closestItem);
+                    $ghost.insertBefore($closestItem);
 
         }
 
@@ -264,7 +265,7 @@
             $drag.css("position", "relative").css(horizontalSpace, "auto").css(verticalSpace, "auto").css("min-width", defaultWidth);
             $drag.removeClass("drag");
 
-            $clone.remove();
+            $ghost.remove();
             clearInterval(ghostInterval);
 
             removeEvents();
@@ -273,8 +274,6 @@
         }
 
         function insertDragItem() {
-            console.log(lastMove.pageX, $closestItem.offset().left);
-
             if (rotation == 180)
                 if (lastMove.pageY >= $closestItem.offset().top + $closestItem.height() / 2)
                     $drag.insertBefore($closestItem);
