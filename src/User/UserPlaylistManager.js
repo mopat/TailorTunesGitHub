@@ -42,6 +42,7 @@ App.UserPlaylistManager = (function () {
                 if (getCurrentUser() != null) {
                     var isExisitingIndex = isPlaylistNameExisting(playlistName);
                     if (isExisitingIndex != -1) {
+                        overwrite = true;
                         swal({
                             title: "Playlist name already exists",
                             text: "Are you sure you want to overwrite?",
@@ -129,11 +130,13 @@ App.UserPlaylistManager = (function () {
         deleteObject = function (playlist) {
             playlist.destroy({
                 success: function (playlist) {
+                    if (overwrite == false)
                     swal({
                         title: "Playlist deleted",
                         type: "success",
                         timer: 500
                     });
+                    overwrite = false;
                     $(that).trigger("userPlaylistDeleteSuccess");
                 },
                 error: function (myObject, error) {
@@ -142,6 +145,7 @@ App.UserPlaylistManager = (function () {
                         type: "error",
                         timer: 500
                     });
+                    overwrite = false;
                 }
             });
         },

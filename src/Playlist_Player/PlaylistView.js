@@ -11,7 +11,6 @@ App.PlaylistView = (function () {
         $playlistSpaceFiller = null,
         $loadingAnimation = null,
         defaultTextColor = null,
-        playlistSortable = null,
         playlistLength = 0,
 
         init = function () {
@@ -234,7 +233,6 @@ App.PlaylistView = (function () {
         _addSortable = function () {
             $playlist.rotatableSortable({
                 contentId: "#rotatable",
-                listId: "#playlist",
                 delegates: ".playlist-item",
                 rotation: getRotation(),
                 sortEnd: function () {

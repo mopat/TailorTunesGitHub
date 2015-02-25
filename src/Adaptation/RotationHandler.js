@@ -14,7 +14,7 @@ App.RotationHandler = (function () {
             $sortModeSwitch = $("#sort-mode-switch");
 
             $rotate.on("click", handleRotateClick);
-            rotationMode = false;
+            rotationMode = true;
             if (rotationMode)
                 showRotateTriggers();
 

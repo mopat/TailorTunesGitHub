@@ -145,6 +145,7 @@ App.UserPlaylistView = (function () {
                     loadedPlaylist.push(playlistObject);
                 });
                 $userPlaylist.switchClass("loading", "loaded");
+                $(this).html("LOADED");
                 $(that).trigger("userPlaylistLoaded", [loadedPlaylist]);
             }
         },
@@ -226,6 +227,7 @@ App.UserPlaylistView = (function () {
 
         _removeLoadedStatus = function () {
             $(".loaded").removeClass("loaded");
+            $(".load-playlist").html("LOAD");
         };
 
 
