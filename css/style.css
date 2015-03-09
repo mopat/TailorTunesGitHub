@@ -545,16 +545,16 @@ footer {
 
 /*scrollbar modifications*/
 /*webkit*/
-#playlist::-webkit-scrollbar {
+#playlist::-webkit-scrollbar, .user-playlist::-webkit-scrollbar {
     width: 10px; /* for vertical scrollbars */
     height: 10px; /* for horizontal scrollbars */
 }
 
-#playlist::-webkit-scrollbar-track {
+#playlist::-webkit-scrollbar-track, .user-playlist::-webkit-scrollbar-track {
     background: rgba(0, 0, 0, 0.1);
 }
 
-#playlist::-webkit-scrollbar-thumb {
+#playlist::-webkit-scrollbar-thumb,.user-playlist::-webkit-scrollbar-thumb {
     background: rgba(0, 0, 0, 0.5);
 }
 

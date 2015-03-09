@@ -50,17 +50,11 @@ App.PlaylistView = (function () {
                     setupSwipeToScroll(event, direction);
 
                 },
-                swipeStatus: function (event, phase, direction, distance, duration, fingers) {
-                    if (getUserSide() != "bottom" && getUserSide() != "top") {
-                        if (phase == "start")
-                            $playlist.css("overflow-y", "hidden");
-                        else if (phase == "end")
-                            $playlist.css("overflow-y", "scroll");
-                    }
-                },
                 allowPageScroll: "vertical",
                 threshold: 10,
                 excludedElements: "button, input, select, textarea, .noSwipe"
+            }).on("touchmove", function(e){
+                e.preventDefault();
             });
         },
 
@@ -76,19 +70,6 @@ App.PlaylistView = (function () {
         },
 
         setupSwipeToScroll = function (event, direction) {
-            /* if (getUserSide() == "bottom" && direction == "down") {
-                scrollMinus();
-            }
-            else if (getUserSide() == "bottom" && direction == "up") {
-                scrollPlus();
-            }
-            else if (getUserSide() == "top" && direction == "up") {
-                scrollMinus();
-            }
-            else if (getUserSide() == "top" && direction == "down") {
-                scrollPlus();
-            }
-             else*/
             if (getUserSide() == "left" && direction == "left") {
                 scrollMinus();
             }
@@ -100,6 +81,18 @@ App.PlaylistView = (function () {
             }
             else if (getUserSide() == "right" && direction == "left") {
                 scrollPlus();
+            }
+            else if(getUserSide() == "bottom" && direction == "up"){
+                scrollPlus();
+            }
+            else if(getUserSide() == "bottom" && direction == "down"){
+                scrollMinus();
+            }
+            else if(getUserSide() == "top" && direction == "down"){
+                scrollPlus();
+            }
+            else if(getUserSide() == "top" && direction == "up"){
+                scrollMinus();
             }
         },
 

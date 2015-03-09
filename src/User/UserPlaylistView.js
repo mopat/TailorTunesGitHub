@@ -27,8 +27,6 @@ App.UserPlaylistView = (function () {
 
             initHandler();
 
-            setupSwipe();
-
             return that;
         },
 
@@ -44,28 +42,54 @@ App.UserPlaylistView = (function () {
             $userPlaylisBox.on("click", ".stop-icon", handleStopIconClick);
         },
 
-        setupSwipe = function () {
-            $userPlaylisBox.swipe({
-                swipeLeft: function (event) {
-                    if (getUserSide() == "bottom")
-                        removeListItem(event);
-                },
-                swipeUp: function (event) {
-                    if (getUserSide() == "left")
-                        removeListItem(event);
-                },
-                swipeRight: function (event) {
-                    if (getUserSide() == "top")
-                        removeListItem(event);
-                },
-                swipeDown: function (event) {
-                    if (getUserSide() == "right")
-                        removeListItem(event);
+
+        setupSwipeControl = function () {
+            $(".user-playlist").swipe({
+                swipe: function (event, direction, distance, duration, fingerCount, fingerData) {
+                    setupSwipeToScroll(event, direction);
                 },
                 allowPageScroll: "vertical",
                 threshold: 10,
                 excludedElements: "button, input, select, textarea, .noSwipe"
+            }).on("touchmove", function (e) {
+                e.preventDefault();
             });
+            ;
+        },
+
+        setupSwipeToScroll = function (event, direction) {
+            if (getUserSide() == "left" && direction == "left") {
+                scrollMinus();
+            }
+            else if (getUserSide() == "left" && direction == "right") {
+                scrollPlus();
+            }
+            else if (getUserSide() == "right" && direction == "right") {
+                scrollMinus();
+            }
+            else if (getUserSide() == "right" && direction == "left") {
+                scrollPlus();
+            } else if (getUserSide() == "bottom" && direction == "up") {
+                scrollPlus();
+            }
+            else if (getUserSide() == "bottom" && direction == "down") {
+                scrollMinus();
+            }
+            else if (getUserSide() == "top" && direction == "down") {
+                scrollPlus();
+            }
+            else if (getUserSide() == "top" && direction == "up") {
+                scrollMinus();
+            }
+        },
+
+
+        scrollMinus = function () {
+            $(".user-playlist").animate({scrollTop: "-=" + $(".user-playlist").height()});
+        },
+
+        scrollPlus = function () {
+            $(".user-playlist").animate({scrollTop: "+=" + $(".user-playlist").height()});
         },
 
         _setUserPlaylistView = function (userPlaylistObj) {
@@ -89,7 +113,7 @@ App.UserPlaylistView = (function () {
                         title: JSONItem.title,
                         duration: JSONItem.duration,
                         playlist_number: JSONItem.number
-                });
+                    });
                 $("#" + userPlaylistObj.playlistId).append(playlistItem);
             }
             setPlaylistIds();
@@ -110,6 +134,7 @@ App.UserPlaylistView = (function () {
 
         _openUserPlaylistModal = function () {
             $userPlaylistModal.foundation('reveal', 'open');
+            setupSwipeControl();
         },
 
         _emptyUserPlaylistModal = function () {
@@ -137,11 +162,11 @@ App.UserPlaylistView = (function () {
                         artworkUrl = $(this).find(".user-playlist-item-image").attr("src"),
                         duration = $(this).find(".user-playlist-track-duration").html(),
                         playlistObject = {
-                        stream_url: streamUrl,
-                        title: title,
-                        artwork_url: artworkUrl,
-                        durationMinsAndSecs: duration
-                    };
+                            stream_url: streamUrl,
+                            title: title,
+                            artwork_url: artworkUrl,
+                            durationMinsAndSecs: duration
+                        };
                     loadedPlaylist.push(playlistObject);
                 });
                 $userPlaylist.switchClass("loading", "loaded");
