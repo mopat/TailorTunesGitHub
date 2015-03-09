@@ -113,7 +113,7 @@ App.RotationHandler = (function () {
 
                 if (rotationValue < 0)
                     rotationValue *= -1;
-                if (rotationValue >= 50)
+                if (rotationValue >= 30)
                     rotateGesture(e);
             });
 

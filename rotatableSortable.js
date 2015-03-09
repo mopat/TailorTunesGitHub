@@ -437,7 +437,7 @@
 
         $(this).stop();
         $delegates.off("touchstart").off("mousedown");
-
+        clearTimeout(scrollInterval);
         return this;
     };
 

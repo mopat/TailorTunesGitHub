@@ -88,7 +88,6 @@ App.MainController = (function () {
                     }
                 });
             })
-
         },
 
         handleCheckSortModeSwitch = function () {
