@@ -195,6 +195,7 @@ App.RotationHandler = (function () {
                 }
 
             }
+            //hammertime.off("rotate pinch").off("rotateend");
         },
 
         handleRotateClick = function (e) {

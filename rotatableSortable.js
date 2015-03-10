@@ -45,6 +45,10 @@
         function addSortable() {
             $delegates.on("touchstart", function (e) {
                 e.preventDefault();
+                console.log(e.originalEvent.changedTouches.length)
+                if (e.originalEvent.changedTouches.length == 1){
+
+                    lastMove = e;
                 $drag = $(this);
 
                 var timeout = window.setTimeout(function () {
@@ -61,21 +65,35 @@
                     $(document).css("user-select", "none").attr('unselectable', 'on').on('selectstart', false);
                     $drag.addClass("drag").off("touchend");
                 }, delay);
-                $drag.on("touchend", function () {
-                    $drag.off("touchend");
-                    window.clearTimeout(timeout);
-                });
+
                 scrollInterval = setInterval(function () {
                     scroll();
+                    console.log("Scroll")
                 }, scrollIntervalDuration);
+
+                $delegates.on("touchend", function () {
+                    clearTimeout(timeout);
+                    clearTimeout(ghostInterval);
+                    clearInterval(scrollInterval);
+                    $ghost.remove();
+                    $list.stop();
+                    $drag.off("touchmove mousemove touchend mouseend");
+                    $delegates.off("touchend");
+                    return false;
+                });
                 return false;
+            }
             });
+
 
             $delegates.on("mousedown", (function (e) {
                 e.preventDefault();
+
+                lastMove = e;
                 $drag = $(this);
 
                 var timeout = window.setTimeout(function () {
+
                     followCursor(e);
                     onMouseUp();
                     onMouseMove();
@@ -90,16 +108,24 @@
                     $drag.addClass("drag").off("mouseup");
                 }, delay);
 
-                $drag.on("mouseup", function () {
-                    $drag.off("mouseup");
-                    window.clearTimeout(timeout);
-                });
                 scrollInterval = setInterval(function () {
                     scroll();
                 }, scrollIntervalDuration);
+
+                $delegates.on("mouseup", function () {
+                    clearTimeout(timeout);
+                    clearTimeout(ghostInterval);
+                    clearInterval(scrollInterval);
+                    $ghost.remove();
+                    $drag.off("touchmove mousemove touchend mouseend");
+                    $delegates.off("mouseup");
+                    return false;
+                });
                 return false;
             }));
-        }
+
+    }
+
 
         function getClosestItem() {
             var $closestItem = null;
@@ -204,6 +230,8 @@
         }
 
         function followCursor(e) {
+            lastMove = e;
+
             defaultWidth = $delegates.width();
             notDraggingItems = $delegates.not(".drag");
             $drag.css("position", "absolute").css("min-width", defaultWidth);
@@ -215,20 +243,20 @@
                 $drag.css(horizontalSpace, e.pageX - $list.offset().left - $drag.width() / 2).css(verticalSpace, e.pageY - $list.offset().top - $drag.height());
             else if (rotation == 270)
                 $drag.css(horizontalSpace, e.pageX - $(document).width() + $list.height()).css(verticalSpace, e.pageY - $list.offset().top - $drag.width() / 2);
-
-            lastMove = e;
         }
 
 
         //SORT END
         function onMouseUp() {
             $(document).on("mouseup", function (e) {
+                $ghost.remove();
                 sortComplete();
             });
         }
 
         function onTouchEnd() {
             $(document).on("touchend", function (e) {
+                $ghost.remove();
                 sortComplete();
             });
         }
@@ -265,7 +293,7 @@
             $drag.css("position", "relative").css(horizontalSpace, "auto").css(verticalSpace, "auto").css("min-width", defaultWidth);
             $drag.removeClass("drag");
 
-            $ghost.remove();
+
             clearInterval(ghostInterval);
 
             removeEvents();
@@ -436,7 +464,7 @@
             $delegates = $(this).children();
 
         $(this).stop();
-        $delegates.off("touchstart").off("mousedown");
+        $delegates.off("touchstart").off("mousedown").off("touchend").off("mouseup");
         clearTimeout(scrollInterval);
         return this;
     };
