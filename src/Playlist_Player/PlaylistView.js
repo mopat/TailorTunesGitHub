@@ -302,12 +302,10 @@ App.PlaylistView = (function () {
 
         hideLoadingAnimation = function () {
             $loadingAnimation.hide();
-            $loadingAnimation.undim();
         },
 
         showLoadingAnimation = function () {
             $loadingAnimation.show();
-            $loadingAnimation.dimBackground();
         },
 
         _isPlaylistExisting = function () {

@@ -23,8 +23,6 @@ App.RotationHandler = (function () {
         },
 
         rotate = function (rotation, side) {
-            $.undim();
-
             $modals.transition({rotate: rotation}, ROTATE_DURATION);
             $(".sweet-alert").transition({rotate: rotation}, ROTATE_DURATION);
             $rotatable.transition({rotate: rotation}, ROTATE_DURATION, function () {
@@ -106,8 +104,10 @@ App.RotationHandler = (function () {
             hammertime.get('pinch').set({enable: true});
             hammertime.on('rotate pinch', function (e) {
                 e.preventDefault();
+            });
+            hammertime.on("rotatestart", function(e){
                 if($sortModeSwitch.attr("checked") && $('#playlist').has($(e.target)).length)
-                swal("Disable sort mode to rotate or do not touch the playlist!", null, "error");
+                    swal("Disable sort mode to rotate or do not touch the playlist!", null, "error");
             });
             hammertime.on("rotateend", function (e) {
                 var rotationValue = e.rotation;

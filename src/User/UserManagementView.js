@@ -117,7 +117,7 @@ App.UserManagementView = (function () {
 
         handleLoginAnchorClick = function () {
             if ($loginForm.is(":visible")) {
-                $loginForm.undim().hide();
+                $loginForm.hide();
             }
             else {
                 $loginForm.show()//.dimBackground();
@@ -126,10 +126,10 @@ App.UserManagementView = (function () {
 
         handleSignInAnchorClick = function () {
             if ($signInForm.is(":visible")) {
-                $signInForm.undim().hide();
+                $signInForm.hide();
             }
             else {
-                $signInForm.show()//.dimBackground();
+                $signInForm.show();
             }
         };
 
