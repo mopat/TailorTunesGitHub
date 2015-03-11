@@ -87,7 +87,10 @@ App.MainController = (function () {
                         alert("You swiped " + direction);
                     }
                 });
-            })
+            });
+            $(window).on("orientationchange",function(){
+                resize._resizePlaylistHeight();
+            });
         },
 
         handleCheckSortModeSwitch = function () {

@@ -39,7 +39,7 @@ body {
 }
 #max-results{
     width: 90%;
-    padding-left: 5px;
+    margin-left: 5px;
 }
 
 #max-results-value{
