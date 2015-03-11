@@ -106,14 +106,15 @@ App.RotationHandler = (function () {
             hammertime.get('pinch').set({enable: true});
             hammertime.on('rotate pinch', function (e) {
                 e.preventDefault();
-                console.log("rotate")
+                if($sortModeSwitch.attr("checked") && $('#playlist').has($(e.target)).length)
+                swal("Disable sort mode to rotate or do not touch the playlist!", null, "error");
             });
             hammertime.on("rotateend", function (e) {
                 var rotationValue = e.rotation;
 
                 if (rotationValue < 0)
                     rotationValue *= -1;
-                if (rotationValue >= 30)
+                if (rotationValue >= 20)
                     rotateGesture(e);
             });
 

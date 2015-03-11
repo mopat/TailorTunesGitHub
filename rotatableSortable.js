@@ -74,6 +74,7 @@
                         clearTimeout(timeout);
                         clearTimeout(ghostInterval);
                         clearInterval(scrollInterval);
+                        if($ghost != null || $ghost != undefined)
                         $ghost.remove();
                         $list.stop();
                         $drag.off("touchmove mousemove touchend mouseend");
@@ -117,6 +118,7 @@
                     clearTimeout(timeout);
                     clearTimeout(ghostInterval);
                     clearInterval(scrollInterval);
+                    if($ghost != null || $ghost != undefined)
                     $ghost.remove();
                     $drag.off("touchmove mousemove touchend mouseend");
                     $delegates.off("mouseup");
@@ -466,6 +468,8 @@
             $delegates = $(this).children();
 
         $(this).stop();
+        if($ghost != null || $ghost != undefined)
+        $ghost.remove()
         $delegates.off("touchstart").off("mousedown").off("touchend").off("mouseup");
         clearTimeout(scrollInterval);
         return this;
