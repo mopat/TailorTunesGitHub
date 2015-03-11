@@ -2,11 +2,13 @@
  * Created by Patrick on 14.01.2015.
  */
 var echoNestAPIKey = "N2U2OZ8ZDCXNV9DBG";
-var searchLimit = 10;
 
 function artistQuery(options) {
+    console.log(options)
     var query = options.query;
     var option = options.option;
+    var searchLimit = options.searchLimit;
+
     var queryUrl = null;
     switch (options.option) {
         case "similar":
@@ -36,6 +38,7 @@ function trackQuery(options) {
 function genreQuery(options) {
     var query = options.query.toLowerCase();
     var option = options.option;
+    var searchLimit = options.searchLimit;
     var queryUrl = "https://developer.echonest.com/api/v4/playlist/static?api_key=" + echoNestAPIKey + "&format=json&genre=" + query + "&type=genre-radio&song_selection=" + option + "&results=" + searchLimit;
     this.queryUrl = queryUrl;
 }
@@ -44,7 +47,6 @@ function QueryFactory() {
 }
 QueryFactory.prototype.createQuery = function createQuery(options) {
     var parentClass = null;
-
     if (options.type === "artist") {
         parentClass = artistQuery;
     }

@@ -120,7 +120,6 @@
             <form onsubmit="return false;" id="search-form">
                 <div class="row collapse">
                     <div id="picker-box" class="text-center">
-
                         <a href="#">
                             <div class="large-1 medium-1 small-4 columns picker picked" id="artist-tab">
                                 Artist
@@ -177,8 +176,25 @@
                         <a href="#" class="button postfix" id="close-search-button"><i class="fi-x"></i> </a>
                     </div>
                 </div>
+                <div class="row">
+                    <div id="max-results-box">
+                        <div class="large-3 medium-3 small-6 columns text-center">
+
+                            Max results:
+                <span id="max-results-value">
+                    20
+                </span>
+                        </div>
+                        <div class="large-9 medium-9 small-6 columns">
+                            <input type="range" min="1" max="50" value="20" id="max-results">
+                        </div>
+                    </div>
+                </div>
             </form>
+
         </div>
+
+
     </div>
     <div class="row" id="choose-title-box">
         <div class="large-12 medium-12 small-12 columns">

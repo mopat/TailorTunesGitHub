@@ -2,7 +2,6 @@
 App.MainModel = (function () {
     var that = {},
         scLimit = 50,
-        searchLimit = 10,
         playlist = [],
         stringScoreTolerance = 0.5,
         requestInterval = null,
@@ -26,7 +25,8 @@ App.MainModel = (function () {
                 type: srchObj.type,
                 query: srchObj.query,
                 option: srchObj.option,
-                trackID: srchObj.trackID
+                trackID: srchObj.trackID,
+                searchLimit: srchObj.searchLimit
             });
 
             $.ajax({

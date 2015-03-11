@@ -13,6 +13,8 @@ App.SearchView = (function () {
         $genreDropdownBox = null,
         $searchDropdown = null,
         $searchIcon = null,
+        $maxResults = null,
+        $maxResultsValue = null,
         mode = null,
 
         init = function () {
@@ -22,11 +24,12 @@ App.SearchView = (function () {
             $closeSearchButton = $("#close-search-button");
             $picker = $(".picker");
             $searchDropdown = $(".search-dropdown");
-
+            $maxResults = $("#max-results");
             $artistDropdownBox = $("#artist-dropdown-box");
             $trackDropdownBox = $("#track-dropdown-box");
             $genreDropdownBox = $("#genre-dropdown-box");
             $searchIcon = $("#search-icon");
+            $maxResultsValue = $("#max-results-value");
 
             mode = "artist";
 
@@ -51,6 +54,11 @@ App.SearchView = (function () {
             $searchIcon.on("click", function () {
                 searchFieldFocusIn();
             });
+
+            $maxResults.on("mousemove touchmove", function(){
+                $(this).attr("value", $(this).val())
+                $maxResultsValue.html($(this).val());
+            })
         },
 
         searchFieldFocusIn = function () {
@@ -69,8 +77,10 @@ App.SearchView = (function () {
             var srchObj = {};
             $searchDropdown.each(function (index) {
                 if ($(this).is(":visible")) {
-                    srchObj = createSrchObj($searchField.val(), $(this).attr("data-type"), $(this).val(), null, $("option:selected", this).attr("data-api"));
+
+                    srchObj = createSrchObj($searchField.val(), $(this).attr("data-type"), $(this).val(), null, $("option:selected", this).attr("data-api"), $maxResults.val());
                 }
+                console.log(srchObj)
             });
             if (srchObj.dataApi == "echonest") {
                 if (srchObj.type == "track" && srchObj.option == "similar")
