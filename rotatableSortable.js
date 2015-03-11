@@ -45,44 +45,44 @@
         function addSortable() {
             $delegates.on("touchstart", function (e) {
                 e.preventDefault();
-                console.log(e.originalEvent.changedTouches.length)
-                if (e.originalEvent.changedTouches.length == 1){
+                if (e.originalEvent.changedTouches.length == 1) {
 
                     lastMove = e;
-                $drag = $(this);
+                    $drag = $(this);
 
-                var timeout = window.setTimeout(function () {
-                    followCursor(e);
-                    onTouchMove();
-                    onTouchEnd();
+                    var timeout = window.setTimeout(function () {
+                        followCursor(e);
+                        onTouchMove();
+                        onTouchEnd();
 
-                    $ghost = $drag.clone();
-                    $ghost.switchClass("drag", "ghost");
-                    ghostInterval = setInterval(function () {
-                        cloneDrag();
-                    }, 50);
+                        $ghost = $drag.clone();
+                        $ghost.switchClass("drag", "ghost");
+                        ghostInterval = setInterval(function () {
+                            cloneDrag();
+                        }, 50);
 
-                    $(document).css("user-select", "none").attr('unselectable', 'on').on('selectstart', false);
-                    $drag.addClass("drag").off("touchend");
-                }, delay);
+                        $(document).css("user-select", "none").attr('unselectable', 'on').on('selectstart', false);
+                        $drag.addClass("drag").off("touchend");
+                    }, delay);
 
-                scrollInterval = setInterval(function () {
-                    scroll();
-                    console.log("Scroll")
-                }, scrollIntervalDuration);
+                    if (scrollInterval == null)
+                        scrollInterval = setInterval(function () {
+                            scroll();
+                        }, scrollIntervalDuration);
 
-                $delegates.on("touchend", function () {
-                    clearTimeout(timeout);
-                    clearTimeout(ghostInterval);
-                    clearInterval(scrollInterval);
-                    $ghost.remove();
-                    $list.stop();
-                    $drag.off("touchmove mousemove touchend mouseend");
-                    $delegates.off("touchend");
+                    $delegates.on("touchend", function () {
+                        clearTimeout(timeout);
+                        clearTimeout(ghostInterval);
+                        clearInterval(scrollInterval);
+                        $ghost.remove();
+                        $list.stop();
+                        $drag.off("touchmove mousemove touchend mouseend");
+                        $delegates.off("touchend");
+                        scrollInterval = null;
+                        return false;
+                    });
                     return false;
-                });
-                return false;
-            }
+                }
             });
 
 
@@ -108,9 +108,10 @@
                     $drag.addClass("drag").off("mouseup");
                 }, delay);
 
-                scrollInterval = setInterval(function () {
-                    scroll();
-                }, scrollIntervalDuration);
+                if (scrollInterval == null)
+                    scrollInterval = setInterval(function () {
+                        scroll();
+                    }, scrollIntervalDuration);
 
                 $delegates.on("mouseup", function () {
                     clearTimeout(timeout);
@@ -119,12 +120,13 @@
                     $ghost.remove();
                     $drag.off("touchmove mousemove touchend mouseend");
                     $delegates.off("mouseup");
+                    scrollInterval = null;
                     return false;
                 });
                 return false;
             }));
 
-    }
+        }
 
 
         function getClosestItem() {
@@ -155,7 +157,6 @@
         }
 
         function cloneDrag() {
-            console.log("clone")
             min = Number.POSITIVE_INFINITY;
 
             if ($oldClosestItem != $closestItem) {
@@ -185,7 +186,6 @@
                     min = dist;
                 }
             }
-
             $ghost.css("position", "relative").css(horizontalSpace, "auto").css(verticalSpace, "auto").css("min-width", defaultWidth);
         }
 
@@ -251,6 +251,7 @@
             $(document).on("mouseup", function (e) {
                 $ghost.remove();
                 sortComplete();
+                scrollInterval = null;
             });
         }
 
@@ -258,6 +259,7 @@
             $(document).on("touchend", function (e) {
                 $ghost.remove();
                 sortComplete();
+                scrollInterval = null;
             });
         }
 

@@ -193,9 +193,7 @@ App.RotationHandler = (function () {
                         rotation: getRotation()
                     });
                 }
-
             }
-            //hammertime.off("rotate pinch").off("rotateend");
         },
 
         handleRotateClick = function (e) {
