@@ -45,9 +45,9 @@ App.PlaylistView = (function () {
 
         setupSwipeControl = function () {
             $playlist.swipe({
-                swipe: function (event, direction, distance, duration, fingerCount, fingerData) {
+                swipe: function (event, direction, distance, fingerCount, fingerData, duration) {
                     setupSwipeToDelete(event, direction);
-                    setupSwipeToScroll(event, direction);
+                    setupSwipeToScroll(event, direction, distance);
 
                 },
                 allowPageScroll: "vertical",
@@ -69,27 +69,27 @@ App.PlaylistView = (function () {
                 removeListItem(event);
         },
 
-        setupSwipeToScroll = function (event, direction) {
+        setupSwipeToScroll = function (event, direction, distance) {
             if (getUserSide() == "left" && direction == "left") {
-                scrollMinus();
+                scrollMinus(distance);
             }
             else if (getUserSide() == "left" && direction == "right") {
-                scrollPlus();
+                scrollPlus(distance);
             }
             else if (getUserSide() == "right" && direction == "right") {
-                scrollMinus();
+                scrollMinus(distance);
             }
             else if (getUserSide() == "right" && direction == "left") {
-                scrollPlus();
+                scrollPlus(distance);
             }
             else if(getUserSide() == "bottom" && direction == "up"){
-                scrollPlus();
+                scrollPlus(distance);
             }
             else if(getUserSide() == "bottom" && direction == "down"){
-                scrollMinus();
+                scrollMinus(distance);
             }
             else if(getUserSide() == "top" && direction == "down"){
-                scrollPlus();
+                scrollPlus(distance);
             }
             else if(getUserSide() == "top" && direction == "up"){
                 scrollMinus();
@@ -97,12 +97,14 @@ App.PlaylistView = (function () {
         },
 
 
-        scrollMinus = function () {
-            $playlist.animate({scrollTop: "-=" + $playlist.height()});
+        scrollMinus = function (distance) {
+            var scrollFactor = distance * 5;
+            $playlist.animate({scrollTop: "-=" + scrollFactor});
         },
 
-        scrollPlus = function () {
-            $playlist.animate({scrollTop: "+=" + $playlist.height()});
+        scrollPlus = function (distance) {
+            var scrollFactor = distance * 5;
+            $playlist.animate({scrollTop: "+=" + scrollFactor });
         },
 
         removeListItem = function (e) {
