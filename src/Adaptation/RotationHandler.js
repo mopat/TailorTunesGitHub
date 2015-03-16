@@ -19,10 +19,16 @@ App.RotationHandler = (function () {
                 showRotateTriggers();
 
             handleRotateGesture();
+
+
+            window.addEventListener("resize", function () {
+                fitContentSize(getRotation(), getUserSide())
+            }, false);
             return that;
         },
 
-        rotate = function (rotation, side) {
+        fitContentSize = function (rotation, side) {
+            console.log("rotate")
             $modals.transition({rotate: rotation}, ROTATE_DURATION);
             $(".sweet-alert").transition({rotate: rotation}, ROTATE_DURATION);
             $rotatable.transition({rotate: rotation}, ROTATE_DURATION, function () {
@@ -169,7 +175,7 @@ App.RotationHandler = (function () {
                     }
                 setRotation(newRotation);
                 setUserSider(side);
-                rotate(newRotation, side)
+                fitContentSize(newRotation, side)
 
                 /**    $("#playlist").destroy({
                     listId: "#playlist",

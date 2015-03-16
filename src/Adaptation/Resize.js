@@ -26,6 +26,10 @@ App.Resize = (function () {
             window.addEventListener("resize", function () {
                 _resizePlaylistHeight();
             }, false);
+
+            $( window ).on( "orientationchange", function() {
+                _resizePlaylistHeight();
+            });
             return that;
         },
 

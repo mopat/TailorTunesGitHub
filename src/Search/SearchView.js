@@ -83,7 +83,6 @@ App.SearchView = (function () {
 
                     srchObj = createSrchObj($searchField.val(), $(this).attr("data-type"), $(this).val(), null, $("option:selected", this).attr("data-api"), $maxResults.val());
                 }
-                console.log(srchObj)
             });
             if (srchObj.dataApi == "echonest") {
                 if (srchObj.type == "track" && srchObj.option == "similar")

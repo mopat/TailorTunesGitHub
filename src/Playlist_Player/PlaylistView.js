@@ -298,16 +298,18 @@ App.PlaylistView = (function () {
         _clearPlaylist = function () {
             $playlist.find("li").remove();
             isPlaylistExisting = false;
+            $playlistSpaceFiller.show();
         },
 
         hideLoadingAnimation = function () {
             $loadingAnimation.hide();
+            $loadingAnimation.undim();
         },
 
         showLoadingAnimation = function () {
             $loadingAnimation.show();
+            $loadingAnimation.dimBackground();
         },
-
         _isPlaylistExisting = function () {
             return isPlaylistExisting;
         };
