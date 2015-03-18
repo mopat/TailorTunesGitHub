@@ -92,18 +92,18 @@ App.PlaylistView = (function () {
                 scrollPlus(distance);
             }
             else if(getUserSide() == "top" && direction == "up"){
-                scrollMinus();
+                scrollMinus(distance);
             }
         },
 
 
         scrollMinus = function (distance) {
-            var scrollFactor = distance * 5;
+            var scrollFactor = distance * 4;
             $playlist.animate({scrollTop: "-=" + scrollFactor});
         },
 
         scrollPlus = function (distance) {
-            var scrollFactor = distance * 5;
+            var scrollFactor = distance * 4;
             $playlist.animate({scrollTop: "+=" + scrollFactor });
         },
 
