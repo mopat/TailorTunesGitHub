@@ -85,12 +85,12 @@ App.UserPlaylistView = (function () {
 
         scrollMinus = function (distance) {
             var scrollFactor = distance * 4;
-            $(".user-playlist").animate({scrollTop: "-=" + $(".user-playlist").height()});
+            $(".user-playlist").animate({scrollTop: "-=" + scrollFactor});
         },
 
         scrollPlus = function (distance) {
             var scrollFactor = distance * 4;
-            $(".user-playlist").animate({scrollTop: "+=" + $(".user-playlist").height()});
+            $(".user-playlist").animate({scrollTop: "+=" + scrollFactor});
         },
 
         _setUserPlaylistView = function (userPlaylistObj) {
