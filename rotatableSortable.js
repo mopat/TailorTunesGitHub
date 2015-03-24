@@ -251,7 +251,7 @@
         //SORT END
         function onMouseUp() {
             $(document).on("mouseup", function (e) {
-                $ghost.remove();
+                $drag.remove();
                 sortComplete();
                 scrollInterval = null;
             });
@@ -259,7 +259,7 @@
 
         function onTouchEnd() {
             $(document).on("touchend", function (e) {
-                $ghost.remove();
+                $drag.remove();
                 sortComplete();
                 scrollInterval = null;
             });
@@ -292,40 +292,16 @@
                     min = dist;
                 }
             }
-
-            insertDragItem();
-            $drag.css("position", "relative").css(horizontalSpace, "auto").css(verticalSpace, "auto").css("min-width", defaultWidth);
-            $drag.removeClass("drag");
-
+            
+            $ghost.removeClass("ghost");
+            $delegates = $list.find(settings.delegates);
+            addSortable();
 
             clearInterval(ghostInterval);
 
             removeEvents();
 
             settings.sortEnd.call(this);
-        }
-
-        function insertDragItem() {
-            if (rotation == 180)
-                if (lastMove.pageY >= $closestItem.offset().top + $closestItem.height() / 2)
-                    $drag.insertBefore($closestItem);
-                else
-                    $drag.insertAfter($closestItem);
-            else if (rotation == 0)
-                if (lastMove.pageY <= $closestItem.offset().top - $closestItem.height() / 2)
-                    $drag.insertBefore($closestItem);
-                else
-                    $drag.insertAfter($closestItem);
-            else if (rotation == 90)
-                if (lastMove.pageX >= $closestItem.offset().left + $closestItem.height() / 2)
-                    $drag.insertBefore($closestItem);
-                else
-                    $drag.insertAfter($closestItem);
-            else if (rotation == 270)
-                if (lastMove.pageX >= $closestItem.offset().left - $closestItem.height() / 2)
-                    $drag.insertAfter($closestItem);
-                else
-                    $drag.insertBefore($closestItem);
         }
 
         function setRotationSpaces() {
@@ -469,7 +445,7 @@
 
         $(this).stop();
         if($ghost != null || $ghost != undefined)
-        $ghost.remove()
+        $ghost.remove();
         $delegates.off("touchstart").off("mousedown").off("touchend").off("mouseup");
         clearTimeout(scrollInterval);
         return this;
