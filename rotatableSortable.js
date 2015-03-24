@@ -63,12 +63,12 @@
 
                         $(document).css("user-select", "none").attr('unselectable', 'on').on('selectstart', false);
                         $drag.addClass("drag").off("touchend");
-                    }, delay);
 
-                    if (scrollInterval == null)
-                        scrollInterval = setInterval(function () {
-                            scroll();
-                        }, scrollIntervalDuration);
+                        if (scrollInterval == null)
+                            scrollInterval = setInterval(function () {
+                                scroll();
+                            }, scrollIntervalDuration);
+                    }, delay);
 
                     $delegates.on("touchend", function () {
                         clearTimeout(timeout);
@@ -107,12 +107,13 @@
 
                     $(document).css("user-select", "none").attr('unselectable', 'on').on('selectstart', false);
                     $drag.addClass("drag").off("mouseup");
-                }, delay);
 
-                if (scrollInterval == null)
-                    scrollInterval = setInterval(function () {
-                        scroll();
-                    }, scrollIntervalDuration);
+                    if (scrollInterval == null)
+                        scrollInterval = setInterval(function () {
+                            scroll();
+                        }, scrollIntervalDuration);
+
+                }, delay);
 
                 $delegates.on("mouseup", function () {
                     clearTimeout(timeout);
@@ -128,34 +129,6 @@
                 return false;
             }));
 
-        }
-
-
-        function getClosestItem() {
-            var $closestItem = null;
-            for (var i = 0; i < notDraggingItems.length; i++) {
-                var notDraggingItemOffset = null,
-                    top = null,
-                    dist = null;
-                if (rotation == 0 || rotation == 180) {
-                    notDraggingItemOffset = $(notDraggingItems[i]).offset().top;
-                    top = lastMove.pageY;
-                }
-                else if (rotation == 90 || 270) {
-                    notDraggingItemOffset = $(notDraggingItems[i]).offset().left;
-                    top = lastMove.pageX;
-                }
-
-                dist = top - notDraggingItemOffset;
-                if (dist < 0) {
-                    dist *= -1;
-                }
-                if (dist < min) {
-                    $closestItem = $(notDraggingItems[i]);
-                    min = dist;
-                }
-            }
-            return $closestItem;
         }
 
         function cloneDrag() {
@@ -251,7 +224,8 @@
         //SORT END
         function onMouseUp() {
             $(document).on("mouseup", function (e) {
-                $drag.remove();
+                $ghost.replaceWith($drag);
+                $ghost.remove();
                 sortComplete();
                 scrollInterval = null;
             });
@@ -259,7 +233,8 @@
 
         function onTouchEnd() {
             $(document).on("touchend", function (e) {
-                $drag.remove();
+                $ghost.replaceWith($drag);
+                $ghost.remove();
                 sortComplete();
                 scrollInterval = null;
             });
@@ -270,32 +245,8 @@
             $list.stop();
             clearInterval(scrollInterval);
 
-            for (var i = 0; i < notDraggingItems.length; i++) {
-                var notDraggingItemOffset = null,
-                    top = null,
-                    dist = null;
-                if (rotation == 0 || rotation == 180) {
-                    notDraggingItemOffset = $(notDraggingItems[i]).offset().top;
-                    top = lastMove.pageY;
-                }
-                else if (rotation == 90 || 270) {
-                    notDraggingItemOffset = $(notDraggingItems[i]).offset().left;
-                    top = lastMove.pageX;
-                }
-
-                dist = top - notDraggingItemOffset;
-                if (dist < 0) {
-                    dist *= -1;
-                }
-                if (dist < min) {
-                    $closestItem = $(notDraggingItems[i]);
-                    min = dist;
-                }
-            }
-            
-            $ghost.removeClass("ghost");
-            $delegates = $list.find(settings.delegates);
-            addSortable();
+            $drag.css("position", "relative").css(horizontalSpace, "auto").css(verticalSpace, "auto").css("min-width", defaultWidth);
+            $drag.removeClass("drag");
 
             clearInterval(ghostInterval);
 
@@ -445,7 +396,7 @@
 
         $(this).stop();
         if($ghost != null || $ghost != undefined)
-        $ghost.remove();
+        $ghost.remove()
         $delegates.off("touchstart").off("mousedown").off("touchend").off("mouseup");
         clearTimeout(scrollInterval);
         return this;
