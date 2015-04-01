@@ -188,7 +188,11 @@ body {
 
 }
 
-#playlist-box, #user-playlist-box {
+#user-playlist-box{
+    margin-top: 10px;
+ }
+
+ #playlist-box, #user-playlist-box {
     height: 100%;
     width: 100%;
     padding: 0;
@@ -306,16 +310,13 @@ body {
 }
 
 .user-playlist-header {
-    height: 50px;
-    line-height: 25px;
+    height: 73px;
+    line-height: 35px;
     background: #D7D9DC;
     margin-bottom: 5px;
     padding-left: 5px;
     border-radius: 10px;
-}
-
-.user-playlist-name {
-
+    font-size: 1.4rem;
 }
 
 .user-playlist-date {
@@ -324,16 +325,23 @@ body {
 
 .user-playlist-length {
     display: inline-block;
+    margin-left: 30px;
 }
 
 .load-playlist {
     display: inline-block;
-    width: 50px;
+width: 92px;
+    text-align: center;
+    height: 35px;
+    background-color: #555555;
+    padding-left: 5px;
+    padding-right: 5px;
 }
 
 .trash-icon, .open-icon, .close-icon {
     text-align: center;
     display: inline-block;
+    margin-left: 30px;
     width: 30px;
 }
 

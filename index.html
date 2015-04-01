@@ -232,7 +232,7 @@
                      </div>
                  </a>-->
                 <ul id="playlist">2
-<div id="playlist-space-filler"></div>
+                    <div id="playlist-space-filler"></div>
 
                 </ul>
 
@@ -351,30 +351,31 @@
                 </div>
                 <div class="large-2 medium-2 small-2 columns">
                     <a href="#">
-                        <div class="user-playlist-length"><%= length %></div>
-                    </a>
-                </div>
-                <div class="large-2 medium-2 small-2 columns">
-                    <a href="#">
                         <div class="stop-icon"><i class="fi-stop"></i></div>
                     </a>
                 </div>
             </div>
             <div class="row">
                 <div class="large-12 medium-12 small-12 columns">
+
                     <a href="#">
                         <div class="load-playlist">LOAD</div>
                     </a>
                     <a href="#">
                         <div class="trash-icon"><i class="fi-trash"></i></div>
                     </a>
-                    <a href="#">
-                        <div class="open-icon"><img src="ui-images/arrow-down-icon.png" class="arrow-up-down"></div>
-                    </a>
-                    <a href="#">
-                        <div class="close-icon" style="display: none"><img src="ui-images/arrow-up-icon.png"
-                                                                           class="arrow-up-down"></div>
-                    </a>
+                        <div class="user-playlist-length"><i class="fi-music"> </i> <%= length %></div>
+
+                    <div style="float: right">
+                        <a href="#">
+                            <div class="open-icon"><img src="ui-images/arrow-down-icon.png" class="arrow-up-down"></div>
+                        </a>
+                        <a href="#">
+                            <div class="close-icon" style="display: none"><img src="ui-images/arrow-up-icon.png"
+                                                                               class="arrow-up-down">
+                            </div>
+                        </a>
+                    </div>
                 </div>
             </div>
             <div class="large-12 columns">
