@@ -91,6 +91,10 @@ App.MainController = (function () {
             $(window).on("orientationchange",function(){
                 resize._resizePlaylistHeight();
             });
+            $(document).on("click", function(){
+                if($(".sweet-alert").is(":visible"))
+                    rotateAlert();
+            });
         },
 
         handleCheckSortModeSwitch = function () {
@@ -117,6 +121,10 @@ App.MainController = (function () {
             $(playlistOptions).on("playlistCleared", handlePlaylistCleared);
             $(playlistView).on("playlistSpaceFillerClicked", handlePlaylistSpaceFillerClick);
             $(playlistView).on("allPlaylistItemsRemoved", handleAllPlaylistItemsRemoved);
+        },
+
+        rotateAlert = function(){
+            rotationHandler._rotateAlert();
         },
 
         handleTrackPick = function (event, src, title) {

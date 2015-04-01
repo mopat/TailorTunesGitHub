@@ -94,6 +94,15 @@ App.RotationHandler = (function () {
             $(".sweet-alert").css("left", "50%");
         },
 
+        _rotateAlert = function () {
+            if (getUserSide() == "left")
+                sweetAlertLeft();
+            else if (getUserSide() == "right")
+                sweetAlertRight();
+            else if (getUserSide() == "top" || getUserSide() == "bottom")
+                sweetAlertDefault();
+        },
+
         hideRotateTriggers = function () {
             $rotate.fadeOut(500);
         },
@@ -111,8 +120,8 @@ App.RotationHandler = (function () {
             hammertime.on('rotate pinch', function (e) {
                 e.preventDefault();
             });
-            hammertime.on("rotatestart", function(e){
-                if($sortModeSwitch.attr("checked") && $('#playlist').has($(e.target)).length)
+            hammertime.on("rotatestart", function (e) {
+                if ($sortModeSwitch.attr("checked") && $('#playlist').has($(e.target)).length)
                     swal("Disable sort mode to rotate or do not touch the playlist!", null, "error");
             });
             hammertime.on("rotateend", function (e) {
@@ -226,6 +235,7 @@ App.RotationHandler = (function () {
             }
         };
 
+    that._rotateAlert = _rotateAlert;
     that.init = init;
 
     return that;
