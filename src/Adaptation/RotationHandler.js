@@ -6,12 +6,14 @@ App.RotationHandler = (function () {
         $modals = null,
         ROTATE_DURATION = 1000,
         $sortModeSwitch = null,
+        $rotateInfoBox = null,
 
         init = function () {
             $rotate = $(".rotate");
             $rotatable = $("#rotatable");
             $modals = $(".reveal-modal");
             $sortModeSwitch = $("#sort-mode-switch");
+            $rotateInfoBox = $("#rotate-info-box");
 
             $rotate.on("click", handleRotateClick);
             rotationMode = false;
@@ -22,16 +24,16 @@ App.RotationHandler = (function () {
             return that;
         },
 
-        _setTabletopMode = function(isTabletopMode){
+        _setTabletopMode = function (isTabletopMode) {
             rotationMode = isTabletopMode;
-            if (rotationMode){
-               // showRotateTriggers();
+            if (rotationMode) {
                 handleRotateGesture();
             }
         },
 
         fitContentSize = function (rotation, side) {
             console.log("rotate")
+            $rotateInfoBox.transition({rotate: rotation}, ROTATE_DURATION);
             $modals.transition({rotate: rotation}, ROTATE_DURATION);
             $(".sweet-alert").transition({rotate: rotation}, ROTATE_DURATION);
             $rotatable.transition({rotate: rotation}, ROTATE_DURATION, function () {
@@ -70,7 +72,7 @@ App.RotationHandler = (function () {
         topOrBottomModeResize = function () {
             $rotatable.width("100%");
             $("#controls-box .row").width($(".row").width());
-            $modals.css("width",  $("#controls-box .row").width()).css("left", 0).css("right", 0);
+            $modals.css("width", $("#controls-box .row").width()).css("left", 0).css("right", 0);
         },
 
         resizeLeftDistanceModal = function () {
@@ -78,7 +80,7 @@ App.RotationHandler = (function () {
         },
 
         resizeRightDistanceModal = function () {
-            $modals.css("left", $(document).width()- $rotatable.width());
+            $modals.css("left", $(document).width() - $rotatable.width());
         },
 
 
@@ -108,10 +110,24 @@ App.RotationHandler = (function () {
 
         hideRotateTriggers = function () {
             $rotate.fadeOut(500);
+            $rotateInfoBox.fadeOut(500);
         },
 
         showRotateTriggers = function () {
             $rotate.fadeIn(500);
+            $rotateInfoBox.fadeIn();
+            if (getRotation() == 0) {
+                $("#rotate-none").hide();
+            }
+            else if (getRotation() == 90) {
+                $("#rotate-90").hide();
+            }
+            else if (getRotation() == 180) {
+                $("#rotate-180").hide();
+            }
+            else if (getRotation() == 270) {
+                $("#rotate-minus-90").hide();
+            }
         },
 
         handleRotateGesture = function () {
@@ -124,6 +140,7 @@ App.RotationHandler = (function () {
                 e.preventDefault();
             });
             hammertime.on("rotatestart", function (e) {
+                showRotateTriggers();
                 if ($sortModeSwitch.attr("checked") && $('#playlist').has($(e.target)).length)
                     swal("Disable sort mode to rotate or do not touch the playlist!", null, "error");
             });
@@ -132,8 +149,9 @@ App.RotationHandler = (function () {
 
                 if (rotationValue < 0)
                     rotationValue *= -1;
-                if (rotationValue >= 20)
-                    rotateGesture(e);
+                if (rotationValue >= 20) {
+                    //rotateGesture(e);
+                }
             });
 
             function rotateGesture(e) {
@@ -219,11 +237,12 @@ App.RotationHandler = (function () {
             var $clickedRotation = $(e.target),
                 rotation = $clickedRotation.attr("data-rotate"),
                 side = $clickedRotation.attr("data-side");
-            showRotateTriggers();
+
+            hideRotateTriggers();
             $clickedRotation.fadeOut(500);
             setRotation(rotation);
             setUserSider(side);
-            rotate(rotation, side);
+            fitContentSize(rotation, side);
 
             if ($sortModeSwitch.attr("checked")) {
                 $("#playlist").destroy({

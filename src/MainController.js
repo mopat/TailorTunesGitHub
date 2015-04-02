@@ -81,6 +81,11 @@ App.MainController = (function () {
             $(playlistOptions).on("sortEnabled", handleSortEnabled);
             $(playlistOptions).on("sortDisabled", handleSortDisabled);
 
+
+            documentStart();
+        },
+
+        documentStart = function(){
             $(document).on("load", function () {
                 $("#playlist-box").swipe({
                     swipe: function (event, direction, distance, duration, fingerCount) {
