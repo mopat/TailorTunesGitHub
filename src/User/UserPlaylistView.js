@@ -67,7 +67,7 @@ App.UserPlaylistView = (function () {
                 scrollMinus(distance);
             }
             else if (getUserSide() == "right" && direction == "left") {
-                scrollPlus();
+                scrollPlus(distance);
             } else if (getUserSide() == "bottom" && direction == "up") {
                 scrollPlus(distance);
             }
