@@ -88,12 +88,33 @@ App.MainController = (function () {
                     }
                 });
             });
-            $(window).on("orientationchange",function(){
+            $(window).on("orientationchange", function () {
                 resize._resizePlaylistHeight();
             });
-            $(document).on("click", function(){
-                if($(".sweet-alert").is(":visible"))
+            $(document).on("click", function () {
+                if ($(".sweet-alert").is(":visible"))
                     rotateAlert();
+            });
+            $(document).on("ready", function () {
+                if (isMobile.any == false) {
+                    swal({
+                        title: "Use TailorTunes in Tabletop mode?",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "Yes",
+                        cancelButtonText: "No",
+                        closeOnConfirm: false,
+                        closeOnCancel: false
+                    }, function (isConfirm) {
+                        if (isConfirm) {
+                            swal("Accepted!", "You're using TailorTunes in Tabletop now!", "success");
+                        } else {
+                            swal("Cancelled", "You're not using Tabletop mode!", "error");
+                        }
+                        rotationHandler._setTabletopMode(isConfirm);
+                    });
+                }
             });
         },
 
@@ -123,7 +144,7 @@ App.MainController = (function () {
             $(playlistView).on("allPlaylistItemsRemoved", handleAllPlaylistItemsRemoved);
         },
 
-        rotateAlert = function(){
+        rotateAlert = function () {
             rotationHandler._rotateAlert();
         },
 

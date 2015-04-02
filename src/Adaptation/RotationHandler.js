@@ -15,16 +15,19 @@ App.RotationHandler = (function () {
 
             $rotate.on("click", handleRotateClick);
             rotationMode = false;
-            if (rotationMode)
-                showRotateTriggers();
-
-            handleRotateGesture();
-
 
             window.addEventListener("resize", function () {
                 fitContentSize(getRotation(), getUserSide())
             }, false);
             return that;
+        },
+
+        _setTabletopMode = function(isTabletopMode){
+            rotationMode = isTabletopMode;
+            if (rotationMode){
+               // showRotateTriggers();
+                handleRotateGesture();
+            }
         },
 
         fitContentSize = function (rotation, side) {
@@ -235,6 +238,7 @@ App.RotationHandler = (function () {
             }
         };
 
+    that._setTabletopMode = _setTabletopMode;
     that._rotateAlert = _rotateAlert;
     that.init = init;
 
