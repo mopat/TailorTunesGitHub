@@ -88,3 +88,4 @@ http://dotdotdot.frebsite.nl/
 http://iscrolljs.com/#intro
 http://stackoverflow.com/questions/2534436/jquery-plugin-adding-callback-functionality
 https://css-tricks.com/styling-cross-browser-compatible-range-inputs-css/
+https://github.com/kaimallea/isMobile
