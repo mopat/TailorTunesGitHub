@@ -2,7 +2,6 @@ App.RotationHandler = (function () {
     var that = {},
         $rotate = null,
         $rotatable = null,
-        rotationMode = false,
         $modals = null,
         ROTATE_DURATION = 1000,
         $sortModeSwitch = null,
@@ -19,7 +18,6 @@ App.RotationHandler = (function () {
 
             $rotate.on("click", handleRotateClick);
             $dimmer.on("click", handleDimmerClick);
-            rotationMode = false;
 
             window.addEventListener("resize", function () {
                 fitContentSize(getRotation(), getUserSide())
@@ -27,15 +25,13 @@ App.RotationHandler = (function () {
             return that;
         },
 
-        _setTabletopMode = function (isTabletopMode) {
-            rotationMode = isTabletopMode;
-            if (rotationMode) {
+        _setTabletopMode = function () {
+            if (isTabletopMode()) {
                 handleRotateGesture();
             }
         },
 
         fitContentSize = function (rotation, side) {
-            console.log("rotate")
             $rotateInfoBox.transition({rotate: rotation}, ROTATE_DURATION);
             $modals.transition({rotate: rotation}, ROTATE_DURATION);
             $(".sweet-alert").transition({rotate: rotation}, ROTATE_DURATION);

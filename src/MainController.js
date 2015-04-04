@@ -97,7 +97,7 @@ App.MainController = (function () {
                 resize._resizePlaylistHeight();
             });
             $(document).on("click", function () {
-                if ($(".sweet-alert").is(":visible"))
+                if ($(".sweet-alert").is(":visible") && isTabletopMode())
                     rotateAlert();
             });
             $(document).on("ready", function () {
@@ -120,7 +120,8 @@ App.MainController = (function () {
                                 showConfirmButton: true
                             });
                         }
-                        rotationHandler._setTabletopMode(isConfirm);
+                        setTabletopMode(isConfirm);
+                        rotationHandler._setTabletopMode();
                     });
                 }
             });

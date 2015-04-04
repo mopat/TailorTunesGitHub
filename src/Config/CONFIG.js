@@ -7,6 +7,7 @@ var PARSE_APPLICATION_ID = "yOTWw2niwOWRTql2MtewglSVcXYQa36Bld6ztZX3",
 
 var rotation = "0";
 var userSide = "bottom";
+var tabletopMode = false;
 
 function setRotation(value) {
     rotation = value;
@@ -22,4 +23,12 @@ function setUserSider(side) {
 
 function getUserSide() {
     return userSide;
+};
+
+function setTabletopMode(isTabletopMode) {
+    tabletopMode = isTabletopMode;
+};
+
+function isTabletopMode() {
+    return tabletopMode;
 };
