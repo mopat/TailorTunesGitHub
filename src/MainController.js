@@ -85,7 +85,7 @@ App.MainController = (function () {
             documentStart();
         },
 
-        documentStart = function(){
+        documentStart = function () {
             $(document).on("load", function () {
                 $("#playlist-box").swipe({
                     swipe: function (event, direction, distance, duration, fingerCount) {
@@ -110,12 +110,15 @@ App.MainController = (function () {
                         confirmButtonText: "Yes",
                         cancelButtonText: "No",
                         closeOnConfirm: false,
-                        closeOnCancel: false
+                        closeOnCancel: true
                     }, function (isConfirm) {
                         if (isConfirm) {
-                            swal("Accepted!", "You're using TailorTunes in Tabletop now!", "success");
-                        } else {
-                            swal("Cancelled", "You're not using Tabletop mode!", "error");
+                            swal({
+                                title: "Accepted",
+                                text: "You're using TailorTunes in Tabletop mode!",
+                                timer: 2000,
+                                showConfirmButton: false
+                            });
                         }
                         rotationHandler._setTabletopMode(isConfirm);
                     });
