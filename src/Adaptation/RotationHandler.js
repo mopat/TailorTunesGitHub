@@ -145,7 +145,6 @@ App.RotationHandler = (function () {
                 e.preventDefault();
             });
             hammertime.on("rotatestart", function (e) {
-                showRotateTriggers();
                 if ($sortModeSwitch.attr("checked") && $('#playlist').has($(e.target)).length)
                     swal("Disable sort mode to rotate or do not touch the playlist!", null, "error");
             });
@@ -155,7 +154,7 @@ App.RotationHandler = (function () {
                 if (rotationValue < 0)
                     rotationValue *= -1;
                 if (rotationValue >= 20) {
-                    //rotateGesture(e);
+                    showRotateTriggers();
                 }
             });
 

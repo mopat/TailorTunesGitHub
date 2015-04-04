@@ -114,10 +114,10 @@ App.MainController = (function () {
                     }, function (isConfirm) {
                         if (isConfirm) {
                             swal({
-                                title: "Accepted",
+                                title: "Use rotate gesture to change orientation",
                                 text: "You're using TailorTunes in Tabletop mode!",
-                                timer: 2000,
-                                showConfirmButton: false
+                                imageUrl: "ui-images/two_finger_rotate.png",
+                                showConfirmButton: true
                             });
                         }
                         rotationHandler._setTabletopMode(isConfirm);

@@ -363,7 +363,7 @@ body {
 
 .load-playlist {
     display: inline-block;
-    width: 92px;
+    width: 100px;
     text-align: center;
     height: 30px;
     background-color: #555555;
