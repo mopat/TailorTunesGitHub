@@ -7,6 +7,7 @@ App.RotationHandler = (function () {
         ROTATE_DURATION = 1000,
         $sortModeSwitch = null,
         $rotateInfoBox = null,
+        $dimmer = null,
 
         init = function () {
             $rotate = $(".rotate");
@@ -14,8 +15,10 @@ App.RotationHandler = (function () {
             $modals = $(".reveal-modal");
             $sortModeSwitch = $("#sort-mode-switch");
             $rotateInfoBox = $("#rotate-info-box");
+            $dimmer = $("#dimmer");
 
             $rotate.on("click", handleRotateClick);
+            $dimmer.on("click", handleDimmerClick);
             rotationMode = false;
 
             window.addEventListener("resize", function () {
@@ -111,9 +114,11 @@ App.RotationHandler = (function () {
         hideRotateTriggers = function () {
             $rotate.fadeOut(500);
             $rotateInfoBox.fadeOut(500);
+            $dimmer.hide();
         },
 
         showRotateTriggers = function () {
+            $dimmer.show();
             $rotate.fadeIn(500);
             $rotateInfoBox.fadeIn();
             if (getRotation() == 0) {
@@ -255,6 +260,10 @@ App.RotationHandler = (function () {
                     rotation: getRotation()
                 });
             }
+        },
+
+        handleDimmerClick = function(){
+            hideRotateTriggers();
         };
 
     that._setTabletopMode = _setTabletopMode;
