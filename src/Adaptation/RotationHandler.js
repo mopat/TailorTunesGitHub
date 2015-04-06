@@ -45,7 +45,6 @@ App.RotationHandler = (function () {
         },
 
         fitContentSize = function (rotation, side) {
-            $rotateInfoBox.transition({rotate: rotation}, ROTATE_DURATION);
             $modals.transition({rotate: rotation}, ROTATE_DURATION);
             $(".sweet-alert").transition({rotate: rotation}, ROTATE_DURATION);
             $rotatable.transition({rotate: rotation}, ROTATE_DURATION, function () {

@@ -581,11 +581,10 @@ footer {
 .rotate {
     width: 100px;
     height: 100px;
-    background-color: #ff3442;
-    opacity: 0.5;
+    background: url("../ui-images/tapring.png") no-repeat;
+    background-size: contain;
     position: absolute;
     z-index: 10000;
-    border-radius: 50%;
 }
 
 #rotate-90 {

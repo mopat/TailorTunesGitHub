@@ -92,3 +92,6 @@ https://github.com/kaimallea/isMobile
 
 //Bild von rotate gesture
 http://blog.snowflax.com/wp-content/uploads/2012/04/two_finger_rotate.png
+
+//bild von finger
+https://cdn1.iconfinder.com/data/icons/touch-gesture/88/touch_gesture_single_tap-512.png
