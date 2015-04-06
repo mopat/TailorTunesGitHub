@@ -6,7 +6,7 @@ App.RotationHandler = (function () {
         ROTATE_DURATION = 1000,
         $sortModeSwitch = null,
         $rotateInfoBox = null,
-        $dimmer = null,
+        $rotationTriggerBox = null,
 
         init = function () {
             $rotate = $(".rotate");
@@ -14,10 +14,10 @@ App.RotationHandler = (function () {
             $modals = $(".reveal-modal");
             $sortModeSwitch = $("#sort-mode-switch");
             $rotateInfoBox = $("#rotate-info-box");
-            $dimmer = $("#dimmer");
+            $rotationTriggerBox = $("#rotation-trigger-box");
 
             $rotate.on("click", handleRotateClick);
-            $dimmer.on("click", handleDimmerClick);
+            $rotationTriggerBox.on("click", closeTriggerBox);
 
             window.addEventListener("resize", function () {
                 fitContentSize(getRotation(), getUserSide())
@@ -108,27 +108,14 @@ App.RotationHandler = (function () {
         },
 
         hideRotateTriggers = function () {
-            $rotate.fadeOut(500);
-            $rotateInfoBox.fadeOut(500);
-            $dimmer.hide();
+            $rotationTriggerBox.fadeOut(200);
         },
 
         showRotateTriggers = function () {
-            $dimmer.show();
-            $rotate.fadeIn(500);
-            $rotateInfoBox.fadeIn();
-            if (getRotation() == 0) {
-                $("#rotate-none").hide();
-            }
-            else if (getRotation() == 90) {
-                $("#rotate-90").hide();
-            }
-            else if (getRotation() == 180) {
-                $("#rotate-180").hide();
-            }
-            else if (getRotation() == 270) {
-                $("#rotate-minus-90").hide();
-            }
+            $rotationTriggerBox.show();
+            $rotate.show();
+
+            $("#rotate-" + getRotation()).hide();
         },
 
         handleRotateGesture = function () {
@@ -207,18 +194,6 @@ App.RotationHandler = (function () {
                 setUserSider(side);
                 fitContentSize(newRotation, side)
 
-                /**    $("#playlist").destroy({
-                    listId: "#playlist",
-                    delegates: ".playlist-item"
-                });
-                 $("#playlist").rotatableSortable({
-                    contentId: "#rotatable",
-                    listId: "#playlist",
-                    delegates: ".playlist-item",
-                    rotation: getRotation()
-                });
-                 **/
-
                 if ($sortModeSwitch.attr("checked")) {
                     $("#playlist").destroy({
                         delegates: ".playlist-item"
@@ -257,7 +232,7 @@ App.RotationHandler = (function () {
             }
         },
 
-        handleDimmerClick = function(){
+        closeTriggerBox = function () {
             hideRotateTriggers();
         };
 
