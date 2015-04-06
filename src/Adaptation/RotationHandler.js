@@ -7,6 +7,7 @@ App.RotationHandler = (function () {
         $sortModeSwitch = null,
         $rotateInfoBox = null,
         $rotationTriggerBox = null,
+        $tabletopInfoBox = null,
 
         init = function () {
             $rotate = $(".rotate");
@@ -15,9 +16,11 @@ App.RotationHandler = (function () {
             $sortModeSwitch = $("#sort-mode-switch");
             $rotateInfoBox = $("#rotate-info-box");
             $rotationTriggerBox = $("#rotation-trigger-box");
+            $tabletopInfoBox = $("#tabletop-info-box");
 
             $rotate.on("click", handleRotateClick);
             $rotationTriggerBox.on("click", closeTriggerBox);
+            $tabletopInfoBox.on("click", handleTabletopInfoBoxClick);
 
             window.addEventListener("resize", function () {
                 fitContentSize(getRotation(), getUserSide())
@@ -25,9 +28,19 @@ App.RotationHandler = (function () {
             return that;
         },
 
+        handleTabletopInfoBoxClick = function (e) {
+            e.preventDefault();
+            swal({
+                title: "Use rotate gesture to change content orientation",
+                imageUrl: "ui-images/two_finger_rotate.png",
+                showConfirmButton: true
+            });
+        },
+
         _setTabletopMode = function () {
             if (isTabletopMode()) {
                 handleRotateGesture();
+                $tabletopInfoBox.show();
             }
         },
 

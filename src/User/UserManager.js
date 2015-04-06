@@ -38,7 +38,6 @@ App.UserManager = (function () {
             Parse.User.logIn(username, password, {
                 success: function (user) {
                     currentUser = Parse.User.current();
-                    console.log("LOGGEDIN")
                     $(that).trigger("loginSuccessful");
                 },
                 error: function (user, error) {
