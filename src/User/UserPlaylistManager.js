@@ -4,6 +4,7 @@
 App.UserPlaylistManager = (function () {
     var that = {},
         playlistTitles = [],
+        overwrite = false,
 
         init = function () {
             Parse.initialize(PARSE_APPLICATION_ID, PARSE_JAVASCRIPT_KEY);
@@ -109,6 +110,7 @@ App.UserPlaylistManager = (function () {
         },
 
         _deleteUserPlaylist = function (playlistId) {
+            playlistTitles = []
             retrieveObject(playlistId, deleteObject);
         },
 

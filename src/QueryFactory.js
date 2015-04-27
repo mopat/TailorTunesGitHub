@@ -4,7 +4,6 @@
 var echoNestAPIKey = "N2U2OZ8ZDCXNV9DBG";
 
 function artistQuery(options) {
-    console.log(options)
     var query = options.query;
     var option = options.option;
     var searchLimit = options.searchLimit;

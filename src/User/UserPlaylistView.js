@@ -243,8 +243,7 @@ App.UserPlaylistView = (function () {
             });
         },
 
-        _removeUserPlaylist = function (e) {
-            e.preventDefault();
+        _removeUserPlaylist = function () {
             if ($playlistContainerToDelete != null) {
                 $playlistContainerToDelete.remove();
                 $playlistContainerToDelete = null;
