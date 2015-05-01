@@ -28,7 +28,6 @@ App.UserPlaylistManager = (function () {
                         var playlistId = usersPosts[i].id,
                             playlistTitle = userPost._serverData.title;
                         playlistTitle.id = playlistId;
-                        console.log(playlistTitle)
                         playlistTitles.push(playlistObj);
 
                         var userPlaylistObj = createUserPlaylistObj(usersPosts[i]._serverData.title, usersPosts[i]._serverData.lastUpdate, usersPosts[i]._serverData.length, usersPosts[i].id, JSONPlaylist);

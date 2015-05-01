@@ -82,7 +82,6 @@ App.UserPlaylistView = (function () {
             }
         },
 
-
         scrollMinus = function (distance) {
             var scrollFactor = distance * 4;
             $(".user-playlist").animate({scrollTop: "-=" + scrollFactor});
@@ -121,15 +120,16 @@ App.UserPlaylistView = (function () {
         },
 
         setPlaylistIds = function () {
-            $(".user-playlist-item").each(function (index) {
-                if (index % 2 == 0) {
-                    $(this).css("background", listItemColors[0]);
-                }
-                else {
-                    $(this).css("background", listItemColors[1]);
-                }
-                $(this).attr("id", index);
-                $(this).find(".user-playlist-number").html(index + 1 + ".");
+            $(".user-playlist").each(function (index) {
+                $(this).children(".user-playlist-item").each(function (index) {
+                    if (index % 2 == 0) {
+                        $(this).css("background", listItemColors[0]);
+                    }
+                    else {
+                        $(this).css("background", listItemColors[1]);
+                    }
+                    $(this).find(".user-playlist-number").html(index + 1 + ".");
+                });
             });
         },
 
@@ -192,8 +192,6 @@ App.UserPlaylistView = (function () {
 
 
         removeListItem = function (e) {
-            console.log("SWIPE")
-
             var $itemToRemove = $(e.target).closest(".user-playlist-item");
             $itemToRemove.fadeOut(500, function () {
                 $itemToRemove.remove();

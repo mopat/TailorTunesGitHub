@@ -70,8 +70,10 @@ App.RotationHandler = (function () {
                         sweetAlertDefault();
                         break;
                 }
-                $(that).trigger("rotationChanged");
             });
+            setTimeout(function () {
+                $(that).trigger("rotationChanged");
+            }, ROTATE_DURATION);
         },
 
         leftOrRightResize = function () {
@@ -97,17 +99,23 @@ App.RotationHandler = (function () {
 
     //ALERT BOXES
         sweetAlertLeft = function () {
-            var left = $rotatable.width() / 2;
-            $(".sweet-alert").css("left", left);
+            setTimeout(function () {
+                var left = $rotatable.width() / 2;
+                $(".sweet-alert").css("left", left);
+            }, ROTATE_DURATION)
         },
 
         sweetAlertRight = function () {
-            var right = $(document).width() - $rotatable.width() / 2;
-            $(".sweet-alert").css("left", right);
+            setTimeout(function () {
+                var right = $(document).width() - $rotatable.width() / 2;
+                $(".sweet-alert").css("left", right);
+            }, ROTATE_DURATION)
         },
 
         sweetAlertDefault = function () {
-            $(".sweet-alert").css("left", "50%");
+            setTimeout(function () {
+                $(".sweet-alert").css("left", "50%");
+            }, ROTATE_DURATION)
         },
 
         _rotateAlert = function () {

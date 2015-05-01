@@ -220,7 +220,6 @@ App.PlaylistView = (function () {
                 else {
                     $(this).css("background", listItemColors[1]);
                 }
-                $(this).attr("id", index);
                 $(this).find(".playlist-number").html(index + 1 + ".");
             });
         },
