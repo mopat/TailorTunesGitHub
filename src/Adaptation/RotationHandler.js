@@ -89,26 +89,47 @@ App.RotationHandler = (function () {
         },
 
         resizeLeftDistanceModal = function () {
-            $modals.css("left", 0).css("right", $(document).width());
+            setTimeout(function () {
+                var offsetLeft = $rotatable.offset().left;
+                console.log(offsetLeft)
+                $modals.offset({left: offsetLeft})
+            }, ROTATE_DURATION);
+
         },
 
         resizeRightDistanceModal = function () {
-            $modals.css("left", $(document).width() - $rotatable.width());
+            setTimeout(function () {
+                var offsetLeft = $rotatable.offset().left;
+                console.log(offsetLeft)
+                $modals.offset({left: offsetLeft})
+            }, ROTATE_DURATION)
+      
+            //$modals.css("left", $(document).width() - $rotatable.width());
         },
 
 
     //ALERT BOXES
         sweetAlertLeft = function () {
             setTimeout(function () {
-                var left = $rotatable.width() / 2;
-                $(".sweet-alert").css("left", left);
+                /* für Rotation von 90 Grad
+                 der Abstand zur linken Seite entspricht
+                 der Hälfte des rotierbaren Containers
+                 */
+                var offsetLeft = $rotatable.offset().left + $rotatable.height() / 2 - $(".sweet-alert").height() / 2;
+                $(".sweet-alert").offset({left: offsetLeft})
             }, ROTATE_DURATION)
         },
 
         sweetAlertRight = function () {
             setTimeout(function () {
-                var right = $(document).width() - $rotatable.width() / 2;
-                $(".sweet-alert").css("left", right);
+                /* für Rotation von 270 Grad
+                 der Abstand zur linken Seite entspricht
+                 der kompletten Breite des Dokuments
+                 abzüglich der halben Breite
+                 des rotierbaren Containers
+                 */
+                var offsetLeft = $rotatable.offset().left + $rotatable.height() / 2 - $(".sweet-alert").height() / 2;
+                $(".sweet-alert").offset({left: offsetLeft})
             }, ROTATE_DURATION)
         },
 
