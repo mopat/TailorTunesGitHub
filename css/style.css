@@ -70,10 +70,6 @@ body {
     font-size: 0.9em;
 }
 
-.stop-icon {
-    display: none;
-}
-
 #player {
     background-color: #df151d;
     width: 100%;
@@ -392,29 +388,14 @@ body {
 
 .stop-icon {
     text-align: center;
-    padding-right: 5px;
+    float: right;
+    padding-right: 20px;
     display: none;
+    font-size: 1.8rem;
 }
 
 .arrow-up-down {
     height: 1.8rem;
-}
-
-.blend {
-    position: relative;
-    margin: 0;
-    height: 35px;
-    background: rgba(255, 255, 255, 0.4);
-    display: none;
-    font-size: 0.75rem;
-}
-
-#blend-up {
-    top: 0;
-}
-
-#blend-down {
-    bottom: 0;
 }
 
 /*Controls-Box: Slider and Buttons*/

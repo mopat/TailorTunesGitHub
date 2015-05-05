@@ -52,13 +52,13 @@ App.RotationHandler = (function () {
                     case "left":
                         $rotatable.css("float", "left");
                         leftOrRightResize();
-                        resizeModalLeft();
+                        modalLeft();
                         sweetAlertLeft();
                         break;
                     case "right":
                         $rotatable.css("float", "right");
                         leftOrRightResize();
-                        resizeModalRight();
+                        modalRight();
                         sweetAlertRight();
                         break;
                     case "top":
@@ -79,9 +79,7 @@ App.RotationHandler = (function () {
         leftOrRightResize = function () {
             $("#controls-box .row").width($(window).height());
             $rotatable.width($(window).height());
-            console.log("ROTWIDTH", $rotatable.width())
             $modals.width($rotatable.width());
-            console.log("modWIDTH", $rotatable.height())
         },
 
         topOrBottomModeResize = function () {
@@ -90,15 +88,13 @@ App.RotationHandler = (function () {
             $modals.css("width", $("#controls-box .row").width()).css("left", 0).css("right", 0);
         },
 
-        resizeModalRight = function () {
+        modalRight = function () {
             var left = $(document).width() - $modals.width();
-            console.log($modals.outerWidth(), $modals.width())
             $modals.css({left: left})
         },
 
-        resizeModalLeft = function () {
+        modalLeft = function () {
             var left = $(document).width() - $modals.width();
-            console.log($modals.outerWidth(), $modals.width())
             $modals.css({left: -left})
         },
 
@@ -135,6 +131,7 @@ App.RotationHandler = (function () {
         },
 
         _rotateAlert = function () {
+            console.log("roatete")
             if (getUserSide() == "left")
                 sweetAlertLeft();
             else if (getUserSide() == "right")
