@@ -52,13 +52,13 @@ App.RotationHandler = (function () {
                     case "left":
                         $rotatable.css("float", "left");
                         leftOrRightResize();
-                        resizeLeftDistanceModal();
+                        resizeModalLeft();
                         sweetAlertLeft();
                         break;
                     case "right":
                         $rotatable.css("float", "right");
                         leftOrRightResize();
-                        resizeRightDistanceModal();
+                        resizeModalRight();
                         sweetAlertRight();
                         break;
                     case "top":
@@ -77,9 +77,11 @@ App.RotationHandler = (function () {
         },
 
         leftOrRightResize = function () {
-            $rotatable.width($(window).height());
             $("#controls-box .row").width($(window).height());
-            $modals.width($rotatable.height());
+            $rotatable.width($(window).height());
+            console.log("ROTWIDTH", $rotatable.width())
+            $modals.width($rotatable.width());
+            console.log("modWIDTH", $rotatable.height())
         },
 
         topOrBottomModeResize = function () {
@@ -88,23 +90,16 @@ App.RotationHandler = (function () {
             $modals.css("width", $("#controls-box .row").width()).css("left", 0).css("right", 0);
         },
 
-        resizeLeftDistanceModal = function () {
-            setTimeout(function () {
-                var offsetLeft = $rotatable.offset().left;
-                console.log(offsetLeft)
-                $modals.offset({left: offsetLeft})
-            }, ROTATE_DURATION);
-
+        resizeModalRight = function () {
+            var left = $(document).width() - $modals.width();
+            console.log($modals.outerWidth(), $modals.width())
+            $modals.css({left: left})
         },
 
-        resizeRightDistanceModal = function () {
-            setTimeout(function () {
-                var offsetLeft = $rotatable.offset().left;
-                console.log(offsetLeft)
-                $modals.offset({left: offsetLeft})
-            }, ROTATE_DURATION)
-      
-            //$modals.css("left", $(document).width() - $rotatable.width());
+        resizeModalLeft = function () {
+            var left = $(document).width() - $modals.width();
+            console.log($modals.outerWidth(), $modals.width())
+            $modals.css({left: -left})
         },
 
 

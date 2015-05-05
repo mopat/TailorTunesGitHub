@@ -43,10 +43,6 @@ body {
     margin-left: 5px;
 }
 
-#max-results-value {
-
-}
-
 /*Login CSS*/
 
 #login-form-box, #sign-in-form-box {
@@ -303,6 +299,7 @@ body {
     bottom: 0;
     left: 0;
     right: 0;
+    padding: 0;
 }
 
 #echonest-trackID-picker-ul, #soundcloud-track-picker-ul {
