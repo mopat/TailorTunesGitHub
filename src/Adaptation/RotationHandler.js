@@ -10,6 +10,12 @@ App.RotationHandler = (function () {
         $tabletopInfoBox = null,
 
         init = function () {
+
+            return that;
+        },
+
+
+        initRotation = function () {
             $rotate = $(".rotate");
             $rotatable = $("#rotatable");
             $modals = $(".reveal-modal");
@@ -25,7 +31,8 @@ App.RotationHandler = (function () {
             window.addEventListener("resize", function () {
                 fitContentSize(getRotation(), getUserSide())
             }, false);
-            return that;
+
+            handleRotateGesture();
         },
 
         handleTabletopInfoBoxClick = function (e) {
@@ -39,7 +46,7 @@ App.RotationHandler = (function () {
 
         _setTabletopMode = function () {
             if (isTabletopMode()) {
-                handleRotateGesture();
+                initRotation();
                 $tabletopInfoBox.show();
             }
         },
@@ -79,6 +86,7 @@ App.RotationHandler = (function () {
         leftOrRightResize = function () {
             $("#controls-box .row").width($(window).height());
             $rotatable.width($(window).height());
+            //setzen der Breite der Fenster auf die Breite des Containers
             $modals.width($rotatable.width());
         },
 
@@ -89,13 +97,21 @@ App.RotationHandler = (function () {
         },
 
         modalRight = function () {
+            /*
+             Der Abstand zum linken Bildschirmrand entspricht der Breite des Dokuments
+             minus der Breite des Pop-ups
+             */
             var left = $(document).width() - $modals.width();
-            $modals.css({left: left})
+            $modals.css("left", left);
         },
 
         modalLeft = function () {
-            var left = $(document).width() - $modals.width();
-            $modals.css({left: -left})
+            /*
+             Der Abstand zum linken Bildschirmrand entspricht der Breite des Dokuments
+             minus der Breite des Pop-ups mal -1
+             */
+            var left = ($(document).width() - $modals.width()) * -1;
+            $modals.css("left", left);
         },
 
 
@@ -104,7 +120,9 @@ App.RotationHandler = (function () {
             setTimeout(function () {
                 /* für Rotation von 90 Grad
                  der Abstand zur linken Seite entspricht
-                 der Hälfte des rotierbaren Containers
+                 dem Abstand des rotierbaren Containers zur linken Seite
+                 Dazu Verschiebung in die Mitte des Containers und
+                 Zentrierung durch Abziehen der halbe Höhe eines SweetAlerts
                  */
                 var offsetLeft = $rotatable.offset().left + $rotatable.height() / 2 - $(".sweet-alert").height() / 2;
                 $(".sweet-alert").offset({left: offsetLeft})
@@ -115,9 +133,9 @@ App.RotationHandler = (function () {
             setTimeout(function () {
                 /* für Rotation von 270 Grad
                  der Abstand zur linken Seite entspricht
-                 der kompletten Breite des Dokuments
-                 abzüglich der halben Breite
-                 des rotierbaren Containers
+                 dem Abstand des rotierbaren Containers zur linken Seite
+                 Dazu Verschiebung in die Mitte des Containers und
+                 Zentrierung durch Abziehen der halbe Höhe eines SweetAlerts
                  */
                 var offsetLeft = $rotatable.offset().left + $rotatable.height() / 2 - $(".sweet-alert").height() / 2;
                 $(".sweet-alert").offset({left: offsetLeft})
@@ -131,7 +149,6 @@ App.RotationHandler = (function () {
         },
 
         _rotateAlert = function () {
-            console.log("roatete")
             if (getUserSide() == "left")
                 sweetAlertLeft();
             else if (getUserSide() == "right")
@@ -141,7 +158,7 @@ App.RotationHandler = (function () {
         },
 
         hideRotateTriggers = function () {
-            $rotationTriggerBox.fadeOut(200);
+            $rotationTriggerBox.fadeOut(100);
         },
 
         showRotateTriggers = function () {

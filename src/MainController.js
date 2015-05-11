@@ -58,6 +58,7 @@ App.MainController = (function () {
             $(userPlaylistManager).on("userPlaylistTitlesLoaded", handleUserPlaylistTitlesLoaded);
             $(userPlaylistView).on("userPlaylistLoaded", handleUserPlaylistLoaded);
             $(userPlaylistManager).on("emptyOldUserPlaylistView", handleEmptyUserPlaylistView);
+
             //playing user playlist
             $(userPlaylistView).on("previewPlayingStart", handlePreviewPlayingStart);
             $(userPlaylistView).on("previewPlayingStop", handlePreviewPlayingStop);
@@ -77,9 +78,10 @@ App.MainController = (function () {
             $(rotationHandler).on("rotationChanged", handleRotationChange);
 
 
-            //sort Click
+            //playlistOptions
             $(playlistOptions).on("sortEnabled", handleSortEnabled);
             $(playlistOptions).on("sortDisabled", handleSortDisabled);
+            $(playlistOptions).on("cancelPlaylistPostButton", handleCancelPlaylistPostButton);
 
 
             documentStart();
@@ -119,9 +121,13 @@ App.MainController = (function () {
                                 imageUrl: "ui-images/two_finger_rotate.png",
                                 showConfirmButton: true
                             });
+                            setTabletopMode(true);
+                            userPlaylistView._setupSwipeControl();
+                            playlistView._setupSwipeControl();
+                            rotationHandler._setTabletopMode();
                         }
-                        setTabletopMode(isConfirm);
-                        rotationHandler._setTabletopMode();
+                        else
+                            setTabletopMode(false);
                     });
                 }
             });
@@ -226,6 +232,7 @@ App.MainController = (function () {
         handleSavePlaylistClicked = function (event, playlistName) {
             var JSONPlaylist = playlistView._getPlaylistAsJSON();
             userPlaylistManager._startPlaylistPost(JSONPlaylist, playlistName);
+            resize._resizePlaylistHeight();
         },
 
         handlePostPlaylistClicked = function () {
@@ -280,6 +287,10 @@ App.MainController = (function () {
 
         handleEmptyUserPlaylistView = function () {
             userPlaylistView._emptyUserPlaylistModal();
+        },
+
+        handleCancelPlaylistPostButton = function () {
+            resize._resizePlaylistHeight();
         },
 
         handleSignInButtonClick = function (event, username, password, email) {

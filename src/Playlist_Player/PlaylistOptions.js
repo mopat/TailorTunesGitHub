@@ -68,10 +68,10 @@ App.PlaylistOptions = (function () {
             if (!playlistName || !isPlaylistExisting)
                 swal("Oops...", "Your playlist or your playlist name is empty!", "error");
             else {
-                $(that).trigger("savePlaylistClicked", [playlistName]);
                 $postPlaylistBox.hide();
                 $clearPlaylistButton.fadeIn(300);
                 $savePlaylistButton.fadeIn(300);
+                $(that).trigger("savePlaylistClicked", [playlistName]);
             }
         },
 
@@ -79,16 +79,20 @@ App.PlaylistOptions = (function () {
             $postPlaylistBox.hide();
             $clearPlaylistButton.fadeIn(300);
             $savePlaylistButton.fadeIn(300);
+            $(that).trigger("cancelPlaylistPostButton");
         },
 
         _checkSortModeSwitch = function () {
             if ($sortModeSwitch.attr("checked"))
                 $sortModeSwitch.click();
+
+            return this;
         },
 
         clearPlaylist = function () {
             $(that).trigger("playlistCleared");
             // $playlistSpaceFiller.show();
+            return this;
         },
 
         _isSortEnabled = function () {
@@ -105,6 +109,7 @@ App.PlaylistOptions = (function () {
                 $clearPlaylistButton.fadeOut(300);
                 $savePlaylistButton.fadeOut(300);
             }
+            return this;
         },
 
         _hideOptionsBox = function () {

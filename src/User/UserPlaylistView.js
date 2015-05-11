@@ -43,10 +43,20 @@ App.UserPlaylistView = (function () {
         },
 
 
-        setupSwipeControl = function () {
+        _setupSwipeControl = function () {
             $(".user-playlist").swipe({
                 swipe: function (event, direction, distance, duration, fingerCount, fingerData) {
-                    setupSwipeToScroll(event, direction, distance);
+                    setupSwipeToScroll($(this), event, direction, distance);
+                },
+                allowPageScroll: "vertical",
+                threshold: 10,
+                excludedElements: "button, input, select, textarea, .noSwipe"
+            }).on("touchmove", function (e) {
+                e.preventDefault();
+            });
+            $userPlaylistModal.swipe({
+                swipe: function (event, direction, distance, duration, fingerCount, fingerData) {
+                    setupSwipeToScroll($(this), event, direction, distance);
                 },
                 allowPageScroll: "vertical",
                 threshold: 10,
@@ -56,40 +66,40 @@ App.UserPlaylistView = (function () {
             });
         },
 
-        setupSwipeToScroll = function (event, direction, distance) {
+        setupSwipeToScroll = function (container, event, direction, distance) {
             if (getUserSide() == "left" && direction == "left") {
-                scrollMinus(distance);
+                scrollMinus(container, distance);
             }
             else if (getUserSide() == "left" && direction == "right") {
-                scrollPlus(distance);
+                scrollPlus(container, distance);
             }
             else if (getUserSide() == "right" && direction == "right") {
-                scrollMinus(distance);
+                scrollMinus(container, distance);
             }
             else if (getUserSide() == "right" && direction == "left") {
-                scrollPlus(distance);
+                scrollPlus(container, distance);
             } else if (getUserSide() == "bottom" && direction == "up") {
-                scrollPlus(distance);
+                scrollPlus(container, distance);
             }
             else if (getUserSide() == "bottom" && direction == "down") {
-                scrollMinus(distance);
+                scrollMinus(container, distance);
             }
             else if (getUserSide() == "top" && direction == "down") {
-                scrollPlus(distance);
+                scrollPlus(container, distance);
             }
             else if (getUserSide() == "top" && direction == "up") {
-                scrollMinus(distance);
+                scrollMinus(container, distance);
             }
         },
 
-        scrollMinus = function (distance) {
+        scrollMinus = function (container, distance) {
             var scrollFactor = distance * 4;
-            $(".user-playlist").animate({scrollTop: "-=" + scrollFactor});
+            container.animate({scrollTop: "-=" + scrollFactor});
         },
 
-        scrollPlus = function (distance) {
+        scrollPlus = function (container, distance) {
             var scrollFactor = distance * 4;
-            $(".user-playlist").animate({scrollTop: "+=" + scrollFactor});
+            container.animate({scrollTop: "+=" + scrollFactor});
         },
 
         _setUserPlaylistView = function (userPlaylistObj) {
@@ -135,7 +145,6 @@ App.UserPlaylistView = (function () {
 
         _openUserPlaylistModal = function () {
             $userPlaylistModal.foundation('reveal', 'open');
-            setupSwipeControl();
         },
 
         _emptyUserPlaylistModal = function () {
@@ -230,11 +239,12 @@ App.UserPlaylistView = (function () {
             $playlistContainerToDelete = $(this).parents(".user-playlist-container");
             var playlistId = $playlistContainerToDelete.find(".user-playlist").attr("id");
             swal({
-                title: "Are you sure you want to delete this playlist?",
+                title: "Delete playlist?",
+                text: "Deleted playlists can not be recovered!",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Yes, delete it!",
+                confirmButtonText: "Delete!",
                 closeOnConfirm: false
             }, function () {
                 $(that).trigger("deleteUserPlaylist", [playlistId]);
@@ -254,6 +264,7 @@ App.UserPlaylistView = (function () {
         };
 
 
+    that._setupSwipeControl = _setupSwipeControl;
     that._setUserPlaylistView = _setUserPlaylistView;
     that._openUserPlaylistModal = _openUserPlaylistModal;
     that._emptyUserPlaylistModal = _emptyUserPlaylistModal;

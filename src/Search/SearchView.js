@@ -80,7 +80,6 @@ App.SearchView = (function () {
             var srchObj = {};
             $searchDropdown.each(function (index) {
                 if ($(this).is(":visible")) {
-
                     srchObj = createSrchObj($searchField.val(), $(this).attr("data-type"), $(this).val(), null, $("option:selected", this).attr("data-api"), $maxResults.val());
                 }
             });

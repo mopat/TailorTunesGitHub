@@ -6,8 +6,6 @@ App.PlaylistView = (function () {
         playlistItemTpl = null,
         listItemColors = [],
         isPlaylistExisting = null,
-        $blendUp = null,
-        $blendDown = null,
         $playlistSpaceFiller = null,
         $loadingAnimation = null,
         defaultTextColor = null,
@@ -18,13 +16,10 @@ App.PlaylistView = (function () {
             $playlist = $("#playlist");
             isPlaylistExisting = false;
 
-            $blendUp = $("#blend-up");
-            $blendDown = $("#blend-down");
-
             $playlistSpaceFiller = $("#playlist-space-filler");
             $loadingAnimation = $("#spinner-loader-box");
             defaultTextColor = "#f5f5f5";
-
+            ;
             playlistItemTpl = _.template($("#playlist-item-tpl").html());
 
             listItemColors = ["rgba(0,0,0,0.1)", "rgba(0,0,0,0.2)"];
@@ -32,8 +27,6 @@ App.PlaylistView = (function () {
             initHandler();
 
             setPlaylistIds();
-
-            setupSwipeControl();
 
             return that;
         },
@@ -43,12 +36,11 @@ App.PlaylistView = (function () {
             $playlist.on("click", ".playlist-item-delete", removeListItem);
         },
 
-        setupSwipeControl = function () {
+        _setupSwipeControl = function () {
             $playlist.swipe({
                 swipe: function (event, direction, distance, fingerCount, fingerData, duration) {
                     setupSwipeToDelete(event, direction);
                     setupSwipeToScroll(event, direction, distance);
-
                 },
                 allowPageScroll: "vertical",
                 threshold: 10,
@@ -95,7 +87,6 @@ App.PlaylistView = (function () {
                 scrollMinus(distance);
             }
         },
-
 
         scrollMinus = function (distance) {
             var scrollFactor = distance * 4;
@@ -255,7 +246,6 @@ App.PlaylistView = (function () {
 
         _enableSwipe = function () {
             $playlist.swipe("enable");
-            console.log("ENABLE")
             return this;
         },
 
@@ -308,8 +298,7 @@ App.PlaylistView = (function () {
         },
 
         showLoadingAnimation = function () {
-            $loadingAnimation.show();
-            $loadingAnimation.dimBackground();
+            $loadingAnimation.show().dimBackground();
         },
         _isPlaylistExisting = function () {
             return isPlaylistExisting;
@@ -327,6 +316,7 @@ App.PlaylistView = (function () {
     that._disableSwipe = _disableSwipe;
     that._clearPlaylist = _clearPlaylist;
     that._isPlaylistExisting = _isPlaylistExisting;
+    that._setupSwipeControl = _setupSwipeControl;
     that.init = init;
 
     return that;

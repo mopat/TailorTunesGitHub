@@ -99,7 +99,7 @@ App.UserPlaylistManager = (function () {
                             // userPosts contains all of the posts by the current user.
                             for (var i in usersPosts) {
                                 playlistTitles = [];
-                                playlistTitles.push(usersPosts[i]._serverData.title)
+                                playlistTitles.push(usersPosts[i]._serverData.title);
                             }
                             _loadPlaylists();
                         }
@@ -109,7 +109,7 @@ App.UserPlaylistManager = (function () {
         },
 
         _deleteUserPlaylist = function (playlistId) {
-            playlistTitles = []
+            playlistTitles = [];
             retrieveObject(playlistId, deleteObject);
         },
 
