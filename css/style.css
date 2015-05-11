@@ -247,7 +247,11 @@ body {
 }
 
 #playlist a:hover, .user-playlist a:hover {
-    background: #757575;
+    background: #424242;
+}
+
+#playlist a:focus, .user-playlist a:focus {
+    background: #343434;
 }
 
 .playlist-number, .user-playlist-number {
