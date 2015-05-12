@@ -176,8 +176,8 @@ body {
 }
 
 #playlist-space-filler {
-    width: 200px;
-    height: 300px;
+    max-width: 500px;
+    height: auto;
     margin: 0 auto;
     padding-top: 10%;
 }
