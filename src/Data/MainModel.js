@@ -35,7 +35,6 @@ App.MainModel = (function () {
                 cache: false,
                 success: function (jsonObject) {
                     var tracks = removeDuplicates(jsonObject.response.songs, "echoNest");
-                    console.log(tracks)
                     searchSoundCloudTracks(tracks);
 
                 },
