@@ -103,6 +103,12 @@ App.MainController = (function () {
                     rotateAlert();
             });
             $(document).on("ready", function () {
+                var storedPlaylist = JSON.parse(localStorage[STORAGE_IDENTIFIER]);
+
+                if (storedPlaylist.length != 0) {
+                    playlistView._addPlaylist(storedPlaylist);
+                    playlistOptions._setIsPlaylistExisting(true);
+                }
                 if (isMobile.any == false) {
                     swal({
                         title: "Use TailorTunes in Tabletop mode?",

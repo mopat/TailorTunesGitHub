@@ -38,7 +38,7 @@ App.SearchView = (function () {
             initHandler();
 
             $(document).ready(function(){
-                searchFieldFocusIn();
+                searchFieldFocusOut();
             });
 
             return that;

@@ -10,7 +10,7 @@ App.PlaylistView = (function () {
         $loadingAnimation = null,
         defaultTextColor = null,
         playlistLength = 0,
-
+        completePlaylist = [],
         init = function () {
             $playlistBox = $("#playlist-box");
             $playlist = $("#playlist");
@@ -19,7 +19,6 @@ App.PlaylistView = (function () {
             $playlistSpaceFiller = $("#playlist-space-filler");
             $loadingAnimation = $("#spinner-loader-box");
             defaultTextColor = "#f5f5f5";
-            ;
             playlistItemTpl = _.template($("#playlist-item-tpl").html());
 
             listItemColors = ["rgba(0,0,0,0.1)", "rgba(0,0,0,0.2)"];
@@ -119,7 +118,8 @@ App.PlaylistView = (function () {
         },
 
         _addPlaylist = function (playlist) {
-            console.log("playlist", playlist)
+            completePlaylist = completePlaylist.concat(playlist);
+            console.log("playlist", completePlaylist)
             for (var i in playlist) {
                 $playlistSpaceFiller.hide();
                 var artworkUrl = playlist[i].artwork_url;
@@ -144,6 +144,7 @@ App.PlaylistView = (function () {
             }
             setPlaylistIds();
             startPlaylist();
+            localStorage[STORAGE_IDENTIFIER] = JSON.stringify(completePlaylist);
 
             isPlaylistExisting = true;
             $(that).trigger("checkSortModeSwitch");
@@ -290,6 +291,8 @@ App.PlaylistView = (function () {
             $playlist.find("li").remove();
             isPlaylistExisting = false;
             $playlistSpaceFiller.show();
+            completePlaylist = [];
+            localStorage[STORAGE_IDENTIFIER] = JSON.stringify(completePlaylist);
         },
 
         hideLoadingAnimation = function () {
