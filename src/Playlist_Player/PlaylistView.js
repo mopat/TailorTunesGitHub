@@ -26,7 +26,9 @@ App.PlaylistView = (function () {
             initHandler();
 
             setPlaylistIds();
-
+            if (isMobile.any) {
+                setupSwipeToDelete();
+            }
             return that;
         },
 
@@ -38,7 +40,6 @@ App.PlaylistView = (function () {
         _setupSwipeControl = function () {
             $playlist.swipe({
                 swipe: function (event, direction, distance, fingerCount, fingerData, duration) {
-                    setupSwipeToDelete(event, direction);
                     setupSwipeToScroll(event, direction, distance);
                 },
                 allowPageScroll: "vertical",
@@ -50,14 +51,22 @@ App.PlaylistView = (function () {
         },
 
         setupSwipeToDelete = function (event, direction) {
-            if (getUserSide() == "bottom" && direction == "left")
-                removeListItem(event);
-            else if (getUserSide() == "left" && direction == "up")
-                removeListItem(event);
-            else if (getUserSide() == "top" && direction == "right")
-                removeListItem(event);
-            else if (getUserSide() == "right" && direction == "down")
-                removeListItem(event);
+            $playlist.swipe({
+                swipe: function (event, direction, distance, fingerCount, fingerData, duration) {
+                    if (getUserSide() == "bottom" && direction == "left")
+                        removeListItem(event);
+                    else if (getUserSide() == "left" && direction == "up")
+                        removeListItem(event);
+                    else if (getUserSide() == "top" && direction == "right")
+                        removeListItem(event);
+                    else if (getUserSide() == "right" && direction == "down")
+                        removeListItem(event);
+                },
+                allowPageScroll: "vertical",
+                threshold: 10,
+                excludedElements: "button, input, select, textarea, .noSwipe"
+            });
+
         },
 
         setupSwipeToScroll = function (event, direction, distance) {

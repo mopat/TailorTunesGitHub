@@ -153,6 +153,10 @@ body {
     border: none;
 }
 
+#swipe-left-to-delete {
+    color: white;
+    text-align: center;
+}
 #save-playlist-button, #clear-playlist-button {
     display: none;
 }
