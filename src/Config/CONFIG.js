@@ -5,7 +5,9 @@ var PARSE_APPLICATION_ID = "yOTWw2niwOWRTql2MtewglSVcXYQa36Bld6ztZX3",
 
     ECHONEST_API_KEY = "N2U2OZ8ZDCXNV9DBG",
 
-    STORAGE_IDENTIFIER = "stored_playlist";
+    STORAGE_IDENTIFIER = "stored_playlist",
+
+    PLAYED_TRACK_IDENTIFIER = "played_track";
 
 var rotation = "0";
 var userSide = "bottom";

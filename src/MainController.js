@@ -102,14 +102,23 @@ App.MainController = (function () {
                 if ($(".sweet-alert").is(":visible") && isTabletopMode())
                     rotateAlert();
             });
+            function isTouchDevice() {
+                return 'ontouchstart' in window // works on most browsers
+                    || 'onmsgesturechange' in window; // works on ie10
+            };
             $(document).on("ready", function () {
                 var storedPlaylist = JSON.parse(localStorage[STORAGE_IDENTIFIER]);
 
                 if (storedPlaylist.length != 0) {
                     playlistView._addPlaylist(storedPlaylist);
                     playlistOptions._setIsPlaylistExisting(true);
+                    playlistView._playStoredTrack();
                 }
-                if (isMobile.any == false) {
+                else {
+                    localStorage.setItem(PLAYED_TRACK_IDENTIFIER, -1);
+                    localStorage[STORAGE_IDENTIFIER] = JSON.stringify([]);
+                }
+                if (isMobile.any == false && isTouchDevice()) {
                     swal({
                         title: "Use TailorTunes in Tabletop mode?",
                         type: "warning",

@@ -44,7 +44,7 @@ App.PlaylistView = (function () {
                 allowPageScroll: "vertical",
                 threshold: 10,
                 excludedElements: "button, input, select, textarea, .noSwipe"
-            }).on("touchmove", function(e){
+            }).on("touchmove", function (e) {
                 e.preventDefault();
             });
         },
@@ -73,16 +73,16 @@ App.PlaylistView = (function () {
             else if (getUserSide() == "right" && direction == "left") {
                 scrollPlus(distance);
             }
-            else if(getUserSide() == "bottom" && direction == "up"){
+            else if (getUserSide() == "bottom" && direction == "up") {
                 scrollPlus(distance);
             }
-            else if(getUserSide() == "bottom" && direction == "down"){
+            else if (getUserSide() == "bottom" && direction == "down") {
                 scrollMinus(distance);
             }
-            else if(getUserSide() == "top" && direction == "down"){
+            else if (getUserSide() == "top" && direction == "down") {
                 scrollPlus(distance);
             }
-            else if(getUserSide() == "top" && direction == "up"){
+            else if (getUserSide() == "top" && direction == "up") {
                 scrollMinus(distance);
             }
         },
@@ -94,7 +94,7 @@ App.PlaylistView = (function () {
 
         scrollPlus = function (distance) {
             var scrollFactor = distance * 4;
-            $playlist.animate({scrollTop: "+=" + scrollFactor });
+            $playlist.animate({scrollTop: "+=" + scrollFactor});
         },
 
         removeListItem = function (e) {
@@ -119,7 +119,6 @@ App.PlaylistView = (function () {
 
         _addPlaylist = function (playlist) {
             completePlaylist = completePlaylist.concat(playlist);
-            console.log("playlist", completePlaylist)
             for (var i in playlist) {
                 $playlistSpaceFiller.hide();
                 var artworkUrl = playlist[i].artwork_url;
@@ -143,22 +142,29 @@ App.PlaylistView = (function () {
                 $playlist.append(playlistItem);
             }
             setPlaylistIds();
-            startPlaylist();
+            startPlaylistExisting();
             localStorage[STORAGE_IDENTIFIER] = JSON.stringify(completePlaylist);
 
             isPlaylistExisting = true;
             $(that).trigger("checkSortModeSwitch");
         },
 
+        startPlaylistExisting = function () {
+            var firstTrack = $("#playlist .playlist-item").first();
+            if (!isPlaylistExisting && localStorage.getItem(PLAYED_TRACK_IDENTIFIER) < 0)
+                playTrack(firstTrack);
+        },
+
         startPlaylist = function () {
             var firstTrack = $("#playlist .playlist-item").first();
-            if (!isPlaylistExisting)
+            if (isPlaylistExisting)
                 playTrack(firstTrack);
         },
 
         _playNextTrack = function () {
             var $nowPlaying = $("#playlist .now-playing");
-            if ($("#playlist .playlist-item:last-child").hasClass("now-playing")) {
+            if ($("#playlist .playlist-item").last().hasClass("now-playing")) {
+                $(".now-playing").removeClass("now-playing");
                 startPlaylist();
             }
             else {
@@ -170,8 +176,9 @@ App.PlaylistView = (function () {
 
         _playPreviousTrack = function () {
             var $nowPlaying = $("#playlist .now-playing");
-            if ($("#playlist .playlist-item:first-child").hasClass("now-playing")) {
-                handleResetTrack($nowPlaying);
+            if ($("#playlist .playlist-item").first().hasClass("now-playing")) {
+                $(".now-playing").removeClass("now-playing");
+                startPlaylist();
             }
             else {
                 var $previousTrack = $nowPlaying.prev();
@@ -185,6 +192,17 @@ App.PlaylistView = (function () {
             var streamUrl = $track.attr("data-stream-url"),
                 title = $track.find(".playlist-title").html();
             $(that).trigger("trackPicked", [streamUrl, title]);
+            localStorage.setItem(PLAYED_TRACK_IDENTIFIER, $track.index() - 1);
+        },
+
+        _playStoredTrack = function () {
+            var storedTrackNumber = localStorage.getItem(PLAYED_TRACK_IDENTIFIER);
+            $("#playlist .playlist-item").each(function (index) {
+                if (index == storedTrackNumber) {
+                    var playlistItemStoredTrack = $(this);
+                    playTrack(playlistItemStoredTrack);
+                }
+            });
         },
 
         handleListItemClick = function (e) {
@@ -274,7 +292,6 @@ App.PlaylistView = (function () {
                     };
                 playlistAsJSON.push(playlistObject);
             });
-            console.log(JSON.parse(JSON.stringify(playlistAsJSON)))
             if (playlistAsJSON.length == 0)
                 return null;
             else
@@ -293,6 +310,7 @@ App.PlaylistView = (function () {
             $playlistSpaceFiller.show();
             completePlaylist = [];
             localStorage[STORAGE_IDENTIFIER] = JSON.stringify(completePlaylist);
+            localStorage.setItem(PLAYED_TRACK_IDENTIFIER, -1);
         },
 
         hideLoadingAnimation = function () {
@@ -310,6 +328,7 @@ App.PlaylistView = (function () {
     that._addPlaylist = _addPlaylist;
     that._playNextTrack = _playNextTrack;
     that._playPreviousTrack = _playPreviousTrack;
+    that._playStoredTrack = _playStoredTrack;
     that._getPlaylistAsJSON = _getPlaylistAsJSON;
     that.hideLoadingAnimation = hideLoadingAnimation;
     that.showLoadingAnimation = showLoadingAnimation;

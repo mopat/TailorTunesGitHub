@@ -53,6 +53,8 @@ App.PlaylistOptions = (function () {
                 $sortModeSwitch.attr("checked", true);
                 isSortEnabled = true;
                 $(that).trigger("sortEnabled");
+
+                swal("Sort mode enabled! Scrolling disabled. Long click item to sort.", "Move the item to the bottom or upper border to scroll.");
             }
         },
 
