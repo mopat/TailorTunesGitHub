@@ -83,7 +83,9 @@ App.MainController = (function () {
             $(playlistOptions).on("sortDisabled", handleSortDisabled);
             $(playlistOptions).on("cancelPlaylistPostButton", handleCancelPlaylistPostButton);
 
-
+            window.onbeforeunload = function () {
+                return "Do you really want to leave this page. Some data will be lost."
+            };
             documentStart();
         },
 

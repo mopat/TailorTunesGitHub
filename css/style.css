@@ -255,7 +255,7 @@ body {
     background: #424242;
 }
 
-#playlist a:focus, .user-playlist a:focus {
+#playlist a:active, .user-playlist a:active {
     background: #343434;
 }
 
