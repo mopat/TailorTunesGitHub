@@ -470,7 +470,7 @@ body {
 }
 
 #time-slider-box {
-    padding-top: 14px;
+    padding-top: 21px;
     margin-left: 50px;
 }
 
@@ -504,6 +504,7 @@ body {
 
 .volume-controls {
     padding-left: 5px;
+    font-size: 1.7rem;
 }
 
 #elapsed-time {

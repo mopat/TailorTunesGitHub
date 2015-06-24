@@ -1,8 +1,8 @@
 /**
  * Created by Patrick on 20.01.2015.
  */
-/**
- * Created by Patrick on 19.01.2015.
+/*
+ Resizing width and height of the lists
  */
 App.Resize = (function () {
     var that = {},
@@ -41,7 +41,7 @@ App.Resize = (function () {
         },
 
         _resizeUserPlaylistHeight = function () {
-            $(".user-playlist").height($("#user-playlist-box").height() - ($(".user-playlist-container").height() + 30));
+            $(".user-playlist").height($("#user-playlist-box").height() - ($(".user-playlist-container").height()) + 30);
         };
 
     that._resizePlaylistHeight = _resizePlaylistHeight;

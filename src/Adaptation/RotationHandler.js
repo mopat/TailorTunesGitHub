@@ -3,17 +3,22 @@ App.RotationHandler = (function () {
         $rotate = null,
         $rotatable = null,
         $modals = null,
-        ROTATE_DURATION = 1000,
         $sortModeSwitch = null,
         $rotateInfoBox = null,
         $rotationTriggerBox = null,
         $tabletopInfoBox = null,
+        ROTATE_DURATION = 1000,
 
         init = function () {
-
             return that;
         },
 
+        _setTabletopMode = function () {
+            if (isTabletopMode()) {
+                initRotation();
+                $tabletopInfoBox.show();
+            }
+        },
 
         initRotation = function () {
             $rotate = $(".rotate");
@@ -24,15 +29,18 @@ App.RotationHandler = (function () {
             $rotationTriggerBox = $("#rotation-trigger-box");
             $tabletopInfoBox = $("#tabletop-info-box");
 
+            initHandler();
+            handleRotateGesture();
+        },
+
+        initHandler = function () {
             $rotate.on("click", handleRotateClick);
             $rotationTriggerBox.on("click", closeTriggerBox);
             $tabletopInfoBox.on("click", handleTabletopInfoBoxClick);
 
             window.addEventListener("resize", function () {
-                fitContentSize(getRotation(), getUserSide())
+                fitContentSize(getRotation(), getUserSide());
             }, false);
-
-            handleRotateGesture();
         },
 
         handleTabletopInfoBoxClick = function (e) {
@@ -44,13 +52,79 @@ App.RotationHandler = (function () {
             });
         },
 
-        _setTabletopMode = function () {
-            if (isTabletopMode()) {
-                initRotation();
-                $tabletopInfoBox.show();
+    /*
+     enable rotate gesture and initialize rotate options
+     */
+        handleRotateGesture = function () {
+            var el = document.getElementById("body"),
+                hammertime = new Hammer(el);
+
+            hammertime.get("rotate").set({enable: true});
+            hammertime.get("pinch").set({enable: true});
+            hammertime.on("rotate pinch", function (e) {
+                e.preventDefault();
+            });
+            hammertime.on("rotatestart", function (e) {
+                if ($sortModeSwitch.attr("checked") && $("#playlist").has($(e.target)).length)
+                    swal("Disable sort mode to rotate or do not touch the playlist!", null, "error");
+            });
+            //when rotation degree is higher than 20 show rotate triggers
+            hammertime.on("rotateend", function (e) {
+                var rotationValue = e.rotation;
+                if (rotationValue < 0)
+                    rotationValue *= -1;
+                if (rotationValue >= 20) {
+                    showRotateTriggers();
+                }
+            });
+        },
+
+        showRotateTriggers = function () {
+            $rotationTriggerBox.show();
+            $rotate.show();
+
+            $("#rotate-" + getRotation()).hide();
+        },
+
+        hideRotateTriggers = function () {
+            $rotationTriggerBox.fadeOut(100);
+        },
+
+    /*
+     start rotation when rotation trigger is clicked
+     */
+        handleRotateClick = function (e) {
+            var $clickedRotation = $(e.target),
+                rotation = $clickedRotation.attr("data-rotate"),
+                side = $clickedRotation.attr("data-side");
+
+            hideRotateTriggers();
+            $clickedRotation.fadeOut(500);
+            setRotation(rotation);
+            setUserSider(side);
+            //fit the size of the content
+            fitContentSize(rotation, side);
+
+            if ($sortModeSwitch.attr("checked")) {
+                $("#playlist").destroy({
+                    delegates: ".playlist-item"
+                });
+                $("#playlist").rotatableSortable({
+                    contentId: "#rotatable",
+                    listId: "#playlist",
+                    delegates: ".playlist-item",
+                    rotation: getRotation()
+                });
             }
         },
 
+        closeTriggerBox = function () {
+            hideRotateTriggers();
+        },
+
+    /*
+     rotate the content with a transition and resize ui elements
+     */
         fitContentSize = function (rotation, side) {
             $modals.transition({rotate: rotation}, ROTATE_DURATION);
             $(".sweet-alert").transition({rotate: rotation}, ROTATE_DURATION);
@@ -78,28 +152,38 @@ App.RotationHandler = (function () {
                         break;
                 }
             });
+            //trigger rotation changed when rotation is completed
             setTimeout(function () {
                 $(that).trigger("rotationChanged");
             }, ROTATE_DURATION);
         },
 
+    /*
+     resize rotatable box and modals when user is on left or right side of the table
+     */
         leftOrRightResize = function () {
             $("#controls-box .row").width($(window).height());
             $rotatable.width($(window).height());
-            //setzen der Breite der Fenster auf die Breite des Containers
+
+            //set modal width to rotatable width
             $modals.width($rotatable.width());
         },
 
+    /*
+     resize rotatable box and modals when user is on top or bottom side of the table
+     */
         topOrBottomModeResize = function () {
             $rotatable.width("100%");
             $("#controls-box .row").width($(".row").width());
-            $modals.css("width", $("#controls-box .row").width()).css("left", 0).css("right", 0);
+
+            //set modal width to width of a row
+            $modals.width($("#controls-box .row").width()).css("left", 0).css("right", 0);
         },
 
         modalRight = function () {
             /*
-             Der Abstand zum linken Bildschirmrand entspricht der Breite des Dokuments
-             minus der Breite des Pop-ups
+             the distance to the left of the screen corresponds to the width of the document
+             minus the width of the popups
              */
             var left = $(document).width() - $modals.width();
             $modals.css("left", left);
@@ -107,35 +191,39 @@ App.RotationHandler = (function () {
 
         modalLeft = function () {
             /*
-             Der Abstand zum linken Bildschirmrand entspricht der Breite des Dokuments
-             minus der Breite des Pop-ups mal -1
+             the distance to the left of the screen corresponds to the width of the document
+             minus the width of the pop-ups times -1
              */
             var left = ($(document).width() - $modals.width()) * -1;
             $modals.css("left", left);
         },
 
-
-    //ALERT BOXES
+    /*
+     fit view of sweet alert when the user is on the left side of the table
+     */
         sweetAlertLeft = function () {
             setTimeout(function () {
-                /* für Rotation von 90 Grad
-                 der Abstand zur linken Seite entspricht
-                 dem Abstand des rotierbaren Containers zur linken Seite
-                 Dazu Verschiebung in die Mitte des Containers und
-                 Zentrierung durch Abziehen der halbe Höhe eines SweetAlerts
+                /* for Rotation of 90 degrees
+                 the distance from the left side corresponds to
+                 the distance of the rotatable container to the left side.
+                 For this shift in the center of the container and
+                 Centering by subtracting half the height of a Sweet Alerts
                  */
                 var offsetLeft = $rotatable.offset().left + $rotatable.height() / 2 - $(".sweet-alert").height() / 2;
                 $(".sweet-alert").offset({left: offsetLeft})
             }, ROTATE_DURATION)
         },
 
+    /*
+     fit view of sweet alert when the user is on the ight side of the table
+     */
         sweetAlertRight = function () {
             setTimeout(function () {
-                /* für Rotation von 270 Grad
-                 der Abstand zur linken Seite entspricht
-                 dem Abstand des rotierbaren Containers zur linken Seite
-                 Dazu Verschiebung in die Mitte des Containers und
-                 Zentrierung durch Abziehen der halbe Höhe eines SweetAlerts
+                /* for Rotation of 270 degrees
+                 the distance from the left side corresponds to
+                 the distance of the rotatable container to the left side.
+                 For this shift in the center of the container and
+                 Centering by subtracting half the height of a Sweet Alerts
                  */
                 var offsetLeft = $rotatable.offset().left + $rotatable.height() / 2 - $(".sweet-alert").height() / 2;
                 $(".sweet-alert").offset({left: offsetLeft})
@@ -155,135 +243,6 @@ App.RotationHandler = (function () {
                 sweetAlertRight();
             else if (getUserSide() == "top" || getUserSide() == "bottom")
                 sweetAlertDefault();
-        },
-
-        hideRotateTriggers = function () {
-            $rotationTriggerBox.fadeOut(100);
-        },
-
-        showRotateTriggers = function () {
-            $rotationTriggerBox.show();
-            $rotate.show();
-
-            $("#rotate-" + getRotation()).hide();
-        },
-
-        handleRotateGesture = function () {
-            var el = document.getElementById("body"),
-                hammertime = new Hammer(el);
-
-            hammertime.get('rotate').set({enable: true});
-            hammertime.get('pinch').set({enable: true});
-            hammertime.on('rotate pinch', function (e) {
-                e.preventDefault();
-            });
-            hammertime.on("rotatestart", function (e) {
-                if ($sortModeSwitch.attr("checked") && $('#playlist').has($(e.target)).length)
-                    swal("Disable sort mode to rotate or do not touch the playlist!", null, "error");
-            });
-            hammertime.on("rotateend", function (e) {
-                var rotationValue = e.rotation;
-
-                if (rotationValue < 0)
-                    rotationValue *= -1;
-                if (rotationValue >= 20) {
-                    showRotateTriggers();
-                }
-            });
-
-            function rotateGesture(e) {
-                console.log(e.rotation)
-                var side = null,
-                    newRotation = null;
-                if (getUserSide() == "bottom")
-                    if (e.rotation > 0) {
-                        side = "left";
-                        newRotation = 90;
-                    }
-
-                    else if (e.rotation < 0) {
-                        side = "right";
-                        newRotation = 270;
-                    }
-
-                if (getUserSide() == "left") {
-                    if (e.rotation < 0) {
-                        side = "bottom";
-                        newRotation = 0;
-                    }
-
-                    else if (e.rotation > 0) {
-                        side = "top";
-                        newRotation = 180;
-                    }
-                }
-                if (getUserSide() == "top")
-                    if (e.rotation > 0) {
-                        side = "right";
-                        newRotation = 270;
-                    }
-
-                    else if (e.rotation < 0) {
-                        side = "left";
-                        newRotation = 90;
-                    }
-
-                if (getUserSide() == "right")
-                    if (e.rotation < 0) {
-                        side = "top";
-                        newRotation = 180;
-
-                    }
-
-                    else if (e.rotation > 0) {
-                        side = "bottom";
-                        newRotation = 0;
-
-                    }
-                setRotation(newRotation);
-                setUserSider(side);
-                fitContentSize(newRotation, side)
-
-                if ($sortModeSwitch.attr("checked")) {
-                    $("#playlist").destroy({
-                        delegates: ".playlist-item"
-                    });
-                    $("#playlist").rotatableSortable({
-                        contentId: "#rotatable",
-                        listId: "#playlist",
-                        delegates: ".playlist-item",
-                        rotation: getRotation()
-                    });
-                }
-            }
-        },
-
-        handleRotateClick = function (e) {
-            var $clickedRotation = $(e.target),
-                rotation = $clickedRotation.attr("data-rotate"),
-                side = $clickedRotation.attr("data-side");
-
-            hideRotateTriggers();
-            $clickedRotation.fadeOut(500);
-            setRotation(rotation);
-            setUserSider(side);
-            fitContentSize(rotation, side);
-
-            if ($sortModeSwitch.attr("checked")) {
-                $("#playlist").destroy({
-                    delegates: ".playlist-item"
-                });
-                $("#playlist").rotatableSortable({
-                    contentId: "#rotatable",
-                    listId: "#playlist",
-                    delegates: ".playlist-item",
-                    rotation: getRotation()
-                });
-            }
-        },
-
-        closeTriggerBox = function () {
-            hideRotateTriggers();
         };
 
     that._setTabletopMode = _setTabletopMode;
