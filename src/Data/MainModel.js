@@ -18,7 +18,10 @@ App.MainModel = (function () {
             });
         },
 
-        searchEchoNestTracks = function (srchObj) {
+    /*
+     search all echoNest tracks but not similar
+     */
+        _searchEchoNestTracks = function (srchObj) {
             $(that).trigger("showLoadingAnimation");
             var queryFactory = new QueryFactory();
             var queryBuilder = queryFactory.createQuery({
@@ -34,8 +37,14 @@ App.MainModel = (function () {
                 url: queryBuilder.queryUrl,
                 cache: false,
                 success: function (jsonObject) {
-                    var tracks = removeDuplicates(jsonObject.response.songs, "echoNest");
-                    searchSoundCloudTracks(tracks);
+                    if (jsonObject.response.songs != undefined) {
+                        var tracks = removeDuplicates(jsonObject.response.songs, "echoNest");
+                        searchSoundCloudTracks(tracks);
+                    }
+                    else {
+                        $(that).trigger("hideLoadingAnimation");
+                        swal("No results found for " + '"' + srchObj.query + '"' + " in " + srchObj.type, null, "error");
+                    }
 
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -45,7 +54,10 @@ App.MainModel = (function () {
             });
         },
 
-        searchEchoNestSimilarTracks = function (srchObj) {
+    /*
+     search similar echonest tracks
+     */
+        _searchEchoNestSimilarTracks = function (srchObj) {
             var getIdQuery = "http://developer.echonest.com/api/v4/song/search?api_key=" + ECHONEST_API_KEY + "&format=json&results=20" + "&title=" + srchObj.query + "&sort=song_hotttnesss-desc";
             $.ajax({
                 type: "GET",
@@ -53,7 +65,6 @@ App.MainModel = (function () {
                 cache: false,
                 success: function (jsonObject) {
                     var tracks = removeDuplicates(jsonObject.response.songs, "echoNest");
-                    console.log(tracks)
                     $(that).trigger("echoNestTrackSearchResultsComplete", [srchObj.query, tracks]);
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -62,16 +73,16 @@ App.MainModel = (function () {
             });
         },
 
-        searchSoundcloudTracksSimple = function (srchObj) {
+    /*
+     search single soundcloud track
+     */
+        _searchSoundcloudTracksSimple = function (srchObj) {
             $(that).trigger("showLoadingAnimation");
             playlist = [];
             $.ajax({
                 url: getScUrl(srchObj.query),
                 data: {
                     format: 'json'
-                },
-                error: function (XMLHttpRequest, textStatus, errorThrown) {
-                    alert("ECHONEST ERROR " + errorThrown + " at" + XMLHttpRequest);
                 },
                 dataType: 'json',
                 success: function (data) {
@@ -89,6 +100,9 @@ App.MainModel = (function () {
             });
         },
 
+    /*
+     execute search in soundcloud with the given tracks from echonest
+     */
         searchSoundCloudTracks = function (tracks) {
             playlist = [];
             var count = tracks.length;
@@ -102,6 +116,10 @@ App.MainModel = (function () {
                 }
                 tracks.splice(0, 1);
 
+                /*
+                 ajax function to start a soundcloud request each 200 milliseconds
+                 for preventing "too many requests"-error in soundcloud
+                 */
                 function ajaxQuery(query) {
                     return $.ajax({
                         url: getScUrl(query),
@@ -109,18 +127,19 @@ App.MainModel = (function () {
                             format: 'json'
                         },
                         error: function (XMLHttpRequest, textStatus, errorThrown) {
-                            swal("No results found for " + '"' + query + '".', null, "error");
+                            swal("No results found for " + '"' + srchObj.query + '"' + " in " + srchObj.type, null, "error");
                             count--;
                         },
                         dataType: 'json',
                         success: function (data) {
                             count--;
                             if (data.length != 0) {
+                                //filter tracks and add them
                                 var filteredTracks = filterResults(data, query);
-                                console.log("QUERY ", query);
                                 addToPlayList(filteredTracks);
                             }
                             if (count == 0) {
+                                //remove duplicates and show them in the playlist
                                 playlist = removeDuplicates(playlist, "soundCloud");
                                 setPlaylistView();
                                 clearInterval(requestInterval);
@@ -131,87 +150,11 @@ App.MainModel = (function () {
                     });
                 }
             }, 200);
-
-
-            /** OLD
-             *   var ajaxCalls = [];
-             var artist = null;
-             var title = null;
-             var queryOne = null;
-             for (var i in tracks) {
-                if (usedAPI == "spotify") {
-                    queryOne = artistQuery + " " + normalize(tracks[i].name);
-                }
-                else {
-                    artist = normalize(tracks[i].artist_name);
-                    title = normalize(tracks[i].title);
-                    queryOne = artist + " " + title;
-                }
-                var queryTwo = title + " " + artist;
-                var queryThree = title;
-                var ajaxCaller = function ajaxQuery(query) {
-                    return $.ajax({
-                        url: getScUrl(query),
-                        data: {
-                            format: 'json'
-                        },
-                        error: function (XMLHttpRequest, textStatus, errorThrown) {
-                            alert("SOUNDCLOUD ERROR " + errorThrown + " at" + XMLHttpRequest);
-                        },
-                        dataType: 'json',
-                        success: function (data) {
-                            console.log(data)
-                            if (data.length != 0) {
-                                var filteredTracks = filterResults(data, query);
-                                console.log("QUERY ", query);
-                                addToPlayList(filteredTracks);
-                            }
-                        },
-                        type: 'GET'
-                    });
-                }
-                ajaxCalls.push(ajaxCaller(queryOne));
-            }
-             $.when.apply($, ajaxCalls).done(function () {
-                playlist = removeDuplicates(playlist);
-                setPlaylistView();
-            })
-             */
-
-            /***
-             $.ajax({
-                url: getScUrl(queryTwo),
-                data: {
-                    format: 'json'
-                },
-                error: function () {
-
-                },
-                dataType: 'json',
-                success: function (data) {
-                  //  deleteNotMatchingResults(data, queryTwo);
-                },
-                type: 'GET'
-            });
-             $.ajax({
-                url: getScUrl(queryThree),
-                data: {
-                    format: 'json'
-                },
-                error: function () {
-
-                },
-                dataType: 'json',
-                success: function (data) {
-                    //deleteNotMatchingResults(data, queryOne);
-                    //createPlaylist();
-                    //playTrack(getBestTrack().stream_url);
-                },
-                type: 'GET'
-            });
-             ***/
         },
 
+    /*
+     remove duplicates for echonest or soundcloud and return unique tracks
+     */
         removeDuplicates = function (tracks, sender) {
             var uniqueTracks = [];
             var indentification = [];
@@ -230,7 +173,6 @@ App.MainModel = (function () {
             return uniqueTracks;
         },
 
-
         addToPlayList = function (filteredTracks) {
             var tracks = [];
 
@@ -243,15 +185,19 @@ App.MainModel = (function () {
             //sort tracks by playback_count
             tracks.sort(sortByFavoritingsCount);
             // console.log(tracks[0].title);
-            //take the first element
+            //take the first element and add id to the playlist
             if (tracks[0] != undefined)
                 playlist.push(tracks[0]);
 
         },
 
+    /*
+     filter the results due to problems with the SC API.
+     some tracks may not be playlable without filtering manually
+     */
         filterResults = function (tracks, query) {
-            var count = 0;
-            var filteredTracks = [];
+            var count = 0,
+                filteredTracks = [];
 
             for (var i in tracks) {
                 var currentTitle = tracks[i].title;
@@ -272,45 +218,31 @@ App.MainModel = (function () {
             return filteredTracks;
         },
 
-        sortByScore = function (a, b) {
-            return b.score - a.score;
-        },
-
+    /*
+     sort tracks by favoritings count so best tracks will be picked
+     */
         sortByFavoritingsCount = function (a, b) {
             return b.favoritings_count - a.favoritings_count;
         },
 
-        sortByPlaybackCount = function (a, b) {
-            return b.playback_count - a.playback_count;
-        },
-
+    /*
+     remove whitespaces and normalize
+     */
         normalize = function (string) {
             return string.replace("-", " ").replace(/[^\w\s.]/gi, ' ').replace(/\s{2,}/g, ' ').toLowerCase().trim();
         },
 
         setPlaylistView = function () {
-            console.log("CREATED")
             $(that).trigger("playlistCreated", [playlist]);
-        },
-
-
-        iterateArray = function (array) {
-            for (var i = 0; i < array.length; i++) {
-                //console.log(array[i]);
-                console.log(array[i].score);
-                console.log(array[i].favoritings_count);
-                console.log(array[i].permalink_url);
-            }
-            console.log(array.length);
         },
 
         getScUrl = function (query) {
             return "https://api.soundcloud.com/tracks?&q=" + query + "&client_id=" + SC_CLIENT_ID + "&limit=" + scLimit;
         };
 
-    that.searchEchoNestTracks = searchEchoNestTracks;
-    that.searchEchoNestSimilarTracks = searchEchoNestSimilarTracks;
-    that.searchSoundcloudTracksSimple = searchSoundcloudTracksSimple;
+    that._searchEchoNestTracks = _searchEchoNestTracks;
+    that._searchEchoNestSimilarTracks = _searchEchoNestSimilarTracks;
+    that._searchSoundcloudTracksSimple = _searchSoundcloudTracksSimple;
     that.init = init;
 
     return that;

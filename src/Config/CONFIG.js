@@ -15,24 +15,24 @@ var tabletopMode = false;
 
 function setRotation(value) {
     rotation = value;
-};
+}
 
 function getRotation() {
     return rotation;
-};
+}
 
 function setUserSider(side) {
     userSide = side;
-};
+}
 
 function getUserSide() {
     return userSide;
-};
+}
 
 function setTabletopMode(isTabletopMode) {
     tabletopMode = isTabletopMode;
-};
+}
 
 function isTabletopMode() {
     return tabletopMode;
-};
+}

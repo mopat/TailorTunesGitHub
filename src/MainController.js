@@ -201,15 +201,15 @@ App.MainController = (function () {
         },
 
         handleSearchButtonClickedEchoNest = function (event, srchObj) {
-            mainModel.searchEchoNestTracks(srchObj);
+            mainModel._searchEchoNestTracks(srchObj);
         },
 
         handleSearchEchoNestSimilarTracks = function (event, srchObj) {
-            mainModel.searchEchoNestSimilarTracks(srchObj);
+            mainModel._searchEchoNestSimilarTracks(srchObj);
         },
 
         handleSearchButtonClickedSoundcloud = function (event, srchObj) {
-            mainModel.searchSoundcloudTracksSimple(srchObj);
+            mainModel._searchSoundcloudTracksSimple(srchObj);
         },
 
         handleNextButtonClick = function () {
@@ -243,7 +243,7 @@ App.MainController = (function () {
         },
 
         handleTrackIdPicked = function (event, srchObj) {
-            mainModel.searchEchoNestTracks(srchObj);
+            mainModel._searchEchoNestTracks(srchObj);
         },
 
         handleSavePlaylistClicked = function (event, playlistName) {
