@@ -340,16 +340,18 @@ body {
     display: none;
     background: rgba(54, 51, 53, 0.9);
     border-radius: 10px;
+    height: 100%;
 }
 
 .user-playlist-header {
     height: 100px;
     line-height: 35px;
-    background: #D7D9DC;
+    background: #616161;
     margin-bottom: 5px;
     padding-left: 5px;
     border-radius: 10px;
     font-size: 1.4rem;
+    color: #f5f5f5;
 }
 
 .user-playlist-date {
