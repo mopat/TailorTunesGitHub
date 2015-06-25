@@ -132,11 +132,11 @@ App.MainModel = (function () {
                             format: 'json'
                         },
                         error: function (XMLHttpRequest, textStatus, errorThrown) {
-                            swal("No results found for " + '"' + srchObj.query + '"' + " in " + srchObj.type, null, "error");
                             count--;
                         },
                         dataType: 'json',
                         success: function (data) {
+
                             count--;
                             if (data.length != 0) {
                                 //filter tracks and add them
