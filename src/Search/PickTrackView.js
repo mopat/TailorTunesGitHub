@@ -1,5 +1,4 @@
 App.PickTrackView = (function () {
-
     var that = {},
         $echoNestTrackPicker = null,
         $echoNestTrackPickerList = null,

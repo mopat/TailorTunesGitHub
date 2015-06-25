@@ -28,67 +28,22 @@ App.MainController = (function () {
             resize = App.Resize.init();
 
 
-            //playlist and player
-            $(playlistView).on("trackPicked", handleTrackPick);
-            $(playlistView).on("playlistItemsRemoved", handleAllPlaylistItemsRemoved);
-            $(controlsView).on("trackEnded", handleTrackEnd);
-            $(controlsView).on("nextButtonClick", handleNextButtonClick);
-            $(controlsView).on("previousButtonClick", handlePreviousButtonClick);
-            $(playlistView).on("playlistItemClicked", handlePlaylistItemClick);
-            $(mainModel).on("playlistCreated", handlePlaylistCreated);
-
-            //search
-            $(searchView).on("searchButtonClickedEchoNest", handleSearchButtonClickedEchoNest);
-
-            //ZUSAMMEN START
-            $(searchView).on("searchEchoNestSimilarTracks", handleSearchEchoNestSimilarTracks);
-            $(pickTrackView).on("echonestTrackIDPicked", handleTrackIdPicked);
-            //ZUSAMMEN END
-            $(mainModel).on("showLoadingAnimation", handleShowLoadingAnimation);
-            $(mainModel).on("hideLoadingAnimation", handleHideLoadingAnimation);
-            $(searchView).on("searchButtonClickedSoundcloud", handleSearchButtonClickedSoundcloud);
-            $(mainModel).on("echoNestTrackSearchResultsComplete", handleEchoNestTrackSearchResultsComplete);
-            $(mainModel).on("soundcloudTrackSearchResultsComplete", handleSoundcloudTrackSearchResultsComplete);
-            $(pickTrackView).on("soundcloudTrackPicked", handleSoundlcoudTrackPicked);
-
-            //user playlist management
-            $(playlistOptions).on("savePlaylistClicked", handleSavePlaylistClicked);
-            $(playlistOptions).on("postPlaylistClicked", handlePostPlaylistClicked);
-            $(userPlaylistManager).on("userPlaylistTitlesLoaded", handleUserPlaylistTitlesLoaded);
-            $(userPlaylistView).on("userPlaylistLoaded", handleUserPlaylistLoaded);
-            $(userPlaylistManager).on("emptyOldUserPlaylistView", handleEmptyUserPlaylistView);
-
-            //playing user playlist
-            $(userPlaylistView).on("previewPlayingStart", handlePreviewPlayingStart);
-            $(userPlaylistView).on("previewPlayingStop", handlePreviewPlayingStop);
-            $(userPlaylistView).on("resizeUserPlaylistHeight", handleResizeUserPlaylistHeight);
-
-
-            $(playlistView).on("checkSortModeSwitch", handleCheckSortModeSwitch);
+            initPlaylistHandler();
+            initSearchViewHandler();
+            initPickTrackViewHandler();
+            initDataHandler();
+            initUserManagementHandler();
+            initUserPlaylistViewHandler();
+            initPlaylistOptionsHandler();
             initUserAndPlaylistManagementHandler();
-
-
-            //search icon click
-            $(searchView).on("searchIconFocusIn", handleSearchIconFocusIn);
-            $(searchView).on("searchIconFocusOut", handleSearchIconFocusOut);
-
-
-            //ROTATION
-            $(rotationHandler).on("rotationChanged", handleRotationChange);
-
-
-            //playlistOptions
-            $(playlistOptions).on("sortEnabled", handleSortEnabled);
-            $(playlistOptions).on("sortDisabled", handleSortDisabled);
-            $(playlistOptions).on("cancelPlaylistPostButton", handleCancelPlaylistPostButton);
-
-            window.onbeforeunload = function () {
-                return "Do you really want to leave this page. Some data will be lost."
-            };
+            initRotationHandler();
             documentStart();
         },
 
         documentStart = function () {
+            window.onbeforeunload = function () {
+                return "Do you really want to leave this page. Some data will be lost."
+            };
             $(document).on("load", function () {
                 $("#playlist-box").swipe({
                     swipe: function (event, direction, distance, duration, fingerCount) {
@@ -153,26 +108,85 @@ App.MainController = (function () {
             playlistOptions._checkSortModeSwitch();
         },
 
+        initPlaylistHandler = function () {
+            $(playlistView).on("trackPicked", handleTrackPick);
+            $(playlistView).on("playlistItemsRemoved", handleAllPlaylistItemsRemoved);
+            $(controlsView).on("trackEnded", handleTrackEnd);
+            $(controlsView).on("nextButtonClick", handleNextButtonClick);
+            $(controlsView).on("previousButtonClick", handlePreviousButtonClick);
+            $(playlistView).on("playlistItemClicked", handlePlaylistItemClick);
+            $(playlistView).on("checkSortModeSwitch", handleCheckSortModeSwitch);
+        },
+
+        initSearchViewHandler = function () {
+            $(searchView).on("searchButtonClickedEchoNest", handleSearchButtonClickedEchoNest);
+            $(searchView).on("searchEchoNestSimilarTracks", handleSearchEchoNestSimilarTracks);
+            $(searchView).on("searchIconFocusIn", handleSearchIconFocusIn);
+            $(searchView).on("searchIconFocusOut", handleSearchIconFocusOut);
+        },
+
+        initPickTrackViewHandler = function () {
+            $(pickTrackView).on("echonestTrackIDPicked", handleTrackIdPicked);
+            $(pickTrackView).on("soundcloudTrackPicked", handleSoundlcoudTrackPicked);
+        },
+
+        initDataHandler = function () {
+            $(mainModel).on("showLoadingAnimation", handleShowLoadingAnimation);
+            $(mainModel).on("hideLoadingAnimation", handleHideLoadingAnimation);
+            $(searchView).on("searchButtonClickedSoundcloud", handleSearchButtonClickedSoundcloud);
+            $(mainModel).on("echoNestTrackSearchResultsComplete", handleEchoNestTrackSearchResultsComplete);
+            $(mainModel).on("soundcloudTrackSearchResultsComplete", handleSoundcloudTrackSearchResultsComplete);
+            $(mainModel).on("playlistCreated", handlePlaylistCreated);
+        },
+
+        initUserManagementHandler = function () {
+            $(playlistOptions).on("savePlaylistClicked", handleSavePlaylistClicked);
+            $(playlistOptions).on("postPlaylistClicked", handlePostPlaylistClicked);
+            $(userPlaylistManager).on("userPlaylistTitlesLoaded", handleUserPlaylistTitlesLoaded);
+            $(userPlaylistView).on("userPlaylistLoaded", handleUserPlaylistLoaded);
+            $(userPlaylistManager).on("emptyOldUserPlaylistView", handleEmptyUserPlaylistView)
+        },
+
+        initUserPlaylistViewHandler = function () {
+            $(userPlaylistView).on("previewPlayingStart", handlePreviewPlayingStart);
+            $(userPlaylistView).on("previewPlayingStop", handlePreviewPlayingStop);
+            $(userPlaylistView).on("resizeUserPlaylistHeight", handleResizeUserPlaylistHeight);
+        },
+
+        initPlaylistOptionsHandler = function () {
+            $(playlistOptions).on("sortEnabled", handleSortEnabled);
+            $(playlistOptions).on("sortDisabled", handleSortDisabled);
+            $(playlistOptions).on("cancelPlaylistPostButton", handleCancelPlaylistPostButton);
+        },
+
         initUserAndPlaylistManagementHandler = function () {
             //login, signin, show playlists
             $(userManagementView).on("loginButtonClicked", handleLoginButtonClick);
             $(userManager).on("loginSuccessful", handleLoginSuccessful);
             $(userManager).on("loginFailed", handleLoginFailed);
+
             //signin
             $(userManagementView).on("signInButtonClick", handleSignInButtonClick);
             $(userManager).on("signInSuccessful", handleSignInSuccessful);
             $(userManager).on("signInFailed", handleSignInFailed);
+
             //Logout, show playlists
             $(userManagementView).on("handleLogoutClicked", handleLogoutClick);
             $(userManagementView).on("myPlaylistsAnchorClick", handleMyPlaylistsAnchorClick);
+
             //delete user playlist
             $(userPlaylistView).on("deleteUserPlaylist", handleDeleteUserPlaylist);
             $(userPlaylistManager).on("userPlaylistDeleteSuccess", handleDeleteUserPlaylistSuccess);
+
             //empty playlist
             $(userManagementView).on("emptyOldUserPlaylistView", handleEmptyUserPlaylistView);
             $(playlistOptions).on("playlistCleared", handlePlaylistCleared);
             $(playlistView).on("playlistSpaceFillerClicked", handlePlaylistSpaceFillerClick);
             $(playlistView).on("allPlaylistItemsRemoved", handleAllPlaylistItemsRemoved);
+        },
+
+        initRotationHandler = function () {
+            $(rotationHandler).on("rotationChanged", handleRotationChange);
         },
 
         rotateAlert = function () {
