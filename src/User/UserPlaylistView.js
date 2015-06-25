@@ -1,6 +1,3 @@
-/**
- * Created by Patrick on 02.01.2015.
- */
 App.UserPlaylistView = (function () {
     var that = {},
         $userPlaylistBox = null,
@@ -13,13 +10,15 @@ App.UserPlaylistView = (function () {
         $playlistContainerToDelete = null,
         defaultTextColor = null,
 
-
         init = function () {
             listItemColors = ["rgba(0,0,0,0.1)", "rgba(0,0,0,0.2)"];
             defaultTextColor = "#f5f5f5";
             $userPlaylistBox = $("#user-playlist-box");
-            userPlaylistTpl = _.template($("#user-playlist-tpl").html());
 
+            /*
+             templates for the user playlist view
+             */
+            userPlaylistTpl = _.template($("#user-playlist-tpl").html());
             userPlaylistItemTpl = _.template($("#user-playlist-item-tpl").html());
 
             $userPlaylistModal = $("#user-playlist-modal");
@@ -42,8 +41,13 @@ App.UserPlaylistView = (function () {
             $userPlaylisBox.on("click", ".stop-icon", handleStopIconClick);
         },
 
-
+    /*
+     setup swipe control: use swipe gestures for modals and lists when tabletop mode is enabled
+     */
         _setupSwipeControl = function () {
+            /*
+             swipe to scroll for user playlists to scroll
+             */
             $(".user-playlist").swipe({
                 swipe: function (event, direction, distance, duration, fingerCount, fingerData) {
                     setupSwipeToScroll($(this), event, direction, distance);
@@ -54,6 +58,10 @@ App.UserPlaylistView = (function () {
             }).on("touchmove", function (e) {
                 e.preventDefault();
             });
+
+            /*
+             swipe to scroll for modal view of playlist
+             */
             $userPlaylistModal.swipe({
                 swipe: function (event, direction, distance, duration, fingerCount, fingerData) {
                     setupSwipeToScroll($(this), event, direction, distance);
@@ -64,8 +72,13 @@ App.UserPlaylistView = (function () {
             }).on("touchmove", function (e) {
                 e.preventDefault();
             });
+
+            return this;
         },
 
+    /*
+     scroll the defined directions depending on the user's side when tabletop mode is enabled
+     */
         setupSwipeToScroll = function (container, event, direction, distance) {
             if (getUserSide() == "left" && direction == "left") {
                 scrollMinus(container, distance);
@@ -92,18 +105,24 @@ App.UserPlaylistView = (function () {
             }
         },
 
+    /*
+     scroll minus the swipe distance * 4
+     */
         scrollMinus = function (container, distance) {
             var scrollFactor = distance * 4;
             container.animate({scrollTop: "-=" + scrollFactor});
         },
 
+    /*
+     scroll plus the swipe distance * 4
+     */
         scrollPlus = function (container, distance) {
             var scrollFactor = distance * 4;
             container.animate({scrollTop: "+=" + scrollFactor});
         },
 
         _setUserPlaylistView = function (userPlaylistObj) {
-            //create Header
+            //create header views for the playlists and append them
             var playlistHeaderItem = userPlaylistTpl({
                 playlist_id: userPlaylistObj.playlistId,
                 title: userPlaylistObj.palylistTitle,
@@ -112,7 +131,7 @@ App.UserPlaylistView = (function () {
             });
             $userPlaylistBox.append(playlistHeaderItem);
 
-            //create list
+            //create list views of the playlist and append them
             var JSONPlaylist = userPlaylistObj.JSONPlaylist;
             for (var j in JSONPlaylist) {
                 var JSONItem = JSONPlaylist[j],
@@ -127,8 +146,13 @@ App.UserPlaylistView = (function () {
                 $("#" + userPlaylistObj.playlistId).append(playlistItem);
             }
             setPlaylistIds();
+
+            return this;
         },
 
+    /*
+     set ids and background colors of the playlists
+     */
         setPlaylistIds = function () {
             $(".user-playlist").each(function (index) {
                 $(this).children(".user-playlist-item").each(function (index) {
@@ -145,12 +169,19 @@ App.UserPlaylistView = (function () {
 
         _openUserPlaylistModal = function () {
             $userPlaylistModal.foundation('reveal', 'open');
+
+            return this;
         },
 
         _emptyUserPlaylistModal = function () {
             $userPlaylistBox.empty();
+
+            return this;
         },
 
+    /*
+     stop track when user playlist track was played
+     */
         handleUserPlaylistModalClosed = function () {
             if (preview.currentTime != 0 || preview == null) {
                 preview.pause();
@@ -159,9 +190,11 @@ App.UserPlaylistView = (function () {
             }
         },
 
+    /*
+     load clicked user playlist in the music player
+     */
         handleLoadPlaylist = function (e) {
             e.preventDefault();
-            //playlist in playlistview laden
             var $userPlaylist = $(this).parents(".user-playlist-container").find(".user-playlist");
             if ($userPlaylist.hasClass("loaded") == false) {
                 $userPlaylist.addClass("loading");
@@ -185,6 +218,9 @@ App.UserPlaylistView = (function () {
             }
         },
 
+    /*
+     play user playlist track
+     */
         handleListItemClick = function (e) {
             e.preventDefault();
             var $clickedItem = $(e.target).closest(".user-playlist-item");
@@ -198,7 +234,6 @@ App.UserPlaylistView = (function () {
             $(that).trigger("previewPlayingStart");
             $(".stop-icon").show();
         },
-
 
         removeListItem = function (e) {
             var $itemToRemove = $(e.target).closest(".user-playlist-item");
@@ -256,13 +291,16 @@ App.UserPlaylistView = (function () {
                 $playlistContainerToDelete.remove();
                 $playlistContainerToDelete = null;
             }
+
+            return this;
         },
 
         _removeLoadedStatus = function () {
             $(".loaded").removeClass("loaded");
             $(".load-playlist").html("LOAD");
-        };
 
+            return this;
+        };
 
     that._setupSwipeControl = _setupSwipeControl;
     that._setUserPlaylistView = _setUserPlaylistView;

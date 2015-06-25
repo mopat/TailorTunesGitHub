@@ -1,4 +1,3 @@
-/*** Created by Patrick on 19.11.2014.*/
 App.ControlsView = (function () {
     var that = {},
         sc_client_id = '23a3031c7cd251c7c217ca127777e48b',
@@ -45,12 +44,6 @@ App.ControlsView = (function () {
             return that;
         },
 
-        addTrackEndListener = function () {
-            player.addEventListener("ended", function () {
-                $(that).trigger("trackEnded");
-            });
-        },
-
         initHandler = function () {
             $volumeMinus.on("click", handleVolumeMinus);
             $volumePlus.on("click", handleVolumePlus);
@@ -58,6 +51,15 @@ App.ControlsView = (function () {
             $previousButton.on("click", handlePreviousButtonClick);
         },
 
+        addTrackEndListener = function () {
+            player.addEventListener("ended", function () {
+                $(that).trigger("trackEnded");
+            });
+        },
+
+    /*
+     initialize the slider for the player time and register evets
+     */
         initTimeSlider = function () {
             $timeSlider.slider();
             $timeSlider.slider("option", "max", 100);
@@ -141,6 +143,8 @@ App.ControlsView = (function () {
                 direction: 'left',
                 duplicated: true
             });
+
+            return this;
         },
 
         _resetPlayer = function () {
@@ -148,14 +152,20 @@ App.ControlsView = (function () {
             player.currentTime = 0;
             resetTimer();
             resetTitleInfo();
+
+            return this;
         },
 
         _pauseTrack = function () {
             player.pause();
+
+            return this;
         },
 
         _playTrack = function () {
             player.play();
+
+            return this;
         },
 
         handleNextButtonClick = function (e) {
@@ -181,10 +191,14 @@ App.ControlsView = (function () {
 
         _hideControlsBox = function () {
             $controlsBox.hide();
+
+            return this;
         },
 
         _showControlsBox = function () {
             $controlsBox.fadeIn(500);
+
+            return this;
         };
 
     that._handleTrackPicked = _handleTrackPicked;

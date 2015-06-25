@@ -1,6 +1,3 @@
-/**
- * Created by Patrick on 19.01.2015.
- */
 App.UserManager = (function () {
     var that = {},
 

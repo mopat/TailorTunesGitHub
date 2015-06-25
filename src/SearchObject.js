@@ -1,6 +1,3 @@
-/**
- * Created by Patrick on 28.01.2015.
- */
 createSrchObj = function (query, type, option, trackID, dataApi, searchLimit) {
     return {
         query: query,

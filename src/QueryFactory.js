@@ -1,6 +1,3 @@
-/**
- * Created by Patrick on 14.01.2015.
- */
 var echoNestAPIKey = "N2U2OZ8ZDCXNV9DBG";
 
 function artistQuery(options) {
@@ -59,4 +56,4 @@ QueryFactory.prototype.createQuery = function createQuery(options) {
     if (parentClass === null) return false;
 
     return new parentClass(options);
-}
+};

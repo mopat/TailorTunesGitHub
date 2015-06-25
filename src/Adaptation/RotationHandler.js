@@ -1,3 +1,6 @@
+/*
+ handle rotations
+ */
 App.RotationHandler = (function () {
     var that = {},
         $rotate = null,

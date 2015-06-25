@@ -1,4 +1,3 @@
-/*** Created by Patrick on 19.11.2014.*/
 App.MainController = (function () {
     var that = {},
         mainModel = null,
@@ -193,11 +192,11 @@ App.MainController = (function () {
         },
 
         handleShowLoadingAnimation = function () {
-            playlistView.showLoadingAnimation();
+            playlistView._showLoadingAnimation();
         },
 
         handleHideLoadingAnimation = function () {
-            playlistView.hideLoadingAnimation();
+            playlistView._hideLoadingAnimation();
         },
 
         handleSearchButtonClickedEchoNest = function (event, srchObj) {
@@ -342,7 +341,7 @@ App.MainController = (function () {
         },
 
         handlePlaylistSpaceFillerClick = function () {
-            searchView.scrollToSearchField();
+            searchView._scrollToSearchField();
         },
 
         handleRotationChange = function () {

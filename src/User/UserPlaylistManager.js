@@ -1,6 +1,3 @@
-/**
- * Created by Patrick on 31.12.2014.
- */
 App.UserPlaylistManager = (function () {
     var that = {},
         playlistTitles = [],
@@ -20,7 +17,9 @@ App.UserPlaylistManager = (function () {
                     for (var i in usersPosts) {
                         var userPost = usersPosts[i],
                             JSONPlaylist = userPost._serverData.JSONPlaylist;
-
+                        /*
+                         Create playlist object
+                         */
                         var playlistObj = {
                             title: userPost._serverData.title,
                             id: usersPosts[i].id
@@ -30,6 +29,9 @@ App.UserPlaylistManager = (function () {
                         playlistTitle.id = playlistId;
                         playlistTitles.push(playlistObj);
 
+                        /*
+                         trigger playlist titles load an give playlist object as parameter
+                         */
                         var userPlaylistObj = createUserPlaylistObj(usersPosts[i]._serverData.title, usersPosts[i]._serverData.lastUpdate, usersPosts[i]._serverData.length, usersPosts[i].id, JSONPlaylist);
                         $(that).trigger("userPlaylistTitlesLoaded", [userPlaylistObj]);
                     }
@@ -37,6 +39,9 @@ App.UserPlaylistManager = (function () {
             });
         },
 
+    /*
+     start saving playlist in account if playlist name not exists
+     */
         _startPlaylistPost = function (JSONPlaylist, playlistName) {
             if (JSONPlaylist != null) {
                 if (getCurrentUser() != null) {
@@ -60,6 +65,9 @@ App.UserPlaylistManager = (function () {
                     }
                     else {
                         $(that).trigger("emptyOldUserPlaylistView");
+                        /*
+                         post playlist usign the function
+                         */
                         postPlaylist(JSONPlaylist, playlistName);
                     }
                 }
@@ -79,6 +87,9 @@ App.UserPlaylistManager = (function () {
             return -1;
         },
 
+    /*
+     save playlist in account
+     */
         postPlaylist = function (JSONPlaylist, playlistName) {
             var Playlists = Parse.Object.extend("Playlists"),
                 query = new Parse.Query(Playlists),
@@ -108,35 +119,35 @@ App.UserPlaylistManager = (function () {
             });
         },
 
+    /*
+     start deleting the playlist from user account by retrieving object and use delete function to delete
+     */
         _deleteUserPlaylist = function (playlistId) {
             playlistTitles = [];
-            retrieveObject(playlistId, deleteObject);
-        },
-
-        retrieveObject = function (playlistId, callback) {
             var Playlists = Parse.Object.extend("Playlists");
             var query = new Parse.Query(Playlists);
             query.get(playlistId, {
                 success: function (playlist) {
-                    if (callback != null || callback != undefined)
-                        callback(playlist);
+                    deletePlaylist(playlist);
                 },
                 error: function (object, error) {
-                    // The object was not retrieved successfully.
-                    // error is a Parse.Error with an error code and message.
+                    swal("Could not delete playlist", error.message, "error")
                 }
             });
         },
 
-        deleteObject = function (playlist) {
+    /*
+     delete playlist from account by the given playlist id
+     */
+        deletePlaylist = function (playlist) {
             playlist.destroy({
                 success: function (playlist) {
                     if (overwrite == false)
-                    swal({
-                        title: "Playlist deleted",
-                        type: "success",
-                        timer: 500
-                    });
+                        swal({
+                            title: "Playlist deleted",
+                            type: "success",
+                            timer: 500
+                        });
                     overwrite = false;
                     $(that).trigger("userPlaylistDeleteSuccess");
                 },
@@ -151,6 +162,9 @@ App.UserPlaylistManager = (function () {
             });
         },
 
+    /*
+     return datetime
+     */
         getCurrenTimeAndDate = function () {
             var now = new Date(),
                 year = now.getFullYear(),
@@ -175,6 +189,7 @@ App.UserPlaylistManager = (function () {
                 second = '0' + second;
             }
             var dateTime = year + '/' + month + '/' + day + ' ' + hour + ':' + minute + ':' + second;
+
             return dateTime;
         };
 

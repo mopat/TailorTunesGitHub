@@ -1,4 +1,3 @@
-/*** Created by Patrick on 19.11.2014.*/
 App.MainModel = (function () {
     var that = {},
         scLimit = 50,
@@ -52,6 +51,8 @@ App.MainModel = (function () {
                     $(that).trigger("hideLoadingAnimation");
                 }
             });
+
+            return this;
         },
 
     /*
@@ -71,6 +72,8 @@ App.MainModel = (function () {
                     swal("No results found for " + '"' + srchObj.query + '"' + " in " + srchObj.type, null, "error");
                 }
             });
+
+            return this;
         },
 
     /*
@@ -98,6 +101,8 @@ App.MainModel = (function () {
                 },
                 type: 'GET'
             });
+
+            return this;
         },
 
     /*
@@ -188,7 +193,6 @@ App.MainModel = (function () {
             //take the first element and add id to the playlist
             if (tracks[0] != undefined)
                 playlist.push(tracks[0]);
-
         },
 
     /*
@@ -246,4 +250,5 @@ App.MainModel = (function () {
     that.init = init;
 
     return that;
+
 }());

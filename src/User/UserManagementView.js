@@ -1,6 +1,3 @@
-/**
- * Created by Patrick on 07.01.2015.
- */
 App.UserManagementView = (function () {
     var that = {},
         $formBox = null,
@@ -9,7 +6,6 @@ App.UserManagementView = (function () {
         $loginPassword = null,
         $loginButton = null,
         $loginForm = null,
-        $loginFailed = null,
         $loggedInUsername = null,
         $myPlaylistsAnchor = null,
         $logoutAnchor = null,
@@ -20,17 +16,14 @@ App.UserManagementView = (function () {
         $signInButton = null,
         $signInEmail = null,
         $signInForm = null,
-        $signInFailed = null,
 
         init = function () {
             $formBox = $(".form-box");
-
             $loginAnchor = $("#login-anchor");
             $loginUsername = $("#login-username");
             $loginPassword = $("#login-password");
             $loginButton = $("#login-button");
             $loginForm = $("#login-form-box");
-            $loginFailed = $("#login-failed");
             $loggedInUsername = $("#loggedin-username");
             $myPlaylistsAnchor = $("#my-playlists-anchor");
             $logoutAnchor = $("#logout-anchor");
@@ -42,7 +35,6 @@ App.UserManagementView = (function () {
             $signInEmail = $("#sign-in-email");
             $signInButton = $("#sign-in-button");
             $signInForm = $("#sign-in-form-box");
-            $signInFailed = $("#sign-in-failed");
 
             initHandler();
 
@@ -51,17 +43,12 @@ App.UserManagementView = (function () {
 
         initHandler = function () {
             $loginAnchor.on("click", handleLoginAnchorClick);
-            $loginButton.on("click", handleLoginButtonClick)
+            $loginButton.on("click", handleLoginButtonClick);
             $myPlaylistsAnchor.on("click", hanldeMyPlaylistsAnchorClick);
             $logoutAnchor.on("click", hanldeLogoutAnchorClick);
 
             $signInAnchor.on("click", handleSignInAnchorClick);
             $signInButton.on("click", handleSignInButtonClick);
-
-            $("html, body").on("click", ".dimbackground-curtain", function () {
-                //$.undim();
-                $formBox.hide();
-            });
         },
 
         handleLoginButtonClick = function () {
@@ -80,26 +67,23 @@ App.UserManagementView = (function () {
         },
 
         _loginSuccessful = function () {
-            // $.undim();
             $loginAnchor.hide();
             $loginForm.hide();
 
             $signInForm.hide();
             $signInAnchor.hide();
-            $signInFailed.empty();
 
             var username = Parse.User.current().attributes.username;
             $loggedInUsername.html(username);
-            $loginFailed.empty();
             $loggedInBox.show();
         },
 
         _loginFailed = function (errorMessage) {
-            $loginFailed.html("Login Failed due to " + errorMessage);
+            swal("Login failed: " + errorMessage, "", "error");
         },
 
         _signInFailed = function (errorMessage) {
-            $signInFailed.html("Sign In Failed: " + errorMessage);
+            swal("Sign In failed: " + errorMessage, "", "error");
         },
 
         hanldeMyPlaylistsAnchorClick = function () {
@@ -116,19 +100,19 @@ App.UserManagementView = (function () {
         },
 
         handleLoginAnchorClick = function () {
-            if ($loginForm.is(":visible")) {
+            if ($loginForm.is(":visible"))
                 $loginForm.hide();
-            }
             else {
-                $loginForm.show()//.dimBackground();
+                $signInForm.hide();
+                $loginForm.show();
             }
         },
 
         handleSignInAnchorClick = function () {
-            if ($signInForm.is(":visible")) {
+            if ($signInForm.is(":visible"))
                 $signInForm.hide();
-            }
             else {
+                $loginForm.hide();
                 $signInForm.show();
             }
         };
@@ -139,4 +123,5 @@ App.UserManagementView = (function () {
     that.init = init;
 
     return that;
+
 }());

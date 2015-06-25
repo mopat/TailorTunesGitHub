@@ -1,6 +1,3 @@
-/**
- * Created by Patrick on 27.12.2014.
- */
 App.PickTrackView = (function () {
 
     var that = {},
@@ -27,6 +24,9 @@ App.PickTrackView = (function () {
             $soundcloudTrackPickerList.on("click", pickSoundcloudTrack);
         },
 
+    /*
+     view for user to pick a suggested track for echonest
+     */
         _setEchoNestTrackIdPicker = function (query, tracks) {
             foundTracks = tracks;
             $echoNestTrackPickerList.empty();
@@ -41,13 +41,16 @@ App.PickTrackView = (function () {
                     $listItem.css("background", "rgba(0,0,0,0.1)");
                 else $listItem.css("background", "rgba(0,0,0,0.2)");
 
-                $anchor = $("<a href='#'></a>").append($listItem);
+                var $anchor = $("<a href='#'></a>").append($listItem);
 
                 $echoNestTrackPickerList.append($anchor);
             }
             $echoNestTrackPicker.foundation('reveal', 'open');
         },
 
+    /*
+     view for user to pick a suggested track for soundcloud
+     */
         _setSoundcloudTrackPicker = function (tracks) {
             $soundcloudTrackPickerList.empty();
             foundTracks = tracks;
@@ -60,10 +63,9 @@ App.PickTrackView = (function () {
                 if (i % 2 == 0)
                     $listItem.css("background", "rgba(0,0,0,0.1)");
                 else $listItem.css("background", "rgba(0,0,0,0.2)");
-                $anchor = $("<a href='#'></a>").append($listItem);
+                var $anchor = $("<a href='#'></a>").append($listItem);
 
                 $soundcloudTrackPickerList.append($anchor);
-
             }
             $soundcloudTrackPicker.foundation('reveal', 'open');
         },
@@ -92,4 +94,5 @@ App.PickTrackView = (function () {
     that.init = init;
 
     return that;
+
 }());

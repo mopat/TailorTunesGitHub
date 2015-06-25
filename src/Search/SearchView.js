@@ -1,6 +1,3 @@
-/**
- * Created by Patrick on 04.12.2014.
- */
 App.SearchView = (function () {
     var that = {},
         $searchForm = null,
@@ -49,7 +46,7 @@ App.SearchView = (function () {
             $searchField.on("click", handleSearchFieldClick);
 
             $searchButton.on("click", handleSearch);
-            $closeSearchButton.on("click", handleCloseSearch);
+            $closeSearchButton.on("click", searchFieldFocusOut);
             $picker.on("click", handleTabClicked);
 
             $trackDropdownBox.on("change", handleTrackDropdownChange);
@@ -58,8 +55,11 @@ App.SearchView = (function () {
                 searchFieldFocusIn();
             });
 
+            /*
+             set value view of the maximum search results
+             */
             $maxResults.on("mousemove touchmove", function(){
-                $(this).attr("value", $(this).val())
+                $(this).attr("value", $(this).val());
                 $maxResultsValue.html($(this).val());
             })
         },
@@ -76,6 +76,9 @@ App.SearchView = (function () {
             $searchField.focusout();
         },
 
+    /*
+     start search depending on the picked options arist, genre and track depending on the parameters
+     */
         handleSearch = function () {
             var srchObj = {};
             $searchDropdown.each(function (index) {
@@ -95,17 +98,15 @@ App.SearchView = (function () {
             searchFieldFocusOut();
         },
 
-
-        handleCloseSearch = function () {
-            searchFieldFocusOut();
-        },
-
         handleSubmitForm = function (e) {
             if (e.keyCode == 13) {
                 handleSearch();
             }
         },
 
+    /*
+     set view when tab is clicked (colors) and set chosen mode
+     */
         handleTabClicked = function (e) {
             resetDropdowns();
             $(".picked").switchClass("picked", "unpicked", 0);
@@ -115,6 +116,9 @@ App.SearchView = (function () {
             $searchField.focus().select();
         },
 
+    /*
+     set mode artist, track or genre
+     */
         setMode = function (tabId) {
             switch (tabId) {
                 case "artist-tab":
@@ -188,10 +192,14 @@ App.SearchView = (function () {
             });
         },
 
-        scrollToSearchField = function () {
+    /*
+     scroll to search field and show it
+     */
+        _scrollToSearchField = function () {
             $('html, body').animate({
                 scrollTop: $searchField.offset().top
             }, 500);
+            searchFieldFocusIn();
             $searchField.focus().select();
         },
 
@@ -199,7 +207,7 @@ App.SearchView = (function () {
             $searchField.select();
         };
 
-    that.scrollToSearchField = scrollToSearchField;
+    that._scrollToSearchField = _scrollToSearchField;
     that.init = init;
 
     return that;

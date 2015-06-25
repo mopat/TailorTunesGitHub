@@ -1,6 +1,3 @@
-/**
- * Created by Patrick on 20.01.2015.
- */
 /*
  Resizing width and height of the lists
  */

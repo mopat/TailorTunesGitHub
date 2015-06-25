@@ -1,6 +1,3 @@
-/**
- * Created by Patrick on 19.01.2015.
- */
 App.PlaylistOptions = (function () {
     var that = {},
         $optionsBox = null,
@@ -30,6 +27,7 @@ App.PlaylistOptions = (function () {
 
             initHandler();
             _checkSortModeSwitch();
+
             return that;
         },
 
@@ -43,6 +41,9 @@ App.PlaylistOptions = (function () {
             $cancelPostPlaylistButton.on("click", cancelPostPlaylist);
         },
 
+    /*
+     trigger event depending on the state of the sort switch
+     */
         handleSortSwitchClick = function () {
             if ($sortModeSwitch.attr("checked")) {
                 $sortModeSwitch.removeAttr("checked");
@@ -65,6 +66,9 @@ App.PlaylistOptions = (function () {
             $(that).trigger("postPlaylistClicked");
         },
 
+    /*
+     trigger post playlist event when playlist name is not empty
+     */
         postPlaylist = function () {
             var playlistName = $playlistNameInput.val();
             if (!playlistName || !isPlaylistExisting)
@@ -93,7 +97,7 @@ App.PlaylistOptions = (function () {
 
         clearPlaylist = function () {
             $(that).trigger("playlistCleared");
-            // $playlistSpaceFiller.show();
+
             return this;
         },
 
@@ -111,6 +115,7 @@ App.PlaylistOptions = (function () {
                 $clearPlaylistButton.fadeOut(300);
                 $savePlaylistButton.fadeOut(300);
             }
+
             return this;
         },
 
