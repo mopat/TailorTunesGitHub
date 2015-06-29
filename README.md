@@ -17,6 +17,15 @@ $ git checkout gh-pages
 
 If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.
 
+###Functionalities###
+* Automatically generate and play playlists with different parameters
+* Search by Artist, Track and Genre
+* Search and playback a single track
+* Save the current playlist in the browser memory
+* Save Playlists in your own account
+* Load and delete playlists from your account
+* Sort your Playlists
+
 ### Adaptations and Adjustments
 Due to the particularities of a Multi-TouchTabletop it is necessary to make special adaptations of the user interface as the turning of the content and the associated adjustments to the user interface and interaction.
 * orientation of content
