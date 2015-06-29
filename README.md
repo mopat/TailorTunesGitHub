@@ -2,7 +2,8 @@
 ### Welcome to TailorTunes
 TailorTunes is a powerful browser-based music player application that is implemented as part of a bachelor thesis for the University of Ratisbona. 
 
-Google Chrome recommended
+**Google Chrome recommended**
+
 Link to web application: http://raspbianpi8.no-ip.org/TailorTunesGithub/index.html
 
 Link to GitHub I/O: http://mopat.github.io/TailorTunesGitHub/
