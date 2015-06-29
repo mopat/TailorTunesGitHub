@@ -51,7 +51,8 @@ App.RotationHandler = (function () {
             swal({
                 title: "Use rotate gesture to change content orientation",
                 imageUrl: "ui-images/two_finger_rotate.png",
-                showConfirmButton: true
+                showConfirmButton: true,
+                animation: false
             });
         },
 
@@ -69,7 +70,7 @@ App.RotationHandler = (function () {
             });
             hammertime.on("rotatestart", function (e) {
                 if ($sortModeSwitch.attr("checked") && $("#playlist").has($(e.target)).length)
-                    swal("Disable sort mode to rotate or do not touch the playlist!", null, "error");
+                    swal({title: "Disable sort mode to rotate!", animation: false, type: "warning"});
             });
             //when rotation degree is higher than 20 show rotate triggers
             hammertime.on("rotateend", function (e) {
@@ -205,7 +206,6 @@ App.RotationHandler = (function () {
      fit view of sweet alert when the user is on the left side of the table
      */
         sweetAlertLeft = function () {
-            setTimeout(function () {
                 /* for Rotation of 90 degrees
                  the distance from the left side corresponds to
                  the distance of the rotatable container to the left side.
@@ -214,14 +214,12 @@ App.RotationHandler = (function () {
                  */
                 var offsetLeft = $rotatable.offset().left + $rotatable.height() / 2 - $(".sweet-alert").height() / 2;
                 $(".sweet-alert").offset({left: offsetLeft})
-            }, ROTATE_DURATION)
         },
 
     /*
      fit view of sweet alert when the user is on the ight side of the table
      */
         sweetAlertRight = function () {
-            setTimeout(function () {
                 /* for Rotation of 270 degrees
                  the distance from the left side corresponds to
                  the distance of the rotatable container to the left side.
@@ -230,13 +228,12 @@ App.RotationHandler = (function () {
                  */
                 var offsetLeft = $rotatable.offset().left + $rotatable.height() / 2 - $(".sweet-alert").height() / 2;
                 $(".sweet-alert").offset({left: offsetLeft})
-            }, ROTATE_DURATION)
         },
 
         sweetAlertDefault = function () {
             setTimeout(function () {
                 $(".sweet-alert").css("left", "50%");
-            }, ROTATE_DURATION)
+            }, 0)
         },
 
         _rotateAlert = function () {

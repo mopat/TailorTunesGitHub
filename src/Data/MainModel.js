@@ -42,12 +42,20 @@ App.MainModel = (function () {
                     }
                     else {
                         $(that).trigger("hideLoadingAnimation");
-                        swal("No results found for " + '"' + srchObj.query + '"' + " in " + srchObj.type, null, "error");
+                        swal({
+                            title: "No results found for " + '"' + srchObj.query + '"' + " in " + srchObj.type,
+                            type: "error",
+                            animation: false
+                        });
                     }
 
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
-                    swal("No results found for " + '"' + srchObj.query + '"' + " in " + srchObj.type, null, "error");
+                    swal({
+                        title: "No results found for " + '"' + srchObj.query + '"' + " in " + srchObj.type,
+                        type: "error",
+                        animation: false
+                    });
                     $(that).trigger("hideLoadingAnimation");
                 }
             });
@@ -69,7 +77,11 @@ App.MainModel = (function () {
                     $(that).trigger("echoNestTrackSearchResultsComplete", [srchObj.query, tracks]);
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
-                    swal("No results found for " + '"' + srchObj.query + '"' + " in " + srchObj.type, null, "error");
+                    swal({
+                        title: "No results found for " + '"' + srchObj.query + '"' + " in " + srchObj.type,
+                        type: "error",
+                        animation: false
+                    });
                 }
             });
 
@@ -96,7 +108,11 @@ App.MainModel = (function () {
                     $(that).trigger("hideLoadingAnimation");
                 },
                 error: function () {
-                    swal("No results found for " + '"' + srchObj.query + '"' + " in " + srchObj.type, null, "error");
+                    swal({
+                        title: "No results found for " + '"' + srchObj.query + '"' + " in " + srchObj.type,
+                        type: "error",
+                        animation: false
+                    });
                     $(that).trigger("hideLoadingAnimation");
                 },
                 type: 'GET'

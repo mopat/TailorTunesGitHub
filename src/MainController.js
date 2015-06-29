@@ -83,14 +83,16 @@ App.MainController = (function () {
                         confirmButtonText: "Yes",
                         cancelButtonText: "No",
                         closeOnConfirm: false,
-                        closeOnCancel: true
+                        closeOnCancel: true,
+                        animation: false
                     }, function (isConfirm) {
                         if (isConfirm) {
                             swal({
                                 title: "Use rotate gesture to change orientation",
                                 text: "You're using TailorTunes in Tabletop mode!",
                                 imageUrl: "ui-images/two_finger_rotate.png",
-                                showConfirmButton: true
+                                showConfirmButton: true,
+                                animation: false
                             });
                             setTabletopMode(true);
                             userPlaylistView._setupSwipeControl();

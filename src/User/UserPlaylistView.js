@@ -280,7 +280,8 @@ App.UserPlaylistView = (function () {
                 showCancelButton: true,
                 confirmButtonColor: "#DD6B55",
                 confirmButtonText: "Delete!",
-                closeOnConfirm: false
+                closeOnConfirm: false,
+                animation: false
             }, function () {
                 $(that).trigger("deleteUserPlaylist", [playlistId]);
             });

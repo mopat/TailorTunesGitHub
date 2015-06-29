@@ -55,7 +55,8 @@ App.UserPlaylistManager = (function () {
                             showCancelButton: true,
                             confirmButtonColor: "#DD6B55",
                             confirmButtonText: "Overwrite",
-                            closeOnConfirm: false
+                            closeOnConfirm: false,
+                            animation: false
                         }, function () {
                             var playlistId = playlistTitles[isExisitingIndex].id;
                             _deleteUserPlaylist(playlistId);
@@ -71,11 +72,19 @@ App.UserPlaylistManager = (function () {
                         postPlaylist(JSONPlaylist, playlistName);
                     }
                 }
-                else swal("Saving failed!", "You need to login to save playlists.", "error");
+                else swal({
+                    title: "Saving failed!",
+                    text: "You need to login to save playlists..",
+                    type: "error",
+                    animation: false
+                });
             }
-            else {
-                swal("Saving failed!", "Your Playlist is empty!", "error");
-            }
+            else swal({
+                title: "Saving failed!",
+                text: "Your Playlist is empty!",
+                type: "error",
+                animation: false
+            });
         },
 
         isPlaylistNameExisting = function (playlistName) {
@@ -101,9 +110,12 @@ App.UserPlaylistManager = (function () {
             post.set("JSONPlaylist", JSONPlaylist);
             post.save(null, {
                 success: function (post) {
-                    swal("Your playlist has been saved! ", null, "success");
+                    swal({
+                        title: "Your playlist has been saved!",
+                        type: "success",
+                        animation: false
+                    });
                     // Find all posts by the current user
-
                     query.equalTo("user", getCurrentUser());
                     query.find({
                         success: function (usersPosts) {
@@ -131,7 +143,12 @@ App.UserPlaylistManager = (function () {
                     deletePlaylist(playlist);
                 },
                 error: function (object, error) {
-                    swal("Could not delete playlist", error.message, "error")
+                    swal({
+                        title: "Could not delete playlist",
+                        text: error.message,
+                        type: "success",
+                        animation: false
+                    });
                 }
             });
         },
@@ -146,7 +163,8 @@ App.UserPlaylistManager = (function () {
                         swal({
                             title: "Playlist deleted",
                             type: "success",
-                            timer: 500
+                            timer: 500,
+                            animation: false
                         });
                     overwrite = false;
                     $(that).trigger("userPlaylistDeleteSuccess");
@@ -155,7 +173,8 @@ App.UserPlaylistManager = (function () {
                     swal({
                         title: "Could not delete Playlist.",
                         type: "error",
-                        timer: 500
+                        timer: 500,
+                        animation: false
                     });
                     overwrite = false;
                 }

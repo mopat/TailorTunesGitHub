@@ -54,8 +54,11 @@ App.PlaylistOptions = (function () {
                 $sortModeSwitch.attr("checked", true);
                 isSortEnabled = true;
                 $(that).trigger("sortEnabled");
-
-                swal("Sort mode enabled! Scrolling disabled. Long click item to sort.", "Move the item to the bottom or upper border to scroll.");
+                swal({
+                    title: "Sort mode enabled! Scrolling disabled. Long click item to sort.",
+                    text: "Move the item to the bottom or upper border to scroll.",
+                    animation: false
+                });
             }
         },
 
@@ -72,7 +75,12 @@ App.PlaylistOptions = (function () {
         postPlaylist = function () {
             var playlistName = $playlistNameInput.val();
             if (!playlistName || !isPlaylistExisting)
-                swal("Oops...", "Your playlist or your playlist name is empty!", "error");
+                swal({
+                    title: "Oops...",
+                    text: "Your playlist or your playlist name is empty!",
+                    type: "error",
+                    animation: false
+                });
             else {
                 $postPlaylistBox.hide();
                 $clearPlaylistButton.fadeIn(300);

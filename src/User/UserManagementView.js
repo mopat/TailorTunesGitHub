@@ -79,11 +79,19 @@ App.UserManagementView = (function () {
         },
 
         _loginFailed = function (errorMessage) {
-            swal("Login failed: " + errorMessage, "", "error");
+            swal({
+                title: "Login failed: " + errorMessage,
+                animation: false,
+                type: "error"
+            });
         },
 
         _signInFailed = function (errorMessage) {
-            swal("Sign In failed: " + errorMessage, "", "error");
+            swal({
+                title: "Sign In failed: " + errorMessage,
+                animation: false,
+                type: "error"
+            });
         },
 
         hanldeMyPlaylistsAnchorClick = function () {
