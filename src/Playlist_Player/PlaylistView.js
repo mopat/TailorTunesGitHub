@@ -373,13 +373,28 @@ App.PlaylistView = (function () {
         _hideLoadingAnimation = function () {
             $loadingAnimation.hide();
             $loadingAnimation.undim();
-
+            $loadingAnimation.css({WebkitTransform: 'rotate(' + 0 + 'deg)'});
+            $loadingAnimation.css({'-moz-transform': 'rotate(' + 0 + 'deg)'});
+            $loadingAnimation.css('transform', 'rotate(' + 0 + 'deg)');
+            clearTimeout($loadingAnimation.timer);
             return this;
         },
 
         _showLoadingAnimation = function () {
             $loadingAnimation.show().dimBackground();
+            $loadingAnimation.timer = null;
+            var degree = 0;
+            rotate();
+            function rotate() {
 
+                $loadingAnimation.css({WebkitTransform: 'rotate(' + degree + 'deg)'});
+                $loadingAnimation.css({'-moz-transform': 'rotate(' + degree + 'deg)'});
+                $loadingAnimation.css('transform', 'rotate(' + degree + 'deg)');
+                $loadingAnimation.timer = setTimeout(function () {
+                    ++degree;
+                    rotate();
+                }, 5);
+            }
             return this;
         },
         _isPlaylistExisting = function () {
