@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="content">
+    <div id="header">
+        <h1>RotatableSortable</h1>
+
+        <h2>Dynamic jquery plugin for (rotated) lists and divs</h2>
+    </div>
+    <div id="list-container">
+        <ul id="list-0-rotation">
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+            <li>5</li>
+        </ul>
+        <ul id="list-90-rotation">
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+            <li>5</li>
+        </ul>
+        <ul id="list-180-rotation">
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+            <li>5</li>
+        </ul>
+        <ul id="list-270-rotation">
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+            <li>5</li>
+        </ul>
+    </div>
+
+</div>
+
+
+<script src="jquery.js"></script>
+<script src="rotatableSortable.js"></script>
+<script type="text/javascript">
+    $("#list-0-rotation").rotatableSortable({
+        delegates: 'li', rotation: 0, sortEnd: function () {
+            console.log("HE")
+        }
+    });
+
+</script>
+</body>
+</html>
