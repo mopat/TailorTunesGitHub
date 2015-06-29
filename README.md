@@ -4,7 +4,9 @@ TailorTunes is a powerful browser-based music player application that is impleme
 
 Google Chrome recommended
 Link to web application: http://raspbianpi8.no-ip.org/TailorTunesGithub/index.html
+
 Link to GitHub I/O: http://mopat.github.io/TailorTunesGitHub/
+
 **----Working fine with Google Chrome Browser on Desktop, Tablet, Smartphone and Multi-Touch-Tabletop----**
 ```
 $ cd mopat/TailorTunesGithub
