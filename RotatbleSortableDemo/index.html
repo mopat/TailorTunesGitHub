@@ -48,12 +48,36 @@
 
 <script src="jquery.js"></script>
 <script src="rotatableSortable.js"></script>
+<script src="greenifiy.js"></script>
 <script type="text/javascript">
     $("#list-0-rotation").rotatableSortable({
         delegates: 'li', rotation: 0, sortEnd: function () {
             console.log("HE")
         }
     });
+    /*
+     $("#list-90-rotation").rotatableSortable({
+
+     delegates: 'li', rotation: 90, sortEnd: function () {
+     console.log("HE")
+     }
+     });
+     $("#list-180-rotation").rotatableSortable({
+     delegates: 'li', rotation: 180, sortEnd: function () {
+     console.log("HE")
+     }
+     });
+     $("#list-270-rotation").rotatableSortable({
+     delegates: 'li', rotation: 270, sortEnd: function () {
+     console.log("HE")
+     }
+     });
+     */
+
+    $("#list-0-rotation li").greenify({backgroundColor: "orange"});
+    $("#list-90-rotation li").greenify({backgroundColor: "lightgreen"});
+    $("#list-180-rotation li").greenify({backgroundColor: "red"});
+    $("#list-270-rotation li").greenify({backgroundColor: "yellow"});
 
 </script>
 </body>

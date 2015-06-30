@@ -61,15 +61,18 @@ App.MainController = (function () {
             function isTouchDevice() {
                 return 'ontouchstart' in window // works on most browsers
                     || 'onmsgesturechange' in window; // works on ie10
-            };
+            }
             $(document).on("ready", function () {
-                var storedPlaylist = JSON.parse(localStorage[STORAGE_IDENTIFIER]);
+                if (localStorage.getItem(STORAGE_IDENTIFIER) != null) {
+                    var storedPlaylist = JSON.parse(localStorage[STORAGE_IDENTIFIER]);
 
-                if (storedPlaylist.length != 0) {
-                    playlistView._addPlaylist(storedPlaylist);
-                    playlistOptions._setIsPlaylistExisting(true);
-                    playlistView._playStoredTrack();
+                    if (storedPlaylist.length != 0) {
+                        playlistView._addPlaylist(storedPlaylist);
+                        playlistOptions._setIsPlaylistExisting(true);
+                        playlistView._playStoredTrack();
+                    }
                 }
+
                 else {
                     localStorage.setItem(PLAYED_TRACK_IDENTIFIER, -1);
                     localStorage[STORAGE_IDENTIFIER] = JSON.stringify([]);
