@@ -6,26 +6,48 @@ var $evButton = $("#ev-button"),
     $evHide = $(".ev-hide"),
     $taskNumber = $("#task-number"),
     $userNumber = $("#user-number"),
-    $device = $("#device");
+    $device = $("#device"),
+    evCount = 0;
+
 
 $evButton.on("click", function (e) {
     if (isTaskRunning) {
-        $(this).html("Start");
         isTaskRunning = false;
-        $evHide.show();
-        removeEventListener();
+
     }
     else {
-        $(this).html("Stop");
         isTaskRunning = true;
+    }
+    if (isTaskRunning) {
+        $(this).html("Stop").css({left: 0, position: "absolute"});
         $evHide.hide();
-        setEventListener();
+    }
+    else {
+
+        $(this).html("Start").css({left: "none", position: "relative"});
+        $evHide.show();
+        removeEventListener();
+        var c = "",
+            datetime = Date.now(),
+            uid = $userNumber.val(),
+            task = $taskNumber.val(),
+            device = $device.val(),
+            eventType = e.type;
+        c = "end";
+        createLog(datetime, uid, task, device, eventType, c);
+        evCount = 0;
+
     }
 });
 
-function setEventListener() {
-    var device = $device.val();
-    console.log(device)
+$device.change(function (e) {
+    if ($(this).val() != "None") {
+        removeEventListener();
+        setEventListener($(this).val());
+    }
+});
+
+function setEventListener(device) {
     if (device == "Mobile" || device == "Tabletop") {
         $(window).on("click touchstart touchend", function (e) {
             log(e);
@@ -35,7 +57,6 @@ function setEventListener() {
         $(window).on("click mousedown mouseup", function (e) {
             log(e);
         });
-
     }
 }
 
@@ -50,16 +71,25 @@ function rotatableLog(e) {
 }
 
 function log(e) {
-
+    var c = "",
+        datetime = Date.now(),
+        uid = $userNumber.val(),
+        task = $taskNumber.val(),
+        device = $device.val(),
+        eventType = e.type;
     if (isTaskRunning) {
-        var datetime = Date.now(),
-            uid = $userNumber.val(),
-            task = $taskNumber.val(),
-            device = $device.val(),
-            eventType = e.type;
 
-        console.log(datetime, uid, task, device, eventType);
+        if (evCount == 0)
+            c = "start";
+        else
+            c = evCount;
+        createLog(datetime, uid, task, device, eventType, c)
     }
 
 
+}
+
+function createLog(datetime, uid, task, device, eventType, c) {
+    evCount++;
+    console.log(datetime, uid, task, device, eventType, c);
 }

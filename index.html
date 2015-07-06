@@ -20,7 +20,11 @@
 
 <body id="body">
 <div id="ev-box">
-    <div class="row">
+    <div class="row full-width">
+        <div class="large-3 small-3 columns">
+            <label>Logging</label>
+            <button class="tiny" id="ev-button">Start</button>
+        </div>
         <div class="large-3 small-3 columns ev-hide">
             <label>Task</label>
             <select id="task-number">
@@ -46,15 +50,13 @@
         <div class="large-3 small-3 columns ev-hide">
             <label>Device</label>
             <select id="device" class="tiny">
+                <option value="None">--Choose--</option>
                 <option value="Desktop">Desktop</option>
                 <option value="Mobile">Mobile</option>
                 <option value="Tabletop">Tabletop</option>
             </select>
         </div>
-        <div class="large-3 small-3 columns">
-            <label>Logging</label>
-            <button class="tiny" id="ev-button">Start</button>
-        </div>
+
     </div>
 </div>
 <div id="rotation-trigger-box">
