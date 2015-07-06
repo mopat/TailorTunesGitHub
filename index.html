@@ -12,12 +12,51 @@
     <link rel="stylesheet" href="css/style.css"/>
     <link rel="stylesheet" href="css/jquery-ui.css">
     <link rel="stylesheet" type="text/css" href="css/sweet-alert.css">
+    <link rel="stylesheet" href="evaluation/evaluation-style.css">
     <script src="js/vendor/modernizr.js"></script>
     <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.3.3.min.js"></script>
     <script src="libs/sweetalert.min.js"></script>
 </head>
 
 <body id="body">
+<div id="ev-box">
+    <div class="row">
+        <div class="large-3 small-3 columns ev-hide">
+            <label>Task</label>
+            <select id="task-number">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+        </div>
+        <div class="large-3 small-3 columns ev-hide">
+            <label>User</label>
+            <select id="user-number">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+            </select>
+        </div>
+        <div class="large-3 small-3 columns ev-hide">
+            <label>Device</label>
+            <select id="device" class="tiny">
+                <option value="Desktop">Desktop</option>
+                <option value="Mobile">Mobile</option>
+                <option value="Tabletop">Tabletop</option>
+            </select>
+        </div>
+        <div class="large-3 small-3 columns">
+            <label>Logging</label>
+            <button class="tiny" id="ev-button">Start</button>
+        </div>
+    </div>
+</div>
 <div id="rotation-trigger-box">
     <div id="rotate-info-box">
         <img alt="tapr-rotate-trigger" src="ui-images/taprotate-ring-tap.png">
@@ -320,6 +359,9 @@
 <script type="text/javascript" src="src/Config/CONFIG.js"></script>
 <script type="text/javascript" src="src/SearchObject.js"></script>
 <script type="text/javascript" src="src/UserPlaylistObject.js"></script>
+
+
+<script type="text/javascript" src="evaluation/log.js"></script>
 
 <script type="text/html" id="user-playlist-tpl">
     <div class=" user-playlist-container">
