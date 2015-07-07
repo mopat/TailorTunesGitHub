@@ -11,7 +11,9 @@ var $evButton = $("#ev-button"),
     groupIndicator = null,
     filename = null,
     data = "",
-    HEADER = "datetime;userid;task;group;device;eventtype;eventind\n";
+    HEADER = "datetime;userid;task;group;device;eventtype;eventind;tdiff;tcomplete\n",
+    lastDatetime = null,
+    tStart = null;
 
 
 $evButton.on("click", function (e) {
@@ -20,6 +22,8 @@ $evButton.on("click", function (e) {
     }
     else {
         isTaskRunning = true;
+        lastDatetime = Date.now();
+        tStart = Date.now();
     }
     if (isTaskRunning) {
         $(this).html("Stop").css({left: 0, position: "absolute"});
@@ -48,6 +52,8 @@ $evButton.on("click", function (e) {
                 data = "";
                 evCount = 0;
                 c = "";
+                lastDatetime = null;
+                tStart = null;
             }, //callback when ajax request finishes
             dataType: "text" //text/json...
         });
@@ -119,7 +125,12 @@ function log(e) {
 
 function createLog(datetime, uid, task, groupIndicator, device, eventType, c) {
     evCount++;
-    data += datetime + ";" + uid + ";" + task + ";" + groupIndicator + ";" + device + ";" + eventType + ";" + c + "\n";
+    var tDiff = datetime - lastDatetime;
+    var tComplete = datetime - tStart;
+    data += datetime + ";" + uid + ";" + task + ";" + groupIndicator + ";" + device + ";" + eventType + ";" + c + ";" + tDiff + ";" + tComplete + "\n";
+    console.log(data)
+    lastDatetime = datetime;
+
     //console.log(data);
 
 }
