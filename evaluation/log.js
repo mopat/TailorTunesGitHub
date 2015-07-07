@@ -9,7 +9,9 @@ var $evButton = $("#ev-button"),
     $device = $("#device"),
     evCount = 0,
     groupIndicator = null,
-    filename = null;
+    filename = null,
+    data = "",
+    HEADER = "datetime;userid;task;group;device;eventtype;eventind\n";
 
 
 $evButton.on("click", function (e) {
@@ -35,10 +37,25 @@ $evButton.on("click", function (e) {
             device = $device.val(),
             eventType = e.type;
         c = "end";
+
         createLog(datetime, uid, task, groupIndicator, device, eventType, c);
-        evCount = 0;
+        $.ajax({
+            type: 'POST',
+            url: 'http://localhost:63342/TailorTunesGithub/evaluation/receiver.php',//url of receiver file on server
+            data: {data: data, directory: device, userId: uid, filename: filename, header: HEADER}, //your data
+            success: function (datas) {
+                alert("SUCCESS");
+                data = "";
+                evCount = 0;
+                c = "";
+            }, //callback when ajax request finishes
+            dataType: "text" //text/json...
+        });
+
+
     }
 });
+
 
 $device.change(function (e) {
     if ($(this).val() != "None") {
@@ -87,7 +104,7 @@ function log(e) {
         task = $taskNumber.val(),
         device = $device.val(),
         eventType = e.type;
-    filename = "p" + uid + "_d" + device;
+    filename = "p" + uid + "_" + device;
     if (isTaskRunning) {
 
         if (evCount == 0)
@@ -102,5 +119,7 @@ function log(e) {
 
 function createLog(datetime, uid, task, groupIndicator, device, eventType, c) {
     evCount++;
-    console.log(datetime, uid, task, groupIndicator, device, eventType, c);
+    data += datetime + ";" + uid + ";" + task + ";" + groupIndicator + ";" + device + ";" + eventType + ";" + c + "\n";
+    //console.log(data);
+
 }
