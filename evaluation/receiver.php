@@ -5,9 +5,8 @@
  * Date: 07.07.2015
  * Time: 09:52
  */
-
 $data = $_POST['data'];
-$filename = $_POST['filename'] . ".txt";
+$filename = $_POST['filename'] . ".csv";
 $directory = $_POST['directory'];
 $header = $_POST['header'];
 
@@ -15,11 +14,14 @@ $header = $_POST['header'];
 // Wir öffnen $filename im "Anhänge" - Modus.
 // Der Dateizeiger befindet sich am Ende der Datei, und
 // dort wird $somecontent später mit fwrite() geschrieben.
-if (file_exists(dirname(__FILE__) . "/$directory/$filename") == false) {
-    $myfile = fopen(dirname(__FILE__) . "/$directory/$filename", "w");
+if (file_exists(dirname(__FILE__) . "/log/$filename")) {
+    $myfile = fopen(dirname(__FILE__) . "/log/$filename", "a+");
+    fwrite($myfile, $data);
+} else {
+    $myfile = fopen(dirname(__FILE__) . "/log/$filename", "w");
     fwrite($myfile, $header);
+    fwrite($myfile, $data);
 }
-$myfile = fopen(dirname(__FILE__) . "/$directory/$filename", "a+");
-fwrite($myfile, $data);
 
 fclose($myfile);
+?>
