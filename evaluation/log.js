@@ -103,19 +103,19 @@ function setGroupIndicator(device) {
 }
 function setEventListener(device) {
     if (device == "Mobile" || device == "Tabletop") {
-        $(window).on("click touchstart touchend", function (e) {
+        $(window).on("click touchstart touchend keydown", function (e) {
             log(e);
         });
     }
     else if (device == "Desktop") {
-        $(window).on("click mousedown mouseup", function (e) {
+        $(window).on("click mousedown mouseup keydown", function (e) {
             log(e);
         });
     }
 }
 
 function removeEventListener() {
-    $(window).on("click touchstart touchend mousedown mouseup", function (e) {
+    $(window).on("click touchstart touchend mousedown mouseup keydown", function (e) {
         return true;
     });
 }
@@ -153,7 +153,7 @@ function createLog(datetime, uid, task, groupIndicator, device, eventType, c) {
     var tDiff = datetime - lastDatetime;
     var tComplete = datetime - tStart;
     data += datetime + ";" + uid + ";" + task + ";" + groupIndicator + ";" + device + ";" + eventType + ";" + c + ";" + tDiff + ";" + tComplete + "\n";
-    console.log(data)
+    console.log(data);
     lastDatetime = datetime;
 
     //console.log(data);
