@@ -6,16 +6,31 @@ var $evButton = $("#ev-button"),
     $evHide = $(".ev-hide"),
     $taskNumber = $("#task-number"),
     $userNumber = $("#user-number"),
-    $device = $("#device"),
+    $taskSuccess = $("#task-success");
+$taskFail = $("#task-fail");
+$device = $("#device"),
     evCount = 0,
     groupIndicator = null,
     filename = null,
     data = "",
     HEADER = "datetime;userid;task;group;device;eventtype;eventind;tdiff;tcomplete\n",
     lastDatetime = null,
-    tStart = null;
+    tStart = null,
+    isTaskSucceeded = null;
 
+$taskSuccess.on("click", function () {
+    handleTaskSuccessOrFail(true);
+});
+$taskFail.on("click", function () {
+    handleTaskSuccessOrFail(false);
+});
 
+function handleTaskSuccessOrFail(isSucceeded) {
+    isTaskSucceeded = false;
+    $taskSuccess.hide();
+    $taskFail.hide();
+    $evButton.show();
+};
 $evButton.on("click", function (e) {
     if (isTaskRunning) {
         isTaskRunning = false;
@@ -24,6 +39,9 @@ $evButton.on("click", function (e) {
         isTaskRunning = true;
         lastDatetime = Date.now();
         tStart = Date.now();
+        $taskSuccess.show();
+        $taskFail.show();
+        $(this).hide();
     }
     if (isTaskRunning) {
         $(this).html("Stop").css({left: 0, position: "absolute"});
@@ -54,6 +72,9 @@ $evButton.on("click", function (e) {
                 c = "";
                 lastDatetime = null;
                 tStart = null;
+                isTaskSucceeded = null;
+                $taskSuccess.hide();
+                $taskFail.hide();
             }, //callback when ajax request finishes
             dataType: "text" //text/json...
         });
@@ -115,6 +136,10 @@ function log(e) {
 
         if (evCount == 0)
             c = "start";
+        else if (isTaskSucceeded)
+            c = "success";
+        else if (isTaskSucceeded == false)
+            c = "fail";
         else
             c = evCount;
         createLog(datetime, uid, task, groupIndicator, device, eventType, c)

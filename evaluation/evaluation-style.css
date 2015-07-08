@@ -11,10 +11,15 @@ label {
     font-size: 0.5rem;
 }
 
-#ev-button {
+#ev-button, #task-success, #task-fail {
     height: 35px;
     font-size: 0.5rem;
     z-index: 10;
+}
+
+#task-success, #task-fail {
+    display: none;
+    position: absolute;
 }
 
 .full-width {
