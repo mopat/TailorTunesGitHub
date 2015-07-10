@@ -75,16 +75,40 @@ App.PickTrackView = (function () {
                 query = $closestItem.html();
 
             var srchObj = createSrchObj(query, "track", "similar", trackID, $("option:selected", this).attr("data-api"));
-
-            $(that).trigger("echonestTrackIDPicked", [srchObj]);
-            $echoNestTrackPicker.foundation('reveal', 'close');
+            swal({
+                title: "",
+                text: "<span style='font-size: 1rem'> Search similar tracks to <b>" + query + "</b>?</span>",
+                html: true,
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes",
+                closeOnConfirm: true,
+                animation: false
+            }, function () {
+                $(that).trigger("echonestTrackIDPicked", [srchObj]);
+                $echoNestTrackPicker.foundation('reveal', 'close');
+            });
         },
 
         pickSoundcloudTrack = function (e) {
             var listId = $(e.target).closest(".modal-soundcloud-list-item").attr("list-id"),
-                track = [foundTracks[listId]];
+                track = [foundTracks[listId]],
+                title = $(e.target).closest(".modal-soundcloud-list-item").html();
 
-            $(that).trigger("soundcloudTrackPicked", [track]);
+            swal({
+                title: "",
+                text: "<span style='font-size: 1rem'> Add <b>" + title + "</b> to playlist?</span>",
+                html: true,
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes",
+                closeOnConfirm: true,
+                animation: false
+            }, function () {
+
+                $(that).trigger("soundcloudTrackPicked", [track]);
+            });
+
             $soundcloudTrackPicker.foundation('reveal', 'close');
         };
 
