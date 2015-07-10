@@ -16,6 +16,7 @@ App.UserManagementView = (function () {
         $signInButton = null,
         $signInEmail = null,
         $signInForm = null,
+        $cancelButton = null,
 
         init = function () {
             $formBox = $(".form-box");
@@ -24,6 +25,7 @@ App.UserManagementView = (function () {
             $loginPassword = $("#login-password");
             $loginButton = $("#login-button");
             $loginForm = $("#login-form-box");
+            $cancelButton = $(".cancel-button");
             $loggedInUsername = $("#loggedin-username");
             $myPlaylistsAnchor = $("#my-playlists-anchor");
             $logoutAnchor = $("#logout-anchor");
@@ -44,9 +46,9 @@ App.UserManagementView = (function () {
         initHandler = function () {
             $loginAnchor.on("click", handleLoginAnchorClick);
             $loginButton.on("click", handleLoginButtonClick);
-            $myPlaylistsAnchor.on("click", hanldeMyPlaylistsAnchorClick);
-            $logoutAnchor.on("click", hanldeLogoutAnchorClick);
-
+            $myPlaylistsAnchor.on("click", handleMyPlaylistsAnchorClick);
+            $logoutAnchor.on("click", handleLogoutAnchorClick);
+            $cancelButton.on("click", handleCancelButtonClick);
             $signInAnchor.on("click", handleSignInAnchorClick);
             $signInButton.on("click", handleSignInButtonClick);
         },
@@ -94,11 +96,16 @@ App.UserManagementView = (function () {
             });
         },
 
-        hanldeMyPlaylistsAnchorClick = function () {
+        handleCancelButtonClick = function () {
+            $loginForm.hide();
+            $signInForm.hide();
+        },
+
+        handleMyPlaylistsAnchorClick = function () {
             $(that).trigger("myPlaylistsAnchorClick");
         },
 
-        hanldeLogoutAnchorClick = function () {
+        handleLogoutAnchorClick = function () {
             $loggedInBox.hide();
             $loginAnchor.show();
             $signInAnchor.show();
