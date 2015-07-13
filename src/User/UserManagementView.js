@@ -51,6 +51,21 @@ App.UserManagementView = (function () {
             $cancelButton.on("click", handleCancelButtonClick);
             $signInAnchor.on("click", handleSignInAnchorClick);
             $signInButton.on("click", handleSignInButtonClick);
+            $loginPassword.keydown(handleLoginEnter);
+            $signInPassword.keydown(handleSignInEnter);
+            $signInEmail.keydown(handleSignInEnter);
+        },
+
+        handleLoginEnter = function (e) {
+            if (e.keyCode == 13) {
+                handleLoginButtonClick();
+            }
+        },
+
+        handleSignInEnter = function (e) {
+            if (e.keyCode == 13) {
+                handleSignInButtonClick();
+            }
         },
 
         handleLoginButtonClick = function () {
