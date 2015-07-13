@@ -23,6 +23,13 @@ $evButton.on("click", function (e) {
         $evHide.hide();
 });
 
+$(window).on("keydown", function (e) {
+    if (e.keyCode == 222 && isTaskRunning) {
+        $evHide.show();
+        isTaskRunning = false;
+    }
+});
+
 
 $device.change(function (e) {
     if ($(this).val() != "None") {
@@ -50,6 +57,27 @@ function setEventListener(device) {
     else if (device == "Desktop") {
         $(window).on("click mousedown mouseup keydown", function (e) {
             log(e);
+        });
+    }
+    if (device == "Mobile") {
+        var el = document.getElementById("body"),
+            hammertime = new Hammer(el);
+
+        hammertime.get("rotate").set({enable: true});
+        hammertime.get("pinch").set({enable: true});
+        hammertime.on("rotate pinch", function (e) {
+            e.preventDefault();
+        });
+
+        hammertime.on("rotateend", function (e) {
+            if ($device.val() == "Mobile") {
+                var rotationValue = e.rotation;
+                if (rotationValue < 0)
+                    rotationValue *= -1;
+                if (rotationValue >= 80) {
+                    $evHide.show();
+                }
+            }
         });
     }
 }
@@ -82,6 +110,7 @@ function log(e) {
     }
 }
 
+
 function createLog(datetime, uid, task, groupIndicator, device, eventType, c) {
     evCount++;
     var tDiff = datetime - lastDatetime;
@@ -89,7 +118,7 @@ function createLog(datetime, uid, task, groupIndicator, device, eventType, c) {
     data = datetime + ";" + uid + ";" + task + ";" + groupIndicator + ";" + device + ";" + eventType + ";" + c + ";" + tDiff + ";" + tComplete + "\n";
     console.log(data);
     lastDatetime = datetime;
-
+//http://132.199.139.24/~mop28809/evaluation/receiver.php
     $.ajax({
         type: 'POST',
         url: 'http://localhost:63342/TailorTunesGithub/evaluation/receiver.php',//url of receiver file on server
@@ -104,9 +133,4 @@ function createLog(datetime, uid, task, groupIndicator, device, eventType, c) {
         }, //callback when ajax request finishes
         dataType: "text" //text/json...
     });
-}
-
-function showEvHide() {
-    $evHide.show();
-    alert("SHOOW")
 }

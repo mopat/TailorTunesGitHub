@@ -41,6 +41,7 @@ $taskFail.on("click", function (e) {
 });
 
 function stopLog(data, device, uid) {
+    //http://132.199.139.24/~mop28809/evaluation/receiver.php
     $.ajax({
         type: 'POST',
         url: 'http://localhost:63342/TailorTunesGithub/evaluation/receiver.php',//url of receiver file on server
