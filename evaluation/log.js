@@ -27,6 +27,11 @@ $(window).on("keydown", function (e) {
     if (e.keyCode == 222 && isTaskRunning) {
         $evHide.show();
         isTaskRunning = false;
+        evCount = 0;
+        c = "";
+        lastDatetime = null;
+        tStart = null;
+        isTaskSucceeded = null;
     }
 });
 
@@ -76,6 +81,11 @@ function setEventListener(device) {
                     rotationValue *= -1;
                 if (rotationValue >= 80) {
                     $evHide.show();
+                    evCount = 0;
+                    c = "";
+                    lastDatetime = null;
+                    tStart = null;
+                    isTaskSucceeded = null;
                 }
             }
         });
@@ -101,9 +111,10 @@ function log(e) {
         eventType = e.type;
     filename = "p" + uid + "_" + device;
     if (isTaskRunning) {
-
         if (evCount == 0)
             c = "start";
+        else if (isTaskRunning == false)
+            c = "delete"
         else
             c = evCount;
         createLog(datetime, uid, task, groupIndicator, device, eventType, c)
@@ -125,11 +136,6 @@ function createLog(datetime, uid, task, groupIndicator, device, eventType, c) {
         data: {data: data, directory: device, userId: uid, filename: filename, header: HEADER}, //your data
         success: function (datas) {
             data = "";
-            evCount = 0;
-            c = "";
-            lastDatetime = null;
-            tStart = null;
-            isTaskSucceeded = null;
         }, //callback when ajax request finishes
         dataType: "text" //text/json...
     });
