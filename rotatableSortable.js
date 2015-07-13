@@ -40,8 +40,13 @@
             $delegates = $list.find(settings.delegates);
             $content = $(settings.contentId);
 
-            setRotationSpaces();
-            addSortable();
+            if ($delegates.length > 1) {
+                setRotationSpaces();
+                addSortable();
+            }
+            else {
+                alert("Sorting not possible with list length < 1");
+            }
 
 
             function addSortable() {
