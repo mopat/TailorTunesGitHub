@@ -98,6 +98,9 @@ App.MainController = (function () {
                                 animation: false
                             });
                             setTabletopMode(true);
+                            $("body").on("contextmenu", function (e) {
+                                e.preventDefault();
+                            });
                             userPlaylistView._setupSwipeControl();
                             playlistView._setupSwipeControl();
                             rotationHandler._setTabletopMode();
