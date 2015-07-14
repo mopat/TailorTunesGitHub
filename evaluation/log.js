@@ -86,6 +86,7 @@ function setEventListener(device) {
                     lastDatetime = null;
                     tStart = null;
                     isTaskSucceeded = null;
+                    isTaskRunning = false;
                 }
             }
         });
@@ -113,8 +114,6 @@ function log(e) {
     if (isTaskRunning) {
         if (evCount == 0)
             c = "start";
-        else if (isTaskRunning == false)
-            c = "delete"
         else
             c = evCount;
         createLog(datetime, uid, task, groupIndicator, device, eventType, c)
@@ -135,7 +134,7 @@ function createLog(datetime, uid, task, groupIndicator, device, eventType, c) {
         url: 'http://localhost:63342/TailorTunesGithub/evaluation/receiver.php',//url of receiver file on server
         data: {data: data, directory: device, userId: uid, filename: filename, header: HEADER}, //your data
         success: function (datas) {
-            data = "";
+
         }, //callback when ajax request finishes
         dataType: "text" //text/json...
     });

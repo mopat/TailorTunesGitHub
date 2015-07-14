@@ -10,7 +10,19 @@ var isTaskRunning = false,
     $device = $("#device"),
     filename = null,
     groupIndicator = null;
+$reset = $("#reset");
 
+$reset.on("click", function (e) {
+    $.ajax({
+        type: 'POST',
+        url: 'http://localhost:63342/TailorTunesGithub/evaluation/receiver.php',//url of receiver file on server
+        data: {isRunning: true}, //your data
+        success: function (datas) {
+            alert("Success")
+        }, //callback when ajax request finishes
+        dataType: "text" //text/json...
+    });
+});
 
 $taskSuccess.on("click", function (e) {
 
@@ -24,6 +36,7 @@ $taskSuccess.on("click", function (e) {
     filename = "p" + uid + "_" + device;
     var data = datetime + ";" + uid + ";" + task + ";" + groupIndicator + ";" + device + ";" + eventType + ";" + c + "\n";
     stopLog(data, device, uid);
+    isTaskRunning = false;
 });
 
 $taskFail.on("click", function (e) {
@@ -37,6 +50,7 @@ $taskFail.on("click", function (e) {
     filename = "p" + uid + "_" + device;
     var data = datetime + ";" + uid + ";" + task + ";" + groupIndicator + ";" + device + ";" + eventType + ";" + c + "\n";
     stopLog(data, device, uid);
+    isTaskRunning = false;
 });
 
 function stopLog(data, device, uid) {
@@ -44,7 +58,7 @@ function stopLog(data, device, uid) {
     $.ajax({
         type: 'POST',
         url: 'http://localhost:63342/TailorTunesGithub/evaluation/receiver.php',//url of receiver file on server
-        data: {data: data, directory: device, userId: uid, filename: filename}, //your data
+        data: {data: data, directory: device, userId: uid, filename: filename, isRunning: false}, //your data
         success: function (datas) {
             alert("Success")
         }, //callback when ajax request finishes
