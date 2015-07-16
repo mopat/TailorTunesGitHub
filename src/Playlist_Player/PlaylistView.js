@@ -69,6 +69,11 @@ App.PlaylistView = (function () {
                         removeListItem(event);
                     else if (getUserSide() == "right" && direction == "down")
                         removeListItem(event);
+                    var e = {};
+                    e.type = "swipe" + direction;
+                    e.target = {};
+                    e.target.tagName = "LI";
+                    log(e);
                 },
                 allowPageScroll: "vertical",
                 threshold: 10,
@@ -80,6 +85,11 @@ App.PlaylistView = (function () {
      scroll the defined directions depending on the user's side when tabletop mode is enabled
      */
         setupSwipeToScroll = function (event, direction, distance) {
+            var e = {};
+            e.type = "scroll";
+            e.target = {};
+            e.target.tagName = "UL";
+            log(e);
             if (getUserSide() == "left" && direction == "left") {
                 scrollMinus(distance);
             }
@@ -397,6 +407,7 @@ App.PlaylistView = (function () {
                     rotate();
                 }, 5);
             }
+
             return this;
         },
         _isPlaylistExisting = function () {

@@ -9,19 +9,41 @@ var isTaskRunning = false,
     $taskFail = $("#task-fail"),
     $device = $("#device"),
     filename = null,
-    groupIndicator = null;
-$reset = $("#reset");
+    groupIndicator = null,
+    HEADER = "datetime;userid;task;group;device;eventtype;eventind;tdiff;tcomplete\n",
+
+    $reset = $("#reset"),
+    isLogEnabled = false,
+    $logEnabled = $("#log-enabled");
+
+$.ajax({
+    type: 'POST',
+    url: 'http://localhost:63342/TailorTunesGithub/evaluation/receiver.php',//url of receiver file on server
+    data: "", //your data
+    success: function (datas) {
+        isLogEnabled = datas.toString();
+        $logEnabled.html("Log enabled: " + isLogEnabled);
+    }, //callback when ajax request finishes
+    dataType: "text" //text/json...
+});
 
 $reset.on("click", function (e) {
+    var datetime = Date.now(),
+        uid = $userNumber.val(),
+        task = $taskNumber.val(),
+        device = $device.val(),
+        eventType = e.type;
+    var data = datetime + ";" + uid + ";" + task + ";" + groupIndicator + ";" + device + ";" + eventType + ";" + c + "\n";
+    setGroupIndicator(device);
     $.ajax({
         type: 'POST',
         url: 'http://localhost:63342/TailorTunesGithub/evaluation/receiver.php',//url of receiver file on server
         data: {isRunning: true}, //your data
         success: function (datas) {
-            $("#task-number > option:selected")
-                .attr("selected", false)
-                .next()
-                .attr("selected", true);
+            isLogEnabled = datas.toString();
+
+            alert("Success");
+            $logEnabled.html("Log enabled: " + isLogEnabled);
         }, //callback when ajax request finishes
         dataType: "text" //text/json...
     });
@@ -60,18 +82,21 @@ function stopLog(data, device, uid) {
     //http://132.199.139.24/~mop28809/evaluation/receiver.php
     $.ajax({
         type: 'POST',
-        url: 'http://localhost:63342/TailorTunesGithub/evaluation/receiver.php',//url of receiver file on server
+        url: 'http://132.199.139.24/~mop28809/evaluation/receiver.php',//url of receiver file on server
         data: {data: data, directory: device, userId: uid, filename: filename, isRunning: false}, //your data
         success: function (datas) {
+            isLogEnabled = datas.toString();
             alert("task-stopped");
             $("#task-number > option:selected")
                 .attr("selected", false)
                 .next()
                 .attr("selected", true);
+            $logEnabled.html("Log enabled: " + isLogEnabled);
         }, //callback when ajax request finishes
         dataType: "text" //text/json...
     });
 }
+
 
 function setGroupIndicator(device) {
     if (device == "Desktop")

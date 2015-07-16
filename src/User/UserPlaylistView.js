@@ -80,6 +80,11 @@ App.UserPlaylistView = (function () {
      scroll the defined directions depending on the user's side when tabletop mode is enabled
      */
         setupSwipeToScroll = function (container, event, direction, distance) {
+            var e = {};
+            e.type = "scroll";
+            e.target = {};
+            e.target.tagName = "UL";
+            log(e);
             if (getUserSide() == "left" && direction == "left") {
                 scrollMinus(container, distance);
             }
