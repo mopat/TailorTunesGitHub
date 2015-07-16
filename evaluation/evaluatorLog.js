@@ -18,7 +18,10 @@ $reset.on("click", function (e) {
         url: 'http://localhost:63342/TailorTunesGithub/evaluation/receiver.php',//url of receiver file on server
         data: {isRunning: true}, //your data
         success: function (datas) {
-            alert("Success")
+            $("#task-number > option:selected")
+                .attr("selected", false)
+                .next()
+                .attr("selected", true);
         }, //callback when ajax request finishes
         dataType: "text" //text/json...
     });
@@ -60,7 +63,11 @@ function stopLog(data, device, uid) {
         url: 'http://localhost:63342/TailorTunesGithub/evaluation/receiver.php',//url of receiver file on server
         data: {data: data, directory: device, userId: uid, filename: filename, isRunning: false}, //your data
         success: function (datas) {
-            alert("Success")
+            alert("task-stopped");
+            $("#task-number > option:selected")
+                .attr("selected", false)
+                .next()
+                .attr("selected", true);
         }, //callback when ajax request finishes
         dataType: "text" //text/json...
     });
