@@ -25,7 +25,7 @@ if ($isRunning == null) {
     $dataComplete = $data . "\n";
 }
 
-if (($logEnabled == true && $data != "")) {
+if (($logEnabled == "true" && $data != "")) {
     // Wir öffnen $filename im "Anhänge" - Modus.
 // Der Dateizeiger befindet sich am Ende der Datei, und
 // dort wird $somecontent später mit fwrite() geschrieben.
