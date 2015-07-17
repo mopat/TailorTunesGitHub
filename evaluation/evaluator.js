@@ -115,6 +115,8 @@ $abort.on("click", function (e) {
 function createLog(datetime, uid, task, groupIndicator, device, eventType, c, isRunning, targetId, targetClass, targetTagName) {
     var userData = isRunning + ";" + uid + ";" + task;
     var data = datetime + ";" + groupIndicator + ";" + device + ";" + eventType + ";" + targetId + ";" + targetClass + ";" + targetTagName + ";" + uid + ";" + task + ";" + c;
+    if (c == "start")
+        data += ";0;0";
 //http://132.199.139.24/~mop28809/evaluation/receiver.php
     $.ajax({
         type: 'POST',
