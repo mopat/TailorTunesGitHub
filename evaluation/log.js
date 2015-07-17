@@ -5,6 +5,12 @@
 var device = window.location.hash.substring(1),
     FILENAME = "log.csv";
 
+if (device == "")
+    alert("empty anchor device");
+else {
+
+}
+
 setEventListener(device);
 
 function setEventListener(device) {
@@ -31,15 +37,19 @@ function rotatableLog(e) {
 function log(e) {
     var datetime = Date.now(),
         eventType = e.type,
-        target = e.target.tagName,
+        targetTagName = e.target.tagName,
+        targetId = $(e.target).attr("id"),
+        targetClass = $(e.target).attr("class"),
         groupIndicator = getGroup(device);
+    if (device != "") {
+        createLog(datetime, groupIndicator, device, eventType, targetId, targetClass, targetTagName);
+    }
 
-    createLog(datetime, groupIndicator, device, eventType, target)
 }
 
 
-function createLog(datetime, groupIndicator, device, eventType, target) {
-    var data = datetime + ";" + groupIndicator + ";" + device + ";" + eventType + ";" + target;
+function createLog(datetime, groupIndicator, device, eventType, targetId, targetClass, targetTagName) {
+    var data = datetime + ";" + groupIndicator + ";" + device + ";" + eventType + ";" + targetId + ";" + targetClass + ";" + targetTagName;
 
 //http://132.199.139.24/~mop28809/evaluation/receiver.php
     $.ajax({

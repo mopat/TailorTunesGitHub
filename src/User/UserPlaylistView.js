@@ -82,7 +82,9 @@ App.UserPlaylistView = (function () {
         setupSwipeToScroll = function (container, event, direction, distance) {
             var e = {};
             e.type = "scroll";
-            e.target = {};
+            e.target = {
+                class: "user-playlist"
+            };
             e.target.tagName = "UL";
             log(e);
             if (getUserSide() == "left" && direction == "left") {

@@ -99,7 +99,7 @@ App.MainController = (function () {
                             });
                             setTabletopMode(true);
                             $("body").on("contextmenu", function (e) {
-                                e.preventDefault();
+                                //e.preventDefault();
                             });
                             userPlaylistView._setupSwipeControl();
                             playlistView._setupSwipeControl();

@@ -71,7 +71,9 @@ App.PlaylistView = (function () {
                         removeListItem(event);
                     var e = {};
                     e.type = "swipe" + direction;
-                    e.target = {};
+                    e.target = {
+                        class: "playlist-item"
+                    };
                     e.target.tagName = "LI";
                     log(e);
                 },
@@ -87,7 +89,9 @@ App.PlaylistView = (function () {
         setupSwipeToScroll = function (event, direction, distance) {
             var e = {};
             e.type = "scroll";
-            e.target = {};
+            e.target = {
+                id: "playlist"
+            };
             e.target.tagName = "UL";
             log(e);
             if (getUserSide() == "left" && direction == "left") {

@@ -10,9 +10,11 @@ var isTaskRunning = false,
     $device = $("#device"),
     FILENAME = "log.csv",
     isLogEnabled = false,
-    HEADER = "datetime;group;device;eventtype;target;userid;task;eventind;tdiff;tcomplete\n",
+    HEADER = "datetime;group;device;eventtype;target_id;target_class;target_tag_name;userid;task;eventind;tdiff;tcomplete\n",
     $startLogging = $("#start-logging"),
-    $logEnabled = $("#log-enabled");
+    $logEnabled = $("#log-enabled"),
+    $error = $("#error"),
+    $abort = $("#abort");
 
 setLogEnabledView();
 
@@ -30,6 +32,7 @@ function setLogEnabledView() {
 }
 
 $startLogging.on("click", function (e) {
+
     var datetime = Date.now(),
         uid = $userNumber.val(),
         task = $taskNumber.val(),
@@ -37,9 +40,14 @@ $startLogging.on("click", function (e) {
         eventType = e.type,
         groupIndicator = getGroup(device),
         isRunning = true,
-        target = e.target.tagName,
+        targetTagName = e.target.tagName,
+        targetId = $(e.target).attr("id"),
+        targetClass = $(e.target).attr("class"),
         c = "start";
-    createLog(datetime, uid, task, groupIndicator, device, eventType, c, isRunning, target);
+    if (device != "None")
+        createLog(datetime, uid, task, groupIndicator, device, eventType, c, isRunning, targetId, targetClass, targetTagName);
+    else
+        alert("choose device");
 });
 
 $taskSuccess.on("click", function (e) {
@@ -48,11 +56,14 @@ $taskSuccess.on("click", function (e) {
         task = $taskNumber.val(),
         device = $device.val(),
         eventType = e.type,
-        target = e.target,
+        targetTagName = e.target.tagName,
+        targetId = $(e.target).attr("id"),
+        targetClass = $(e.target).attr("class"),
         groupIndicator = getGroup(device),
         isRunning = false,
         c = "success";
-    createLog(datetime, uid, task, groupIndicator, device, eventType, c, isRunning, target);
+    $('#task-number option:selected').next().attr('selected', 'selected');
+    createLog(datetime, uid, task, groupIndicator, device, eventType, c, isRunning, targetId, targetClass, targetTagName);
 });
 
 $taskFail.on("click", function (e) {
@@ -61,22 +72,56 @@ $taskFail.on("click", function (e) {
         task = $taskNumber.val(),
         device = $device.val(),
         eventType = e.type,
-        target = e.target.tagName,
+        targetTagName = e.target.tagName,
+        targetId = $(e.target).attr("id"),
+        targetClass = $(e.target).attr("class"),
         groupIndicator = getGroup(device),
         isRunning = false,
         c = "fail";
-    createLog(datetime, uid, task, groupIndicator, device, eventType, c, isRunning, target);
+    $('#task-number option:selected').next().attr('selected', 'selected');
+    createLog(datetime, uid, task, groupIndicator, device, eventType, c, isRunning, targetId, targetClass, targetTagName);
 });
 
-function createLog(datetime, uid, task, groupIndicator, device, eventType, c, isRunning, target) {
+$error.on("click", function (e) {
+    var datetime = Date.now(),
+        uid = $userNumber.val(),
+        task = $taskNumber.val(),
+        device = $device.val(),
+        eventType = e.type,
+        targetTagName = e.target.tagName,
+        targetId = $(e.target).attr("id"),
+        targetClass = $(e.target).attr("class"),
+        groupIndicator = getGroup(device),
+        isRunning = true,
+        c = "error";
+    createLog(datetime, uid, task, groupIndicator, device, eventType, c, isRunning, targetId, targetClass, targetTagName);
+});
+
+$abort.on("click", function (e) {
+    var datetime = Date.now(),
+        uid = $userNumber.val(),
+        task = $taskNumber.val(),
+        device = $device.val(),
+        eventType = e.type,
+        targetTagName = e.target.tagName,
+        targetId = $(e.target).attr("id"),
+        targetClass = $(e.target).attr("class"),
+        groupIndicator = getGroup(device),
+        isRunning = false,
+        c = "abort";
+    createLog(datetime, uid, task, groupIndicator, device, eventType, c, isRunning, targetId, targetClass, targetTagName);
+});
+
+function createLog(datetime, uid, task, groupIndicator, device, eventType, c, isRunning, targetId, targetClass, targetTagName) {
     var userData = isRunning + ";" + uid + ";" + task;
-    var data = datetime + ";" + groupIndicator + ";" + device + ";" + eventType + ";" + target + ";" + uid + ";" + task + ";" + c;
+    var data = datetime + ";" + groupIndicator + ";" + device + ";" + eventType + ";" + targetId + ";" + targetClass + ";" + targetTagName + ";" + uid + ";" + task + ";" + c;
 //http://132.199.139.24/~mop28809/evaluation/receiver.php
     $.ajax({
         type: 'POST',
         url: 'http://localhost:63342/TailorTunesGithub/evaluation/receiver.php',//url of receiver file on server
         data: {data: data, userId: uid, filename: FILENAME, header: HEADER, isRunning: isRunning, userData: userData}, //your data
         success: function (datas) {
+            $logEnabled.html("log enabled: " + datas);
 
         }, //callback when ajax request finishes
         dataType: "text" //text/json...
