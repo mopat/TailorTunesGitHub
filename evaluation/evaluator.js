@@ -32,7 +32,12 @@ function setLogEnabledView() {
 }
 
 $startLogging.on("click", function (e) {
+    startLoggingClick(e);
+    startLoggingClick(e);
 
+});
+
+function startLoggingClick(e) {
     var datetime = Date.now(),
         uid = $userNumber.val(),
         task = $taskNumber.val(),
@@ -48,7 +53,7 @@ $startLogging.on("click", function (e) {
         createLog(datetime, uid, task, groupIndicator, device, eventType, c, isRunning, targetId, targetClass, targetTagName);
     else
         alert("choose device");
-});
+}
 
 $taskSuccess.on("click", function (e) {
     var datetime = Date.now(),
