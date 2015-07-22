@@ -780,10 +780,6 @@ input[type=range]:focus::-ms-fill-upper {
     background: #367ebd;
 }
 
-i.controls:hover, i#volume-minus:hover, i#volume-plus:hover {
-    color: #ffc200;
-}
-
 i.controls:active, i#volume-minus:active, i#volume-plus:active {
     color: #008cba;
 }

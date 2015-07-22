@@ -44,8 +44,9 @@
                 setRotationSpaces();
                 addSortable();
             }
-            else
-                alert("Sorting not possible with list length of 1");
+            else {
+                alert("Sorting not possible with list length < 1");
+            }
 
 
             function addSortable() {
@@ -85,7 +86,7 @@
                             if ($ghost != null || $ghost != undefined)
                                 $ghost.remove();
                             $list.stop();
-                            $drag.off("touchmove mousemove touchend mouseend");
+                            $drag.off("touchmove mousemove touchend mouseup");
                             $delegates.off("touchend");
                             scrollInterval = null;
                             return false;
@@ -110,7 +111,6 @@
                         $ghost = $drag.clone();
                         $ghost.css("z-index", "-1");
                         $ghost.toggleClass("ghost", "drag");
-                        console.log($ghost)
                         ghostInterval = setInterval(function () {
                             cloneDrag();
                         }, 50);
@@ -131,7 +131,7 @@
                         clearInterval(scrollInterval);
                         if ($ghost != null || $ghost != undefined)
                             $ghost.remove();
-                        $drag.off("touchmove mousemove touchend mouseend");
+                        $drag.off("touchmove mousemove touchend mouseup");
                         $delegates.off("mouseup");
                         scrollInterval = null;
                         return false;
@@ -237,6 +237,7 @@
             function onMouseUp() {
                 $(document).on("mouseup", function (e) {
                     e.preventDefault();
+                    $drag.css("color", "#f5f5f5");
                     $ghost.replaceWith($drag);
                     sortComplete();
                     scrollInterval = null;
@@ -245,6 +246,7 @@
 
             function onTouchEnd() {
                 $(document).on("touchend", function (e) {
+                    $drag.css("color", "#f5f5f5");
                     $ghost.replaceWith($drag);
                     sortComplete();
                     scrollInterval = null;
@@ -286,7 +288,10 @@
             }
 
             function removeEvents() {
-                $(document).off("touchstart").off("touchmove").off("touchend").off("touchstart").off("mousedown").off("mousemove").off("mouseup");
+                /*$(document).on("touchstart touchmove touchend mousedown mousemove mouseup", function(){
+                 return true;
+                 });*/
+                $(document).off("touchstart").off("touchmove").off("touchend").off("mousedown").off("mousemove").off("mouseup");
                 $(document).css("user-select", "auto").attr('unselectable', 'off').on('selectstart', true);
             }
 
