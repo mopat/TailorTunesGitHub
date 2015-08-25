@@ -127,7 +127,7 @@ App.PlaylistView = (function () {
 
             swal({
                 title: "Delete track?",
-                text: "Deleted tracks can not be restored!",
+                text: "Deleted tracks cannot be restored!",
                 showCancelButton: true,
                 confirmButtonColor: "#DD6B55",
                 confirmButtonText: "Yes",
