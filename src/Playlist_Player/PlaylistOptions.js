@@ -104,7 +104,18 @@ App.PlaylistOptions = (function () {
         },
 
         clearPlaylist = function () {
-            $(that).trigger("playlistCleared");
+            swal({
+                title: "Delete current playlist?",
+                text: "A deleted playlist can not be restored!",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Delete!",
+                closeOnConfirm: true,
+                animation: false
+            }, function () {
+                $(that).trigger("playlistCleared");
+            });
 
             return this;
         },

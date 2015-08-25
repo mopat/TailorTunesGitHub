@@ -290,7 +290,6 @@ App.UserPlaylistView = (function () {
                 animation: false
             }, function () {
                 $(that).trigger("deleteUserPlaylist", [playlistId]);
-
             });
         },
 
