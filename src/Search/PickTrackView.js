@@ -5,6 +5,7 @@ App.PickTrackView = (function () {
         $soundcloudTrackPicker = null,
         $soundcloudTrackPickerList = null,
         foundTracks = [],
+        preview = new Audio();
 
         init = function () {
             $echoNestTrackPicker = $("#echonest-trackID-picker");
@@ -76,7 +77,7 @@ App.PickTrackView = (function () {
 
             var srchObj = createSrchObj(query, "track", "similar", trackID, $("option:selected", this).attr("data-api"));
             swal({
-                title: "",
+                title: "No preview available",
                 text: "<span style='font-size: 1rem'> Search similar tracks to <b>" + query + "</b>?</span>",
                 html: true,
                 showCancelButton: true,
@@ -91,25 +92,38 @@ App.PickTrackView = (function () {
         },
 
         pickSoundcloudTrack = function (e) {
+            preview.pause();
+            preview.currentTime = 0;
             var listId = $(e.target).closest(".modal-soundcloud-list-item").attr("list-id"),
                 track = [foundTracks[listId]],
-                title = $(e.target).closest(".modal-soundcloud-list-item").html();
+                title = $(e.target).closest(".modal-soundcloud-list-item").html(),
+                streamUrl = $(e.target).attr("data-stream-url");
 
+            preview.src = streamUrl + "?client_id=" + SC_CLIENT_ID;
+            preview.play();
+            $(that).trigger("previewPlayingStart");
             swal({
                 title: "",
-                text: "<span style='font-size: 1rem'> Add <b>" + title + "</b> to playlist?</span>",
+                text: "<span style='font-size: 1rem'> Append <b>" + title + "</b> to playlist?</span>",
                 html: true,
                 showCancelButton: true,
                 confirmButtonColor: "#DD6B55",
                 confirmButtonText: "Yes",
                 closeOnConfirm: true,
                 animation: false
-            }, function () {
-
-                $(that).trigger("soundcloudTrackPicked", [track]);
+            }, function (isConfirm) {
+                preview.pause();
+                preview.currentTime = 0;
+                if (isConfirm) {
+                    $(that).trigger("soundcloudTrackPicked", [track]);
+                    swal({
+                        title: "The picked track has been appended to your current playlist!",
+                        timer: 10000,
+                        showConfirmButton: false,
+                        animation: false
+                    });
+                }
             });
-
-            $soundcloudTrackPicker.foundation('reveal', 'close');
         };
 
     that._setEchoNestTrackIdPicker = _setEchoNestTrackIdPicker;

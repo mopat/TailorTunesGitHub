@@ -191,7 +191,6 @@ App.UserPlaylistView = (function () {
             if (preview.currentTime != 0 || preview == null) {
                 preview.pause();
                 preview.currentTime = 0;
-                $(that).trigger("previewPlayingStop");
             }
         },
 

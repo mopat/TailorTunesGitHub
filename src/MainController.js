@@ -136,6 +136,7 @@ App.MainController = (function () {
         initPickTrackViewHandler = function () {
             $(pickTrackView).on("echonestTrackIDPicked", handleTrackIdPicked);
             $(pickTrackView).on("soundcloudTrackPicked", handleSoundlcoudTrackPicked);
+            $(pickTrackView).on("previewPlayingStart", handlePreviewPlayingStart);
         },
 
         initDataHandler = function () {
@@ -157,7 +158,6 @@ App.MainController = (function () {
 
         initUserPlaylistViewHandler = function () {
             $(userPlaylistView).on("previewPlayingStart", handlePreviewPlayingStart);
-            $(userPlaylistView).on("previewPlayingStop", handlePreviewPlayingStop);
             $(userPlaylistView).on("resizeUserPlaylistHeight", handleResizeUserPlaylistHeight);
         },
 
