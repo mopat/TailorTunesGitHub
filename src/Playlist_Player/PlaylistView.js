@@ -125,13 +125,23 @@ App.PlaylistView = (function () {
         removeListItem = function (e) {
             var $itemToRemove = $(e.target).closest(".playlist-item");
 
-            $itemToRemove.fadeOut(200, function fadeOutComplete() {
-                if ($itemToRemove.hasClass("now-playing"))
-                    _playNextTrack();
+            swal({
+                title: "Delete track?",
+                text: "Deleted tracks can not be restored!",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes",
+                closeOnConfirm: true,
+                animation: false
+            }, function () {
+                $itemToRemove.fadeOut(200, function fadeOutComplete() {
+                    if ($itemToRemove.hasClass("now-playing"))
+                        _playNextTrack();
 
-                $itemToRemove.remove();
-                setPlaylistIds();
-                checkPlaylistLength();
+                    $itemToRemove.remove();
+                    setPlaylistIds();
+                    checkPlaylistLength();
+                });
             });
         },
 
