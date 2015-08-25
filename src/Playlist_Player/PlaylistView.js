@@ -296,6 +296,7 @@ App.PlaylistView = (function () {
                 contentId: "#rotatable",
                 delegates: ".playlist-item",
                 rotation: getRotation(),
+                delay: 50,
                 sortEnd: function () {
                     setPlaylistIds();
                 }

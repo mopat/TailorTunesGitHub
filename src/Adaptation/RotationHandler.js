@@ -117,7 +117,8 @@ App.RotationHandler = (function () {
                     contentId: "#rotatable",
                     listId: "#playlist",
                     delegates: ".playlist-item",
-                    rotation: getRotation()
+                    rotation: getRotation(),
+                    delay: 50
                 });
             }
         },
