@@ -89,8 +89,17 @@
             </div>
         </div>
         <div id="user-playlist-modal" class="reveal-modal" data-reveal>
+            <div class="row">
+                <div class="large-12 medium-12 small-12 columns" id="no-playlists-info-panel">
+                    <div class="panel large-centered">
+                        <h2>No Playlists stored</h2>
+                        <button id="close-playlist-modal">
+                            Close
+                        </button>
+                    </div>
+                </div>
+            </div>
             <div id="user-playlist-box">
-
             </div>
             <a class="close-reveal-modal">&#215;</a>
         </div>
@@ -334,7 +343,7 @@
 <script type="text/javascript" src="src/UserPlaylistObject.js"></script>
 
 <script type="text/html" id="user-playlist-tpl">
-    <div class=" user-playlist-container">
+    <div class="user-playlist-container">
 
         <div class="user-playlist-header">
             <div class="row">

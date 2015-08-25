@@ -4,7 +4,8 @@ App.UserPlaylistView = (function () {
         userPlaylistTpl = null,
         userPlaylistItemTpl = null,
         $userPlaylistModal = null,
-        $userPlaylisBox = null,
+        $noPlaylistsInfoPanel = null,
+        $closePlaylistModal = null,
         listItemColors = null,
         preview = new Audio(),
         $playlistContainerToDelete = null,
@@ -13,7 +14,8 @@ App.UserPlaylistView = (function () {
         init = function () {
             listItemColors = ["rgba(0,0,0,0.1)", "rgba(0,0,0,0.2)"];
             defaultTextColor = "#f5f5f5";
-            $userPlaylistBox = $("#user-playlist-box");
+            $noPlaylistsInfoPanel = $("#no-playlists-info-panel");
+            $closePlaylistModal = $("#close-playlist-modal");
 
             /*
              templates for the user playlist view
@@ -22,7 +24,7 @@ App.UserPlaylistView = (function () {
             userPlaylistItemTpl = _.template($("#user-playlist-item-tpl").html());
 
             $userPlaylistModal = $("#user-playlist-modal");
-            $userPlaylisBox = $("#user-playlist-box");
+            $userPlaylistBox = $("#user-playlist-box");
 
             initHandler();
 
@@ -32,13 +34,15 @@ App.UserPlaylistView = (function () {
         initHandler = function () {
             $userPlaylistModal.on("close", handleUserPlaylistModalClosed);
 
-            $userPlaylisBox.on("click", ".load-playlist", handleLoadPlaylist);
-            $userPlaylisBox.on("click", ".open-icon", handleOpenPlaylist);
-            $userPlaylisBox.on("click", ".trash-icon", handleDeletePlaylistClicked);
-            $userPlaylisBox.on("click", ".close-icon", handleClosePlaylist);
-            $userPlaylisBox.on("click", ".user-playlist-item-anchor", handleListItemClick);
-            $userPlaylisBox.on("click", ".user-playlist-item-delete", removeListItem);
-            $userPlaylisBox.on("click", ".stop-icon", handleStopIconClick);
+            $userPlaylistBox.on("click", ".load-playlist", handleLoadPlaylist);
+            $userPlaylistBox.on("click", ".open-icon", handleOpenPlaylist);
+            $userPlaylistBox.on("click", ".trash-icon", handleDeletePlaylistClicked);
+            $userPlaylistBox.on("click", ".close-icon", handleClosePlaylist);
+            $userPlaylistBox.on("click", ".user-playlist-item-anchor", handleListItemClick);
+            $userPlaylistBox.on("click", ".user-playlist-item-delete", removeListItem);
+            $userPlaylistBox.on("click", ".stop-icon", handleStopIconClick);
+
+            $closePlaylistModal.on("click", closeUserPlaylistModal);
         },
 
     /*
@@ -146,6 +150,7 @@ App.UserPlaylistView = (function () {
                 $("#" + userPlaylistObj.playlistId).append(playlistItem);
             }
             setPlaylistIds();
+            updatePlaylistCount();
 
             return this;
         },
@@ -215,6 +220,7 @@ App.UserPlaylistView = (function () {
                 $userPlaylist.switchClass("loading", "loaded");
                 $(this).html("LOADED");
                 $(that).trigger("userPlaylistLoaded", [loadedPlaylist]);
+                updatePlaylistCount();
             }
         },
 
@@ -284,6 +290,7 @@ App.UserPlaylistView = (function () {
                 animation: false
             }, function () {
                 $(that).trigger("deleteUserPlaylist", [playlistId]);
+
             });
         },
 
@@ -291,6 +298,7 @@ App.UserPlaylistView = (function () {
             if ($playlistContainerToDelete != null) {
                 $playlistContainerToDelete.remove();
                 $playlistContainerToDelete = null;
+                updatePlaylistCount();
             }
 
             return this;
@@ -301,6 +309,25 @@ App.UserPlaylistView = (function () {
             $(".load-playlist").html("LOAD");
 
             return this;
+        },
+
+    /*
+     handler for button to close user playlist view
+     */
+        closeUserPlaylistModal = function () {
+            $userPlaylistModal.foundation("reveal", "close");
+        },
+
+    /*
+     show no playlists info when no playlists are stored
+     */
+        updatePlaylistCount = function () {
+            var playlistCount = $(".user-playlist-container").size();
+
+            if (playlistCount == 0)
+                $noPlaylistsInfoPanel.show();
+            else
+                $noPlaylistsInfoPanel.hide();
         };
 
     that._setupSwipeControl = _setupSwipeControl;
