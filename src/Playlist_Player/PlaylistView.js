@@ -410,6 +410,7 @@ App.PlaylistView = (function () {
             }
             return this;
         },
+
         _isPlaylistExisting = function () {
             return isPlaylistExisting;
         };

@@ -44,13 +44,6 @@ App.MainController = (function () {
             window.onbeforeunload = function () {
                 return "Do you really want to leave this page. Some data will be lost."
             };
-            $(document).on("load", function () {
-                $("#playlist-box").swipe({
-                    swipe: function (event, direction, distance, duration, fingerCount) {
-                        alert("You swiped " + direction);
-                    }
-                });
-            });
             $(window).on("orientationchange", function () {
                 resize._resizePlaylistHeight();
             });
