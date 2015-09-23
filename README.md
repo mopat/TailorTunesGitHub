@@ -39,4 +39,4 @@ Browse code and comments for solutions (src/Adaptation/RotationHandler.js)!
 
 [Rotations of TailorTunes](http://raspbianpi8.no-ip.org/TailorTunesGithub/tailortunes_rotations_small.png)
 
-Watch demo video for Tabletop here: [TailorTunes Demo on Tabletop](https://www.youtube.com/watch?v=8JMxLo10SSI)
+Watch demo video for Tabletop here: [TailorTunes Demo on Samsung SUR40](https://youtu.be/o-0NTzU4aCE)
